@@ -7,8 +7,11 @@
     .PARAMETER id
     Unique ID  For accessory or array of IDs to checkout
 
-    .PARAMETER assigned_id
-    Id of target user
+    .PARAMETER assigned_to
+    Id of target user, asset, or location
+
+    .PARAMETER checkout_to_type
+    Checkout accessory to one of following types: user, asset, location
 
     .PARAMETER note
     Notes about checkout
@@ -20,7 +23,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
 
     .EXAMPLE
-    Set-SnipeitAccessoryOwner -id 1 -assigned_id 1  -note "testing check out to user"
+    Set-SnipeitAccessoryOwner -id 1 -assigned_to 1 -checkout_to_type user -note "testing check out to user"
 #>
 function Set-SnipeitAccessoryOwner() {
     [CmdletBinding(
@@ -35,6 +38,9 @@ function Set-SnipeitAccessoryOwner() {
         [parameter(mandatory = $true)]
         [int]$assigned_to,
 
+        [ValidateSet("user","asset","location")]
+        [string]$checkout_to_type = "user",
+
         [string] $note,
 
         [parameter(mandatory = $false)]
@@ -45,6 +51,15 @@ function Set-SnipeitAccessoryOwner() {
     )
     begin{
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        switch ($checkout_to_type) {
+            'user' { $Values += @{ "assigned_user" = $assigned_to } }
+            'asset' { $Values += @{ "assigned_asset" = $assigned_to } }
+            'location' { $Values += @{ "assigned_location" = $assigned_to } }
+        }
+
+        if ($Values.ContainsKey('assigned_to')) { $Values.Remove('assigned_to') }
+        if ($Values.ContainsKey('checkout_to_type')) { $Values.Remove('checkout_to_type') }
     }
 
     process {
