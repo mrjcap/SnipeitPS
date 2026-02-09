@@ -1,5 +1,7 @@
 [![GitHub release](https://img.shields.io/github/release/snazy2000/SnipeitPS.svg)](https://github.com/snazy2000/snipeitps/releases/latest) [![Build status](https://ci.appveyor.com/api/projects/status/dvuw4ggx543nx3h7/branch/master?svg=true)](https://ci.appveyor.com/project/snazy2000/snipeitps/branch/master) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/snipeitps.svg)](https://www.powershellgallery.com/packages/snipeitps) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
+> **This fork is actively maintained.** The original repository by [snazy2000](https://github.com/snazy2000/SnipeitPS) has been archived. I use this module daily and plan to continue developing it. Pull requests and bug reports are welcome!
+
 ---
 
 ## Want to say thanks?
