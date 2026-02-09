@@ -8,26 +8,42 @@ schema: 2.0.0
 # Set-SnipeitManufacturer
 
 ## SYNOPSIS
-Add a new Manufacturer to Snipe-it asset system
+Updates an existing Manufacturer in Snipe-it asset system
 
 ## SYNTAX
 
 ```
-Set-SnipeitManufacturer [-Name] <String> [[-image] <String>] [-image_delete] [[-RequestType] <String>]
- [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-SnipeitManufacturer [-id] <Int32[]> [[-Name] <String>] [[-image] <String>]
+ [[-manufacturer_url] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>]
+ [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Long description
+Updates manufacturer on Snipe-It system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitManufacturer -name "HP"
+Set-SnipeitManufacturer -id 1 -name "HP Inc."
 ```
 
 ## PARAMETERS
+
+### -id
+ID number of the Manufacturer to update
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
@@ -39,7 +55,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -54,7 +70,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -83,8 +99,24 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 1
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manufacturer_url
+Website URL of the manufacturer.
+Named manufacturer_url to avoid conflict with the deprecated -url parameter.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -100,7 +132,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 5
 Default value: Patch
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -116,7 +148,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

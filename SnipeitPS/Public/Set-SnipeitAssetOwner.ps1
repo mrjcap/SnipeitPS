@@ -2,7 +2,7 @@
     .SYNOPSIS
     Checkout asset
     .DESCRIPTION
-    Checkout asset to user/localtion/asset
+    Checkout asset to user/location/asset
 
     .PARAMETER ID
     Unique IDs For assets to checkout
@@ -13,19 +13,22 @@
     .PARAMETER checkout_to_type
     Checkout asset to one of following types user, location, asset
 
-    .PARAMETER note
-    Notes about checkout
-
     .PARAMETER name
     Optional new asset name. This is useful for changing the asset's name on new checkout,
     for example, an asset that was named "Anna's Macbook Pro" could be renamed on the fly
     when it's checked out to Elizabeth, to "Beth's Macbook Pro"
+
+    .PARAMETER note
+    Notes about checkout
 
     .PARAMETER expected_checkin
     Optional date the asset is expected to be checked in
 
     .PARAMETER checkout_at
     Optional date to override the checkout time of now
+
+    .PARAMETER status_id
+    Optional status id to set the asset to during checkout
 
     .PARAMETER url
     Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -59,6 +62,9 @@ function Set-SnipeitAssetOwner() {
         [datetime] $expected_checkin,
 
         [datetime]$checkout_at,
+
+        [ValidateRange(1, [int]::MaxValue)]
+        [int]$status_id,
 
         [parameter(mandatory = $false)]
         [string]$url,

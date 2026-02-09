@@ -13,12 +13,12 @@ Add a new Manufacturer to Snipe-it asset system
 ## SYNTAX
 
 ```
-New-SnipeitManufacturer [-Name] <String> [[-image] <String>] [-image_delete] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SnipeitManufacturer [-Name] <String> [[-image] <String>] [[-manufacturer_url] <String>]
+ [-image_delete] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Long description
+Creates a new manufacturer on Snipe-It system
 
 ## EXAMPLES
 
@@ -39,7 +39,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -90,6 +90,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -manufacturer_url
+Website URL of the manufacturer.
+Named manufacturer_url to avoid conflict with the deprecated -url parameter.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipeit system.
@@ -100,7 +116,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

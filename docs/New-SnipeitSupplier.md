@@ -15,8 +15,8 @@ Creates a supplier
 ```
 New-SnipeitSupplier [-name] <String> [[-address] <String>] [[-address2] <String>] [[-city] <String>]
  [[-state] <String>] [[-country] <String>] [[-zip] <String>] [[-phone] <String>] [[-fax] <String>]
- [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-image] <String>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-supplier_url] <String>]
+ [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +26,7 @@ Creates a new supplier on Snipe-It system
 
 ### EXAMPLE 1
 ```
-New-SnipeitDepartment -name "Department1" -company_id 1 -localtion_id 1 -manager_id 3
+New-SnipeitSupplier -name "Supplier1"
 ```
 
 ## PARAMETERS
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -address2
-Address line 1 of supplier
+Address line 2 of supplier
 
 ```yaml
 Type: String
@@ -71,7 +71,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -161,14 +161,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -name
-Department Name
+Supplier Name
 
 ```yaml
 Type: String
@@ -183,7 +183,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
-Email address
+Notes about the supplier
 
 ```yaml
 Type: String
@@ -227,6 +227,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -supplier_url
+Website URL of the supplier.
+Named supplier_url to avoid conflict with the deprecated -url parameter.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipeit system.
@@ -237,7 +253,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

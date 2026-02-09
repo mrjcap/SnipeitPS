@@ -8,13 +8,13 @@ schema: 2.0.0
 # Set-SnipeitLicense
 
 ## SYNOPSIS
-Updates a licence
+Updates a license
 
 ## SYNTAX
 
 ```
 Set-SnipeitLicense [-id] <Int32[]> [[-name] <String>] [[-seats] <Int32>] [[-category_id] <Int32>]
- [[-company_id] <Int32>] [[-expiration_date] <DateTime>] [[-license_email] <MailAddress>]
+ [[-company_id] <Int32>] [[-expiration_date] <DateTime>] [[-license_email] <String>]
  [[-license_name] <String>] [[-maintained] <Boolean>] [[-manufacturer_id] <Int32>] [[-notes] <String>]
  [[-order_number] <String>] [[-purchase_cost] <Single>] [[-purchase_date] <DateTime>]
  [[-reassignable] <Boolean>] [[-serial] <String>] [[-supplier_id] <Int32>] [[-termination_date] <DateTime>]
@@ -22,13 +22,13 @@ Set-SnipeitLicense [-id] <Int32[]> [[-name] <String>] [[-seats] <Int32>] [[-cate
 ```
 
 ## DESCRIPTION
-Updates licence on Snipe-It system
+Updates license on Snipe-It system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-SnipeitLicence -name "License" -seats 3 -company_id 1
+Set-SnipeitLicense -id 1 -name "License" -seats 3 -company_id 1
 ```
 
 ## PARAMETERS
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-{{ Fill category_id Description }}
+ID number of license category
 
 ```yaml
 Type: Int32
@@ -113,7 +113,7 @@ Accept wildcard characters: False
 Email address associated with license
 
 ```yaml
-Type: MailAddress
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -291,7 +291,7 @@ Accept wildcard characters: False
 ```
 
 ### -serial
-Serialnumber  of license
+Serial number of license
 
 ```yaml
 Type: String

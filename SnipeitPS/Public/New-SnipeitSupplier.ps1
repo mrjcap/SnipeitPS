@@ -6,13 +6,13 @@
     Creates a new supplier on Snipe-It system
 
     .PARAMETER name
-    Department Name
+    Supplier Name
 
     .PARAMETER address
     Address line 1 of supplier
 
     .PARAMETER address2
-    Address line 1 of supplier
+    Address line 2 of supplier
 
     .PARAMETER city
     City
@@ -39,9 +39,12 @@
     Contact person
 
     .PARAMETER notes
-    Email address
+    Notes about the supplier
 
-     .PARAMETER image
+    .PARAMETER supplier_url
+    Website URL of the supplier. Named supplier_url to avoid conflict with the deprecated -url parameter.
+
+    .PARAMETER image
     Image file name and path for item
 
     .PARAMETER url
@@ -51,7 +54,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
     .EXAMPLE
-    New-SnipeitDepartment -name "Department1" -company_id 1 -localtion_id 1 -manager_id 3
+    New-SnipeitSupplier -name "Supplier1"
 
 #>
 
@@ -87,6 +90,8 @@ function New-SnipeitSupplier() {
 
         [string]$notes,
 
+        [string]$supplier_url,
+
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
@@ -101,8 +106,13 @@ function New-SnipeitSupplier() {
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
+        if ($Values.ContainsKey('supplier_url')) {
+            $Values['url'] = $Values['supplier_url']
+            $Values.Remove('supplier_url')
+        }
+
         $Parameters = @{
-            Api    = "/api/v1/suppilers"
+            Api    = "/api/v1/suppliers"
             Method = 'POST'
             Body   = $Values
         }

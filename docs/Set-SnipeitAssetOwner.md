@@ -14,12 +14,12 @@ Checkout asset
 
 ```
 Set-SnipeitAssetOwner [-id] <Int32[]> [-assigned_id] <Int32> [[-checkout_to_type] <String>] [[-name] <String>]
- [[-note] <String>] [[-expected_checkin] <DateTime>] [[-checkout_at] <DateTime>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-note] <String>] [[-expected_checkin] <DateTime>] [[-checkout_at] <DateTime>] [[-status_id] <Int32>]
+ [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Checkout asset to user/localtion/asset
+Checkout asset to user/location/asset
 
 ## EXAMPLES
 
@@ -40,7 +40,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -154,6 +154,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -status_id
+Optional status id to set the asset to during checkout
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipeit system.
@@ -164,7 +179,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
