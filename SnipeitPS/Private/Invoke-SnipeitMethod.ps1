@@ -110,13 +110,30 @@ function Invoke-SnipeitMethod {
             }
         }
 
+        # Send file upload requests as multipart/form-data
+        if($null -ne $body -and $Body.Keys -contains 'file' ){
+            if($PSVersionTable.PSVersion -ge '7.0'){
+                # Laravel expects file[] (array notation) for file uploads
+                $Body['file[]'] = get-item $body['file']
+                $Body.Remove('file')
+                $Body['_method'] = $Method
+                $splatParameters["Method"] = 'POST'
+                $splatParameters["Form"] = $Body
+                # Remove Content-Type header so -Form can set multipart/form-data
+                $_headers.Remove('Content-Type')
+            } else {
+                throw "File uploads require PowerShell 7.0 or later."
+            }
+        }
         if ($Body -and $splatParameters.Keys -notcontains 'Form') {
             $splatParameters["Body"] =  [System.Text.Encoding]::UTF8.GetBytes(($Body | Convertto-Json))
         }
 
         $script:PSDefaultParameterValues = $global:PSDefaultParameterValues
 
-        Write-Debug "$($Body | ConvertTo-Json)"
+        if ($DebugPreference -ne 'SilentlyContinue') {
+            Write-Debug "$($Body | ConvertTo-Json -Depth 4)"
+        }
 
         #Check throttle limit
         if ($SnipeitPSSession.throttleLimit -gt 0) {
