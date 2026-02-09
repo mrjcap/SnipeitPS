@@ -5,6 +5,72 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# [v.1.11.x] - 2026-02-09
+
+## Extended API coverage
+
+### New features
+Added 30 new functions covering missing Snipe-IT API endpoints including
+groups, fieldsets, status labels, asset/model files, component and consumable
+checkout/checkin, custom field association, user/asset restore, audit,
+and system information endpoints.
+
+Added file upload support to Invoke-SnipeitMethod for multipart/form-data
+file uploads (New-SnipeitAssetFile, New-SnipeitModelFile). Requires
+PowerShell 7.0 or later.
+
+Added 180 Pester tests covering all new functions including endpoint
+validation, parameter passing, legacy API parameter handling, and
+pagination loop behavior.
+
+Added documentation for all 30 new functions in docs/.
+
+### New Functions
+- Get-SnipeitAssetFile
+- Get-SnipeitCurrentUser
+- Get-SnipeitFieldsetField
+- Get-SnipeitGroup
+- Get-SnipeitModelFile
+- Get-SnipeitSetting
+- Get-SnipeitStatusAsset
+- Get-SnipeitUserEula
+- Get-SnipeitVersion
+- New-SnipeitAssetFile
+- New-SnipeitFieldset
+- New-SnipeitGroup
+- New-SnipeitModelFile
+- New-SnipeitStatus
+- Register-SnipeitCustomField
+- Remove-SnipeitAssetFile
+- Remove-SnipeitFieldset
+- Remove-SnipeitGroup
+- Remove-SnipeitModelFile
+- Remove-SnipeitStatus
+- Reset-SnipeitComponentOwner
+- Restore-SnipeitAsset
+- Restore-SnipeitUser
+- Set-SnipeitAssetMaintenance
+- Set-SnipeitComponentOwner
+- Set-SnipeitConsumableOwner
+- Set-SnipeitFieldset
+- Set-SnipeitGroup
+- Unregister-SnipeitCustomField
+- Update-SnipeitAssetAudit
+
+### Fixes
+- Fixed file uploads in Invoke-SnipeitMethod using file[] form field name
+  for Laravel/Snipe-IT compatibility
+- Clarified Reset-SnipeitComponentOwner id parameter is the component_assets
+  pivot record ID, not the component ID (matches accessory checkin pattern)
+- Fixed ConvertTo-Json debug output in Invoke-SnipeitMethod causing spurious
+  "Resulting JSON is truncated" warnings when not in debug mode
+- Fixed Restore-SnipeitAsset and Restore-SnipeitUser failing due to missing
+  body on POST requests
+- Fixed Get-SnipeitStatusAsset -all pagination by preserving id in search
+  parameters for recursive calls
+- Removed unreachable dead code in Get-SnipeitGroup (parameter set validation
+  made the manual throw check redundant)
+
 # [v.1.10.x] - 2021-09-03
 
 ## New secure ways to connect Snipe it

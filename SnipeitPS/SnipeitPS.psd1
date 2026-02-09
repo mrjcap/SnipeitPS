@@ -12,7 +12,7 @@
 RootModule = 'SnipeitPS'
 
 # Version number of this module.
-ModuleVersion = '1.10'
+ModuleVersion = '1.11.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -21,13 +21,13 @@ ModuleVersion = '1.10'
 GUID = 'f86f4db4-1cb1-45c4-b7bf-6762531bfdeb'
 
 # Author of this module
-Author = 'Stephen Maunder'
+Author = 'Stephen Maunder, Jay Cap'
 
 # Company or vendor of this module
 CompanyName = 'Unknown'
 
 # Copyright statement for this module
-Copyright = '(c) 2017 Stephen Maunder. All rights reserved.'
+Copyright = '(c) 2017 Stephen Maunder, (c) 2026 Jay Cap. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Powershell API for Snipeit Asset Management'
@@ -75,24 +75,34 @@ FunctionsToExport = @(
         'Get-SnipeitAccessoryOwner',
         'Get-SnipeitActivity',
         'Get-SnipeitAsset',
+        'Get-SnipeitAssetFile',
         'Get-SnipeitAssetMaintenance',
         'Get-SnipeitCategory',
         'Get-SnipeitCompany',
         'Get-SnipeitComponent',
         'Get-SnipeitConsumable',
+        'Get-SnipeitCurrentUser',
         'Get-SnipeitCustomField',
         'Get-SnipeitDepartment',
         'Get-SnipeitFieldset',
+        'Get-SnipeitFieldsetField',
+        'Get-SnipeitGroup',
         'Get-SnipeitLicense',
         'Get-SnipeitLicenseSeat',
         'Get-SnipeitLocation',
         'Get-SnipeitManufacturer',
         'Get-SnipeitModel',
+        'Get-SnipeitModelFile',
+        'Get-SnipeitSetting',
         'Get-SnipeitStatus',
+        'Get-SnipeitStatusAsset',
         'Get-SnipeitSupplier',
         'Get-SnipeitUser',
+        'Get-SnipeitUserEula',
+        'Get-SnipeitVersion',
         'New-SnipeitAccessory',
         'New-SnipeitAsset',
+        'New-SnipeitAssetFile',
         'New-SnipeitAssetMaintenance',
         'New-SnipeItAudit',
         'New-SnipeitCategory',
@@ -101,14 +111,20 @@ FunctionsToExport = @(
         'New-SnipeitConsumable',
         'New-SnipeitCustomField',
         'New-SnipeitDepartment',
+        'New-SnipeitFieldset',
+        'New-SnipeitGroup',
         'New-SnipeitLicense',
         'New-SnipeitLocation',
         'New-SnipeitManufacturer',
         'New-SnipeitModel',
+        'New-SnipeitModelFile',
+        'New-SnipeitStatus',
         'New-SnipeitSupplier',
         'New-SnipeitUser',
+        'Register-SnipeitCustomField',
         'Remove-SnipeitAccessory',
         'Remove-SnipeitAsset',
+        'Remove-SnipeitAssetFile',
         'Remove-SnipeitAssetMaintenance',
         'Remove-SnipeitCategory',
         'Remove-SnipeitCompany',
@@ -116,24 +132,36 @@ FunctionsToExport = @(
         'Remove-SnipeitConsumable',
         'Remove-SnipeitCustomField',
         'Remove-SnipeitDepartment',
+        'Remove-SnipeitFieldset',
+        'Remove-SnipeitGroup',
         'Remove-SnipeitLicense',
         'Remove-SnipeitLocation',
         'Remove-SnipeitManufacturer',
         'Remove-SnipeitModel',
+        'Remove-SnipeitModelFile',
+        'Remove-SnipeitStatus',
         'Remove-SnipeitSupplier',
         'Remove-SnipeitUser',
         'Reset-SnipeitAccessoryOwner',
         'Reset-SnipeitAssetOwner',
+        'Reset-SnipeitComponentOwner',
+        'Restore-SnipeitAsset',
+        'Restore-SnipeitUser',
         'Set-SnipeitAccessory',
         'Set-SnipeitAccessoryOwner',
         'Set-SnipeitAsset',
+        'Set-SnipeitAssetMaintenance',
         'Set-SnipeitAssetOwner',
-        'Set-SnipeitCategory'
-        'Set-SnipeitCompany'
+        'Set-SnipeitCategory',
+        'Set-SnipeitCompany',
         'Set-SnipeitComponent',
+        'Set-SnipeitComponentOwner',
         'Set-SnipeitConsumable',
+        'Set-SnipeitConsumableOwner',
         'Set-SnipeitCustomField',
         'Set-SnipeitDepartment',
+        'Set-SnipeitFieldset',
+        'Set-SnipeitGroup',
         'Set-SnipeitInfo',
         'Set-SnipeitLicense',
         'Set-SnipeitLicenseSeat',
@@ -143,7 +171,9 @@ FunctionsToExport = @(
         'Set-SnipeitStatus',
         'Set-SnipeitSupplier',
         'Set-SnipeitUser',
-        'Update-SnipeitAlias'
+        'Unregister-SnipeitCustomField',
+        'Update-SnipeitAlias',
+        'Update-SnipeitAssetAudit'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
