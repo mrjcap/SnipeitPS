@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Updates a licence
+    Updates a license
 
     .DESCRIPTION
-    Updates licence on Snipe-It system
+    Updates license on Snipe-It system
 
     .PARAMETER id
     ID number of license or array of license IDs
@@ -14,11 +14,11 @@
     .PARAMETER seats
     Number of license seats owned.
 
+    .PARAMETER category_id
+    ID number of license category
+
     .PARAMETER company_id
     Id number of company license belongs to
-
-    .PARAMETER expiration_date
-    Date of license expiration
 
     .PARAMETER expiration_date
     Date of license expiration
@@ -28,9 +28,6 @@
 
     .PARAMETER license_name
     Name of license contact person
-
-    .PARAMETER serial
-    Serialnumber  of license
 
     .PARAMETER maintained
     Maintained status of license
@@ -53,6 +50,9 @@
     .PARAMETER reassignable
     Is license reassignable?
 
+    .PARAMETER serial
+    Serial number of license
+
     .PARAMETER supplier_id
     ID number of license supplier
 
@@ -69,7 +69,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
     .EXAMPLE
-    Set-SnipeitLicence -name "License" -seats 3 -company_id 1
+    Set-SnipeitLicense -id 1 -name "License" -seats 3 -company_id 1
 
 #>
 
@@ -97,7 +97,7 @@ function Set-SnipeitLicense() {
 
         [datetime]$expiration_date,
 
-        [mailaddress]$license_email,
+        [string]$license_email,
 
         [ValidateLength(1, 100)]
         [string]$license_name,

@@ -5,7 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-# [v.1.11.x] - 2026-02-09
+# [v.1.11.1] - 2026-02-09
+
+## Bug fixes from original repo issue audit
+
+### Critical Fixes
+- Fixed New-SnipeitSupplier: API endpoint typo (`/suppilers` -> `/suppliers`) caused
+  every call to return 404. Function has never worked. (Original repo issue)
+- Fixed Set-SnipeitSupplier: Missing `$id` parameter in Param block made the function
+  unable to update any supplier. Added mandatory `[int[]]$id` parameter.
+- Fixed Set-SnipeitManufacturer: Missing `$id` parameter in Param block made the function
+  unable to update any manufacturer. Added mandatory `[int[]]$id` parameter.
+
+### Moderate Fixes
+- Fixed New-SnipeitLicense: `[mailaddress]` type on `license_email` was incompatible
+  with `[ValidateLength]` and serialized as object instead of string. Changed to `[string]`.
+  (Addresses #299)
+- Fixed Set-SnipeitLicense: Same `[mailaddress]` to `[string]` fix for `license_email`.
+- Fixed New-SnipeitManufacturer: Body was manually built as `@{ "name" = $Name }`,
+  silently ignoring `image` and `image_delete` parameters. Now uses `Get-ParameterValue`.
+
+### Enhancements
+- Added `status_id` parameter to Set-SnipeitAssetOwner to allow setting asset status
+  during checkout. (Addresses #294)
+- Added `supplier_url` parameter to New-SnipeitSupplier and Set-SnipeitSupplier to set
+  the supplier website URL (renamed to `url` in API body to avoid conflict with deprecated
+  `-url` parameter). (Addresses #195)
+- Added `manufacturer_url` parameter to New-SnipeitManufacturer and Set-SnipeitManufacturer
+  for the same reason.
+
+### Help Text Fixes
+- Fixed New-SnipeitSupplier example (was showing New-SnipeitDepartment)
+- Fixed Set-SnipeitSupplier example (was showing New-SnipeitDepartment)
+- Fixed Set-SnipeitManufacturer synopsis (was saying "Add a new" instead of "Updates")
+- Fixed supplier `.PARAMETER notes` description (was saying "Email address")
+
+### Tests
+- Added Pester tests for New-SnipeitSupplier, Set-SnipeitSupplier, Set-SnipeitManufacturer,
+  New-SnipeitManufacturer, New-SnipeitLicense, Set-SnipeitLicense, and Set-SnipeitAssetOwner
+
+# [v.1.11.0] - 2026-02-09
 
 ## Extended API coverage
 

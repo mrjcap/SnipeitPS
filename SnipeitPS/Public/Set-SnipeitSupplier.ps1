@@ -3,16 +3,19 @@
     Modify the supplier
 
     .DESCRIPTION
-    Modifieds the supplier on Snipe-It system
+    Modifies the supplier on Snipe-It system
+
+    .PARAMETER id
+    ID number of the Supplier to update
 
     .PARAMETER name
-    Suppiers Name
+    Supplier Name
 
     .PARAMETER address
     Address line 1 of supplier
 
     .PARAMETER address2
-    Address line 1 of supplier
+    Address line 2 of supplier
 
     .PARAMETER city
     City
@@ -39,10 +42,13 @@
     Contact person
 
     .PARAMETER notes
-    Email address
+    Notes about the supplier
 
     .PARAMETER image
     Image file name and path for item
+
+    .PARAMETER supplier_url
+    Website URL of the supplier. Named supplier_url to avoid conflict with the deprecated -url parameter.
 
     .PARAMETER image_delete
     Remove current image
@@ -57,7 +63,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
     .EXAMPLE
-    New-SnipeitDepartment -name "Department1" -company_id 1 -localtion_id 1 -manager_id 3
+    Set-SnipeitSupplier -id 1 -name "UpdatedSupplier"
 
 #>
 
@@ -68,7 +74,9 @@ function Set-SnipeitSupplier() {
     )]
 
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $true, ValueFromPipelineByPropertyName)]
+        [int[]]$id,
+
         [string]$name,
 
         [string]$address,
@@ -96,6 +104,8 @@ function Set-SnipeitSupplier() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
+        [string]$supplier_url,
+
         [switch]$image_delete,
 
         [ValidateSet("Put","Patch")]
@@ -113,6 +123,10 @@ function Set-SnipeitSupplier() {
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
+        if ($Values.ContainsKey('supplier_url')) {
+            $Values['url'] = $Values['supplier_url']
+            $Values.Remove('supplier_url')
+        }
     }
     process {
         foreach ($supplier_id in $id) {

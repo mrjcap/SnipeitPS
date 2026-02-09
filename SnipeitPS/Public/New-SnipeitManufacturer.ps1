@@ -3,13 +3,16 @@
     Add a new Manufacturer to Snipe-it asset system
 
     .DESCRIPTION
-    Long description
+    Creates a new manufacturer on Snipe-It system
 
     .PARAMETER Name
     Name of the Manufacturer
 
     .PARAMETER image
     Manufacturer Image filename and path
+
+    .PARAMETER manufacturer_url
+    Website URL of the manufacturer. Named manufacturer_url to avoid conflict with the deprecated -url parameter.
 
     .PARAMETER image_delete
     Remove current image
@@ -37,6 +40,8 @@ function New-SnipeitManufacturer() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
+        [string]$manufacturer_url,
+
         [switch]$image_delete=$false,
 
         [parameter(mandatory = $false)]
@@ -49,13 +54,16 @@ function New-SnipeitManufacturer() {
     begin {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        $Values = @{
-            "name" = $Name
+        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        if ($Values.ContainsKey('manufacturer_url')) {
+            $Values['url'] = $Values['manufacturer_url']
+            $Values.Remove('manufacturer_url')
         }
 
         $Parameters = @{
             Api    = "/api/v1/manufacturers"
-            Method = 'post'
+            Method = 'POST'
             Body   = $Values
         }
 

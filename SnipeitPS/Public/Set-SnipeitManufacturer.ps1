@@ -1,15 +1,21 @@
 <#
     .SYNOPSIS
-    Add a new Manufacturer to Snipe-it asset system
+    Updates an existing Manufacturer in Snipe-it asset system
 
     .DESCRIPTION
-    Long description
+    Updates manufacturer on Snipe-It system
+
+    .PARAMETER id
+    ID number of the Manufacturer to update
 
     .PARAMETER Name
     Name of the Manufacturer
 
     .PARAMETER image
     Image file name and path for item
+
+    .PARAMETER manufacturer_url
+    Website URL of the manufacturer. Named manufacturer_url to avoid conflict with the deprecated -url parameter.
 
     .PARAMETER image_delete
     Remove current image
@@ -24,7 +30,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
     .EXAMPLE
-    New-SnipeitManufacturer -name "HP"
+    Set-SnipeitManufacturer -id 1 -name "HP Inc."
 #>
 
 function Set-SnipeitManufacturer() {
@@ -34,11 +40,15 @@ function Set-SnipeitManufacturer() {
     )]
 
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $true, ValueFromPipelineByPropertyName)]
+        [int[]]$id,
+
         [string]$Name,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
+
+        [string]$manufacturer_url,
 
         [switch]$image_delete=$false,
 
@@ -56,6 +66,11 @@ function Set-SnipeitManufacturer() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        if ($Values.ContainsKey('manufacturer_url')) {
+            $Values['url'] = $Values['manufacturer_url']
+            $Values.Remove('manufacturer_url')
+        }
     }
 
     process{

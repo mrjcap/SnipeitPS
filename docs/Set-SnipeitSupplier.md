@@ -13,23 +13,39 @@ Modify the supplier
 ## SYNTAX
 
 ```
-Set-SnipeitSupplier [-name] <String> [[-address] <String>] [[-address2] <String>] [[-city] <String>]
- [[-state] <String>] [[-country] <String>] [[-zip] <String>] [[-phone] <String>] [[-fax] <String>]
- [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-image] <String>] [-image_delete]
- [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-SnipeitSupplier [-id] <Int32[]> [[-name] <String>] [[-address] <String>] [[-address2] <String>]
+ [[-city] <String>] [[-state] <String>] [[-country] <String>] [[-zip] <String>] [[-phone] <String>]
+ [[-fax] <String>] [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-image] <String>]
+ [[-supplier_url] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>]
+ [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Modifieds the supplier on Snipe-It system
+Modifies the supplier on Snipe-It system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitDepartment -name "Department1" -company_id 1 -localtion_id 1 -manager_id 3
+Set-SnipeitSupplier -id 1 -name "UpdatedSupplier"
 ```
 
 ## PARAMETERS
+
+### -id
+ID number of the Supplier to update
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
 
 ### -address
 Address line 1 of supplier
@@ -40,14 +56,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -address2
-Address line 1 of supplier
+Address line 2 of supplier
 
 ```yaml
 Type: String
@@ -55,7 +71,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -71,7 +87,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 18
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -86,7 +102,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -101,7 +117,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -116,7 +132,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -131,7 +147,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -146,7 +162,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -161,7 +177,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -183,22 +199,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
-Suppiers Name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -notes
-Email address
+Supplier Name
 
 ```yaml
 Type: String
@@ -206,7 +207,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+Notes about the supplier
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -221,7 +237,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -supplier_url
+Website URL of the supplier.
+Named supplier_url to avoid conflict with the deprecated -url parameter.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -237,7 +269,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 16
 Default value: Patch
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -252,7 +284,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -268,7 +300,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 17
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -283,7 +315,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
