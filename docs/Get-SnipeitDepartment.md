@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -24,7 +24,7 @@ Get-SnipeitDepartment [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonP
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT departments or a specific department by ID.
 
 ## EXAMPLES
 
@@ -46,7 +46,7 @@ Get-SnipeitDepartment -id 1
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Department
+An id of specific Department
 
 ```yaml
 Type: Int32
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String
@@ -154,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
-{{ Fill sort Description }}
+Column to sort on.
 
 ```yaml
 Type: String

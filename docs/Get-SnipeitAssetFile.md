@@ -24,7 +24,7 @@ Get-SnipeitAssetFile [-id] <Int32> [-file_id <Int32>] [-url <String>] [-apiKey <
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets files associated with a specific Snipe-IT asset.
 
 ## EXAMPLES
 
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -file_id
-A id of specific file
+An id of specific file
 
 ```yaml
 Type: Int32
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Asset
+An id of specific Asset
 
 ```yaml
 Type: Int32

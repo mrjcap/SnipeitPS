@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Create a new Snipe-IT Category
+Update a Snipe-IT Category
 
 .PARAMETER name
 Name of new category to be created
@@ -33,7 +33,7 @@ Http request type to send Snipe IT system. Defaults to Patch you could use Put i
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
 Set-SnipeitCategory -id 4 -name "Laptops"

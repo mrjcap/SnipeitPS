@@ -71,11 +71,11 @@ Describe "Get-SnipeitSetting" {
         }
     }
 
-    It "Calls /api/v1/settings/backups endpoint with GET method" {
+    It "Calls /api/v1/settings endpoint with GET method" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitSetting
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/settings/backups" -and
+                $Api -eq "/api/v1/settings" -and
                 $Method -eq "Get"
             }
         }

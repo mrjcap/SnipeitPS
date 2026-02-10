@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -24,7 +24,7 @@ Get-SnipeitCompany [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonPara
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT companies or a specific company by ID.
 
 ## EXAMPLES
 
@@ -43,7 +43,7 @@ Gets specific company
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Company
+An id of specific Company
 
 ```yaml
 Type: Int32
@@ -121,7 +121,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String

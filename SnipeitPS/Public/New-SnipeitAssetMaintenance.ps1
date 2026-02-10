@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Add a new Asset maintenence to Snipe-it asset system
+Add a new Asset maintenance to Snipe-it asset system
 
 .DESCRIPTION
-Long description
+Add a new Asset maintenance to Snipe-it asset system
 
 
 .PARAMETER title
@@ -24,11 +24,11 @@ Optional Maintenance done under warranty
 .PARAMETER cost
 Optional cost
 
-.PARAMETER comletion_date
+.PARAMETER completion_date
 Optional completion date
 
 .PARAMETER notes
-Optional cost
+Optional notes
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -37,7 +37,7 @@ Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit syste
 Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
-New-SnipeitAssetMaintenence -asset_id 1 -supplier_id 1 -title "replace keyboard" -start_date 2021-01-01
+New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -title "replace keyboard" -start_date 2021-01-01
 #>
 function New-SnipeitAssetMaintenance() {
     [CmdletBinding(

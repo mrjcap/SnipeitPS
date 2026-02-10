@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -20,7 +20,7 @@ Set-SnipeitLocation [-id] <Int32[]> [[-name] <String>] [[-address] <String>] [[-
 ```
 
 ## DESCRIPTION
-Long description
+Updates Location in Snipe-it asset system
 
 ## EXAMPLES
 
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 ```
 
 ### -country
-Address Contry
+Address Country
 
 ```yaml
 Type: String

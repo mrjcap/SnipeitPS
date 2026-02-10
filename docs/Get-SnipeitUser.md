@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitUser
 
 ## SYNOPSIS
-# Gets a list of Snipe-it Users
+Gets a list of Snipe-it Users
 
 ## SYNTAX
 
@@ -30,7 +30,7 @@ Get-SnipeitUser [-accessory_id <String>] [-all] [-url <String>] [-apiKey <String
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT users or a specific user by ID.
 
 ## EXAMPLES
 
@@ -63,7 +63,7 @@ Get users with accessory id 3 has been checked out to
 ## PARAMETERS
 
 ### -accessory_id
-{{ Fill accessory_id Description }}
+Get users a specific accessory id has been checked out to
 
 ```yaml
 Type: String
@@ -78,7 +78,7 @@ Accept wildcard characters: False
 ```
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -109,7 +109,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-{{ Fill company_id Description }}
+Optionally restrict User results to this company_id field
 
 ```yaml
 Type: Int32
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -department_id
-{{ Fill department_id Description }}
+Optionally restrict User results to this department_id field
 
 ```yaml
 Type: Int32
@@ -154,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -group_id
-{{ Fill group_id Description }}
+Optionally restrict User results to this group_id field
 
 ```yaml
 Type: Int32
@@ -169,7 +169,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific User
+An id of specific User
 
 ```yaml
 Type: String
@@ -201,7 +201,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-{{ Fill location_id Description }}
+Optionally restrict User results to this location_id field
 
 ```yaml
 Type: Int32
@@ -231,7 +231,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitSetting
 
 ## SYNOPSIS
-Gets the Snipe-IT backup settings
+Gets Snipe-IT general settings
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ Get-SnipeitSetting [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets the general settings from the Snipe-IT asset management system.
 
 ## EXAMPLES
 

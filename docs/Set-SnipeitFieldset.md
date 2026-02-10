@@ -18,7 +18,7 @@ Set-SnipeitFieldset [-id] <Int32[]> [[-name] <String>] [[-RequestType] <String>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Update a Snipe-IT fieldset.
 
 ## EXAMPLES
 
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Fieldset
+An id of specific Fieldset
 
 ```yaml
 Type: Int32[]

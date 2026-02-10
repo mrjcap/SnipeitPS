@@ -96,14 +96,14 @@ function Set-SnipeitLicenseSeat() {
                 $result = Invoke-SnipeitMethod @Parameters
             }
 
-            return $result
+            $result
         }
+    }
 
-        end {
-            # reset legacy sessions
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Reset-SnipeitPSLegacyApi
-            }
+    end {
+        # reset legacy sessions
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Reset-SnipeitPSLegacyApi
         }
     }
 }

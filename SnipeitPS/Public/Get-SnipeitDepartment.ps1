@@ -6,7 +6,7 @@ Gets a list of Snipe-it Departments
 A text string to search the Departments data
 
 .PARAMETER id
-A id of specific Department
+An id of specific Department
 
 .PARAMETER name
 Optionally restrict department results to this department name.
@@ -27,7 +27,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -97,10 +97,6 @@ function Get-SnipeitDepartment() {
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $api = "/api/v1/departments"
-
-        if ($search -and $id ) {
-            Throw "[$($MyInvocation.MyCommand.Name)] Please specify only -search or -id parameter , not both "
-        }
 
         if ($id) {
         $api= "/api/v1/departments/$id"

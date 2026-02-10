@@ -30,7 +30,8 @@ Remove-SnipeitAssetMaintenance -ID 44
 ## PARAMETERS
 
 ### -apiKey
-{{ Fill apiKey Description }}
+Deprecated parameter, please use Connect-SnipeitPS instead.
+User's API Key for Snipeit.
 
 ```yaml
 Type: String

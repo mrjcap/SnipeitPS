@@ -1,4 +1,4 @@
-﻿---
+---
 Module Name: SnipeitPS
 Module Guid: f86f4db4-1cb1-45c4-b7bf-6762531bfdeb
 Download Help Link: {{ Update Download Link }}
@@ -8,11 +8,11 @@ Locale: en-US
 
 # SnipeitPS Module
 ## Description
-{{ Fill in the Description }}
+PowerShell module for the Snipe-IT asset management system API.
 
 ## SnipeitPS Cmdlets
 ### [Connect-SnipeitPS](Connect-SnipeitPS.md)
-Sets authetication information
+Sets authentication information
 
 ### [Get-SnipeitAccessory](Get-SnipeitAccessory.md)
 Gets a list of Snipe-it Accessories
@@ -26,8 +26,20 @@ Gets and search Snipe-it Activity history
 ### [Get-SnipeitAsset](Get-SnipeitAsset.md)
 Gets a list of Snipe-it Assets or specific asset
 
+### [Get-SnipeitAssetLicense](Get-SnipeitAssetLicense.md)
+Gets licenses assigned to a specific asset
+
 ### [Get-SnipeitAssetMaintenance](Get-SnipeitAssetMaintenance.md)
 Lists Snipe-it Assets Maintenances
+
+### [Get-SnipeitAuditDue](Get-SnipeitAuditDue.md)
+Gets assets due for audit
+
+### [Get-SnipeitAuditOverdue](Get-SnipeitAuditOverdue.md)
+Gets assets overdue for audit
+
+### [Get-SnipeitBackup](Get-SnipeitBackup.md)
+Gets list of available Snipe-IT backups
 
 ### [Get-SnipeitCategory](Get-SnipeitCategory.md)
 Gets a list of Snipe-it Categories
@@ -38,8 +50,14 @@ Gets a list of Snipe-it Companies
 ### [Get-SnipeitComponent](Get-SnipeitComponent.md)
 Gets a list of Snipe-it Components
 
+### [Get-SnipeitComponentAsset](Get-SnipeitComponentAsset.md)
+Gets assets checked out to a specific component
+
 ### [Get-SnipeitConsumable](Get-SnipeitConsumable.md)
 Gets a list of Snipe-it consumables
+
+### [Get-SnipeitConsumableUser](Get-SnipeitConsumableUser.md)
+Gets users who have a specific consumable checked out
 
 ### [Get-SnipeitCustomField](Get-SnipeitCustomField.md)
 Returns specific Snipe-IT custom field or a list of all custom field
@@ -65,6 +83,15 @@ Gets a list of Snipe-it Models
 ### [Get-SnipeitStatus](Get-SnipeitStatus.md)
 Gets a list of Snipe-it Status Labels
 
+### [Get-SnipeitUserAccessory](Get-SnipeitUserAccessory.md)
+Gets accessories assigned to a specific user
+
+### [Get-SnipeitUserAsset](Get-SnipeitUserAsset.md)
+Gets assets assigned to a specific user
+
+### [Get-SnipeitUserLicense](Get-SnipeitUserLicense.md)
+Gets licenses assigned to a specific user
+
 ### [New-SnipeitAccessory](New-SnipeitAccessory.md)
 Creates new accessory on Snipe-It system
 
@@ -72,7 +99,7 @@ Creates new accessory on Snipe-It system
 Add a new Asset to Snipe-it asset system
 
 ### [New-SnipeitAssetMaintenance](New-SnipeitAssetMaintenance.md)
-Add a new Asset maintenence to Snipe-it asset system
+Add a new Asset maintenance to Snipe-it asset system
 
 ### [New-SnipeitAudit](New-SnipeitAudit.md)
 Add a new Audit to Snipe-it asset system
@@ -164,6 +191,9 @@ Checkin  accessories
 ### [Reset-SnipeitAssetOwner](Reset-SnipeitAssetOwner.md)
 Checkin asset
 
+### [Save-SnipeitBackup](Save-SnipeitBackup.md)
+Downloads a Snipe-IT backup file
+
 ### [Set-SnipeitAccessory](Set-SnipeitAccessory.md)
 Updates accessory on Snipe-It system
 
@@ -195,7 +225,7 @@ Add a new Custom Field to Snipe-it asset system
 Updates a department
 
 ### [Set-SnipeitInfo](Set-SnipeitInfo.md)
-Sets authetication information.
+Sets authentication information.
 Deprecated, use Connect-SnipeitPS instead.
 
 ### [Set-SnipeitLicense](Set-SnipeitLicense.md)

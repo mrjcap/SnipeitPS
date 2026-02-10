@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -18,7 +18,7 @@ Get-SnipeitLicenseSeat [-id] <Int32> [[-seat_id] <Int32>] [[-limit] <Int32>] [[-
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets license seats for a specific Snipe-IT license.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Get-SnipeitLicenseSeat -id 1
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific License
+An id of specific License
 
 ```yaml
 Type: Int32
@@ -108,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -seat_id
-A id of specific seat
+An id of specific seat
 
 ```yaml
 Type: Int32

@@ -3,7 +3,7 @@
 Returns a fieldset or list of Snipe-it Fieldsets
 
 .PARAMETER id
-A id of specific fieldset
+An id of specific fieldset
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

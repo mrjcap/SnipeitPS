@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_to
-{{ Fill assigned_to Description }}
+Id of target user, asset, or location
 
 ```yaml
 Type: Int32

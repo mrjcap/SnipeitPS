@@ -12,7 +12,7 @@
 RootModule = 'SnipeitPS'
 
 # Version number of this module.
-ModuleVersion = '1.11.1'
+ModuleVersion = '1.12.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -76,11 +76,17 @@ FunctionsToExport = @(
         'Get-SnipeitActivity',
         'Get-SnipeitAsset',
         'Get-SnipeitAssetFile',
+        'Get-SnipeitAssetLicense',
         'Get-SnipeitAssetMaintenance',
+        'Get-SnipeitAuditDue',
+        'Get-SnipeitAuditOverdue',
+        'Get-SnipeitBackup',
         'Get-SnipeitCategory',
         'Get-SnipeitCompany',
         'Get-SnipeitComponent',
+        'Get-SnipeitComponentAsset',
         'Get-SnipeitConsumable',
+        'Get-SnipeitConsumableUser',
         'Get-SnipeitCurrentUser',
         'Get-SnipeitCustomField',
         'Get-SnipeitDepartment',
@@ -98,7 +104,10 @@ FunctionsToExport = @(
         'Get-SnipeitStatusAsset',
         'Get-SnipeitSupplier',
         'Get-SnipeitUser',
+        'Get-SnipeitUserAccessory',
+        'Get-SnipeitUserAsset',
         'Get-SnipeitUserEula',
+        'Get-SnipeitUserLicense',
         'Get-SnipeitVersion',
         'New-SnipeitAccessory',
         'New-SnipeitAsset',
@@ -147,6 +156,7 @@ FunctionsToExport = @(
         'Reset-SnipeitComponentOwner',
         'Restore-SnipeitAsset',
         'Restore-SnipeitUser',
+        'Save-SnipeitBackup',
         'Set-SnipeitAccessory',
         'Set-SnipeitAccessoryOwner',
         'Set-SnipeitAsset',

@@ -6,7 +6,7 @@ Gets a list of Snipe-it consumables
 A text string to search the consumables
 
 .PARAMETER id
-A id of specific consumable
+An id of specific consumable
 
 .PARAMETER name
 Optionally restrict consumable results to this name field
@@ -36,7 +36,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results
+Return all results
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -50,7 +50,7 @@ Returns all consumables
 
 .EXAMPLE
 Get-SnipeitConsumable -search paper
-Returns search results containeing string display
+Returns search results containing string display
 
 .EXAMPLE
 Get-Snipeitconsumable -id

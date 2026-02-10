@@ -6,7 +6,7 @@ Gets a list of Snipe-it Assets or specific asset
 A text string to search the assets data
 
 .PARAMETER id
-ID number of excact snipeit asset
+ID number of exact snipeit asset
 
 .PARAMETER asset_tag
 Exact asset tag to query
@@ -60,7 +60,7 @@ Optionally restrict asset results to one of these status types: RTD, Deployed, U
 Optionally restrict asset results to this status label ID
 
 .PARAMETER customfields
-Hastable of custom fields and extra fields for searching assets in Snipe-It.
+Hashtable of custom fields and extra fields for searching assets in Snipe-It.
 Use internal field names from Snipe-It. You can use Get-CustomField to get internal field names.
 
 .PARAMETER sort
@@ -76,7 +76,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -86,7 +86,7 @@ Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Sn
 
 .EXAMPLE
 Get-SnipeitAsset -all
-Returens all assets
+Returns all assets
 
 .EXAMPLE
 Get-SnipeitAsset -search "myMachine"
@@ -97,23 +97,23 @@ Get-SnipeitAsset -id 3
 Get asset with id number 3
 
 .EXAMPLE
-Get-SnipeitAsset -asset_tag snipe0003
+Get-SnipeitAsset -asset_tag snipe00033
 Get asset with asset tag snipe00033
 
 .EXAMPLE
 Get-SnipeitAsset -serial 1234
-Get asset with searial number 1234
+Get asset with serial number 1234
 
 .EXAMPLE
-Get-SnipeitAsser -audit_due
+Get-SnipeitAsset -audit_due
 Get Assets due auditing soon
 
 .EXAMPLE
-Get-SnipeitAsser -audit_overdue
+Get-SnipeitAsset -audit_overdue
 Get Assets overdue for auditing
 
 .EXAMPLE
-Get-AnipeitAsset -user_id 4
+Get-SnipeitAsset -user_id 4
 Get Assets checked out to user id 4
 
 .EXAMPLE

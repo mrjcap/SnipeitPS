@@ -3,7 +3,7 @@
 Add a new Asset to Snipe-it asset system
 
 .DESCRIPTION
-Long description
+Add a new Asset to Snipe-it asset system
 
 
 .PARAMETER status_id
@@ -30,14 +30,14 @@ Optional Order number
 .PARAMETER notes
 Optional Notes
 
-.PARAMETER warranty_monhts
-Optional Warranty lenght of the Asset in months
+.PARAMETER warranty_months
+Optional Warranty length of the Asset in months
 
 .PARAMETER purchase_cost
 Optional Purchase cost of the Asset
 
 .PARAMETER purchase_date
-Optional Purchase cost of the Asset
+Optional Purchase date of the Asset
 
 .PARAMETER supplier_id
 Optional Supplier id of the Asset
@@ -52,7 +52,7 @@ Asset image filename and path
 .PARAMETER assigned_id
 Id of target user , location or asset
 
- .PARAMETER checkout_to_type
+.PARAMETER checkout_to_type
 Checkout asset when creating to one of following types user, location or asset.
 
 .PARAMETER url
@@ -62,12 +62,12 @@ Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit syste
 Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .PARAMETER customfields
-Hastable of custom fields and extra fields that need passing through to Snipeit.
+Hashtable of custom fields and extra fields that need passing through to Snipeit.
 Use internal field names from snipeit .You can use Get-CustomField to get internal field names.
 
 .EXAMPLE
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1"
-Create asset with automatic tag if tag genaration is enabled on snipe-it, other wise without tag
+Create asset with automatic tag if tag generation is enabled on snipe-it, other wise without tag
 
 .EXAMPLE
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1" -asset_tag "DEV123"

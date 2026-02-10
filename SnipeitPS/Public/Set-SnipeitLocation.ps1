@@ -3,7 +3,7 @@
     Updates Location in Snipe-it asset system
 
     .DESCRIPTION
-    Long description
+    Updates Location in Snipe-it asset system
 
     .PARAMETER id
     ID number of location or array or IDs
@@ -21,13 +21,10 @@
     Address State
 
     .PARAMETER country
-    Address Contry
+    Address Country
 
     .PARAMETER zip
     Address zipcode
-
-    .PARAMETER state
-    Address State
 
     .PARAMETER manager_id
     Location manager as id

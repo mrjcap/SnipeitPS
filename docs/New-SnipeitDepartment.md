@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -25,7 +25,7 @@ Creates a new department on Snipe-It system
 
 ### EXAMPLE 1
 ```
-New-SnipeitDepartment -name "Department1" -company_id 1 -localtion_id 1 -manager_id 3
+New-SnipeitDepartment -name "Department1" -company_id 1 -location_id 1 -manager_id 3
 ```
 
 ## PARAMETERS
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
-{{ Fill image_delete Description }}
+Set to true to remove the existing image for this item
 
 ```yaml
 Type: SwitchParameter
@@ -137,7 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
-{{ Fill notes Description }}
+Notes about the department
 
 ```yaml
 Type: String

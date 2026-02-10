@@ -3,7 +3,7 @@
     Returns specific Snipe-IT custom field or a list of all custom field
 
     .PARAMETER id
-    A id of specific field
+    An id of specific field
 
     .PARAMETER url
     Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

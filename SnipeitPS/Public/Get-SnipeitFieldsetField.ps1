@@ -3,7 +3,7 @@
 Gets fields associated with a specific fieldset
 
 .PARAMETER id
-A id of specific Fieldset
+An id of specific Fieldset
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

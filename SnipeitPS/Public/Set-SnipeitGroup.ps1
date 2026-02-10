@@ -3,7 +3,7 @@
 Set properties of a Snipe-it Group
 
 .PARAMETER id
-A id of specific Group
+An id of specific Group
 
 .PARAMETER name
 Name of the Group

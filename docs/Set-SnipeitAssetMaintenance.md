@@ -20,7 +20,7 @@ Set-SnipeitAssetMaintenance [-id] <Int32[]> [[-asset_id] <Int32>] [[-supplier_id
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Update an asset maintenance record in the Snipe-IT system.
 
 ## EXAMPLES
 
@@ -108,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Asset Maintenance
+An id of specific Asset Maintenance
 
 ```yaml
 Type: Int32[]

@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-    Sets authetication information
+    Sets authentication information
 
     .DESCRIPTION
     Sets apikey and url to connect Snipe-It system.
@@ -17,23 +17,23 @@
     Snipe it Api key as securestring
 
     .PARAMETER siteCred
-    PSCredential where username shoul be snipe it url and password should be
+    PSCredential where username should be snipe it url and password should be
     snipe it apikey.
 
     .PARAMETER throttleLimit
-    Throttle request rate to nro of requests per throttlePeriod. Defaults to 0 that means no requests are not throttled.
+    Throttle request rate to number of requests per throttlePeriod. Defaults to 0 that means requests are not throttled.
 
     .PARAMETER throttlePeriod
     Throttle period time span in milliseconds defaults to 60 milliseconds.
 
     .PARAMETER throttleThreshold
-    Threshold percentage of used request on period after request are throttled.
+    Threshold percentage of used requests per period after which requests are throttled.
 
     .PARAMETER throttleMode
     RequestThrottling type. "Burst" allows all requests to be used in ThrottlePeriod without delays and then waits
-    until there's new requests avalable. With "Contant" mode there always delay between requests. Delay is calculated
+    until there's new requests available. With "Constant" mode there is always a delay between requests. Delay is calculated
     by dividing throttlePeriod with throttleLimit. "Adaptive" mode allows throttleThreshold percentage of request to be
-    used with out delay, after threshold limit is reached next requests are delayded by dividing available requests
+    used with out delay, after threshold limit is reached next requests are delayed by dividing available requests
     over throttlePeriod.
 
     .EXAMPLE
@@ -47,13 +47,13 @@
     .EXAMPLE
     Connect-SnipeitPS -siteCred (Get-Credential -message "Use site url as username and apikey as password")
     Connect to Snipe It with PSCredential object.
-    To use saved creadentials yu can use export-clixml and import-clixml commandlets.
+    To use saved credentials you can use export-clixml and import-clixml commandlets.
 
     .EXAMPLE
     Build credential with apikey value from secret vault (Microsoft.PowerShell.SecretManagement)
     $siteurl = "https://mysnipeitsite.url"
     $apikey = Get-SecretInfo -Name SnipeItApiKey
-    $siteCred = New-Object -Type PSCredential -Argumentlist $siteurl,$spikey
+    $siteCred = New-Object -Type PSCredential -Argumentlist $siteurl,$apikey
     Connect-SnipeitPS -siteCred $siteCred
 
 
@@ -106,11 +106,7 @@ function Connect-SnipeitPS {
         switch ($PsCmdlet.ParameterSetName) {
             'Connect with url and apikey' {
                 $SnipeitPSSession.url = $url.AbsoluteUri.TrimEnd('/')
-                if($PSVersionTable.PSVersion -ge '7.0'){
-                    $SnipeitPSSession.apiKey = ConvertTo-SecureString -AsPlainText -String $apiKey
-                } else {
-                    $SnipeitPSSession.apiKey = ConvertTo-SecureString -String $apiKey -AsPlainText -Force
-                }
+                $SnipeitPSSession.apiKey = ConvertTo-SecureString -String $apiKey -AsPlainText -Force
             }
 
             'Connect with url and secure apikey' {
@@ -123,7 +119,6 @@ function Connect-SnipeitPS {
                 $SnipeitPSSession.apiKey = $siteCred.GetNetworkCredential().SecurePassword
             }
         }
-        if($null -eq $throttleLimit) { $throttleLimit = 0}
         $SnipeitPSSession.throttleLimit = $throttleLimit
 
         if($throttleThreshold -lt 1) { $throttleThreshold = 90}
@@ -133,7 +128,7 @@ function Connect-SnipeitPS {
         $SnipeitPSSession.throttleMode = $throttleMode
 
         if ($SnipeitPSSession.throttleLimit -gt 0) {
-            if($null -eq $throttlePeriod) { $throttlePeriod = 60000}
+            if(-not $PSBoundParameters.ContainsKey('throttlePeriod')) { $throttlePeriod = 60000}
             $SnipeitPSSession.throttlePeriod = $throttlePeriod
 
             $SnipeitPSSession.throttledRequests = [System.Collections.ArrayList]::new()

@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# [v.1.12.0] - 2026-02-10
+
+## Close Snipe-IT v8 API coverage gaps
+
+### New Functions
+- Get-SnipeitAssetLicense: Gets licenses assigned to a specific asset (`/api/v1/hardware/{id}/licenses`)
+- Get-SnipeitComponentAsset: Gets assets checked out to a specific component (`/api/v1/components/{id}/assets`)
+- Get-SnipeitUserAsset: Gets assets assigned to a specific user (`/api/v1/users/{id}/assets`)
+- Get-SnipeitUserAccessory: Gets accessories assigned to a specific user (`/api/v1/users/{id}/accessories`)
+- Get-SnipeitUserLicense: Gets licenses assigned to a specific user (`/api/v1/users/{id}/licenses`)
+- Get-SnipeitAuditDue: Gets assets due for audit (`/api/v1/hardware/audit/due`)
+- Get-SnipeitAuditOverdue: Gets assets overdue for audit (`/api/v1/hardware/audit/overdue`)
+- Get-SnipeitBackup: Gets list of available Snipe-IT backups (`/api/v1/settings/backups`)
+- Save-SnipeitBackup: Downloads a Snipe-IT backup file (`/api/v1/settings/backups/download/{filename}`)
+- Get-SnipeitConsumableUser: Gets users who have a specific consumable checked out (`/api/v1/consumables/{id}/users`)
+
+### Bug Fixes
+- Fixed Get-SnipeitSetting: API path was incorrectly pointing to `/api/v1/settings/backups`
+  instead of `/api/v1/settings`
+- Fixed Set-SnipeitLicenseSeat: `end` block was nested inside `process` block, preventing
+  `Reset-SnipeitPSLegacyApi` from ever being called when using legacy parameters
+- Fixed Connect-SnipeitPS: `throttlePeriod` default of 60000ms was never applied due to
+  `$null` check on `[int]` parameter (which defaults to 0, not `$null`)
+- Fixed Connect-SnipeitPS: Simplified PS5/PS7 `ConvertTo-SecureString` to single cross-version call
+- Fixed Save-SnipeitBackup: Simplified PS5/PS7 `ConvertFrom-SecureString` to single cross-version call
+
+### Code Cleanup
+- Removed dead `if ($search -and $id) { Throw }` checks from 9 Get-* functions (parameter
+  sets already enforce mutual exclusion at binding time)
+- Fixed ~95 spelling and typo issues across 80+ source and documentation files
+
+### Tests
+- Added 615 Pester v5 tests achieving 100% line coverage (2493/2493 lines)
+- Added documentation for Connect-SnipeitPS throttle parameters
+
 # [v.1.11.1] - 2026-02-09
 
 ## Bug fixes from original repo issue audit
@@ -190,7 +225,7 @@ Added support for consumables
 
 # [v.1.6.x] - 2021-06-14
 
-## Remove more things ja set some more
+## Remove more things and set some more
 
 ### New features
 Added some set and remove functions. Pipelineinput supported
@@ -239,7 +274,7 @@ needed
 
 ### New features
 Snipeit activity history is now searchable. So finding out checked out the
-assest its easy. Api support many different target or item types that can
+asset is easy. Api support many different target or item types that can
 be uses as filter. Searchable types are 'Accessory','Asset','AssetMaintenance'
 ,'AssetModel','Category','Company','Component','Consumable','CustomField',
 ,'Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel',
@@ -276,7 +311,7 @@ All commands are now prefixed like Set-Info -> Set-SnipeitInfo.
 To keep compatibility all old commands are available as aliases.
 To update existing scripts theres Update-SnipeitAlias command.
 
-### New fuctions
+### New functions
 - Update-SnipeitAlias Tool to update existing scripts
 - Get-SnipeitLicenceSeat lists license seats
 - Set-SnipeitLicenseSeat Set and checkouts/in license seats

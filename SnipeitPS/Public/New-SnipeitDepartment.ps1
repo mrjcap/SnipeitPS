@@ -27,7 +27,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
     .EXAMPLE
-    New-SnipeitDepartment -name "Department1" -company_id 1 -localtion_id 1 -manager_id 3
+    New-SnipeitDepartment -name "Department1" -company_id 1 -location_id 1 -manager_id 3
 
 #>
 

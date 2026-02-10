@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -19,7 +19,7 @@ New-SnipeitCategory [-name] <String> [-category_type] <String> [[-eula_text] <St
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Create a new Category to Snipe-IT system
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ New-SnipeitCategory -name "Laptops" -category_type asset
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key API Key for Snipeit.
+Users API Key for Snipeit.
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_type
-{{ Fill category_type Description }}
+Type of new category to be created (asset, accessory, consumable, component, license)
 
 ```yaml
 Type: String

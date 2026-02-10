@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-    Sets authetication information. Deprecated, use Connect-SnipeitPS instead.
+    Sets authentication information. Deprecated, use Connect-SnipeitPS instead.
 
     .DESCRIPTION
     Deprecated combatibilty function that Set apikey and url user to connect Snipe-It system.

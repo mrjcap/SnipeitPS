@@ -18,7 +18,7 @@ New-SnipeitAudit [-tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <D
 ```
 
 ## DESCRIPTION
-Long description
+Add a new Audit to Snipe-it asset system
 
 ## EXAMPLES
 
@@ -30,7 +30,8 @@ New-SnipeitAudit -tag 1 -location_id 1
 ## PARAMETERS
 
 ### -apiKey
-{{ Fill apiKey Description }}
+Deprecated parameter, please use Connect-SnipeitPS instead.
+Users API Key for Snipeit.
 
 ```yaml
 Type: String
@@ -90,7 +91,8 @@ Accept wildcard characters: False
 ```
 
 ### -url
-{{ Fill url Description }}
+Deprecated parameter, please use Connect-SnipeitPS instead.
+URL of Snipeit system.
 
 ```yaml
 Type: String

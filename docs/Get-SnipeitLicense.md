@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -37,7 +37,7 @@ Get-SnipeitLicense [-asset_id <Int32>] [-all] [-url <String>] [-apiKey <String>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT licenses or a specific license by ID.
 
 ## EXAMPLES
 
@@ -54,7 +54,7 @@ Get-SnipeitLicense -id 1
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -85,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_id
-{{ Fill asset_id Description }}
+ID of the asset to filter by.
 
 ```yaml
 Type: Int32
@@ -100,7 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-{{ Fill category_id Description }}
+ID of the category to filter by.
 
 ```yaml
 Type: Int32
@@ -115,7 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-{{ Fill company_id Description }}
+ID of the company to filter by.
 
 ```yaml
 Type: Int32
@@ -130,7 +130,7 @@ Accept wildcard characters: False
 ```
 
 ### -depreciation_id
-{{ Fill depreciation_id Description }}
+ID of the depreciation to filter by.
 
 ```yaml
 Type: Int32
@@ -145,7 +145,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific License
+An id of specific License
 
 ```yaml
 Type: Int32
@@ -160,7 +160,7 @@ Accept wildcard characters: False
 ```
 
 ### -license_email
-{{ Fill license_email Description }}
+Contact email address for the license.
 
 ```yaml
 Type: MailAddress
@@ -175,7 +175,7 @@ Accept wildcard characters: False
 ```
 
 ### -license_name
-{{ Fill license_name Description }}
+Display name of the license.
 
 ```yaml
 Type: String
@@ -207,7 +207,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-{{ Fill manufacturer_id Description }}
+ID of the manufacturer to filter by.
 
 ```yaml
 Type: Int32
@@ -222,7 +222,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
-{{ Fill name Description }}
+Name of the license to filter by.
 
 ```yaml
 Type: String
@@ -252,7 +252,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String
@@ -267,7 +267,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
-{{ Fill order_number Description }}
+Order number to filter by.
 
 ```yaml
 Type: String
@@ -282,7 +282,7 @@ Accept wildcard characters: False
 ```
 
 ### -product_key
-{{ Fill product_key Description }}
+Product key to filter by.
 
 ```yaml
 Type: String
@@ -297,7 +297,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_order
-{{ Fill purchase_order Description }}
+Purchase order number to filter by.
 
 ```yaml
 Type: String
@@ -327,7 +327,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
-{{ Fill sort Description }}
+Column to sort on.
 
 ```yaml
 Type: String
@@ -342,7 +342,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
-{{ Fill supplier_id Description }}
+ID of the supplier to filter by.
 
 ```yaml
 Type: Int32
@@ -373,7 +373,7 @@ Accept wildcard characters: False
 ```
 
 ### -user_id
-{{ Fill user_id Description }}
+ID of the user to filter by.
 
 ```yaml
 Type: Int32

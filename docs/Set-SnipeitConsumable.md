@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitConsumable
 
 ## SYNOPSIS
-Add a new Consumable to Snipe-it asset system
+Update a Consumable to Snipe-it asset system
 
 ## SYNTAX
 
@@ -21,13 +21,13 @@ Set-SnipeitConsumable [-id] <Int32[]> [[-name] <String>] [[-qty] <Int32>] [[-cat
 ```
 
 ## DESCRIPTION
-Long description
+Update a Consumable on Snipe-it asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-Snipeitconsumable -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
+Set-SnipeitConsumable -id 1 -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
 Create consumable with stock count 20 , alert when stock is  5 or lower
 ```
 
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-Manufaturer id number of the consumable
+Manufacturer id number of the consumable
 
 ```yaml
 Type: Int32
@@ -170,7 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -min_amt
-Optional minimum quantity of comsumable
+Optional minimum quantity of consumable
 
 ```yaml
 Type: Int32
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -model_number
-Model number of the consumable in months
+Model number of the consumable
 
 ```yaml
 Type: String
@@ -230,7 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
-Optional Purchase cost of the consumable
+Optional Purchase date of the consumable
 
 ```yaml
 Type: String
@@ -245,7 +245,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
-Optional Purchase cost of the consumable
+Optional Purchase date of the consumable
 
 ```yaml
 Type: DateTime
@@ -260,7 +260,7 @@ Accept wildcard characters: False
 ```
 
 ### -qty
-Optional Quantity of comsumable
+Optional Quantity of consumable
 
 ```yaml
 Type: Int32

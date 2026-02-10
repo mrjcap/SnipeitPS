@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -34,7 +34,7 @@ Sets count of component with ID 42 to 12
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key API Key for Snipeit.
+Users API Key for Snipeit.
 
 ```yaml
 Type: String
@@ -49,7 +49,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-{{ Fill company_id Description }}
+ID number of the company
 
 ```yaml
 Type: Int32
@@ -64,7 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-ID number of  name
+ID number of component or array of IDs
 
 ```yaml
 Type: Int32[]
@@ -109,7 +109,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-ID number of the location the accessory is assigned to
+ID number of the location the component is assigned to
 
 ```yaml
 Type: Int32
@@ -154,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
-Order number for the accessory
+Order number for the component
 
 ```yaml
 Type: String
@@ -184,7 +184,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
-Date accessory was purchased
+Date component was purchased
 
 ```yaml
 Type: DateTime

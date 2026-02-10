@@ -18,7 +18,7 @@ Set-SnipeitGroup [-id] <Int32[]> [[-name] <String>] [[-permissions] <Hashtable>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Update a Snipe-IT permission group.
 
 ## EXAMPLES
 
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Group
+An id of specific Group
 
 ```yaml
 Type: Int32[]

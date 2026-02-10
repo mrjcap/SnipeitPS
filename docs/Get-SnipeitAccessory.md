@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -53,7 +53,7 @@ Get accessories checked out to user ID 1
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -84,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-{{ Fill category_id Description }}
+Optionally restrict Accessory results to this category_id field
 
 ```yaml
 Type: Int32
@@ -99,7 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-{{ Fill company_id Description }}
+Optionally restrict Accessory results to this company_id field
 
 ```yaml
 Type: Int32
@@ -114,7 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Accessory
+An id of specific Accessory
 
 ```yaml
 Type: Int32
@@ -146,7 +146,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-{{ Fill manufacturer_id Description }}
+Optionally restrict Accessory results to this manufacturer_id field
 
 ```yaml
 Type: Int32
@@ -176,7 +176,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String
@@ -206,7 +206,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
-{{ Fill sort Description }}
+Column to sort on.
 
 ```yaml
 Type: String
@@ -221,7 +221,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
-{{ Fill supplier_id Description }}
+Optionally restrict Accessory results to this supplier_id field
 
 ```yaml
 Type: Int32
@@ -252,7 +252,7 @@ Accept wildcard characters: False
 ```
 
 ### -user_id
-{{ Fill user_id Description }}
+Return Accessories checked out to user id
 
 ```yaml
 Type: Int32

@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -22,7 +22,7 @@ Set-SnipeitAsset [-id] <Int32[]> [[-asset_tag] <String>] [[-name] <String>] [[-s
 ```
 
 ## DESCRIPTION
-Long description
+Update a specific Asset in the Snipe-it asset system
 
 ## EXAMPLES
 
@@ -121,7 +121,7 @@ Accept wildcard characters: False
 ```
 
 ### -customfields
-Hastable of custom fields and extra fields that need passing through to Snipeit
+Hashtable of custom fields and extra fields that need passing through to Snipeit
 
 ```yaml
 Type: Hashtable

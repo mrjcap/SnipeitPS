@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -27,14 +27,14 @@ Creates a new user to Snipe-IT system
 
 ### EXAMPLE 1
 ```
-New-Snipeituser -fist_name It -lastname Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
+New-SnipeitUser -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
 Creates new a new user who can't login to system
 ```
 
 ## PARAMETERS
 
 ### -activated
-{{ Fill activated Description }}
+Can user log in to snipe-it?
 
 ```yaml
 Type: Boolean
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-ID number of company users belogs to
+ID number of company users belongs to
 
 ```yaml
 Type: Int32
@@ -110,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -employee_num
-Employeenumber
+Employee number
 
 ```yaml
 Type: String
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -jobtitle
-Users job tittle
+Users job title
 
 ```yaml
 Type: String
@@ -200,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-ID number of localtion
+ID number of location
 
 ```yaml
 Type: Int32

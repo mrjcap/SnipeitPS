@@ -3,7 +3,7 @@
     Add a new Model to Snipe-it asset system
 
     .DESCRIPTION
-    Long description
+    Add a new Model to Snipe-it asset system
 
     .PARAMETER name
     Name of the Asset Model

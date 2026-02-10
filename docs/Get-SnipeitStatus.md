@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -24,7 +24,7 @@ Get-SnipeitStatus [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParam
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT status labels or a specific status label by ID.
 
 ## EXAMPLES
 
@@ -41,7 +41,7 @@ Get-SnipeitStatus -id 3
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Status Label
+An id of specific Status Label
 
 ```yaml
 Type: Int32
@@ -119,7 +119,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String

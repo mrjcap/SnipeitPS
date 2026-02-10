@@ -3,7 +3,7 @@
 Create a new component
 
 .DESCRIPTION
-Createa new componen on Snipe-It system
+Creates a new component on Snipe-It system
 
 .PARAMETER name
 Component name
@@ -15,13 +15,13 @@ ID number of category
 Quantity of the components you have
 
 .PARAMETER location_id
-ID number of the location the accessory is assigned to
+ID number of the location the component is assigned to
 
 .PARAMETER order_number
 Order number of the component
 
 .PARAMETER purchase_date
-Date accessory was purchased
+Date component was purchased
 
 .PARAMETER purchase_cost
 Cost of item being purchased.
@@ -33,10 +33,10 @@ Component image filename and path
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
-New-SnipeitComponent -name 'Display adapter' -catecory_id 3 -qty 10
+New-SnipeitComponent -name 'Display adapter' -category_id 3 -qty 10
 
 
 #>

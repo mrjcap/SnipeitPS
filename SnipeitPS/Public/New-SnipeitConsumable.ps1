@@ -3,19 +3,19 @@
 Add a new Consumable to Snipe-it asset system
 
 .DESCRIPTION
-Long description
+Add a new Consumable to Snipe-it asset system
 
 .PARAMETER name
 Required  Name of the Consumable
 
 .PARAMETER qty
-Required Quantity of comsumable
+Required Quantity of consumable
 
 .PARAMETER category_id
 Required Category ID of the Consumable, this can be got using Get-SnipeitCategory
 
 .PARAMETER min_amt
-Optional minimum quantity of comsumable
+Optional minimum quantity of consumable
 
 .PARAMETER company_id
 Optional Company id
@@ -24,7 +24,7 @@ Optional Company id
 Optional Order number
 
 .PARAMETER manufacturer_id
-Manufaturer id number of the consumable
+Manufacturer id number of the consumable
 
 .PARAMETER location_id
 Location id number of the consumable
@@ -33,13 +33,13 @@ Location id number of the consumable
 Is consumable requestable?
 
 .PARAMETER purchase_date
-Optional Purchase cost of the consumable
+Optional Purchase date of the consumable
 
 .PARAMETER purchase_cost
 Optional Purchase cost of the consumable
 
 .PARAMETER model_number
-Model number of the consumable in months
+Model number of the consumable
 
 .PARAMETER item_no
 Item number for the consumable

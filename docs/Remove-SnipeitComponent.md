@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-{{ Fill id Description }}
+Unique ID for component to be removed
 
 ```yaml
 Type: Int32[]

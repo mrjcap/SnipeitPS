@@ -2,7 +2,7 @@
     .SYNOPSIS
     Checkin asset
     .DESCRIPTION
-    Checks asset in from current user/localtion/asset
+    Checks asset in from current user/location/asset
 
     .PARAMETER ID
     Unique ID For asset to checkin
@@ -21,7 +21,7 @@
     .PARAMETER apiKey
     Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
     .EXAMPLE
-    Remove-SnipeitUser -ID 44
+    Reset-SnipeitAssetOwner -ID 44
 #>
 function Reset-SnipeitAssetOwner() {
     [CmdletBinding(

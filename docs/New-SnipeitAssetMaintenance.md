@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitAssetMaintenance
 
 ## SYNOPSIS
-Add a new Asset maintenence to Snipe-it asset system
+Add a new Asset maintenance to Snipe-it asset system
 
 ## SYNTAX
 
@@ -20,13 +20,13 @@ New-SnipeitAssetMaintenance [-asset_id] <Int32> [-supplier_id] <Int32> [-asset_m
 ```
 
 ## DESCRIPTION
-Long description
+Add a new Asset maintenance to Snipe-it asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitAssetMaintenence -asset_id 1 -supplier_id 1 -title "replace keyboard" -start_date 2021-01-01
+New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -title "replace keyboard" -start_date 2021-01-01
 ```
 
 ## PARAMETERS
@@ -63,7 +63,8 @@ Accept wildcard characters: False
 ```
 
 ### -asset_maintenance_type
-{{ Fill asset_maintenance_type Description }}
+Type of asset maintenance.
+Valid values are 'Maintenance', 'Repair', 'Upgrade', or 'PAT Test'.
 
 ```yaml
 Type: String
@@ -78,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -completion_date
-{{ Fill completion_date Description }}
+Optional completion date
 
 ```yaml
 Type: DateTime
@@ -93,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -cost
-Optional cost
+Optional notes
 
 ```yaml
 Type: Decimal
@@ -123,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
-Optional cost
+Optional notes
 
 ```yaml
 Type: String

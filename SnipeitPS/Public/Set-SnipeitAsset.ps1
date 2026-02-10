@@ -3,7 +3,7 @@
     Update a specific Asset in the Snipe-it asset system
 
     .DESCRIPTION
-    Long description
+    Update a specific Asset in the Snipe-it asset system
 
     .PARAMETER id
     ID of the Asset or array of IDs
@@ -75,7 +75,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
     .PARAMETER customfields
-    Hastable of custom fields and extra fields that need passing through to Snipeit
+    Hashtable of custom fields and extra fields that need passing through to Snipeit
 
     .EXAMPLE
     Set-SnipeitAsset -id 1 -status_id 1 -model_id 1 -name "Machine1"

@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitAssetMaintenance
 
 ## SYNOPSIS
-Lists Snipe-it Assets Maintenances
+Lists Snipe-it Asset Maintenance
 
 ## SYNTAX
 
@@ -18,29 +18,29 @@ Get-SnipeitAssetMaintenance [[-search] <String>] [[-asset_id] <Int32>] [[-sort] 
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets asset maintenance records from the Snipe-IT system.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-SnipeitAssetMaintenances
+Get-SnipeitAssetMaintenance
 ```
 
 ### EXAMPLE 2
 ```
-Get-SnipeitAssetMaintenances -search "myMachine"
+Get-SnipeitAssetMaintenance -search "myMachine"
 ```
 
 ### EXAMPLE 3
 ```
-Get-SnipeitAssetMaintenances -search "myMachine"
+Get-SnipeitAssetMaintenance -search "myMachine"
 ```
 
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter

@@ -17,7 +17,7 @@ Get-SnipeitUserEula [-id] <Int32> [-url <String>] [-apiKey <String>] [<CommonPar
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets the EULA acceptance status for a specific Snipe-IT user.
 
 ## EXAMPLES
 
@@ -45,7 +45,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific User
+An id of specific User
 
 ```yaml
 Type: Int32

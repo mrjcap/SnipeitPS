@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitSupplier
 
 ## SYNOPSIS
-# Gets a list of Snipe-it Suppliers
+Gets a list of Snipe-it Suppliers
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Get-SnipeitSupplier [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonPar
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT suppliers or a specific supplier by ID.
 
 ## EXAMPLES
 
@@ -41,7 +41,7 @@ Get-SnipeitSupplier -id 2
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Suplier
+An id of specific Supplier
 
 ```yaml
 Type: Int32
@@ -119,7 +119,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String
@@ -134,7 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
-A text string to search the Supliers data
+A text string to search the Suppliers data
 
 ```yaml
 Type: String
