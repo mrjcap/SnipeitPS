@@ -3,7 +3,7 @@
 Gets the EULAs for a specific user
 
 .PARAMETER id
-A id of specific User
+An id of specific User
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

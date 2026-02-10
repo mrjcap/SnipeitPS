@@ -3,7 +3,7 @@
 Sets  Snipe-it Status Labels
 
 .PARAMETER id
-A id of specific Status Label
+An id of specific Status Label
 
 
 .PARAMETER color

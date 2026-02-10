@@ -6,10 +6,10 @@ Gets a list of Snipe-it Licenses Seats or specific Seat
 A text string to search the Licenses data
 
 .PARAMETER id
-A id of specific License
+An id of specific License
 
 .PARAMETER seat_id
-A id of specific seat
+An id of specific seat
 
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
@@ -18,7 +18,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 
 .PARAMETER url

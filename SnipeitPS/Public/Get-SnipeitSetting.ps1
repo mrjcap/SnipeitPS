@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Gets the Snipe-IT backup settings
+Gets Snipe-IT general settings
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -26,7 +26,7 @@ function Get-SnipeitSetting() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api           = "/api/v1/settings/backups"
+            Api           = "/api/v1/settings"
             Method        = 'Get'
         }
 

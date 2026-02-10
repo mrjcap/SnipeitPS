@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -17,7 +17,7 @@ Get-SnipeitFieldset [[-id] <Int32>] [[-url] <String>] [[-apiKey] <String>] [<Com
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets Snipe-IT fieldsets or a specific fieldset by ID.
 
 ## EXAMPLES
 
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific fieldset
+An id of specific fieldset
 
 ```yaml
 Type: Int32

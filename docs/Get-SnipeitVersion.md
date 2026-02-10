@@ -17,7 +17,7 @@ Get-SnipeitVersion [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets the Snipe-IT application version.
 
 ## EXAMPLES
 

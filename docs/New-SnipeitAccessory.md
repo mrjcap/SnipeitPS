@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -78,7 +78,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
-Accessory image fileame and path
+Accessory image filename and path
 
 ```yaml
 Type: String

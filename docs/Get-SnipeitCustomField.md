@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -17,7 +17,7 @@ Get-SnipeitCustomField [[-id] <Int32>] [[-url] <String>] [[-apiKey] <String>] [<
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets Snipe-IT custom fields or a specific custom field by ID.
 
 ## EXAMPLES
 
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific field
+An id of specific field
 
 ```yaml
 Type: Int32

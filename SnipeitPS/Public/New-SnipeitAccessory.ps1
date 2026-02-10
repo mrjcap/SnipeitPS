@@ -35,15 +35,6 @@ Cost of item being purchased.
 .PARAMETER purchase_date
 Date accessory was purchased
 
-.PARAMETER order_number
-Order number for this accessory.
-
-.PARAMETER purchase_cost
-Cost of item being purchased.
-
-.PARAMETER purchase_date
-Date accessory was purchased
-
 .PARAMETER supplier_id
 ID number of the supplier for this accessory
 
@@ -54,7 +45,7 @@ ID number of the location the accessory is assigned to
 Min quantity of the accessory before alert is triggered
 
 .PARAMETER image
-Accessory image fileame and path
+Accessory image filename and path
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

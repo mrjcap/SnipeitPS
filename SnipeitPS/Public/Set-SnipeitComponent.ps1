@@ -6,7 +6,7 @@ Updates component
 Updates component on Snipe-It system
 
 .PARAMETER id
-ID number of  name
+ID number of component or array of IDs
 
 .PARAMETER name
 Component name
@@ -21,13 +21,13 @@ Quantity of the components you have
 Minimum Quantity of the components before alert is triggered
 
 .PARAMETER location_id
-ID number of the location the accessory is assigned to
+ID number of the location the component is assigned to
 
 .PARAMETER order_number
-Order number for the accessory
+Order number for the component
 
 .PARAMETER purchase_date
-Date accessory was purchased
+Date component was purchased
 
 .PARAMETER purchase_cost
 Cost of item being purchased.
@@ -45,7 +45,7 @@ Http request type to send Snipe IT system. Defaults to Patch you could use Put i
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
 Set-SnipeitComponent -id 42 -qty 12

@@ -24,7 +24,7 @@
     User Notes
 
     .PARAMETER jobtitle
-    Users job tittle
+    Users job title
 
     .PARAMETER email
     email address
@@ -33,10 +33,10 @@
     Phone number
 
     .PARAMETER company_id
-    ID number of company users belogs to
+    ID number of company users belongs to
 
     .PARAMETER location_id
-    ID number of localtion
+    ID number of location
 
     .PARAMETER department_id
     ID number of department
@@ -48,7 +48,7 @@
     ID numbers of groups
 
     .PARAMETER employee_num
-    Employeenumber
+    Employee number
 
     .PARAMETER ldap_import
     Mark user as import from ldap
@@ -63,7 +63,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
 
     .EXAMPLE
-    New-Snipeituser -fist_name It -lastname Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
+    New-SnipeitUser -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
     Creates new a new user who can't login to system
 
     .NOTES

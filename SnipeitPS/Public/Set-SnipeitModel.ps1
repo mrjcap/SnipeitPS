@@ -39,7 +39,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
     .EXAMPLE
-    New-SnipeitModel -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
+    Set-SnipeitModel -id 1 -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
 #>
 
 function Set-SnipeitModel() {

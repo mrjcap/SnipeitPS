@@ -139,7 +139,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-{{ Fill id Description }}
+Unique ID of the custom field or array of IDs
 
 ```yaml
 Type: Int32[]

@@ -2,7 +2,7 @@
     .SYNOPSIS
     Removes Location from Snipe-it asset system
     .DESCRIPTION
-    Removes localtion or multiple locations from Snipe-it asset system
+    Removes location or multiple locations from Snipe-it asset system
     .PARAMETER ID
     Unique ID For location to be removed
     .PARAMETER url
@@ -41,7 +41,7 @@ function Remove-SnipeitLocation () {
     process {
         foreach($location_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/locations/$asset_id"
+                Api    = "/api/v1/locations/$location_id"
                 Method = 'Delete'
             }
 

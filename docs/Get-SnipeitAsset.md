@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -60,14 +60,14 @@ Get-SnipeitAsset [-component_id <Int32>] [-sort <String>] [-order <String>] [-li
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT assets or a specific asset by ID, asset tag, or serial number.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 Get-SnipeitAsset -all
-Returens all assets
+Returns all assets
 ```
 
 ### EXAMPLE 2
@@ -84,31 +84,31 @@ Get asset with id number 3
 
 ### EXAMPLE 4
 ```
-Get-SnipeitAsset -asset_tag snipe0003
+Get-SnipeitAsset -asset_tag snipe00033
 Get asset with asset tag snipe00033
 ```
 
 ### EXAMPLE 5
 ```
 Get-SnipeitAsset -serial 1234
-Get asset with searial number 1234
+Get asset with serial number 1234
 ```
 
 ### EXAMPLE 6
 ```
-Get-SnipeitAsser -audit_due
+Get-SnipeitAsset -audit_due
 Get Assets due auditing soon
 ```
 
 ### EXAMPLE 7
 ```
-Get-SnipeitAsser -audit_overdue
+Get-SnipeitAsset -audit_overdue
 Get Assets overdue for auditing
 ```
 
 ### EXAMPLE 8
 ```
-Get-AnipeitAsset -user_id 4
+Get-SnipeitAsset -user_id 4
 Get Assets checked out to user id 4
 ```
 
@@ -121,7 +121,7 @@ Get Assets with component id 5
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -227,7 +227,7 @@ Accept wildcard characters: False
 ```
 
 ### -component_id
-{{ Fill component_id Description }}
+Retrieve a list of assets assigned this component id.
 
 ```yaml
 Type: Int32
@@ -242,7 +242,7 @@ Accept wildcard characters: False
 ```
 
 ### -depreciation_id
-{{ Fill depreciation_id Description }}
+Optionally restrict asset results to this depreciation ID
 
 ```yaml
 Type: Int32
@@ -257,7 +257,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-ID number of excact snipeit asset
+ID number of exact snipeit asset
 
 ```yaml
 Type: Int32
@@ -379,7 +379,7 @@ Accept wildcard characters: False
 ```
 
 ### -requestable
-{{ Fill requestable Description }}
+Optionally restrict asset results to those set as requestable
 
 ```yaml
 Type: Boolean
@@ -409,7 +409,7 @@ Accept wildcard characters: False
 ```
 
 ### -serial
-{{ Fill serial Description }}
+Exact asset serialnumber to query
 
 ```yaml
 Type: String
@@ -485,7 +485,7 @@ Accept wildcard characters: False
 ```
 
 ### -user_id
-{{ Fill user_id Description }}
+Retrieve a list of assets checked out to user id.
 
 ```yaml
 Type: Int32

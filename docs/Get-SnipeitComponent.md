@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -25,7 +25,7 @@ Get-SnipeitComponent [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonPa
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT components or a specific component by ID.
 
 ## EXAMPLES
 
@@ -38,7 +38,7 @@ Returns all components
 ### EXAMPLE 2
 ```
 Get-SnipeitComponent -search display
-Returns search results containeing string display
+Returns search results containing string display
 ```
 
 ### EXAMPLE 3
@@ -50,7 +50,7 @@ Returns specific component
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-{{ Fill category_id Description }}
+Optionally restrict Component results to this category_id field
 
 ```yaml
 Type: Int32
@@ -96,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-{{ Fill company_id Description }}
+Optionally restrict Component results to this company_id field
 
 ```yaml
 Type: Int32
@@ -111,7 +111,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Component
+An id of specific Component
 
 ```yaml
 Type: Int32
@@ -143,7 +143,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-{{ Fill location_id Description }}
+Optionally restrict Component results to this location_id field
 
 ```yaml
 Type: Int32
@@ -173,7 +173,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String
@@ -203,7 +203,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
-{{ Fill sort Description }}
+Column to sort on.
 
 ```yaml
 Type: String

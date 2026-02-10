@@ -18,7 +18,7 @@ Get-SnipeitStatusAsset [-id] <Int32> [-limit <Int32>] [-offset <Int32>] [-all] [
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets assets associated with a specific Snipe-IT status label.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Get-SnipeitStatusAsset -id 1
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Status Label
+An id of specific Status Label
 
 ```yaml
 Type: Int32

@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitUser
 
 ## SYNOPSIS
-Creates a new user
+Updates a user on Snipe-IT system
 
 ## SYNTAX
 
@@ -21,13 +21,13 @@ Set-SnipeitUser [-id] <Int32[]> [[-first_name] <String>] [[-last_name] <String>]
 ```
 
 ## DESCRIPTION
-Creates a new user to Snipe-IT system
+Updates a user on Snipe-IT system to Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Update-SnipeitUser -id 3 -fist_name It -lastname Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
+Set-SnipeitUser -id 3 -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
 Updates user with id 3
 ```
 
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-ID number of company users belogs to
+ID number of company users belongs to
 
 ```yaml
 Type: Int32
@@ -110,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -employee_num
-Employeenumber
+Employee number
 
 ```yaml
 Type: String
@@ -140,7 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-ID number of Snipe--It user or array of IDs
+ID number of Snipe-IT user or array of IDs
 
 ```yaml
 Type: Int32[]
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -jobtitle
-Users job tittle
+Users job title
 
 ```yaml
 Type: String
@@ -230,7 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-ID number of localtion
+ID number of location
 
 ```yaml
 Type: Int32

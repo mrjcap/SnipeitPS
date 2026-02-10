@@ -3,10 +3,10 @@
 Gets files associated with an asset
 
 .PARAMETER id
-A id of specific Asset
+An id of specific Asset
 
 .PARAMETER file_id
-A id of specific file
+An id of specific file
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

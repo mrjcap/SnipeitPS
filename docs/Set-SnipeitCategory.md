@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitCategory
 
 ## SYNOPSIS
-Create a new Snipe-IT Category
+Update a Snipe-IT Category
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Set-SnipeitCategory [-id] <Int32[]> [[-name] <String>] [[-category_type] <String
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Update a specific Category in the Snipe-IT asset system.
 
 ## EXAMPLES
 
@@ -33,7 +33,7 @@ Set-SnipeitCategory -id 4 -name "Laptops"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key API Key for Snipeit.
+Users API Key for Snipeit.
 
 ```yaml
 Type: String
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_type
-{{ Fill category_type Description }}
+Type of category. Valid values are 'asset', 'accessory', 'consumable', 'component', and 'license'.
 
 ```yaml
 Type: String
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-{{ Fill id Description }}
+Unique ID of the category or array of IDs
 
 ```yaml
 Type: Int32[]

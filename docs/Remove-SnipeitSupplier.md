@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -18,7 +18,7 @@ Remove-SnipeitSupplier [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-
 ```
 
 ## DESCRIPTION
-Removes supplier or multiple manufacturers from Snipe-it asset system
+Removes supplier or multiple suppliers from Snipe-it asset system
 
 ## EXAMPLES
 

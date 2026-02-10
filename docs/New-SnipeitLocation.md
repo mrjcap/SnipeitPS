@@ -20,7 +20,7 @@ New-SnipeitLocation [-name] <String> [[-address] <String>] [[-address2] <String>
 ```
 
 ## DESCRIPTION
-Long description
+Add a new Location to Snipe-it asset system
 
 ## EXAMPLES
 
@@ -138,7 +138,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
-{{ Fill image_delete Description }}
+Set to true to remove the existing image for this item
 
 ```yaml
 Type: SwitchParameter

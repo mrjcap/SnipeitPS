@@ -27,7 +27,7 @@ Category image filename and path
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
 New-SnipeitCategory -name "Laptops" -category_type asset

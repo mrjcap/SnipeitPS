@@ -152,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
-{{ Fill notes Description }}
+Notes about the department
 
 ```yaml
 Type: String

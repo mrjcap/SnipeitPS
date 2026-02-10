@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -79,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-{{ Fill id Description }}
+Unique ID of the accessory or array of IDs
 
 ```yaml
 Type: Int32[]
@@ -184,7 +184,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
-ID number of Accessory or array of IDs on Snipe-It system
+Accessory name
 
 ```yaml
 Type: String

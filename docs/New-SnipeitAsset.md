@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -31,14 +31,14 @@ New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_t
 ```
 
 ## DESCRIPTION
-Long description
+Add a new Asset to Snipe-it asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1"
-Create asset with automatic tag if tag genaration is enabled on snipe-it, other wise without tag
+Create asset with automatic tag if tag generation is enabled on snipe-it, other wise without tag
 ```
 
 ### EXAMPLE 2
@@ -132,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -customfields
-Hastable of custom fields and extra fields that need passing through to Snipeit.
+Hashtable of custom fields and extra fields that need passing through to Snipeit.
 Use internal field names from snipeit .You can use Get-CustomField to get internal field names.
 
 ```yaml
@@ -223,7 +223,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
-Optional Purchase cost of the Asset
+Optional Purchase date of the Asset
 
 ```yaml
 Type: String
@@ -238,7 +238,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
-Optional Purchase cost of the Asset
+Optional Purchase date of the Asset
 
 ```yaml
 Type: DateTime
@@ -329,7 +329,7 @@ Accept wildcard characters: False
 ```
 
 ### -warranty_months
-{{ Fill warranty_months Description }}
+Optional Warranty length of the Asset in months
 
 ```yaml
 Type: Int32

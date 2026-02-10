@@ -2,7 +2,7 @@
     .SYNOPSIS
     Removes supplier from Snipe-it asset system
     .DESCRIPTION
-    Removes supplier or multiple manufacturers from Snipe-it asset system
+    Removes supplier or multiple suppliers from Snipe-it asset system
     .PARAMETER ID
     Unique ID For supplier to be removed
     .PARAMETER url
@@ -41,7 +41,7 @@ function Remove-SnipeitSupplier () {
     process {
         foreach($suppliers_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/suppliers/$supplier_id"
+                Api    = "/api/v1/suppliers/$suppliers_id"
                 Method = 'Delete'
             }
 

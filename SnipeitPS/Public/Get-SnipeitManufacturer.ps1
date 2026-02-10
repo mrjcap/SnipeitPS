@@ -1,12 +1,12 @@
 <#
     .SYNOPSIS
-    # Gets a list of Snipe-it Manufacturers
+    Gets a list of Snipe-it Manufacturers
 
     .PARAMETER search
-    A text string to search the Manufactures data
+    A text string to search the Manufacturers data
 
     .PARAMETER id
-    A id of specific Manufactuter
+    An id of specific Manufacturer
 
     .PARAMETER name
     Optionally restrict Manufacturer results to this name field
@@ -18,7 +18,7 @@
     Offset to use
 
     .PARAMETER all
-    A return all results, works with -offset and other parameters
+    Return all results, works with -offset and other parameters
 
     .PARAMETER url
     Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -72,10 +72,6 @@ function Get-SnipeitManufacturer() {
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $api = "/api/v1/manufacturers"
-
-        if ($search -and $id ) {
-            Throw "[$($MyInvocation.MyCommand.Name)] Please specify only -search or -id parameter , not both "
-        }
 
         if ($id) {
         $api= "/api/v1/manufacturers/$id"

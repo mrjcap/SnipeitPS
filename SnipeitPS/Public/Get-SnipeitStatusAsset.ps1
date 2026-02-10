@@ -3,7 +3,7 @@
 Gets assets associated with a specific status label
 
 .PARAMETER id
-A id of specific Status Label
+An id of specific Status Label
 
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
@@ -12,7 +12,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

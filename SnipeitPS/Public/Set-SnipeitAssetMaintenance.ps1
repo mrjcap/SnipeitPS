@@ -3,7 +3,7 @@
 Set properties of a Snipe-it Asset Maintenance
 
 .PARAMETER id
-A id of specific Asset Maintenance
+An id of specific Asset Maintenance
 
 .PARAMETER asset_id
 ID of the asset

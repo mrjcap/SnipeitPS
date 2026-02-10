@@ -136,7 +136,7 @@ Accept wildcard characters: False
 ```
 
 ### -seat_id
-{{ Fill seat_id Description }}
+ID of the license seat
 
 ```yaml
 Type: Int32

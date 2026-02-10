@@ -19,7 +19,7 @@ New-SnipeitModel [-name] <String> [[-model_number] <String>] [-category_id] <Int
 ```
 
 ## DESCRIPTION
-Long description
+Add a new Model to Snipe-it asset system
 
 ## EXAMPLES
 
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -eol
-{{ Fill eol Description }}
+Number of months until end of life
 
 ```yaml
 Type: Int32

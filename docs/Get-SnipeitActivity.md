@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -25,12 +25,12 @@ Gets a list of Snipe-it activity history
 
 ### EXAMPLE 1
 ```
-Get-SnipeitAccessory -search Keyboard
+Get-SnipeitActivity -search Keyboard
 ```
 
 ### EXAMPLE 2
 ```
-Get-SnipeitAccessory -id 1
+Get-SnipeitActivity -target_type Asset -target_id 1
 ```
 
 ## PARAMETERS
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -114,7 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
-{{ Fill limit Description }}
+Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
 ```yaml
 Type: Int32

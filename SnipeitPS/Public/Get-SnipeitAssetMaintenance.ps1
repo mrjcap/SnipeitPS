@@ -21,7 +21,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -30,12 +30,12 @@ Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit syste
 Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
-Get-SnipeitAssetMaintenances
+Get-SnipeitAssetMaintenance
 .EXAMPLE
-Get-SnipeitAssetMaintenances -search "myMachine"
+Get-SnipeitAssetMaintenance -search "myMachine"
 
 .EXAMPLE
-Get-SnipeitAssetMaintenances -search "myMachine"
+Get-SnipeitAssetMaintenance -search "myMachine"
 #>
 function Get-SnipeitAssetMaintenance() {
     Param(

@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,23 +8,23 @@ schema: 2.0.0
 # Connect-SnipeitPS
 
 ## SYNOPSIS
-Sets authetication information
+Sets authentication information
 
 ## SYNTAX
 
 ### Connect with url and apikey (Default)
 ```
-Connect-SnipeitPS -url <Uri> -apiKey <String> [<CommonParameters>]
+Connect-SnipeitPS -url <Uri> -apiKey <String> [-throttleLimit <Int32>] [-throttlePeriod <Int32>] [-throttleThreshold <Int32>] [-throttleMode <String>] [<CommonParameters>]
 ```
 
 ### Connect with url and secure apikey
 ```
-Connect-SnipeitPS -url <Uri> -secureApiKey <SecureString> [<CommonParameters>]
+Connect-SnipeitPS -url <Uri> -secureApiKey <SecureString> [-throttleLimit <Int32>] [-throttlePeriod <Int32>] [-throttleThreshold <Int32>] [-throttleMode <String>] [<CommonParameters>]
 ```
 
 ### Connect with credential
 ```
-Connect-SnipeitPS -siteCred <PSCredential> [<CommonParameters>]
+Connect-SnipeitPS -siteCred <PSCredential> [-throttleLimit <Int32>] [-throttlePeriod <Int32>] [-throttleThreshold <Int32>] [-throttleMode <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,7 +50,7 @@ Connects to Snipe it api with apikey stored to securestring
 ```
 Connect-SnipeitPS -siteCred (Get-Credential -message "Use site url as username and apikey as password")
 Connect to Snipe It with PSCredential object.
-To use saved creadentials yu can use export-clixml and import-clixml commandlets.
+To use saved credentials you can use export-clixml and import-clixml commandlets.
 ```
 
 ### EXAMPLE 4
@@ -58,7 +58,7 @@ To use saved creadentials yu can use export-clixml and import-clixml commandlets
 Build credential with apikey value from secret vault (Microsoft.PowerShell.SecretManagement)
 $siteurl = "https://mysnipeitsite.url"
 $apikey = Get-SecretInfo -Name SnipeItApiKey
-$siteCred = New-Object -Type PSCredential -Argumentlist $siteurl,$spikey
+$siteCred = New-Object -Type PSCredential -Argumentlist $siteurl,$apikey
 Connect-SnipeitPS -siteCred $siteCred
 ```
 
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -siteCred
-PSCredential where username shoul be snipe it url and password should be
+PSCredential where username should be snipe it url and password should be
 snipe it apikey.
 
 ```yaml
@@ -121,6 +121,71 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -throttleLimit
+Throttle request rate to number of requests per throttlePeriod.
+Defaults to 0 that means requests are not throttled.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -throttlePeriod
+Throttle period time span in milliseconds defaults to 60000 milliseconds.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 60000
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -throttleThreshold
+Threshold percentage of used requests per period after which requests are throttled.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 90
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -throttleMode
+RequestThrottling type.
+"Burst" allows all requests to be used in ThrottlePeriod without delays and then waits until there's new requests available.
+With "Constant" mode there is always a delay between requests.
+Delay is calculated by dividing throttlePeriod with throttleLimit.
+"Adaptive" mode allows throttleThreshold percentage of request to be used without delay, after threshold limit is reached next requests are delayed by dividing available requests over throttlePeriod.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Burst
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

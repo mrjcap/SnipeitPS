@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -31,7 +31,7 @@ An example
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key API Key for Snipeit.
+Users API Key for Snipeit.
 
 ```yaml
 Type: String

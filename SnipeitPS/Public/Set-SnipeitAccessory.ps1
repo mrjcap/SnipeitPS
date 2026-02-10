@@ -6,7 +6,7 @@ Updates accessory on Snipe-It system
 Updates accessory on Snipe-It system
 
 .PARAMETER name
-ID number of Accessory or array of IDs on Snipe-It system
+Accessory name
 
 .PARAMETER notes
 Notes about the accessory

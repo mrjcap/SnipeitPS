@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -26,7 +26,7 @@ Updates Model on Snipe-it asset system
 
 ### EXAMPLE 1
 ```
-New-SnipeitModel -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
+Set-SnipeitModel -id 1 -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
 ```
 
 ## PARAMETERS
@@ -63,7 +63,7 @@ Accept wildcard characters: False
 ```
 
 ### -custom_fieldset_id
-{{ Fill custom_fieldset_id Description }}
+Fieldset ID that the asset uses (Custom fields)
 
 ```yaml
 Type: Int32
@@ -78,7 +78,7 @@ Accept wildcard characters: False
 ```
 
 ### -eol
-{{ Fill eol Description }}
+Number of months until end of life
 
 ```yaml
 Type: Int32

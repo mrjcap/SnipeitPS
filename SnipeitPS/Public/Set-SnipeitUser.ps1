@@ -1,12 +1,12 @@
 <#
     .SYNOPSIS
-    Creates a new user
+    Updates a user on Snipe-IT system
 
     .PARAMETER id
-    ID number of Snipe--It user or array of IDs
+    ID number of Snipe-IT user or array of IDs
 
     .DESCRIPTION
-    Creates a new user to Snipe-IT system
+    Updates a user on Snipe-IT system
 
     .PARAMETER first_name
     Users first name
@@ -27,7 +27,7 @@
     User Notes
 
     .PARAMETER jobtitle
-    Users job tittle
+    Users job title
 
     .PARAMETER email
     email address
@@ -36,10 +36,10 @@
     Phone number
 
     .PARAMETER company_id
-    ID number of company users belogs to
+    ID number of company users belongs to
 
     .PARAMETER location_id
-    ID number of localtion
+    ID number of location
 
     .PARAMETER department_id
     ID number of department
@@ -51,7 +51,7 @@
     ID numbers of groups
 
     .PARAMETER employee_num
-    Employeenumber
+    Employee number
 
     .PARAMETER ldap_import
     Mark user as import from ldap
@@ -72,7 +72,7 @@
     Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
 
     .EXAMPLE
-    Update-SnipeitUser -id 3 -fist_name It -lastname Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
+    Set-SnipeitUser -id 3 -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
     Updates user with id 3
 
     .NOTES

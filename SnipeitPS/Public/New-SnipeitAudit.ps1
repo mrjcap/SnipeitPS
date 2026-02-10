@@ -3,7 +3,7 @@
 Add a new Audit to Snipe-it asset system
 
 .DESCRIPTION
-Long description
+Add a new Audit to Snipe-it asset system
 
 .PARAMETER Tag
 The asset tag of the asset you wish to audit

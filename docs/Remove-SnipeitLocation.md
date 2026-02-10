@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -18,7 +18,7 @@ Remove-SnipeitLocation [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-
 ```
 
 ## DESCRIPTION
-Removes localtion or multiple locations from Snipe-it asset system
+Removes location or multiple locations from Snipe-it asset system
 
 ## EXAMPLES
 

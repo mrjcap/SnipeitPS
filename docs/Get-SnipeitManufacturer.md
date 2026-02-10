@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitManufacturer
 
 ## SYNOPSIS
-# Gets a list of Snipe-it Manufacturers
+Gets a list of Snipe-it Manufacturers
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Get-SnipeitManufacturer [-id <Int32>] [-url <String>] [-apiKey <String>] [<Commo
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT manufacturers or a specific manufacturer by ID.
 
 ## EXAMPLES
 
@@ -43,7 +43,7 @@ Returns manufacturer with id 3
 ## PARAMETERS
 
 ### -all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Manufactuter
+An id of specific Manufacturer
 
 ```yaml
 Type: Int32
@@ -121,7 +121,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
-{{ Fill order Description }}
+Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
 Type: String
@@ -136,7 +136,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
-A text string to search the Manufactures data
+A text string to search the Manufacturers data
 
 ```yaml
 Type: String

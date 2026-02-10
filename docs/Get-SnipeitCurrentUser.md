@@ -17,7 +17,7 @@ Get-SnipeitCurrentUser [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets the currently authenticated Snipe-IT user.
 
 ## EXAMPLES
 

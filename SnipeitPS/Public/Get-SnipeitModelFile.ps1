@@ -3,10 +3,10 @@
 Gets files associated with a model
 
 .PARAMETER id
-A id of specific Model
+An id of specific Model
 
 .PARAMETER file_id
-A id of specific file
+An id of specific file
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

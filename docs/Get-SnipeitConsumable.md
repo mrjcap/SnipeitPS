@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -25,7 +25,7 @@ Get-SnipeitConsumable [-id <Int32[]>] [-url <String>] [-apiKey <String>] [<Commo
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Gets a list of Snipe-IT consumables or a specific consumable by ID.
 
 ## EXAMPLES
 
@@ -38,7 +38,7 @@ Returns all consumables
 ### EXAMPLE 2
 ```
 Get-SnipeitConsumable -search paper
-Returns search results containeing string display
+Returns search results containing string display
 ```
 
 ### EXAMPLE 3
@@ -50,7 +50,7 @@ Returns specific consumable
 ## PARAMETERS
 
 ### -all
-A return all results
+Return all results
 
 ```yaml
 Type: SwitchParameter
@@ -126,7 +126,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific consumable
+An id of specific consumable
 
 ```yaml
 Type: Int32[]
@@ -158,7 +158,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-{{ Fill location_id Description }}
+Optionally restrict consumable results to this location_id field
 
 ```yaml
 Type: Int32

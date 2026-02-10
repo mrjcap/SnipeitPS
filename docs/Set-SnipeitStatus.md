@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -19,7 +19,7 @@ Set-SnipeitStatus [-id] <Int32[]> [[-name] <String>] [-type] <String> [[-notes] 
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Update a status label in the Snipe-IT system.
 
 ## EXAMPLES
 
@@ -82,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-A id of specific Status Label
+An id of specific Status Label
 
 ```yaml
 Type: Int32[]
@@ -97,7 +97,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
-{{ Fill name Description }}
+Name of the status label
 
 ```yaml
 Type: String
@@ -112,7 +112,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
-{{ Fill notes Description }}
+Notes about the status label
 
 ```yaml
 Type: String
@@ -158,7 +158,7 @@ Accept wildcard characters: False
 ```
 
 ### -type
-{{ Fill type Description }}
+Type of status label. Valid values are 'deployable', 'undeployable', 'pending', and 'archived'.
 
 ```yaml
 Type: String

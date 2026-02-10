@@ -3,7 +3,7 @@
 Set properties of a Snipe-it Fieldset
 
 .PARAMETER id
-A id of specific Fieldset
+An id of specific Fieldset
 
 .PARAMETER name
 Name of the Fieldset

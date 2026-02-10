@@ -12,7 +12,7 @@ A text string to search the Accessory data
 Return Accessories checked out to user id
 
 .PARAMETER id
-A id of specific Accessory
+An id of specific Accessory
 
 .PARAMETER company_id
 Optionally restrict Accessory results to this company_id field
@@ -33,7 +33,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Result offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.

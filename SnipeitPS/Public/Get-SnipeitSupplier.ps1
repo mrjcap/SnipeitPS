@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-# Gets a list of Snipe-it Suppliers
+Gets a list of Snipe-it Suppliers
 
 .PARAMETER search
-A text string to search the Supliers data
+A text string to search the Suppliers data
 
 .PARAMETER id
-A id of specific Suplier
+An id of specific Supplier
 
 .PARAMETER name
 Optionally restrict Supplier results to this Supplier name.
@@ -42,7 +42,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -119,10 +119,6 @@ function Get-SnipeitSupplier() {
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $api = "/api/v1/suppliers"
-
-        if ($search -and $id ) {
-            Throw "[$($MyInvocation.MyCommand.Name)] Please specify only -search or -id parameter , not both "
-        }
 
         if ($id) {
         $api= "/api/v1/suppliers/$id"

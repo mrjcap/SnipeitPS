@@ -6,7 +6,7 @@ Gets a list of Snipe-it Components
 A text string to search the Components data
 
 .PARAMETER id
-A id of specific Component
+An id of specific Component
 
 .PARAMETER name
 Optionally restrict Component results to this name field
@@ -27,7 +27,7 @@ Specify the number of results you wish to return. Defaults to 50. Defines batch 
 Offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -41,7 +41,7 @@ Returns all components
 
 .EXAMPLE
 Get-SnipeitComponent -search display
-Returns search results containeing string display
+Returns search results containing string display
 
 .EXAMPLE
 Get-SnipeitComponent -id
@@ -99,10 +99,6 @@ function Get-SnipeitComponent() {
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $api = "/api/v1/components"
-
-        if ($search -and $id ) {
-            Throw "[$($MyInvocation.MyCommand.Name)] Please specify only -search or -id parameter , not both "
-        }
 
         if ($id) {
         $api= "/api/v1/components/$id"

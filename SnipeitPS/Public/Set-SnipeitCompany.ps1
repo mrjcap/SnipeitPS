@@ -24,7 +24,7 @@ Http request type to send Snipe IT system. Defaults to Patch you could use Put i
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
 An example

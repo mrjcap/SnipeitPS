@@ -10,7 +10,8 @@
 
     .PARAMETER url
     Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
-    .PARAMETER url
+
+    .PARAMETER apiKey
     Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
 
     .EXAMPLE

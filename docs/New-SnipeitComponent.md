@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -19,20 +19,20 @@ New-SnipeitComponent [-name] <String> [-category_id] <Int32> [-qty] <String> [[-
 ```
 
 ## DESCRIPTION
-Createa new componen on Snipe-It system
+Creates a new component on Snipe-It system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitComponent -name 'Display adapter' -catecory_id 3 -qty 10
+New-SnipeitComponent -name 'Display adapter' -category_id 3 -qty 10
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key API Key for Snipeit.
+Users API Key for Snipeit.
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-{{ Fill company_id Description }}
+ID number of company
 
 ```yaml
 Type: Int32
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-ID number of the location the accessory is assigned to
+ID number of the location the component is assigned to
 
 ```yaml
 Type: Int32
@@ -152,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
-Date accessory was purchased
+Date component was purchased
 
 ```yaml
 Type: DateTime

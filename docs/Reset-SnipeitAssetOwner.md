@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -18,13 +18,13 @@ Reset-SnipeitAssetOwner [-id] <Int32> [[-status_id] <Int32>] [[-location_id] <In
 ```
 
 ## DESCRIPTION
-Checks asset in from current user/localtion/asset
+Checks asset in from current user/location/asset
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Remove-SnipeitUser -ID 44
+Reset-SnipeitAssetOwner -ID 44
 ```
 
 ## PARAMETERS

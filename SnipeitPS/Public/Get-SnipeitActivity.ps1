@@ -27,7 +27,7 @@ Type of action. One from following list "add seats", "checkin from", 'checkout' 
 Result offset to use
 
 .PARAMETER all
-A return all results, works with -offset and other parameters
+Return all results, works with -offset and other parameters
 
 .PARAMETER url
 Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
@@ -36,10 +36,10 @@ Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit syste
 Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
 
 .EXAMPLE
-Get-SnipeitAccessory -search Keyboard
+Get-SnipeitActivity -search Keyboard
 
 .EXAMPLE
-Get-SnipeitAccessory -id 1
+Get-SnipeitActivity -target_type Asset -target_id 1
 
 #>
 

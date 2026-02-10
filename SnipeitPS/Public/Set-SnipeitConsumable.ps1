@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Add a new Consumable to Snipe-it asset system
+Update a Consumable on Snipe-it asset system
 
 .DESCRIPTION
-Long description
+Update a Consumable on Snipe-it asset system
 
 .PARAMETER id
 Optional  id number of the Consumable
@@ -12,13 +12,13 @@ Optional  id number of the Consumable
 Optional  Name of the Consumable
 
 .PARAMETER qty
-Optional Quantity of comsumable
+Optional Quantity of consumable
 
 .PARAMETER category_id
 Required Category ID of the Consumable, this can be got using Get-SnipeitCategory
 
 .PARAMETER min_amt
-Optional minimum quantity of comsumable
+Optional minimum quantity of consumable
 
 .PARAMETER company_id
 Optional Company id
@@ -27,7 +27,7 @@ Optional Company id
 Optional Order number
 
 .PARAMETER manufacturer_id
-Manufaturer id number of the consumable
+Manufacturer id number of the consumable
 
 .PARAMETER location_id
 Location id number of the consumable
@@ -36,13 +36,13 @@ Location id number of the consumable
 Is consumable requestable?
 
 .PARAMETER purchase_date
-Optional Purchase cost of the consumable
+Optional Purchase date of the consumable
 
 .PARAMETER purchase_cost
 Optional Purchase cost of the consumable
 
 .PARAMETER model_number
-Model number of the consumable in months
+Model number of the consumable
 
 .PARAMETER item_no
 Item number for the consumable
@@ -64,7 +64,7 @@ Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Sn
 
 
 .EXAMPLE
-New-Snipeitconsumable -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
+Set-SnipeitConsumable -id 1 -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
 Create consumable with stock count 20 , alert when stock is  5 or lower
 
 #>

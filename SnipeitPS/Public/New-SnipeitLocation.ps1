@@ -3,7 +3,7 @@
     Add a new Location to Snipe-it asset system
 
     .DESCRIPTION
-    Long description
+    Add a new Location to Snipe-it asset system
 
     .PARAMETER name
     Name of the Location
