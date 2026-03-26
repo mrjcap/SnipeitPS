@@ -112,6 +112,7 @@ FunctionsToExport = @(
         'New-SnipeitAccessory',
         'New-SnipeitAsset',
         'New-SnipeitAssetFile',
+        'New-SnipeitAssetLabel',
         'New-SnipeitAssetMaintenance',
         'New-SnipeitAudit',
         'New-SnipeitCategory',
