@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# [v.1.13.0] - 2026-03-26
+
+### New Functions
+- New-SnipeitAssetLabel: Generates printable asset labels (`POST /api/v1/hardware/labels`)
+
+### Bug Fixes
+- Fixed Set-SnipeitUser: `-RequestType` parameter was ignored; method was hardcoded to
+  PATCH instead of using the parameter value. Users could not send PUT requests.
+
 # [v.1.12.0] - 2026-02-10
 
 ## Close Snipe-IT v8 API coverage gaps
