@@ -9,16 +9,16 @@
     Updates a user on Snipe-IT system
 
     .PARAMETER first_name
-    Users first name
+    User's first name
 
     .PARAMETER last_name
-    Users last name
+    User's last name
 
     .PARAMETER username
     Username for user
 
     .PARAMETER activated
-    Can user log in to snipe-it?
+    Can user log in to Snipe-IT?
 
     .PARAMETER password
     Password for user
@@ -27,16 +27,16 @@
     User Notes
 
     .PARAMETER jobtitle
-    Users job title
+    User's job title
 
     .PARAMETER email
-    email address
+    Email address
 
     .PARAMETER phone
     Phone number
 
     .PARAMETER company_id
-    ID number of company users belongs to
+    ID number of company the user belongs to
 
     .PARAMETER location_id
     ID number of location
@@ -54,7 +54,7 @@
     Employee number
 
     .PARAMETER ldap_import
-    Mark user as import from ldap
+    Mark user as imported from LDAP
 
     .PARAMETER image
     Image file name and path for item
@@ -63,20 +63,18 @@
     Remove current image
 
     .PARAMETER RequestType
-    Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+    HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     Set-SnipeitUser -id 3 -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
-    Updates user with id 3
+    Updates user with ID 3
 
-    .NOTES
-    General notes
 #>
 function Set-SnipeitUser() {
 
@@ -138,12 +136,23 @@ function Set-SnipeitUser() {
         [string]$apiKey
     )
     begin{
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($password) {
             $Values['password_confirmation'] = $password
+        }
+
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
         }
 
     }
@@ -156,25 +165,15 @@ function Set-SnipeitUser() {
                 Body   = $Values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
         }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

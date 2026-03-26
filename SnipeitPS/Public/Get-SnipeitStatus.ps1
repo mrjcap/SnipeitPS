@@ -1,16 +1,19 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Status Labels
+Gets a list of Snipe-IT Status Labels
 
 .PARAMETER search
 A text string to search the Status Labels data
 
 .PARAMETER id
-An id of specific Status Label
+An ID of a specific Status Label
 
 .PARAMETER name
 Optionally restrict Status Label results to this name field
-    
+
+.PARAMETER order
+Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
+
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
@@ -21,13 +24,13 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
-Get-SnipeitStatus -search  "Ready to Deploy"
+Get-SnipeitStatus -search "Ready to Deploy"
 
 .EXAMPLE
 Get-SnipeitStatus -id 3
@@ -66,6 +69,7 @@ function Get-SnipeitStatus() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -116,6 +120,7 @@ function Get-SnipeitStatus() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -22,7 +22,7 @@ Set-SnipeitLicense [-id] <Int32[]> [[-name] <String>] [[-seats] <Int32>] [[-cate
 ```
 
 ## DESCRIPTION
-Updates license on Snipe-It system
+Updates license on Snipe-IT system
 
 ## EXAMPLES
 
@@ -35,7 +35,7 @@ Set-SnipeitLicense -id 1 -name "License" -seats 3 -company_id 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-Id number of company license belongs to
+ID number of company the license belongs to
 
 ```yaml
 Type: Int32
@@ -260,8 +260,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -337,7 +337,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

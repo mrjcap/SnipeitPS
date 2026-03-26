@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitGroup
 
 ## SYNOPSIS
-Create a new group in Snipe-it
+Create a new group in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ New-SnipeitGroup [-name] <String> [[-permissions] <Hashtable>] [[-notes] <String
 ```
 
 ## DESCRIPTION
-Create a new group in Snipe-it
+Create a new group in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ New-SnipeitGroup -name "IT Admins"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

@@ -6,16 +6,16 @@
     Creates a new user to Snipe-IT system
 
     .PARAMETER first_name
-    Users first name
+    User's first name
 
     .PARAMETER last_name
-    Users last name
+    User's last name
 
     .PARAMETER username
     Username for user
 
-    .PARAMETER active
-    Can user log in to snipe-it?
+    .PARAMETER activated
+    Can user log in to Snipe-IT?
 
     .PARAMETER password
     Password for user
@@ -24,16 +24,16 @@
     User Notes
 
     .PARAMETER jobtitle
-    Users job title
+    User's job title
 
     .PARAMETER email
-    email address
+    Email address
 
     .PARAMETER phone
     Phone number
 
     .PARAMETER company_id
-    ID number of company users belongs to
+    ID number of company the user belongs to
 
     .PARAMETER location_id
     ID number of location
@@ -51,23 +51,21 @@
     Employee number
 
     .PARAMETER ldap_import
-    Mark user as import from ldap
+    Mark user as imported from LDAP
 
     .PARAMETER image
     User Image file name and path
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     New-SnipeitUser -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
-    Creates new a new user who can't login to system
+    Creates a new user who can't login to system
 
-    .NOTES
-    General notes
 #>
 function New-SnipeitUser() {
 
@@ -122,6 +120,7 @@ function New-SnipeitUser() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -150,12 +149,12 @@ function New-SnipeitUser() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
      end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

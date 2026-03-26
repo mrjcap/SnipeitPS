@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitCompany
 
 ## SYNOPSIS
-Removes Company from Snipe-it asset system
+Removes Company from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitCompany [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-W
 ```
 
 ## DESCRIPTION
-Removes Company or multiple Companies from Snipe-it asset system
+Removes Company or multiple Companies from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitCompany -ID 44
 
 ### EXAMPLE 2
 ```
-Get-SnipeitCompany | | Where-object {$_.name -like '*some*'} | Remove-SnipeitCompany
+Get-SnipeitCompany | Where-object {$_.name -like '*some*'} | Remove-SnipeitCompany
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For Company to be removed
+Unique ID for Company to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

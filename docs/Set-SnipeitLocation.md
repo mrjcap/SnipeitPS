@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitLocation
 
 ## SYNOPSIS
-Updates Location in Snipe-it asset system
+Updates Location in Snipe-IT asset system
 
 ## SYNTAX
 
@@ -20,13 +20,13 @@ Set-SnipeitLocation [-id] <Int32[]> [[-name] <String>] [[-address] <String>] [[-
 ```
 
 ## DESCRIPTION
-Updates Location in Snipe-it asset system
+Updates Location in Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-SnipeitLocation -id 123 -name "Some storage"  -parent_id 100
+Set-SnipeitLocation -id 123 -name "Some storage" -parent_id 100
 ```
 
 ## PARAMETERS
@@ -63,7 +63,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-ID number of location or array or IDs
+ID number of location or array of IDs
 
 ```yaml
 Type: Int32[]
@@ -228,8 +228,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -260,7 +260,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

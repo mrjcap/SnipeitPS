@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitComponent
 
 ## SYNOPSIS
-Removes component from Snipe-it asset system
+Removes component from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitComponent [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [
 ```
 
 ## DESCRIPTION
-Removes component or multiple components from Snipe-it asset system
+Removes component or multiple components from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitComponent -ID 44
 
 ### EXAMPLE 2
 ```
-Get-SnipeitComponent -search 123456789  | Remove-SnipeitComponent
+Get-SnipeitComponent -search 123456789 | Remove-SnipeitComponent
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

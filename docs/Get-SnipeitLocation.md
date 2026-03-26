@@ -8,14 +8,15 @@ schema: 2.0.0
 # Get-SnipeitLocation
 
 ## SYNOPSIS
-Gets a list of Snipe-it Locations
+Gets a list of Snipe-IT Locations
 
 ## SYNTAX
 
 ### Search (Default)
 ```
 Get-SnipeitLocation [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-name <String>] [-address <String>] [-address2 <String>] [-city <String>] [-zip <String>]
+ [-country <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -40,6 +41,36 @@ Get-SnipeitLocation -id 3
 
 ## PARAMETERS
 
+### -address
+Optionally restrict Location results to this Location address.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -address2
+Optionally restrict Location results to this Location address2.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -all
 Return all results, works with -offset and other parameters
 
@@ -57,7 +88,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -71,8 +102,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -city
+Optionally restrict Location results to this Location city.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -country
+Optionally restrict Location results to this Location country.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -id
-An id of specific Location
+An ID of a specific Location
 
 ```yaml
 Type: Int32
@@ -99,6 +160,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict Location results to this Location name.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -150,11 +226,26 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -zip
+Optionally restrict Location results to this Location zip.
+
+```yaml
+Type: String
+Parameter Sets: Search
 Aliases:
 
 Required: False

@@ -2,11 +2,14 @@
 .SYNOPSIS
 Update a Snipe-IT Category
 
-.PARAMETER name
-Name of new category to be created
+.PARAMETER id
+An ID of a specific resource to update
 
-.PARAMETER type
-Type of new category to be created (asset, accessory, consumable, component, license)
+.PARAMETER name
+Name of the category
+
+.PARAMETER category_type
+Type of category (asset, accessory, consumable, component, license)
 
 .PARAMETER use_default_eula
 If switch is present, use the primary default EULA
@@ -27,13 +30,13 @@ Image file name and path for item
 Remove current image
 
 .PARAMETER RequestType
-Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Set-SnipeitCategory -id 4 -name "Laptops"
@@ -46,7 +49,7 @@ function Set-SnipeitCategory() {
     )]
 
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
         [string]$name,
@@ -79,9 +82,20 @@ function Set-SnipeitCategory() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
     }
 
     process {
@@ -92,25 +106,15 @@ function Set-SnipeitCategory() {
                 Body   = $values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
         }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

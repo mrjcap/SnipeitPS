@@ -8,14 +8,15 @@ schema: 2.0.0
 # Get-SnipeitDepartment
 
 ## SYNOPSIS
-Gets a list of Snipe-it Departments
+Gets a list of Snipe-IT Departments
 
 ## SYNTAX
 
 ### Search (Default)
 ```
-Get-SnipeitDepartment [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-sort <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+Get-SnipeitDepartment [-search <String>] [-name <String>] [-manager_id <Int32>] [-company_id <Int32>]
+ [-location_id <Int32>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-sort <String>]
+ [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -35,7 +36,7 @@ Get-SnipeitDepartment
 
 ### EXAMPLE 2
 ```
-Get-SnipeitDepartment -search  Department1
+Get-SnipeitDepartment -search Department1
 ```
 
 ### EXAMPLE 3
@@ -62,7 +63,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -76,8 +77,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -company_id
+Optionally restrict department results to this company ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -id
-An id of specific Department
+An ID of a specific Department
 
 ```yaml
 Type: Int32
@@ -104,6 +120,51 @@ Aliases:
 Required: False
 Position: Named
 Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -location_id
+Optionally restrict department results to this location ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manager_id
+Optionally restrict department results to this manager ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict department results to this department name.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -170,7 +231,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

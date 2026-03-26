@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitAssetMaintenance
 
 ## SYNOPSIS
-Lists Snipe-it Asset Maintenance
+Lists Snipe-IT Asset Maintenances
 
 ## SYNTAX
 
@@ -32,11 +32,6 @@ Get-SnipeitAssetMaintenance
 Get-SnipeitAssetMaintenance -search "myMachine"
 ```
 
-### EXAMPLE 3
-```
-Get-SnipeitAssetMaintenance -search "myMachine"
-```
-
 ## PARAMETERS
 
 ### -all
@@ -56,7 +51,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -164,7 +159,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitStatus
 
 ## SYNOPSIS
-Sets  Snipe-it Status Labels
+Sets Snipe-IT Status Labels
 
 ## SYNTAX
 
@@ -25,7 +25,7 @@ Update a status label in the Snipe-IT system.
 
 ### EXAMPLE 1
 ```
-Get-SnipeitStatus -search  "Ready to Deploy"
+Set-SnipeitStatus -id 1 -name "Ready to Deploy" -type deployable
 ```
 
 ### EXAMPLE 2
@@ -37,7 +37,7 @@ Set-SnipeitStatus -id 3 -name 'Waiting for arrival' -type pending
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -82,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Status Label
+An ID of a specific Status Label
 
 ```yaml
 Type: Int32[]
@@ -127,8 +127,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -174,7 +174,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

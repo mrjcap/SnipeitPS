@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitManufacturer
 
 ## SYNOPSIS
-Updates an existing Manufacturer in Snipe-it asset system
+Updates an existing Manufacturer in Snipe-IT asset system
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Set-SnipeitManufacturer [-id] <Int32[]> [[-Name] <String>] [[-image] <String>]
 ```
 
 ## DESCRIPTION
-Updates manufacturer on Snipe-It system
+Updates manufacturer on Snipe-IT system
 
 ## EXAMPLES
 
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -123,8 +123,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -140,7 +140,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

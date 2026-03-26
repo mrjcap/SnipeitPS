@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitFieldset
 
 ## SYNOPSIS
-Returns a fieldset or list of Snipe-it Fieldsets
+Returns a fieldset or list of Snipe-IT Fieldsets
 
 ## SYNTAX
 
@@ -29,7 +29,7 @@ Get all fieldsets
 
 ### EXAMPLE 2
 ```
-Get-SnipeitFieldset  | Where-Object {$_.name -eq "Windows" }
+Get-SnipeitFieldset | Where-Object {$_.name -eq "Windows" }
 Gets fieldset by name
 ```
 
@@ -37,7 +37,7 @@ Gets fieldset by name
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific fieldset
+An ID of a specific fieldset
 
 ```yaml
 Type: Int32
@@ -68,7 +68,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

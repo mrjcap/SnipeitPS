@@ -8,16 +8,17 @@ schema: 2.0.0
 # Get-SnipeitAsset
 
 ## SYNOPSIS
-Gets a list of Snipe-it Assets or specific asset
+Gets a list of Snipe-IT Assets or specific asset
 
 ## SYNTAX
 
 ### Search (Default)
 ```
-Get-SnipeitAsset [-search <String>] [-order_number <String>] [-model_id <Int32>] [-category_id <Int32>]
- [-manufacturer_id <Int32>] [-company_id <Int32>] [-location_id <Int32>] [-depreciation_id <Int32>]
- [-requestable <Boolean>] [-status <String>] [-status_id <Int32>] [-sort <String>] [-order <String>]
- [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+Get-SnipeitAsset [-search <String>] [-name <String>] [-order_number <String>] [-model_id <Int32>]
+ [-category_id <Int32>] [-manufacturer_id <Int32>] [-company_id <Int32>] [-location_id <Int32>]
+ [-depreciation_id <Int32>] [-requestable <Boolean>] [-status <String>] [-status_id <Int32>]
+ [-customfields <Hashtable>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
+ [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with id
@@ -79,7 +80,7 @@ Search for specific asset
 ### EXAMPLE 3
 ```
 Get-SnipeitAsset -id 3
-Get asset with id number 3
+Get asset with ID number 3
 ```
 
 ### EXAMPLE 4
@@ -109,13 +110,13 @@ Get Assets overdue for auditing
 ### EXAMPLE 8
 ```
 Get-SnipeitAsset -user_id 4
-Get Assets checked out to user id 4
+Get Assets checked out to user ID 4
 ```
 
 ### EXAMPLE 9
 ```
 Get-SnipeitAsset -component_id 5
-Get Assets with component id 5
+Get Assets with component ID 5
 ```
 
 ## PARAMETERS
@@ -137,7 +138,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -227,7 +228,7 @@ Accept wildcard characters: False
 ```
 
 ### -component_id
-Retrieve a list of assets assigned this component id.
+Retrieve a list of assets assigned this component ID.
 
 ```yaml
 Type: Int32
@@ -237,6 +238,23 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -customfields
+Hashtable of custom fields and extra fields for searching assets in Snipe-IT.
+Use internal field names from Snipe-IT.
+You can use Get-SnipeitCustomField to get internal field names.
+
+```yaml
+Type: Hashtable
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -257,7 +275,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-ID number of exact snipeit asset
+ID number of exact Snipe-IT asset
 
 ```yaml
 Type: Int32
@@ -329,6 +347,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict asset results to this asset name
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -409,7 +442,7 @@ Accept wildcard characters: False
 ```
 
 ### -serial
-Exact asset serialnumber to query
+Exact asset serial number to query
 
 ```yaml
 Type: String
@@ -470,7 +503,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -485,7 +518,7 @@ Accept wildcard characters: False
 ```
 
 ### -user_id
-Retrieve a list of assets checked out to user id.
+Retrieve a list of assets checked out to user ID.
 
 ```yaml
 Type: Int32

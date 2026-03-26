@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitManufacturer
 
 ## SYNOPSIS
-Removes manufacturer from Snipe-it asset system
+Removes manufacturer from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitManufacturer [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>
 ```
 
 ## DESCRIPTION
-Removes manufacturer or multiple manufacturers from Snipe-it asset system
+Removes manufacturer or multiple manufacturers from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitManufacturer -ID 44
 
 ### EXAMPLE 2
 ```
-Get-SnipeitManufacturer | Where-object {$_.name -like '*something*'}  | Remove-SnipeitManufacturer
+Get-SnipeitManufacturer | Where-object {$_.name -like '*something*'} | Remove-SnipeitManufacturer
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For manufacturer to be removed
+Unique ID for manufacturer to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

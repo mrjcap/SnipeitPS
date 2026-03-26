@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitAsset
 
 ## SYNOPSIS
-Update a specific Asset in the Snipe-it asset system
+Update a specific Asset in the Snipe-IT asset system
 
 ## SYNTAX
 
@@ -22,7 +22,7 @@ Set-SnipeitAsset [-id] <Int32[]> [[-asset_tag] <String>] [[-name] <String>] [[-s
 ```
 
 ## DESCRIPTION
-Update a specific Asset in the Snipe-it asset system
+Update a specific Asset in the Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -33,7 +33,7 @@ Set-SnipeitAsset -id 1 -status_id 1 -model_id 1 -name "Machine1"
 
 ### EXAMPLE 2
 ```
-Set-SnipeitAsset -id 1 -name "Machine1" -customfields =  @{ "_snipeit_os_5" = "Windows 10 Pro" ; "_snipeit_os_version" = "1909" }
+Set-SnipeitAsset -id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Windows 10 Pro" ; "_snipeit_os_version" = "1909" }
 ```
 
 ### EXAMPLE 3
@@ -45,7 +45,7 @@ Get-SnipeitAsset -serial 12345678 | Set-SnipeitAsset -notes 'Just updated'
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -91,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_to
-The id of the user the asset is currently checked out to
+The ID of the user the asset is currently checked out to
 
 ```yaml
 Type: Int32
@@ -106,7 +106,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-The id of an associated company id
+The ID of an associated company ID
 
 ```yaml
 Type: Int32
@@ -121,7 +121,7 @@ Accept wildcard characters: False
 ```
 
 ### -customfields
-Hashtable of custom fields and extra fields that need passing through to Snipeit
+Hashtable of custom fields and extra fields that need passing through to Snipe-IT
 
 ```yaml
 Type: Hashtable
@@ -196,7 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -model_id
-Model ID of the asset, this can be got using Get-Model
+Model ID of the asset, this can be obtained using Get-SnipeitModel
 
 ```yaml
 Type: Int32
@@ -301,8 +301,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -317,7 +317,7 @@ Accept wildcard characters: False
 ```
 
 ### -rtd_location_id
-The id that corresponds to the location where the asset is usually located when not checked out
+The ID that corresponds to the location where the asset is usually located when not checked out
 
 ```yaml
 Type: Int32
@@ -347,7 +347,7 @@ Accept wildcard characters: False
 ```
 
 ### -status_id
-Status ID of the asset, this can be got using Get-Status
+Status ID of the asset, this can be obtained using Get-SnipeitStatus
 
 ```yaml
 Type: Int32
@@ -362,7 +362,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
-Supplier id of the Asset
+Supplier ID of the Asset
 
 ```yaml
 Type: Int32
@@ -378,7 +378,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

@@ -1,15 +1,15 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Users
+Gets a list of Snipe-IT Users
 
 .PARAMETER search
 A text string to search the User data
 
 .PARAMETER id
-An id of specific User
+An ID of a specific User
 
 .PARAMETER accessory_id
-Get users a specific accessory id has been checked out to
+Get users that a specific accessory ID has been checked out to
 
 .PARAMETER username
 Optionally restrict User results to this username field
@@ -35,6 +35,9 @@ Optionally restrict User results to this company_id field
 .PARAMETER location_id
 Optionally restrict User results to this location_id field
 
+.PARAMETER group_id
+Optionally restrict User results to this group_id field
+
 .PARAMETER department_id
 Optionally restrict User results to this department_id field
 
@@ -59,6 +62,9 @@ Optionally restrict User results to those with the specified accessories count
 .PARAMETER consumables_count
 Optionally restrict User results to those with the specified consumables count
 
+.PARAMETER order
+Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
+
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
@@ -69,10 +75,10 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitUser -search SomeSurname
@@ -88,7 +94,7 @@ Get-SnipeitUser -email user@somedomain.com
 
 .EXAMPLE
 Get-SnipeitUser -accessory_id 3
-Get users with accessory id 3 has been checked out to
+Get users that accessory ID 3 has been checked out to
 #>
 
 function Get-SnipeitUser() {
@@ -176,6 +182,7 @@ function Get-SnipeitUser() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -224,6 +231,7 @@ function Get-SnipeitUser() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

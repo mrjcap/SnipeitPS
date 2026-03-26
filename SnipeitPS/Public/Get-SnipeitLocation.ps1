@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Locations
+Gets a list of Snipe-IT Locations
 
 .PARAMETER search
 A text string to search the Locations data
 
 .PARAMETER id
-An id of specific Location
+An ID of a specific Location
 
 .PARAMETER name
 Optionally restrict Location results to this Location name.
@@ -26,6 +26,9 @@ Optionally restrict Location results to this Location zip.
 .PARAMETER country
 Optionally restrict Location results to this Location country.
 
+.PARAMETER order
+Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
+
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
@@ -36,10 +39,10 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitLocation -search Location1
@@ -96,6 +99,7 @@ function Get-SnipeitLocation() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -146,6 +150,7 @@ function Get-SnipeitLocation() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

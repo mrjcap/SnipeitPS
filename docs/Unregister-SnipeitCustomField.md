@@ -8,7 +8,7 @@ schema: 2.0.0
 # Unregister-SnipeitCustomField
 
 ## SYNOPSIS
-Disassociate a custom field from a fieldset in Snipe-it
+Disassociate a custom field from a fieldset in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Unregister-SnipeitCustomField [-id] <Int32> [-fieldset_id] <Int32> [[-url] <Stri
 ```
 
 ## DESCRIPTION
-Disassociate a custom field from a fieldset in Snipe-it
+Disassociate a custom field from a fieldset in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Unregister-SnipeitCustomField -id 1 -fieldset_id 5
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

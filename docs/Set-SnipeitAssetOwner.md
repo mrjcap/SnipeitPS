@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -32,7 +32,7 @@ Set-SnipeitAssetOwner -id 1 -assigned_id 1 -checkout_to_type user -note "testing
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_id
-Id of target user , location or asset
+ID of target user, location, or asset
 
 ```yaml
 Type: Int32
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -checkout_to_type
-Checkout asset to one of following types user, location, asset
+Checkout asset to one of the following types: location, asset, or user
 
 ```yaml
 Type: String
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -status_id
-Optional status id to set the asset to during checkout
+Optional status ID to set the asset to during checkout
 
 ```yaml
 Type: Int32
@@ -171,7 +171,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

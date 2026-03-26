@@ -325,7 +325,7 @@ Describe "New-SnipeitCategory" {
         InModuleScope 'SnipeitPS' {
             { New-SnipeitCategory -name "Laptops" -category_type "asset" `
                 -eula_text "Custom" -use_default_eula -Confirm:$false } |
-                Should -Throw "*Dont use -use_defalt_eula*"
+                Should -Throw "*Don't use -use_default_eula*"
         }
     }
 

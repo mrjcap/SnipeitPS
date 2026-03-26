@@ -8,7 +8,7 @@ schema: 2.0.0
 # Reset-SnipeitComponentOwner
 
 ## SYNOPSIS
-Checkin a component in Snipe-it
+Checkin a component in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Reset-SnipeitComponentOwner [-id] <Int32> [-checkin_qty] <Int32> [[-note] <Strin
 ```
 
 ## DESCRIPTION
-Checks in a component that was previously checked out. The id parameter
+Checks in a component that was previously checked out. The ID parameter
 is the component_assets pivot record ID (not the component ID).
 Use Get-SnipeitComponent to find checked out assets and their pivot IDs.
 
@@ -35,7 +35,7 @@ Checkin 1 unit using the component_assets pivot record ID 15.
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -97,7 +97,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

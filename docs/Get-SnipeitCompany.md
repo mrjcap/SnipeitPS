@@ -8,14 +8,14 @@ schema: 2.0.0
 # Get-SnipeitCompany
 
 ## SYNOPSIS
-Gets a list of Snipe-it Companies
+Gets a list of Snipe-IT Companies
 
 ## SYNTAX
 
 ### Search (Default)
 ```
 Get-SnipeitCompany [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-name <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Company
+An ID of a specific Company
 
 ```yaml
 Type: Int32
@@ -101,6 +101,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict company results to this company name.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -152,7 +167,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

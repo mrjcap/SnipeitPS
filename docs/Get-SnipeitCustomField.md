@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitCustomField
 
 ## SYNOPSIS
-Returns specific Snipe-IT custom field or a list of all custom field
+Returns specific Snipe-IT custom field or a list of all custom fields
 
 ## SYNTAX
 
@@ -37,7 +37,7 @@ Get custom field with ID 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific field
+An ID of a specific field
 
 ```yaml
 Type: Int32
@@ -68,7 +68,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

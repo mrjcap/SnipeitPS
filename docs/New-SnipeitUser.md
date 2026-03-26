@@ -16,8 +16,8 @@ Creates a new user
 New-SnipeitUser [-first_name] <String> [-last_name] <String> [-username] <String> [[-password] <String>]
  [[-activated] <Boolean>] [[-notes] <String>] [[-jobtitle] <String>] [[-email] <String>] [[-phone] <String>]
  [[-company_id] <Int32>] [[-location_id] <Int32>] [[-department_id] <Int32>] [[-manager_id] <Int32>]
- [[-employee_num] <String>] [[-ldap_import] <Boolean>] [[-image] <String>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-groups] <Int32[]>] [[-employee_num] <String>] [[-ldap_import] <Boolean>] [[-image] <String>]
+ [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,13 +28,13 @@ Creates a new user to Snipe-IT system
 ### EXAMPLE 1
 ```
 New-SnipeitUser -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
-Creates new a new user who can't login to system
+Creates a new user who can't login to system
 ```
 
 ## PARAMETERS
 
 ### -activated
-Can user log in to snipe-it?
+Can user log in to Snipe-IT?
 
 ```yaml
 Type: Boolean
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -58,14 +58,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 19
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -company_id
-ID number of company users belongs to
+ID number of company the user belongs to
 
 ```yaml
 Type: Int32
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -email
-email address
+Email address
 
 ```yaml
 Type: String
@@ -118,14 +118,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -first_name
-Users first name
+User's first name
 
 ```yaml
 Type: String
@@ -134,6 +134,21 @@ Aliases:
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -groups
+ID numbers of groups
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -148,14 +163,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 17
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -jobtitle
-Users job title
+User's job title
 
 ```yaml
 Type: String
@@ -170,7 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -last_name
-Users last name
+User's last name
 
 ```yaml
 Type: String
@@ -185,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -ldap_import
-Mark user as import from ldap
+Mark user as imported from LDAP
 
 ```yaml
 Type: Boolean
@@ -193,7 +208,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -276,7 +291,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -284,7 +299,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 18
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -344,6 +359,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-General notes
 
 ## RELATED LINKS

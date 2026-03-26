@@ -1,15 +1,12 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Licenses Seats or specific Seat
-
-.PARAMETER search
-A text string to search the Licenses data
+Gets a list of Snipe-IT License Seats or specific Seat
 
 .PARAMETER id
-An id of specific License
+An ID of a specific License
 
 .PARAMETER seat_id
-An id of specific seat
+An ID of a specific seat
 
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
@@ -22,10 +19,10 @@ Return all results, works with -offset and other parameters
 
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitLicenseSeat -id 1
@@ -34,6 +31,7 @@ Get-SnipeitLicenseSeat -id 1
 #>
 
 function Get-SnipeitLicenseSeat() {
+    [CmdletBinding()]
     Param(
 
         [parameter(mandatory = $true)]
@@ -54,9 +52,10 @@ function Get-SnipeitLicenseSeat() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'url', 'apiKey', 'Debug', 'Verbose','RequestType'
+        $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'url', 'apiKey', 'Debug', 'Verbose'
 
         $api = "/api/v1/licenses/$id/seats"
 
@@ -105,6 +104,7 @@ function Get-SnipeitLicenseSeat() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

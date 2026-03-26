@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Components
+Gets a list of Snipe-IT Components
 
 .PARAMETER search
 A text string to search the Components data
 
 .PARAMETER id
-An id of specific Component
+An ID of a specific Component
 
 .PARAMETER name
 Optionally restrict Component results to this name field
@@ -20,6 +20,9 @@ Optionally restrict Component results to this category_id field
 .PARAMETER location_id
 Optionally restrict Component results to this location_id field
 
+.PARAMETER sort
+Specify the column name you wish to sort by
+
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
@@ -30,10 +33,10 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitComponent
@@ -41,10 +44,10 @@ Returns all components
 
 .EXAMPLE
 Get-SnipeitComponent -search display
-Returns search results containing string display
+Returns search results containing "display"
 
 .EXAMPLE
-Get-SnipeitComponent -id
+Get-SnipeitComponent -id 1
 Returns specific component
 
 #>
@@ -94,6 +97,7 @@ function Get-SnipeitComponent() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -144,6 +148,7 @@ function Get-SnipeitComponent() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Updates Model on Snipe-it asset system
+    Updates Model on Snipe-IT asset system
 
     .DESCRIPTION
-    Updates Model on Snipe-it asset system
+    Updates Model on Snipe-IT asset system
 
     .PARAMETER id
     ID number of the Asset Model or array of IDs
@@ -15,12 +15,15 @@
     Model number of the Asset Model
 
     .PARAMETER category_id
-    Category ID that the asset belongs to this can be got using Get-Category
+    Category ID that the model belongs to. This can be obtained using Get-SnipeitCategory
 
     .PARAMETER manufacturer_id
-    Manufacturer ID that the asset belongs to this can be got using Get-Manufacturer
+    Manufacturer ID that the model belongs to. This can be obtained using Get-SnipeitManufacturer
 
-    .PARAMETER fieldset_id
+    .PARAMETER eol
+    Number of months until end of life
+
+    .PARAMETER custom_fieldset_id
     Fieldset ID that the asset uses (Custom fields)
 
     .PARAMETER image
@@ -30,13 +33,13 @@
     Remove current image
 
     .PARAMETER RequestType
-    Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+    HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     Set-SnipeitModel -id 1 -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
@@ -82,10 +85,20 @@ function Set-SnipeitModel() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
     }
     process {
         foreach ($model_id in $id) {
@@ -95,25 +108,15 @@ function Set-SnipeitModel() {
                 Body   = $Values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
         }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

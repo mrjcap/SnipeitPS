@@ -8,7 +8,7 @@ schema: 2.0.0
 # Restore-SnipeitUser
 
 ## SYNOPSIS
-Restores a deleted user in Snipe-it
+Restores a deleted user in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Restore-SnipeitUser [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-Wha
 ```
 
 ## DESCRIPTION
-Restores a deleted user in Snipe-it
+Restores a deleted user in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Restore-SnipeitUser -id 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

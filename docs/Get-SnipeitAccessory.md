@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitAccessory
 
 ## SYNOPSIS
-Gets a list of Snipe-it Accessories
+Gets a list of Snipe-IT Accessories
 
 ## SYNTAX
 
@@ -30,7 +30,7 @@ Get-SnipeitAccessory [-user_id <Int32>] [-all] [-url <String>] [-apiKey <String>
 ```
 
 ## DESCRIPTION
-Gets a list of Snipe-it Accessories
+Gets a list of Snipe-IT Accessories
 
 ## EXAMPLES
 
@@ -69,7 +69,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -114,7 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Accessory
+An ID of a specific Accessory
 
 ```yaml
 Type: Int32
@@ -237,7 +237,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -252,7 +252,7 @@ Accept wildcard characters: False
 ```
 
 ### -user_id
-Return Accessories checked out to user id
+Return Accessories checked out to a user ID
 
 ```yaml
 Type: Int32

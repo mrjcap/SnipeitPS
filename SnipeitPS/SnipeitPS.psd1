@@ -30,7 +30,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) 2017 Stephen Maunder, (c) 2026 Jay Cap. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Powershell API for Snipeit Asset Management'
+Description = 'PowerShell API for Snipe-IT Asset Management'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.1'
@@ -113,7 +113,7 @@ FunctionsToExport = @(
         'New-SnipeitAsset',
         'New-SnipeitAssetFile',
         'New-SnipeitAssetMaintenance',
-        'New-SnipeItAudit',
+        'New-SnipeitAudit',
         'New-SnipeitCategory',
         'New-SnipeitCompany',
         'New-SnipeitComponent',
@@ -202,7 +202,7 @@ AliasesToExport = @(
     'Get-CustomField',
     'Get-Department',
     'Get-Fieldset',
-    'Get-SnipeitLocation',
+    'Get-Location',
     'Get-Manufacturer',
     'Get-Model',
     'Get-Status',
@@ -250,13 +250,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('SnipeIT', 'Snipe-IT', 'AssetManagement', 'ITAM', 'Inventory', 'API', 'REST')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/snazy2000/SnipeitPS/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/snazy2000/SnipeitPS'
 
         # A URL to an icon representing this module.
         # IconUri = ''

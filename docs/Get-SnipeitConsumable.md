@@ -8,13 +8,13 @@ schema: 2.0.0
 # Get-SnipeitConsumable
 
 ## SYNOPSIS
-Gets a list of Snipe-it consumables
+Gets a list of Snipe-IT consumables
 
 ## SYNTAX
 
 ### Search (Default)
 ```
-Get-SnipeitConsumable [-search <String>] [-category_id <Int32>] [-company_id <Int32>]
+Get-SnipeitConsumable [-search <String>] [-name <String>] [-category_id <Int32>] [-company_id <Int32>]
  [-manufacturer_id <Int32>] [-location_id <Int32>] [-order <String>] [-sort <String>] [-expand]
  [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
@@ -38,12 +38,12 @@ Returns all consumables
 ### EXAMPLE 2
 ```
 Get-SnipeitConsumable -search paper
-Returns search results containing string display
+Returns search results containing "paper"
 ```
 
 ### EXAMPLE 3
 ```
-Get-Snipeitconsumable -id
+Get-SnipeitConsumable -id 1
 Returns specific consumable
 ```
 
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-Id number of category
+ID number of category
 
 ```yaml
 Type: Int32
@@ -96,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-Id number of company
+ID number of company
 
 ```yaml
 Type: Int32
@@ -126,11 +126,26 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific consumable
+An ID of a specific consumable
 
 ```yaml
 Type: Int32[]
 Parameter Sets: Get with ID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict consumable results to this name field
+
+```yaml
+Type: String
+Parameter Sets: Search
 Aliases:
 
 Required: False
@@ -173,7 +188,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-Id number of manufacturer
+ID number of manufacturer
 
 ```yaml
 Type: Int32
@@ -249,7 +264,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

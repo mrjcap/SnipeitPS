@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitAssetMaintenance
 
 ## SYNOPSIS
-Set properties of a Snipe-it Asset Maintenance
+Set properties of a Snipe-IT Asset Maintenance
 
 ## SYNTAX
 
@@ -33,7 +33,7 @@ Set-SnipeitAssetMaintenance -id 1 -title "Updated maintenance"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -108,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Asset Maintenance
+An ID of a specific Asset Maintenance
 
 ```yaml
 Type: Int32[]
@@ -153,8 +153,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -215,7 +215,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

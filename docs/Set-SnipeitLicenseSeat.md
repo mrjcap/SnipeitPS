@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -25,27 +25,27 @@ Checkout specific license seat to user, asset or both
 
 ### EXAMPLE 1
 ```
-Set-SnipeitLicenceSeat -ID 1 -seat_id 1 -assigned_id 3
-Checkout licence to user id 3
+Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -assigned_id 3
+Checkout license to user ID 3
 ```
 
 ### EXAMPLE 2
 ```
-Set-SnipeitLicenceSeat -ID 1 -seat_id 1 -asset_id 3
-Checkout licence to asset id 3
+Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -asset_id 3
+Checkout license to asset ID 3
 ```
 
 ### EXAMPLE 3
 ```
-Set-SnipeitLicenceSeat -ID 1 -seat_id 1 -asset_id $null -assigned_id $null
-Checkin licence seat id 1 of licence id 1
+Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -asset_id $null -assigned_id $null
+Checkin license seat ID 1 of license ID 1
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -60,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_id
-Id of target asset
+ID of target asset
 
 ```yaml
 Type: Int32
@@ -75,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_to
-Id of target user
+ID of target user
 
 ```yaml
 Type: Int32
@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For license to checkout or array of IDs
+Unique ID for license to checkout or array of IDs
 
 ```yaml
 Type: Int32[]
@@ -100,7 +100,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -120,8 +120,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -152,7 +152,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

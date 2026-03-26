@@ -3,7 +3,7 @@
     Creates a department
 
     .DESCRIPTION
-    Creates a new department on Snipe-It system
+    Creates a new department on Snipe-IT system
 
     .PARAMETER name
     Department Name
@@ -17,14 +17,20 @@
     .PARAMETER manager_id
     ID number of manager
 
+    .PARAMETER notes
+    Notes about the department
+
     .PARAMETER image
     Department Image filename and path
 
+    .PARAMETER image_delete
+    Remove current image
+
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     New-SnipeitDepartment -name "Department1" -company_id 1 -location_id 1 -manager_id 3
@@ -61,6 +67,7 @@ function New-SnipeitDepartment() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -85,12 +92,12 @@ function New-SnipeitDepartment() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

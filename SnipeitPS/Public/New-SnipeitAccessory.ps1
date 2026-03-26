@@ -1,15 +1,12 @@
 <#
 .SYNOPSIS
-Creates new accessory on Snipe-It system
+Creates a new accessory on Snipe-IT system
 
 .DESCRIPTION
-Creates new accessory on Snipe-It system
+Creates a new accessory on Snipe-IT system
 
 .PARAMETER name
 Accessory name
-
-.PARAMETER notes
-Notes about the accessory
 
 .PARAMETER qty
 Quantity of the accessory you have
@@ -48,13 +45,13 @@ Min quantity of the accessory before alert is triggered
 Accessory image filename and path
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
-New-SnipeitAccessory -name "Accessory" -qty 3  -category_id 1
+New-SnipeitAccessory -name "Accessory" -qty 3 -category_id 1
 
 #>
 function New-SnipeitAccessory() {
@@ -107,6 +104,7 @@ function New-SnipeitAccessory() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -135,11 +133,12 @@ function New-SnipeitAccessory() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitCustomField
 
 ## SYNOPSIS
-Add a new Custom Field to Snipe-it asset system
+Updates a Custom Field on Snipe-IT asset system
 
 ## SYNTAX
 
@@ -20,20 +20,20 @@ Set-SnipeitCustomField [-id] <Int32[]> [[-name] <String>] [[-help_text] <String>
 ```
 
 ## DESCRIPTION
-Add a new Custom Field to Snipe-it asset system
+Updates a Custom Field on Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitCustomField -Name "AntivirusInstalled" -Format "BOOLEAN" -HelpText "Is AntiVirus installed on Asset"
+Set-SnipeitCustomField -id 1 -Name "AntivirusInstalled" -Format "BOOLEAN" -element text -HelpText "Is AntiVirus installed on Asset"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -custom_format
-In the case of format 'CUSTOM REGEX', this should be validation regex this field
+In the case of format 'CUSTOM REGEX', this should be the validation regex for this field
 
 ```yaml
 Type: String
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -help_text
-Any additional text you wish to display under the new form field to make it clearer what the gauges should be.
+Any additional text you wish to display under the form field to make it clearer what the values should be.
 
 ```yaml
 Type: String
@@ -169,8 +169,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Put you could use Patch if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Put. You could use Patch if needed.
 
 ```yaml
 Type: String
@@ -201,7 +201,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

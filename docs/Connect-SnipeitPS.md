@@ -28,8 +28,8 @@ Connect-SnipeitPS -siteCred <PSCredential> [-throttleLimit <Int32>] [-throttlePe
 ```
 
 ## DESCRIPTION
-Sets apikey and url to connect Snipe-It system.
-Based on Set-SnipeitInfo command, what is now just compatibility wrapper
+Sets API Key and URL to connect to Snipe-IT system.
+Based on Set-SnipeitInfo command, which is now just a compatibility wrapper
 and calls Connect-SnipeitPS
 
 ## EXAMPLES
@@ -37,20 +37,20 @@ and calls Connect-SnipeitPS
 ### EXAMPLE 1
 ```
 Connect-SnipeitPS -Url $url -apiKey $myapikey
-Connect to  Snipe it  api.
+Connect to Snipe-IT API.
 ```
 
 ### EXAMPLE 2
 ```
 Connect-SnipeitPS -Url $url -SecureApiKey $myapikey
-Connects to Snipe it api with apikey stored to securestring
+Connects to Snipe-IT API with API Key stored as SecureString
 ```
 
 ### EXAMPLE 3
 ```
-Connect-SnipeitPS -siteCred (Get-Credential -message "Use site url as username and apikey as password")
-Connect to Snipe It with PSCredential object.
-To use saved credentials you can use export-clixml and import-clixml commandlets.
+Connect-SnipeitPS -siteCred (Get-Credential -message "Use site URL as username and API Key as password")
+Connect to Snipe-IT with PSCredential object.
+To use saved credentials you can use Export-Clixml and Import-Clixml cmdlets.
 ```
 
 ### EXAMPLE 4
@@ -65,7 +65,7 @@ Connect-SnipeitPS -siteCred $siteCred
 ## PARAMETERS
 
 ### -apiKey
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -80,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -secureApiKey
-Snipe it Api key as securestring
+Snipe-IT API key as SecureString
 
 ```yaml
 Type: SecureString
@@ -95,8 +95,8 @@ Accept wildcard characters: False
 ```
 
 ### -siteCred
-PSCredential where username should be snipe it url and password should be
-snipe it apikey.
+PSCredential where username should be Snipe-IT URL and password should be
+Snipe-IT API key.
 
 ```yaml
 Type: PSCredential
@@ -111,7 +111,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: Uri

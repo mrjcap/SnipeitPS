@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitUser
 
 ## SYNOPSIS
-Removes User from Snipe-it asset system
+Removes User from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,20 +18,20 @@ Remove-SnipeitUser [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-What
 ```
 
 ## DESCRIPTION
-Removes Uuser or users from Snipe-it asset system
+Removes user or users from Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Remove-SnipeitUser -ID 44 -url $url -apiKey $secret -Verbose
+Remove-SnipeitUser -ID 44
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For User to be removed
+Unique ID for User to be removed
 
 ```yaml
 Type: Int32[]
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

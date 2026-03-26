@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitComponentOwner
 
 ## SYNOPSIS
-Checkout a component to an asset in Snipe-it
+Checkout a component to an asset in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Set-SnipeitComponentOwner [-id] <Int32[]> [-assigned_to] <Int32> [-assigned_qty]
 ```
 
 ## DESCRIPTION
-Checkout a component to an asset in Snipe-it
+Checkout a component to an asset in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Set-SnipeitComponentOwner -id 1 -assigned_to 100 -assigned_qty 2
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

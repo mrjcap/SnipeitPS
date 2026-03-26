@@ -3,28 +3,28 @@
     Sets authentication information
 
     .DESCRIPTION
-    Sets apikey and url to connect Snipe-It system.
-    Based on Set-SnipeitInfo command, what is now just compatibility wrapper
+    Sets API Key and URL to connect to Snipe-IT system.
+    Based on Set-SnipeitInfo command, which is now just a compatibility wrapper
     and calls Connect-SnipeitPS
 
     .PARAMETER url
-    URL of Snipeit system.
+    URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    User's API Key for Snipeit.
+    User's API Key for Snipe-IT.
 
     .PARAMETER secureApiKey
-    Snipe it Api key as securestring
+    Snipe-IT API key as SecureString
 
     .PARAMETER siteCred
-    PSCredential where username should be snipe it url and password should be
-    snipe it apikey.
+    PSCredential where username should be Snipe-IT URL and password should be
+    Snipe-IT API key.
 
     .PARAMETER throttleLimit
-    Throttle request rate to number of requests per throttlePeriod. Defaults to 0 that means requests are not throttled.
+    Throttle request rate to number of requests per throttlePeriod. Defaults to 0, which means requests are not throttled.
 
     .PARAMETER throttlePeriod
-    Throttle period time span in milliseconds defaults to 60 milliseconds.
+    Throttle period time span in milliseconds. Defaults to 60000 milliseconds.
 
     .PARAMETER throttleThreshold
     Threshold percentage of used requests per period after which requests are throttled.
@@ -33,21 +33,21 @@
     RequestThrottling type. "Burst" allows all requests to be used in ThrottlePeriod without delays and then waits
     until there's new requests available. With "Constant" mode there is always a delay between requests. Delay is calculated
     by dividing throttlePeriod with throttleLimit. "Adaptive" mode allows throttleThreshold percentage of request to be
-    used with out delay, after threshold limit is reached next requests are delayed by dividing available requests
+    used without delay, after threshold limit is reached next requests are delayed by dividing available requests
     over throttlePeriod.
 
     .EXAMPLE
     Connect-SnipeitPS -Url $url -apiKey $myapikey
-    Connect to  Snipe it  api.
+    Connect to Snipe-IT API.
 
     .EXAMPLE
     Connect-SnipeitPS -Url $url -SecureApiKey $myapikey
-    Connects to Snipe it api with apikey stored to securestring
+    Connects to Snipe-IT API with API Key stored as SecureString
 
     .EXAMPLE
-    Connect-SnipeitPS -siteCred (Get-Credential -message "Use site url as username and apikey as password")
-    Connect to Snipe It with PSCredential object.
-    To use saved credentials you can use export-clixml and import-clixml commandlets.
+    Connect-SnipeitPS -siteCred (Get-Credential -message "Use site URL as username and API Key as password")
+    Connect to Snipe-IT with PSCredential object.
+    To use saved credentials you can use Export-Clixml and Import-Clixml cmdlets.
 
     .EXAMPLE
     Build credential with apikey value from secret vault (Microsoft.PowerShell.SecretManagement)
@@ -102,11 +102,20 @@ function Connect-SnipeitPS {
     )
 
 
+    begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+    }
+
     PROCESS {
         switch ($PsCmdlet.ParameterSetName) {
             'Connect with url and apikey' {
                 $SnipeitPSSession.url = $url.AbsoluteUri.TrimEnd('/')
-                $SnipeitPSSession.apiKey = ConvertTo-SecureString -String $apiKey -AsPlainText -Force
+                $convertParams = @{
+                    String      = $apiKey
+                    AsPlainText = $true
+                    Force       = $true
+                }
+                $SnipeitPSSession.apiKey = ConvertTo-SecureString @convertParams
             }
 
             'Connect with url and secure apikey' {
@@ -138,7 +147,11 @@ function Connect-SnipeitPS {
         Write-Debug "Site apikey: $($SnipeitPSSession.apiKey)"
 
         if (-not (Test-SnipeitPSConnection)) {
-            throw "Cannot verify connection to snipe it. For the start try to check url and provided apikey or credential parameters"
+            throw "Cannot verify connection to Snipe-IT. Try checking the URL and provided API key or credential parameters."
         }
+    }
+
+    end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
     }
 }

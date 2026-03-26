@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitLocation
 
 ## SYNOPSIS
-Add a new Location to Snipe-it asset system
+Add a new Location to Snipe-IT asset system
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ New-SnipeitLocation [-name] <String> [[-address] <String>] [[-address2] <String>
 ```
 
 ## DESCRIPTION
-Add a new Location to Snipe-it asset system
+Add a new Location to Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -63,7 +63,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -229,7 +229,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

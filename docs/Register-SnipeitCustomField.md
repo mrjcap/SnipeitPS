@@ -8,7 +8,7 @@ schema: 2.0.0
 # Register-SnipeitCustomField
 
 ## SYNOPSIS
-Associate a custom field with a fieldset in Snipe-it
+Associate a custom field with a fieldset in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Register-SnipeitCustomField [-id] <Int32> [-fieldset_id] <Int32> [[-required] <B
 ```
 
 ## DESCRIPTION
-Associate a custom field with a fieldset in Snipe-it
+Associate a custom field with a fieldset in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Register-SnipeitCustomField -id 1 -fieldset_id 5
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

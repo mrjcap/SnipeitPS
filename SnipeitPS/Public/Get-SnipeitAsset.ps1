@@ -1,18 +1,18 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Assets or specific asset
+Gets a list of Snipe-IT Assets or specific asset
 
 .PARAMETER search
 A text string to search the assets data
 
 .PARAMETER id
-ID number of exact snipeit asset
+ID number of exact Snipe-IT asset
 
 .PARAMETER asset_tag
 Exact asset tag to query
 
-.PARAMETER asset_serial
-Exact asset serialnumber to query
+.PARAMETER serial
+Exact asset serial number to query
 
 .PARAMETER audit_due
 Retrieve a list of assets that are due for auditing soon.
@@ -21,10 +21,10 @@ Retrieve a list of assets that are due for auditing soon.
 Retrieve a list of assets that are overdue for auditing.
 
 .PARAMETER user_id
-Retrieve a list of assets checked out to user id.
+Retrieve a list of assets checked out to user ID.
 
 .PARAMETER component_id
-Retrieve a list of assets assigned this component id.
+Retrieve a list of assets assigned this component ID.
 
 .PARAMETER name
 Optionally restrict asset results to this asset name
@@ -51,7 +51,7 @@ Optionally restrict asset results to this location ID
 Optionally restrict asset results to this depreciation ID
 
 .PARAMETER requestable
-Optionally restrict asset results to those set as requestable 
+Optionally restrict asset results to those set as requestable
 
 .PARAMETER status
 Optionally restrict asset results to one of these status types: RTD, Deployed, Undeployable, Deleted, Archived, Requestable
@@ -60,8 +60,8 @@ Optionally restrict asset results to one of these status types: RTD, Deployed, U
 Optionally restrict asset results to this status label ID
 
 .PARAMETER customfields
-Hashtable of custom fields and extra fields for searching assets in Snipe-It.
-Use internal field names from Snipe-It. You can use Get-CustomField to get internal field names.
+Hashtable of custom fields and extra fields for searching assets in Snipe-IT.
+Use internal field names from Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
 
 .PARAMETER sort
 Specify the column name you wish to sort by
@@ -79,10 +79,10 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitAsset -all
@@ -94,7 +94,7 @@ Search for specific asset
 
 .EXAMPLE
 Get-SnipeitAsset -id 3
-Get asset with id number 3
+Get asset with ID number 3
 
 .EXAMPLE
 Get-SnipeitAsset -asset_tag snipe00033
@@ -114,11 +114,11 @@ Get Assets overdue for auditing
 
 .EXAMPLE
 Get-SnipeitAsset -user_id 4
-Get Assets checked out to user id 4
+Get Assets checked out to user ID 4
 
 .EXAMPLE
 Get-SnipeitAsset -component_id 5
-Get Assets with component id 5
+Get Assets with component ID 5
 
 
 #>
@@ -232,6 +232,7 @@ function Get-SnipeitAsset() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -277,7 +278,7 @@ function Get-SnipeitAsset() {
         if ($all) {
             $offstart = $(if ($offset) {$offset} Else {0})
             $callargs = $SearchParameter
-            Write-Verbose "Callargs: $($callargs | convertto-json)"
+            Write-Verbose "Callargs: $($callargs | ConvertTo-Json)"
             $callargs.Remove('all')
 
             while ($true) {
@@ -297,6 +298,7 @@ function Get-SnipeitAsset() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

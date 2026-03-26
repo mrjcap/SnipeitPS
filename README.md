@@ -28,14 +28,14 @@ Import-Module SnipeitPS
 Connect-SnipeitPS -URL 'https://asset.example.com' -apiKey 'tokenKey'
 
 # Or set connection with safely saved credentials, first save credentials
-$SnipeCred =Get-Credential -message "Use url as username and apikey as password"
+$SnipeCred =Get-Credential -message "Use URL as username and API key as password"
 $SnipeCred | Export-CliXml snipecred.xml
 
 # ..then use your saved credentials like
 Connect-SnipeitPS -siteCred (Import-CliXml snipecred.xml)
 
-# OR use -secureApiKey that allow pass apiKey as SecureString
-# if you are usin Microsoft.PowerShell.SecretManagement or like
+# OR use -secureApiKey that allows passing an API key as SecureString
+# if you are using Microsoft.PowerShell.SecretManagement or like
 Connect-SnipeitPS -URL 'https://asset.example.com' -secureApiKey 'tokenKey'
 
 ```

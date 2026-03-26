@@ -11,7 +11,7 @@ Describe "Get-SnipeitAssetLicense" {
         }
     }
 
-    It "Calls /api/v1/hardware/{id}/licenses endpoint with id interpolated" {
+    It "Calls /api/v1/hardware/{id}/licenses endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitAssetLicense -id 5
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -65,7 +65,7 @@ Describe "Get-SnipeitComponentAsset" {
         }
     }
 
-    It "Calls /api/v1/components/{id}/assets endpoint with id interpolated" {
+    It "Calls /api/v1/components/{id}/assets endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitComponentAsset -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -119,7 +119,7 @@ Describe "Get-SnipeitUserAsset" {
         }
     }
 
-    It "Calls /api/v1/users/{id}/assets endpoint with id interpolated" {
+    It "Calls /api/v1/users/{id}/assets endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitUserAsset -id 7
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -173,7 +173,7 @@ Describe "Get-SnipeitUserAccessory" {
         }
     }
 
-    It "Calls /api/v1/users/{id}/accessories endpoint with id interpolated" {
+    It "Calls /api/v1/users/{id}/accessories endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitUserAccessory -id 7
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -227,7 +227,7 @@ Describe "Get-SnipeitUserLicense" {
         }
     }
 
-    It "Calls /api/v1/users/{id}/licenses endpoint with id interpolated" {
+    It "Calls /api/v1/users/{id}/licenses endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitUserLicense -id 7
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -281,7 +281,7 @@ Describe "Get-SnipeitConsumableUser" {
         }
     }
 
-    It "Calls /api/v1/consumables/{id}/users endpoint with id interpolated" {
+    It "Calls /api/v1/consumables/{id}/users endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitConsumableUser -id 4
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {

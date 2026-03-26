@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitModel
 
 ## SYNOPSIS
-Updates Model on Snipe-it asset system
+Updates Model on Snipe-IT asset system
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Set-SnipeitModel [-id] <Int32[]> [[-name] <String>] [[-model_number] <String>] [
 ```
 
 ## DESCRIPTION
-Updates Model on Snipe-it asset system
+Updates Model on Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -33,7 +33,7 @@ Set-SnipeitModel -id 1 -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-Category ID that the asset belongs to this can be got using Get-Category
+Category ID that the model belongs to. This can be obtained using Get-SnipeitCategory
 
 ```yaml
 Type: Int32
@@ -138,7 +138,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-Manufacturer ID that the asset belongs to this can be got using Get-Manufacturer
+Manufacturer ID that the model belongs to. This can be obtained using Get-SnipeitManufacturer
 
 ```yaml
 Type: Int32
@@ -183,8 +183,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -200,7 +200,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

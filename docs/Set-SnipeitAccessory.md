@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitAccessory
 
 ## SYNOPSIS
-Updates accessory on Snipe-It system
+Updates accessory on Snipe-IT system
 
 ## SYNTAX
 
@@ -16,12 +16,12 @@ Updates accessory on Snipe-It system
 Set-SnipeitAccessory [-id] <Int32[]> [[-name] <String>] [[-qty] <Int32>] [[-category_id] <Int32>]
  [[-company_id] <Int32>] [[-manufacturer_id] <Int32>] [[-model_number] <String>] [[-order_number] <String>]
  [[-purchase_cost] <Single>] [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>]
- [[-location_id] <Int32>] [[-image] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-location_id] <Int32>] [[-image] <String>] [-image_delete] [[-RequestType] <String>]
+ [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Updates accessory on Snipe-It system
+Updates accessory on Snipe-IT system
 
 ## EXAMPLES
 
@@ -34,7 +34,7 @@ Set-SnipeitAccessory -id 1 -qty 3
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -259,8 +259,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -291,7 +291,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

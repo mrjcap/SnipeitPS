@@ -5,37 +5,40 @@
     Checkout specific license seat to user, asset or both
 
     .PARAMETER ID
-    Unique ID For license to checkout or array of IDs
+    Unique ID for license to checkout or array of IDs
+
+    .PARAMETER seat_id
+    ID of the license seat
 
     .PARAMETER assigned_to
-    Id of target user
+    ID of target user
 
     .PARAMETER asset_id
-    Id of target asset
+    ID of target asset
 
     .PARAMETER note
     Notes about checkout
 
     .PARAMETER RequestType
-    Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+    HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
-    Set-SnipeitLicenceSeat -ID 1 -seat_id 1 -assigned_id 3
-    Checkout licence to user id 3
+    Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -assigned_id 3
+    Checkout license to user ID 3
 
     .EXAMPLE
-    Set-SnipeitLicenceSeat -ID 1 -seat_id 1 -asset_id 3
-    Checkout licence to asset id 3
+    Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -asset_id 3
+    Checkout license to asset ID 3
 
     .EXAMPLE
-    Set-SnipeitLicenceSeat -ID 1 -seat_id 1 -asset_id $null -assigned_id $null
-    Checkin licence seat id 1 of licence id 1
+    Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -asset_id $null -assigned_id $null
+    Checkin license seat ID 1 of license ID 1
 
 #>
 function Set-SnipeitLicenseSeat() {
@@ -45,7 +48,7 @@ function Set-SnipeitLicenseSeat() {
     )]
 
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
         [parameter(mandatory = $true)]
@@ -71,7 +74,20 @@ function Set-SnipeitLicenseSeat() {
     )
 
     begin{
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
     }
 
     process{
@@ -82,25 +98,15 @@ function Set-SnipeitLicenseSeat() {
                 Body   = $Values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
         }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

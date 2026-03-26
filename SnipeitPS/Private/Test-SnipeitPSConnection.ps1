@@ -1,5 +1,7 @@
 function Test-SnipeitPSConnection {
-    #test api connection
+    [CmdletBinding()]
+    param()
+    #test API connection
     $Parameters = @{
         Api           = '/api/v1/statuslabels'
         Method        = 'Get'
@@ -7,10 +9,10 @@ function Test-SnipeitPSConnection {
     }
     Write-Verbose "Testing connection to $($SnipeitPSSession.url)."
 
-    $contest = Invoke-SnipeitMethod @Parameters
+    $result = Invoke-SnipeitMethod @Parameters
 
-    if ( $contest) {
-        Write-Verbose "Connection to $($SnipeitPSSession.url) tested succesfully."
+    if ( $result) {
+        Write-Verbose "Connection to $($SnipeitPSSession.url) tested successfully."
         return $true
     } else {
         return $false

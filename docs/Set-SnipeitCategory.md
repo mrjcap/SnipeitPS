@@ -33,7 +33,7 @@ Set-SnipeitCategory -id 4 -name "Laptops"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_type
-Type of category. Valid values are 'asset', 'accessory', 'consumable', 'component', and 'license'.
+Type of category (asset, accessory, consumable, component, license)
 
 ```yaml
 Type: String
@@ -103,7 +103,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -138,7 +138,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
-Name of new category to be created
+Name of the category
 
 ```yaml
 Type: String
@@ -153,8 +153,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitActivity
 
 ## SYNOPSIS
-Gets and search Snipe-it Activity history
+Gets and searches Snipe-IT Activity history
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Get-SnipeitActivity [[-search] <String>] [[-target_type] <String>] [[-target_id]
 ```
 
 ## DESCRIPTION
-Gets a list of Snipe-it activity history
+Gets a list of Snipe-IT activity history
 
 ## EXAMPLES
 
@@ -37,7 +37,7 @@ Get-SnipeitActivity -target_type Asset -target_id 1
 
 ### -action_type
 Type of action.
-One from following list "add seats", "checkin from", 'checkout' or 'update'
+One of the following: "add seats", "checkin from", 'checkout' or 'update'
 
 ```yaml
 Type: String
@@ -68,7 +68,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -99,7 +99,7 @@ Accept wildcard characters: False
 
 ### -item_type
 Type of target.
-One from following list 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
+One of the following: 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
 
 ```yaml
 Type: String
@@ -175,7 +175,7 @@ Accept wildcard characters: False
 
 ### -target_type
 Type of target.
-One from following list 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
+One of the following: 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
 
 ```yaml
 Type: String
@@ -191,7 +191,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

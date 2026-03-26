@@ -18,20 +18,20 @@ Set-SnipeitInfo [-url] <Uri> [-apiKey] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Deprecated combatibilty function that Set apikey and url user to connect Snipe-It system.
+Deprecated compatibility function that Sets API Key and URL used to connect to Snipe-IT system.
 Please use Connect-SnipeitPS instead.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-SnipeitInfo -url $url -apiKey -Verbose
+Set-SnipeitInfo -url $url -apiKey $myapikey -Verbose
 ```
 
 ## PARAMETERS
 
 ### -apiKey
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: Uri

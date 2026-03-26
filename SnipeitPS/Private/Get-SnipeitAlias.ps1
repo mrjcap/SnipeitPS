@@ -1,9 +1,11 @@
- Function Get-SnipeitAlias(){
+function Get-SnipeitAlias(){
+    [CmdletBinding()]
+    param()
  @{'Get-Asset' = 'Get-SnipeitAsset';
     'Get-AssetMaintenance' = 'Get-SnipeitAssetMaintenance';
     'Get-Category' = 'Get-SnipeitCategory';
     'Get-Company' = 'Get-SnipeitCompany';
-    'Get-Component' = 'Get-SnipeitCompany';
+    'Get-Component' = 'Get-SnipeitComponent';
     'Get-CustomField' = 'Get-SnipeitCustomField';
     'Get-Department' = 'Get-SnipeitDepartment';
     'Get-Fieldset' = 'Get-SnipeitFieldset';
@@ -33,6 +35,8 @@
     'New-Accessory' = 'New-SnipeitAccessory';
     'Set-Accessory' = 'Set-SnipeitAccessory';
     'Get-Accessory' = 'Get-SnipeitAccessory';
+    'Get-License' = 'Get-SnipeitLicense';
+    'Get-Location' = 'Get-SnipeitLocation';
     'Remove-Asset' = 'Remove-SnipeitAsset';
     'Remove-User' = 'Remove-SnipeitUser';}
 }

@@ -8,14 +8,14 @@ schema: 2.0.0
 # Get-SnipeitStatus
 
 ## SYNOPSIS
-Gets a list of Snipe-it Status Labels
+Gets a list of Snipe-IT Status Labels
 
 ## SYNTAX
 
 ### Search (Default)
 ```
 Get-SnipeitStatus [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-name <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -30,7 +30,7 @@ Gets a list of Snipe-IT status labels or a specific status label by ID.
 
 ### EXAMPLE 1
 ```
-Get-SnipeitStatus -search  "Ready to Deploy"
+Get-SnipeitStatus -search "Ready to Deploy"
 ```
 
 ### EXAMPLE 2
@@ -57,7 +57,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Status Label
+An ID of a specific Status Label
 
 ```yaml
 Type: Int32
@@ -99,6 +99,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict Status Label results to this name field.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -150,7 +165,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

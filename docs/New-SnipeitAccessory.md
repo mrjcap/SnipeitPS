@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitAccessory
 
 ## SYNOPSIS
-Creates new accessory on Snipe-It system
+Creates a new accessory on Snipe-IT system
 
 ## SYNTAX
 
@@ -16,24 +16,25 @@ Creates new accessory on Snipe-It system
 New-SnipeitAccessory [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-company_id] <Int32>]
  [[-manufacturer_id] <Int32>] [[-order_number] <String>] [[-model_number] <String>] [[-purchase_cost] <Single>]
  [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>] [[-location_id] <Int32>]
- [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates new accessory on Snipe-It system
+Creates a new accessory on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitAccessory -name "Accessory" -qty 3  -category_id 1
+New-SnipeitAccessory -name "Accessory" -qty 3 -category_id 1
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -244,7 +245,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

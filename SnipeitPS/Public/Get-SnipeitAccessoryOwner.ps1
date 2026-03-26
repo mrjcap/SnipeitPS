@@ -1,26 +1,23 @@
 <#
     .SYNOPSIS
-    Get list of checked out accessories
+    Gets a list of checked out accessories
     .DESCRIPTION
-    Get list of checked out accessories
+    Gets a list of checked out accessories
 
     .PARAMETER id
-    Unique ID For accessory to list
+    Unique ID for accessory to list
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     Get-SnipeitAccessoryOwner -id 1
 #>
 function Get-SnipeitAccessoryOwner() {
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
+    [CmdletBinding()]
 
     Param(
         [parameter(mandatory = $true)]
@@ -33,6 +30,9 @@ function Get-SnipeitAccessoryOwner() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+
         $Parameters = @{
             Api    = "/api/v1/accessories/$id/checkedout"
             Method = 'GET'
@@ -49,13 +49,12 @@ function Get-SnipeitAccessoryOwner() {
         }
     }
     process {
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
-            $result = Invoke-SnipeitMethod @Parameters
-        }
+        $result = Invoke-SnipeitMethod @Parameters
         $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

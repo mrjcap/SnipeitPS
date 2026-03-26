@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitFieldset
 
 ## SYNOPSIS
-Set properties of a Snipe-it Fieldset
+Set properties of a Snipe-IT Fieldset
 
 ## SYNTAX
 
@@ -31,7 +31,7 @@ Set-SnipeitFieldset -id 1 -name "Updated Fieldset"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Fieldset
+An ID of a specific Fieldset
 
 ```yaml
 Type: Int32[]
@@ -76,8 +76,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
