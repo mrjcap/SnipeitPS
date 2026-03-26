@@ -161,7 +161,7 @@ function Set-SnipeitUser() {
         foreach($user_id in $id) {
             $Parameters = @{
                 Api    = "/api/v1/users/$user_id"
-                Method = 'PATCH'
+                Method = $RequestType
                 Body   = $Values
             }
 

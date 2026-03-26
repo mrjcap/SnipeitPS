@@ -955,6 +955,16 @@ Describe "Set-SnipeitUser" {
         }
     }
 
+    It "Uses Put method when RequestType is Put" {
+        InModuleScope 'SnipeitPS' {
+            Set-SnipeitUser -id 5 -first_name "Test" -RequestType "Put" -Confirm:$false
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Api -eq "/api/v1/users/5" -and
+                $Method -eq "Put"
+            }
+        }
+    }
+
     It "Handles legacy url and apiKey parameters" {
         InModuleScope 'SnipeitPS' {
             Mock Invoke-SnipeitMethod { return $null }
