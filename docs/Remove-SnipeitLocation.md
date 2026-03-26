@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitLocation
 
 ## SYNOPSIS
-Removes Location from Snipe-it asset system
+Removes Location from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitLocation [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-
 ```
 
 ## DESCRIPTION
-Removes location or multiple locations from Snipe-it asset system
+Removes location or multiple locations from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitLocation -ID 44
 
 ### EXAMPLE 2
 ```
-Get-SnipeitLocation -city Arkham  | Remove-SnipeitLocation
+Get-SnipeitLocation -city Arkham | Remove-SnipeitLocation
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For location to be removed
+Unique ID for location to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

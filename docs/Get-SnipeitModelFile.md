@@ -37,7 +37,7 @@ Get-SnipeitModelFile -id 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -file_id
-An id of specific file
+An ID of a specific file
 
 ```yaml
 Type: Int32
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Model
+An ID of a specific Model
 
 ```yaml
 Type: Int32
@@ -83,7 +83,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

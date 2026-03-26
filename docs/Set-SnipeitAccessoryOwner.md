@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -13,8 +13,8 @@ Checkout accessory
 ## SYNTAX
 
 ```
-Set-SnipeitAccessoryOwner [-id] <Int32[]> [-assigned_to] <Int32> [[-note] <String>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-SnipeitAccessoryOwner [-id] <Int32[]> [-assigned_to] <Int32> [[-checkout_to_type] <String>]
+ [[-note] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,14 +24,14 @@ Checkout accessory to user
 
 ### EXAMPLE 1
 ```
-Set-SnipeitAccessoryOwner -id 1 -assigned_id 1  -note "testing check out to user"
+Set-SnipeitAccessoryOwner -id 1 -assigned_to 1 -checkout_to_type user -note "testing check out to user"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -39,14 +39,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -assigned_to
-Id of target user, asset, or location
+ID of target user, asset, or location
 
 ```yaml
 Type: Int32
@@ -60,8 +60,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -checkout_to_type
+Checkout accessory to one of the following types: user, asset, or location
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: user
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -id
-Unique ID  For accessory or array of IDs to checkout
+Unique ID for accessory or array of IDs to checkout
 
 ```yaml
 Type: Int32[]
@@ -84,7 +99,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,7 +107,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -100,7 +115,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

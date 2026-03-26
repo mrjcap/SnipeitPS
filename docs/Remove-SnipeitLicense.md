@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitLicense
 
 ## SYNOPSIS
-Removes licence from Snipe-it asset system
+Removes license from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,25 +18,25 @@ Remove-SnipeitLicense [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-W
 ```
 
 ## DESCRIPTION
-Removes licence or multiple licenses from Snipe-it asset system
+Removes license or multiple licenses from Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Remove-SnipeitLicence -ID 44
+Remove-SnipeitLicense -ID 44
 ```
 
 ### EXAMPLE 2
 ```
-Get-SnipeitLicence -product_key 123456789  | Remove-SnipeitLicense
+Get-SnipeitLicense -product_key 123456789 | Remove-SnipeitLicense
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For licence to be removed
+Unique ID for license to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

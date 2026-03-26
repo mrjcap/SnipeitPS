@@ -8,15 +8,18 @@ schema: 2.0.0
 # Get-SnipeitUser
 
 ## SYNOPSIS
-Gets a list of Snipe-it Users
+Gets a list of Snipe-IT Users
 
 ## SYNTAX
 
 ### Search (Default)
 ```
 Get-SnipeitUser [-search <String>] [-company_id <Int32>] [-location_id <Int32>] [-group_id <Int32>]
- [-department_id <Int32>] [-username <String>] [-email <String>] [-order <String>] [-limit <Int32>]
- [-offset <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-department_id <Int32>] [-username <String>] [-email <String>] [-employee_num <String>]
+ [-state <String>] [-zip <String>] [-country <String>] [-deleted <Nullable`1>] [-ldap_import <Nullable`1>]
+ [-remote <Nullable`1>] [-assets_count <Int32>] [-licenses_count <Int32>] [-accessories_count <Int32>]
+ [-consumables_count <Int32>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>]
+ [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -57,13 +60,13 @@ Get-SnipeitUser -email user@somedomain.com
 ### EXAMPLE 5
 ```
 Get-SnipeitUser -accessory_id 3
-Get users with accessory id 3 has been checked out to
+Get users that accessory ID 3 has been checked out to
 ```
 
 ## PARAMETERS
 
 ### -accessory_id
-Get users a specific accessory id has been checked out to
+Get users that a specific accessory ID has been checked out to
 
 ```yaml
 Type: String
@@ -73,6 +76,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -accessories_count
+Optionally restrict User results to those with the specified accessories count
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -94,7 +112,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -104,6 +122,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assets_count
+Optionally restrict User results to those with the specified assets count
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -119,6 +152,51 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -consumables_count
+Optionally restrict User results to those with the specified consumables count
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -country
+Optionally restrict User results to this country field
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -deleted
+Optionally restrict User results to deleted users only
+
+```yaml
+Type: Nullable[Boolean]
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -139,7 +217,22 @@ Accept wildcard characters: False
 ```
 
 ### -email
-Search string for email field
+Optionally restrict User results to this email field
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -employee_num
+Optionally restrict User results to this employee_num field
 
 ```yaml
 Type: String
@@ -169,7 +262,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific User
+An ID of a specific User
 
 ```yaml
 Type: String
@@ -179,6 +272,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ldap_import
+Optionally restrict User results to those with specified ldap_import value
+
+```yaml
+Type: Nullable[Boolean]
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -licenses_count
+Optionally restrict User results to those with the specified licenses count
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -245,6 +368,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -remote
+Optionally restrict User results to those with specified remote worker value
+
+```yaml
+Type: Nullable[Boolean]
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -search
 A text string to search the User data
 
@@ -260,9 +398,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -state
+Optionally restrict User results to this state field
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -277,7 +430,22 @@ Accept wildcard characters: False
 ```
 
 ### -username
-Search string for username field
+Optionally restrict User results to this username field
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -zip
+Optionally restrict User results to this zip field
 
 ```yaml
 Type: String

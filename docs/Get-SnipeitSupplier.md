@@ -8,14 +8,16 @@ schema: 2.0.0
 # Get-SnipeitSupplier
 
 ## SYNOPSIS
-Gets a list of Snipe-it Suppliers
+Gets a list of Snipe-IT Suppliers
 
 ## SYNTAX
 
 ### Search (Default)
 ```
 Get-SnipeitSupplier [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-name <String>] [-address <String>] [-address2 <String>] [-city <String>] [-zip <String>]
+ [-country <String>] [-fax <String>] [-email <String>] [-notes <String>] [-url <String>]
+ [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -40,6 +42,36 @@ Get-SnipeitSupplier -id 2
 
 ## PARAMETERS
 
+### -address
+Optionally restrict Supplier results to this Supplier address.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -address2
+Optionally restrict Supplier results to this Supplier address2.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -all
 Return all results, works with -offset and other parameters
 
@@ -57,7 +89,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -71,8 +103,68 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -city
+Optionally restrict Supplier results to this Supplier city.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -country
+Optionally restrict Supplier results to this Supplier country.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -email
+Optionally restrict Supplier results to this Supplier email address.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -fax
+Optionally restrict Supplier results to this Supplier fax number.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -id
-An id of specific Supplier
+An ID of a specific Supplier
 
 ```yaml
 Type: Int32
@@ -99,6 +191,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict Supplier results to this Supplier name.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+Optionally restrict Supplier results to this Supplier notes field.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -150,11 +272,26 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -zip
+Optionally restrict Supplier results to this Supplier zip.
+
+```yaml
+Type: String
+Parameter Sets: Search
 Aliases:
 
 Required: False

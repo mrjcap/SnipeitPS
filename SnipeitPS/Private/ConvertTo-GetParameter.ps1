@@ -15,7 +15,7 @@ function ConvertTo-GetParameter {
     }
 
     PROCESS {
-        Add-Type -AssemblyName System.Web
+        Add-Type -AssemblyName System.Web -ErrorAction Stop
 
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Making HTTP get parameter string out of a hashtable"
         foreach ($key in $InputObject.Keys) {

@@ -1,12 +1,57 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Licenses
+Gets a list of Snipe-IT Licenses
 
 .PARAMETER search
 A text string to search the Licenses data
 
 .PARAMETER id
-An id of specific License
+An ID of a specific License
+
+.PARAMETER user_id
+ID of a user to filter licenses checked out to
+
+.PARAMETER asset_id
+ID of an asset to filter licenses checked out to
+
+.PARAMETER name
+Name of a specific license to search for
+
+.PARAMETER company_id
+ID of a company to filter by
+
+.PARAMETER product_key
+Product key to search for
+
+.PARAMETER order_number
+Order number to search for
+
+.PARAMETER purchase_order
+Purchase order to search for
+
+.PARAMETER license_name
+Name of the license to search for
+
+.PARAMETER license_email
+Email address associated with the license
+
+.PARAMETER manufacturer_id
+ID of a manufacturer to filter by
+
+.PARAMETER supplier_id
+ID of a supplier to filter by
+
+.PARAMETER depreciation_id
+ID of a depreciation schedule to filter by
+
+.PARAMETER category_id
+ID of a category to filter by
+
+.PARAMETER order
+Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
+
+.PARAMETER sort
+Specify the column name you wish to sort by
 
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
@@ -19,10 +64,10 @@ Return all results, works with -offset and other parameters
 
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitLicense -search SomeLicense
@@ -105,6 +150,7 @@ function Get-SnipeitLicense() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -156,6 +202,7 @@ function Get-SnipeitLicense() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

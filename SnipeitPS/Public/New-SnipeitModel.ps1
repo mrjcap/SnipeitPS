@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Add a new Model to Snipe-it asset system
+    Add a new Model to Snipe-IT asset system
 
     .DESCRIPTION
-    Add a new Model to Snipe-it asset system
+    Add a new Model to Snipe-IT asset system
 
     .PARAMETER name
     Name of the Asset Model
@@ -12,10 +12,13 @@
     Model number of the Asset Model
 
     .PARAMETER category_id
-    Category ID that the asset belongs to this can be got using Get-Category
+    Category ID that the model belongs to. This can be obtained using Get-SnipeitCategory
 
     .PARAMETER manufacturer_id
-    Manufacturer ID that the asset belongs to this can be got using Get-Manufacturer
+    Manufacturer ID that the model belongs to. This can be obtained using Get-SnipeitManufacturer
+
+    .PARAMETER eol
+    Number of months until end of life
 
     .PARAMETER fieldset_id
     Fieldset ID that the asset uses (Custom fields)
@@ -24,10 +27,10 @@
     Asset model Image filename and path
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     New-SnipeitModel -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
@@ -67,15 +70,16 @@ function New-SnipeitModel() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = @{
             name            = $name
             category_id     = $category_id
             manufacturer_id = $manufacturer_id
-            fieldset_id     = $fieldset_id
         }
 
+        if ($PSBoundParameters.ContainsKey('fieldset_id')) { $Values.Add("fieldset_id", $fieldset_id) }
         if ($PSBoundParameters.ContainsKey('model_number')) { $Values.Add("model_number", $model_number) }
         if ($PSBoundParameters.ContainsKey('eol')) { $Values.Add("eol", $eol) }
 
@@ -100,12 +104,12 @@ function New-SnipeitModel() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

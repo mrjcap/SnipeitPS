@@ -3,7 +3,7 @@
     Updates a license
 
     .DESCRIPTION
-    Updates license on Snipe-It system
+    Updates license on Snipe-IT system
 
     .PARAMETER id
     ID number of license or array of license IDs
@@ -18,7 +18,7 @@
     ID number of license category
 
     .PARAMETER company_id
-    Id number of company license belongs to
+    ID number of company the license belongs to
 
     .PARAMETER expiration_date
     Date of license expiration
@@ -60,13 +60,13 @@
     Termination date for license.
 
     .PARAMETER RequestType
-    Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+    HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     Set-SnipeitLicense -id 1 -name "License" -seats 3 -company_id 1
@@ -135,6 +135,7 @@ function Set-SnipeitLicense() {
     )
 
     begin{
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -151,6 +152,15 @@ function Set-SnipeitLicense() {
             $Values['termination_date'] = $Values['termination_date'].ToString("yyyy-MM-dd")
         }
 
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
     }
 
     process {
@@ -161,24 +171,14 @@ function Set-SnipeitLicense() {
                 Body   = $Values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                 Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
         }
     }
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

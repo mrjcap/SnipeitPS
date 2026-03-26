@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Add a new Audit to Snipe-it asset system
+Add a new Audit to Snipe-IT asset system
 
 .DESCRIPTION
-Add a new Audit to Snipe-it asset system
+Add a new Audit to Snipe-IT asset system
 
 .PARAMETER Tag
 The asset tag of the asset you wish to audit
@@ -42,16 +42,19 @@ function New-SnipeitAudit() {
 
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        $Values = @{
-            "location_id" = $location_id
-        }
+        $Values = @{}
 
         if ($PSBoundParameters.ContainsKey('tag')) {
             $Values += @{"asset_tag" = $tag}
         }
-        
+
+        if ($PSBoundParameters.ContainsKey('location_id')) {
+            $Values += @{"location_id" = $location_id}
+        }
+
         if ($PSBoundParameters.ContainsKey('next_audit_date')) {
             $Values += @{"next_audit_date" = ($next_audit_date).ToString("yyyy-MM-dd")}
         }
@@ -76,12 +79,12 @@ function New-SnipeitAudit() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

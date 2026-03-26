@@ -1,21 +1,22 @@
 ﻿<#
     .SYNOPSIS
-    Make api request to Snipe it
+    Make an API request to Snipe-IT
 
     .PARAMETER Api
-    Api part of url. prefix with slash ie. "/api/v1/hardware"
+    API part of URL. prefix with slash ie. "/api/v1/hardware"
 
     .PARAMETER Method
-    Method of the invokation, one of following "GET", "POST", "PUT", "PATCH" or "DELETE"
+    Method of the invocation, one of the following: "GET", "POST", "PUT", "PATCH" or "DELETE"
 
     .PARAMETER Body
     Request body as hashtable. Needed for post, put and patch
 
     .PARAMETER GetParameters
-    Get-Parameters as hastable.
+    Get-Parameters as hashtable.
 #>
 
 function Invoke-SnipeitMethod {
+    [CmdletBinding()]
     [OutputType(
         [PSObject]
     )]
@@ -38,35 +39,55 @@ function Invoke-SnipeitMethod {
         if ( $null -ne $SnipeitPSSession.legacyUrl -and $null -ne $SnipeitPSSession.legacyApiKey ) {
             [string]$Url = $SnipeitPSSession.legacyUrl
             Write-Debug "Invoke-SnipeitMethod url: $Url"
-            if($PSVersionTable.PSVersion -ge '7.0'){
-                $Token =  ConvertFrom-SecureString -AsPlainText -SecureString $SnipeitPSSession.legacyApiKey
+            if($script:IsPowerShell7){
+                $convertParams = @{
+                    AsPlainText  = $true
+                    SecureString = $SnipeitPSSession.legacyApiKey
+                }
+                $Token = ConvertFrom-SecureString @convertParams
             } else {
                 #convert to plaintext via credential
-                $Token =  (New-Object PSCredential "user",$SnipeitPSSession.legacyApiKey).GetNetworkCredential().Password
+                $credentialParams = @{
+                    TypeName     = 'System.Management.Automation.PSCredential'
+                    ArgumentList = @("user", $SnipeitPSSession.legacyApiKey)
+                }
+                $Token = (New-Object @credentialParams).GetNetworkCredential().Password
             }
         } elseif ($null -ne $SnipeitPSSession.url -and $null -ne $SnipeitPSSession.apiKey) {
             [string]$Url = $SnipeitPSSession.url
             Write-Debug "Invoke-SnipeitMethod url: $Url"
-            if($PSVersionTable.PSVersion -ge '7.0'){
-                $Token =  ConvertFrom-SecureString -AsPlainText -SecureString $SnipeitPSSession.apiKey
+            if($script:IsPowerShell7){
+                $convertParams = @{
+                    AsPlainText  = $true
+                    SecureString = $SnipeitPSSession.apiKey
+                }
+                $Token = ConvertFrom-SecureString @convertParams
             } else {
                 #convert to plaintext via credential
-                $Token =  (New-Object PSCredential "user",$SnipeitPSSession.apiKey).GetNetworkCredential().Password
+                $credentialParams = @{
+                    TypeName     = 'System.Management.Automation.PSCredential'
+                    ArgumentList = @("user", $SnipeitPSSession.apiKey)
+                }
+                $Token = (New-Object @credentialParams).GetNetworkCredential().Password
             }
         } else {
-            throw "Please use Connect-SnipeitPS to setup connection before any other commands."
+            throw "Please use Connect-SnipeitPS to set up a connection before any other commands."
         }
 
         # Validation of parameters
         if (($Method -in ("POST", "PUT", "PATCH")) -and (!($Body))) {
             $message = "The following parameters are required when using the ${Method} parameter: Body."
-            $exception = New-Object -TypeName System.ArgumentException -ArgumentList $message
+            $newObjectParams = @{
+                TypeName     = 'System.ArgumentException'
+                ArgumentList = $message
+            }
+            $exception = New-Object @newObjectParams
             Throw $exception
         }
 
         #Build request uri
         $apiUri = "$Url$Api"
-        #To support images "image" property have be handled before this
+        #To support images "image" property has to be handled before this
 
         $_headers = @{
             "Authorization" = "Bearer $($Token)"
@@ -90,43 +111,53 @@ function Invoke-SnipeitMethod {
             Method          = $Method
             Headers         = $_headers
             UseBasicParsing = $true
-            ErrorAction     = 'SilentlyContinue'
+            ErrorAction     = 'Stop'
         }
 
         # Send image requests as multipart/form-data if supported
         if($null -ne $body -and $Body.Keys -contains 'image' ){
-            if($PSVersionTable.PSVersion -ge '7.0'){
-                $Body['image'] = get-item $body['image']
-                # As multipart/form-data is always POST we need add
-                # requested method for laravel named as '_method'
-                $Body['_method'] = $Method
-                $splatParameters["Method"] = 'POST'
-                $splatParameters["Form"] = $Body
-            } else {
-                # use base64 encoded images for powershell  version < 7
-                Add-Type -AssemblyName "System.Web"
-                $mimetype = [System.Web.MimeMapping]::GetMimeMapping($body['image'])
-                $Body['image'] = 'data:@'+$mimetype+';base64,'+[Convert]::ToBase64String([IO.File]::ReadAllBytes($Body['image']))
+            try {
+                if($script:IsPowerShell7){
+                    $Body['image'] = Get-Item $body['image'] -ErrorAction Stop
+                    # As multipart/form-data is always POST we need add
+                    # requested method for laravel named as '_method'
+                    $Body['_method'] = $Method
+                    $splatParameters["Method"] = 'POST'
+                    $splatParameters["Form"] = $Body
+                } else {
+                    # use base64 encoded images for PowerShell version < 7
+                    $mimetype = 'application/octet-stream'
+                    try { Add-Type -AssemblyName "System.Web"; $mimetype = [System.Web.MimeMapping]::GetMimeMapping($body['image']) } catch {}
+                    $Body['image'] = 'data:@'+$mimetype+';base64,'+[Convert]::ToBase64String([IO.File]::ReadAllBytes($Body['image']))
+                }
+            } catch {
+                Write-Error "Failed to process image file '$($body['image'])': $_"
+                return
             }
         }
 
         # Send file upload requests as multipart/form-data
         if($null -ne $body -and $Body.Keys -contains 'file' ){
-            if($PSVersionTable.PSVersion -ge '7.0'){
-                # Laravel expects file[] (array notation) for file uploads
-                $Body['file[]'] = get-item $body['file']
-                $Body.Remove('file')
-                $Body['_method'] = $Method
-                $splatParameters["Method"] = 'POST'
-                $splatParameters["Form"] = $Body
-                # Remove Content-Type header so -Form can set multipart/form-data
-                $_headers.Remove('Content-Type')
-            } else {
-                throw "File uploads require PowerShell 7.0 or later."
+            try {
+                if($script:IsPowerShell7){
+                    # Laravel expects file[] (array notation) for file uploads
+                    $Body['file[]'] = Get-Item $body['file'] -ErrorAction Stop
+                    $Body.Remove('file')
+                    $Body['_method'] = $Method
+                    $splatParameters["Method"] = 'POST'
+                    $splatParameters["Form"] = $Body
+                    # Remove Content-Type header so -Form can set multipart/form-data
+                    $_headers.Remove('Content-Type')
+                } else {
+                    throw "File uploads require PowerShell 7.0 or later."
+                }
+            } catch {
+                Write-Error "Failed to process file '$($body['file'])': $_"
+                return
             }
         }
         if ($Body -and $splatParameters.Keys -notcontains 'Form') {
-            $splatParameters["Body"] =  [System.Text.Encoding]::UTF8.GetBytes(($Body | Convertto-Json))
+            $splatParameters["Body"] =  [System.Text.Encoding]::UTF8.GetBytes(($Body | ConvertTo-Json))
         }
 
         $script:PSDefaultParameterValues = $global:PSDefaultParameterValues
@@ -138,49 +169,44 @@ function Invoke-SnipeitMethod {
         #Check throttle limit
         if ($SnipeitPSSession.throttleLimit -gt 0) {
             Write-Verbose "Check for request throttling"
-            Write-debug "ThrottleMode: $($SnipeitPSSession.throttleMode)"
-            Write-debug "ThrottleLimit: $($SnipeitPSSession.throttleLimit)"
-            Write-debug "ThrottlePeriod: $($SnipeitPSSession.throttlePeriod)"
-            Write-debug "ThrottleThreshold: $($SnipeitPSSession.throttleThreshold)"
-            Write-debug "Current count: $($SnipeitPSSession.throttledRequests.count)"
+            Write-Debug "ThrottleMode: $($SnipeitPSSession.throttleMode)"
+            Write-Debug "ThrottleLimit: $($SnipeitPSSession.throttleLimit)"
+            Write-Debug "ThrottlePeriod: $($SnipeitPSSession.throttlePeriod)"
+            Write-Debug "ThrottleThreshold: $($SnipeitPSSession.throttleThreshold)"
+            Write-Debug "Current count: $($SnipeitPSSession.throttledRequests.count)"
 
             #current request timestamps in period
-            $SnipeitPSSession.throttledRequests = ($SnipeitPSSession.throttledRequests).where({$_ -gt (get-date).AddMilliseconds( 0 - $SnipeitPSSession.throttlePeriod).ToFileTime()})
-
-            #make sure that we alway have list here
-            if($null -eq $SnipeitPSSession.throttledRequests) {
-                $SnipeitPSSession.throttledRequests = [System.Collections.ArrayList]::new()
-            }
+            $SnipeitPSSession.throttledRequests = ($SnipeitPSSession.throttledRequests).where({$_ -gt (Get-Date).AddMilliseconds( 0 - $SnipeitPSSession.throttlePeriod).ToFileTime()})
 
             $naptime = 0
             switch ($SnipeitPSSession.throttleMode) {
                 "Burst" {
                     if ($SnipeitPSSession.throttledRequests.count -ge $SnipeitPSSession.throttleLimit) {
-                        $naptime =  [Math]::Round(((get-date).ToFileTime() - ($SnipeitPSSession.throttledRequests[0]))/10000)
+                        $naptime =  [Math]::Round(((Get-Date).ToFileTime() - ($SnipeitPSSession.throttledRequests[0]))/10000)
                     }
                 }
 
                 "Constant" {
-                    $prevrequesttime =[Math]::Round(((get-date).ToFileTime() - ($SnipeitPSSession.throttledRequests[$SnipeitPSSession.throttledRequests.count - 1]))/10000)
+                    $prevrequesttime =[Math]::Round(((Get-Date).ToFileTime() - ($SnipeitPSSession.throttledRequests[$SnipeitPSSession.throttledRequests.count - 1]))/10000)
                     $naptime = [Math]::Round($SnipeitPSSession.throttlePeriod / $SnipeitPSSession.throttleLimit) - $prevrequesttime
                 }
 
                 "Adaptive" {
                   $unThrottledRequests = $SnipeitPSSession.throttleLimit * ($SnipeitPSSession.throttleThreshold / 100)
                   if($SnipeitPSSession.throttledRequests.count -ge $unThrottledRequests) {
-                     #calculate time left in throttlePeriod and devide it for remaining requests
+                     #calculate time left in throttlePeriod and divide it for remaining requests
                      $remaining = $SnipeitPSSession.throttleLimit - $SnipeitPSSession.throttledRequests.count
                      if ($remaining -lt 1) {
                         $remaining = 1
                      }
-                     $naptime =  [Math]::Round((((get-date).ToFileTime() - ($SnipeitPSSession.throttledRequests[0]))/ 10000) / $remaining)
+                     $naptime =  [Math]::Round((((Get-Date).ToFileTime() - ($SnipeitPSSession.throttledRequests[0]))/ 10000) / $remaining)
                   }
                 }
             }
 
             #Do we need a nap
             if ($naptime -gt 0) {
-                Write-verbose "Throttling request for $naptime ms"
+                Write-Verbose "Throttling request for $naptime ms"
                 Start-Sleep -Milliseconds $naptime
             }
 
@@ -189,7 +215,7 @@ function Invoke-SnipeitMethod {
 
         # Invoke the API
         try {
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Invoking method $Method to URI $URi"
+            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Invoking method $Method to URI $apiUri"
             Write-Debug "[$($MyInvocation.MyCommand.Name)] Invoke-WebRequest with: $($splatParameters | Out-String)"
             $webResponse = Invoke-RestMethod @splatParameters
         }
@@ -210,12 +236,12 @@ function Invoke-SnipeitMethod {
                 try{
                     if ($webResponse.status -eq "error") {
                         Write-Verbose "[$($MyInvocation.MyCommand.Name)] An error response was received ... resolving"
-                        # This could be handled nicely in an function such as:
+                        # This could be handled nicely in a function such as:
                         # ResolveError $response -WriteError
                         Write-Error $($webResponse.messages | Out-String)
                     } elseif ( $webResponse.StatusCode -eq 'Unauthorized') {
                         Write-Verbose "[$($MyInvocation.MyCommand.Name)] An Unauthorized response was received"
-                        Write-Error "Cannot connect to Snipe It: Unauthorized."
+                        Write-Error "Cannot connect to Snipe-IT: Unauthorized."
                         return $false
                     } else {
                         #update operations return payload
@@ -246,22 +272,14 @@ function Invoke-SnipeitMethod {
                     }
                 }
                 catch {
-                    Write-Warning "Cannot parse server response. To debug try to add -Verbose with command."
+                    Write-Warning "Cannot parse server response. To debug, try adding -Verbose to the command."
                 }
 
-            }
-            elseif ($webResponse.StatusCode -eq "Unauthorized") {
-                Write-Error "[$($MyInvocation.MyCommand.Name)] You are not Authorized to access the resource, check your apiKey is correct"
-            }
-            else {
-                # No content, although statusCode < 400
-                # This could be wanted behavior of the API
-                Write-Verbose "[$($MyInvocation.MyCommand.Name)] No content was returned from."
             }
 
         }
         else {
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] No Web result object was returned from. This is unusual!"
+            Write-Verbose "[$($MyInvocation.MyCommand.Name)] No web result object was returned. This is unusual!"
         }
     }
 

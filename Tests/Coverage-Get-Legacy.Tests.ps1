@@ -23,7 +23,7 @@ Describe "Get-SnipeitAsset" {
     }
 
     # Parameter set: Get with id
-    It "Calls /api/v1/hardware/{id} endpoint when id specified" {
+    It "Calls /api/v1/hardware/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitAsset -id 5
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -164,7 +164,7 @@ Describe "Get-SnipeitAccessory" {
         }
     }
 
-    It "Calls /api/v1/accessories/{id} endpoint when id specified" {
+    It "Calls /api/v1/accessories/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitAccessory -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -419,7 +419,7 @@ Describe "Get-SnipeitCategory" {
         }
     }
 
-    It "Calls /api/v1/categories/{id} endpoint when id specified" {
+    It "Calls /api/v1/categories/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitCategory -id 2
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -487,7 +487,7 @@ Describe "Get-SnipeitCompany" {
         }
     }
 
-    It "Calls /api/v1/companies/{id} endpoint when id specified" {
+    It "Calls /api/v1/companies/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitCompany -id 1
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -555,7 +555,7 @@ Describe "Get-SnipeitComponent" {
         }
     }
 
-    It "Calls /api/v1/components/{id} endpoint when id specified" {
+    It "Calls /api/v1/components/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitComponent -id 4
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -623,7 +623,7 @@ Describe "Get-SnipeitConsumable" {
         }
     }
 
-    It "Calls /api/v1/consumables/{id} endpoint when id specified" {
+    It "Calls /api/v1/consumables/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitConsumable -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -698,7 +698,7 @@ Describe "Get-SnipeitCustomField" {
         }
     }
 
-    It "Calls /api/v1/fields/{id} endpoint when id specified" {
+    It "Calls /api/v1/fields/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitCustomField -id 5
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -740,7 +740,7 @@ Describe "Get-SnipeitDepartment" {
         }
     }
 
-    It "Calls /api/v1/departments/{id} endpoint when id specified" {
+    It "Calls /api/v1/departments/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitDepartment -id 2
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -808,7 +808,7 @@ Describe "Get-SnipeitFieldset" {
         }
     }
 
-    It "Calls /api/v1/fieldsets/{id} endpoint when id specified" {
+    It "Calls /api/v1/fieldsets/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitFieldset -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -850,7 +850,7 @@ Describe "Get-SnipeitLicense" {
         }
     }
 
-    It "Calls /api/v1/licenses/{id} endpoint when id specified" {
+    It "Calls /api/v1/licenses/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitLicense -id 2
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -1004,7 +1004,7 @@ Describe "Get-SnipeitLocation" {
         }
     }
 
-    It "Calls /api/v1/locations/{id} endpoint when id specified" {
+    It "Calls /api/v1/locations/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitLocation -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -1072,7 +1072,7 @@ Describe "Get-SnipeitManufacturer" {
         }
     }
 
-    It "Calls /api/v1/manufacturers/{id} endpoint when id specified" {
+    It "Calls /api/v1/manufacturers/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitManufacturer -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -1140,7 +1140,7 @@ Describe "Get-SnipeitModel" {
         }
     }
 
-    It "Calls /api/v1/models/{id} endpoint when id specified" {
+    It "Calls /api/v1/models/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitModel -id 1
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -1208,7 +1208,7 @@ Describe "Get-SnipeitStatus" {
         }
     }
 
-    It "Calls /api/v1/statuslabels/{id} endpoint when id specified" {
+    It "Calls /api/v1/statuslabels/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitStatus -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -1276,7 +1276,7 @@ Describe "Get-SnipeitSupplier" {
         }
     }
 
-    It "Calls /api/v1/suppliers/{id} endpoint when id specified" {
+    It "Calls /api/v1/suppliers/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitSupplier -id 2
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -1344,7 +1344,7 @@ Describe "Get-SnipeitUser" {
         }
     }
 
-    It "Calls /api/v1/users/{id} endpoint when id specified" {
+    It "Calls /api/v1/users/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitUser -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -1414,7 +1414,7 @@ Describe "Get-SnipeitAccessoryOwner" {
 
     It "Calls /api/v1/accessories/{id}/checkedout endpoint" {
         InModuleScope 'SnipeitPS' {
-            Get-SnipeitAccessoryOwner -id 1 -Confirm:$false
+            Get-SnipeitAccessoryOwner -id 1
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
                 $Api -eq "/api/v1/accessories/1/checkedout" -and $Method -eq "GET"
             }
@@ -1427,7 +1427,7 @@ Describe "Get-SnipeitAccessoryOwner" {
             Mock Set-SnipeitPSLegacyUrl {}
             Mock Reset-SnipeitPSLegacyApi {}
             Mock Write-Warning {}
-            Get-SnipeitAccessoryOwner -id 1 -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
+            Get-SnipeitAccessoryOwner -id 1 -url "http://test.snipeit.com" -apiKey "testkey"
             Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
             Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
             Should -Invoke Reset-SnipeitPSLegacyApi -Times 1

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitAssetFile
 
 ## SYNOPSIS
-Removes a file from an asset in Snipe-it
+Removes a file from an asset in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitAssetFile [-id] <Int32> [-file_id] <Int32> [[-url] <String>] [[-ap
 ```
 
 ## DESCRIPTION
-Removes a file from an asset in Snipe-it
+Removes a file from an asset in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Remove-SnipeitAssetFile -id 1 -file_id 10
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

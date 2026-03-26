@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Add a new Manufacturer to Snipe-it asset system
+    Add a new Manufacturer to Snipe-IT asset system
 
     .DESCRIPTION
-    Creates a new manufacturer on Snipe-It system
+    Creates a new manufacturer on Snipe-IT system
 
     .PARAMETER Name
     Name of the Manufacturer
@@ -18,10 +18,10 @@
     Remove current image
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     New-SnipeitManufacturer -name "HP"
@@ -52,6 +52,7 @@ function New-SnipeitManufacturer() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -80,11 +81,11 @@ function New-SnipeitManufacturer() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

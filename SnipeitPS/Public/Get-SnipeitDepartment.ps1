@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Departments
+Gets a list of Snipe-IT Departments
 
 .PARAMETER search
 A text string to search the Departments data
 
 .PARAMETER id
-An id of specific Department
+An ID of a specific Department
 
 .PARAMETER name
 Optionally restrict department results to this department name.
@@ -29,17 +29,20 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER sort
+Specify the column name you wish to sort by
+
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitDepartment
 
 .EXAMPLE
-Get-SnipeitDepartment -search  Department1
+Get-SnipeitDepartment -search Department1
 
 .EXAMPLE
 Get-SnipeitDepartment -id 1
@@ -91,6 +94,7 @@ function Get-SnipeitDepartment() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
@@ -141,6 +145,7 @@ function Get-SnipeitDepartment() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

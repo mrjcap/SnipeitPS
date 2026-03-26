@@ -3,7 +3,7 @@
 Updates component
 
 .DESCRIPTION
-Updates component on Snipe-It system
+Updates component on Snipe-IT system
 
 .PARAMETER id
 ID number of component or array of IDs
@@ -11,14 +11,14 @@ ID number of component or array of IDs
 .PARAMETER name
 Component name
 
-.PARAMETER category_id
-ID number of category
-
 .PARAMETER qty
 Quantity of the components you have
 
 .PARAMETER min_amt
 Minimum Quantity of the components before alert is triggered
+
+.PARAMETER company_id
+Company ID to associate with the component
 
 .PARAMETER location_id
 ID number of the location the component is assigned to
@@ -39,13 +39,13 @@ Image file name and path for item
 Remove current image
 
 .PARAMETER RequestType
-Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Set-SnipeitComponent -id 42 -qty 12
@@ -95,21 +95,13 @@ function Set-SnipeitComponent() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['purchase_date']) {
             $Values['purchase_date'] = $Values['purchase_date'].ToString("yyyy-MM-dd")
-        }
-    }
-
-    process {
-        foreach($component_id in $id) {
-        $Parameters = @{
-            Api    = "/api/v1/components/$component_id"
-            Method = $RequestType
-            Body   = $Values
         }
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
@@ -121,16 +113,25 @@ function Set-SnipeitComponent() {
             Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
             Set-SnipeitPSLegacyUrl -url $url
         }
+    }
+
+    process {
+        foreach($component_id in $id) {
+        $Parameters = @{
+            Api    = "/api/v1/components/$component_id"
+            Method = $RequestType
+            Body   = $Values
+        }
 
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
         }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

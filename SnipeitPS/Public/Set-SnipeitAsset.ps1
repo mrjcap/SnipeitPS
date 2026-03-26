@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Update a specific Asset in the Snipe-it asset system
+    Update a specific Asset in the Snipe-IT asset system
 
     .DESCRIPTION
-    Update a specific Asset in the Snipe-it asset system
+    Update a specific Asset in the Snipe-IT asset system
 
     .PARAMETER id
     ID of the Asset or array of IDs
@@ -15,19 +15,19 @@
     Asset name
 
     .PARAMETER Status_id
-    Status ID of the asset, this can be got using Get-Status
+    Status ID of the asset, this can be obtained using Get-SnipeitStatus
 
     .PARAMETER Model_id
-    Model ID of the asset, this can be got using Get-Model
+    Model ID of the asset, this can be obtained using Get-SnipeitModel
 
     .PARAMETER last_checkout
     Date the asset was last checked out
 
     .PARAMETER assigned_to
-    The id of the user the asset is currently checked out to
+    The ID of the user the asset is currently checked out to
 
     .PARAMETER company_id
-    The id of an associated company id
+    The ID of an associated company ID
 
     .PARAMETER serial
     Serial number of the asset
@@ -45,7 +45,7 @@
     Date of asset purchase
 
     .PARAMETER supplier_id
-    Supplier id of the Asset
+    Supplier ID of the Asset
 
     .PARAMETER requestable
     Whether or not the asset can be requested by users with the permission to request assets
@@ -54,7 +54,7 @@
     Whether or not the asset is archived. Archived assets cannot be checked out and do not show up in the deployable asset screens
 
     .PARAMETER rtd_location_id
-    The id that corresponds to the location where the asset is usually located when not checked out
+    The ID that corresponds to the location where the asset is usually located when not checked out
 
     .PARAMETER notes
     Notes about asset
@@ -66,22 +66,22 @@
     Remove current image
 
     .PARAMETER RequestType
-    Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+    HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .PARAMETER customfields
-    Hashtable of custom fields and extra fields that need passing through to Snipeit
+    Hashtable of custom fields and extra fields that need passing through to Snipe-IT
 
     .EXAMPLE
     Set-SnipeitAsset -id 1 -status_id 1 -model_id 1 -name "Machine1"
 
     .EXAMPLE
-    Set-SnipeitAsset -id 1 -name "Machine1" -customfields =  @{ "_snipeit_os_5" = "Windows 10 Pro" ; "_snipeit_os_version" = "1909" }
+    Set-SnipeitAsset -id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Windows 10 Pro" ; "_snipeit_os_version" = "1909" }
 
     .EXAMPLE
     Get-SnipeitAsset -serial 12345678 | Set-SnipeitAsset -notes 'Just updated'
@@ -154,6 +154,7 @@ function Set-SnipeitAsset() {
         [hashtable] $customfields
     )
     begin{
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -166,6 +167,16 @@ function Set-SnipeitAsset() {
             $Values += $customfields
         }
 
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
+
     }
 
     process {
@@ -176,25 +187,15 @@ function Set-SnipeitAsset() {
                 Body   = $Values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
         }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

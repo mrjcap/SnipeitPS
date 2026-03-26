@@ -31,7 +31,7 @@ Reset-SnipeitAssetOwner -ID 44
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For asset to checkin
+Unique ID for asset to checkin
 
 ```yaml
 Type: Int32
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-Location id to change asset location to
+Location ID to change asset location to
 
 ```yaml
 Type: Int32
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

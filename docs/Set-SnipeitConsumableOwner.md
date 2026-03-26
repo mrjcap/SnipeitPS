@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitConsumableOwner
 
 ## SYNOPSIS
-Checkout a consumable to a user in Snipe-it
+Checkout a consumable to a user in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Set-SnipeitConsumableOwner [-id] <Int32[]> [-assigned_to] <Int32> [[-checkout_qt
 ```
 
 ## DESCRIPTION
-Checkout a consumable to a user in Snipe-it
+Checkout a consumable to a user in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Set-SnipeitConsumableOwner -id 1 -assigned_to 100
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

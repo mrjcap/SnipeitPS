@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitAssetMaintenance
 
 ## SYNOPSIS
-Add a new Asset maintenance to Snipe-it asset system
+Add a new Asset maintenance to Snipe-IT asset system
 
 ## SYNTAX
 
@@ -20,20 +20,20 @@ New-SnipeitAssetMaintenance [-asset_id] <Int32> [-supplier_id] <Int32> [-asset_m
 ```
 
 ## DESCRIPTION
-Add a new Asset maintenance to Snipe-it asset system
+Add a new Asset maintenance to Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -title "replace keyboard" -start_date 2021-01-01
+New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" -title "replace keyboard" -start_date "2021-01-01"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_id
-Required ID of the asset, this can be got using Get-Asset
+Required ID of the asset, this can be obtained using Get-SnipeitAsset
 
 ```yaml
 Type: Int32
@@ -64,7 +64,7 @@ Accept wildcard characters: False
 
 ### -asset_maintenance_type
 Type of asset maintenance.
-Valid values are 'Maintenance', 'Repair', 'Upgrade', or 'PAT Test'.
+Valid values are 'Maintenance', 'Repair', 'Upgrade', 'PAT', or 'Hardware Support'.
 
 ```yaml
 Type: String
@@ -94,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -cost
-Optional notes
+Optional cost of the maintenance
 
 ```yaml
 Type: Decimal
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

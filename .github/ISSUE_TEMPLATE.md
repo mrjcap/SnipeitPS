@@ -4,9 +4,9 @@
 
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
-* SnipitPS Module version used:
+* SnipeitPS Module version used:
 * Operating System and PowerShell version:
-* Snipe It version:
+* Snipe-IT version:
 
 ## Expected Behavior
 <!--- If you're describing a bug, tell us what should happen -->

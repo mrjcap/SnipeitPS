@@ -24,11 +24,12 @@ function Update-SnipeitAlias() {
         [Parameter(Mandatory = $true,
             ValueFromPipeline = $true)]
 
-	    [string[]]
-	    $String
+        [string[]]
+        $String
     )
     begin{
-        Write-Verbose "Replacing old Snipeit fuctions with new ones.. "
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Write-Verbose "Replacing old Snipe-IT functions with new ones."
         $SnipeitAliases = Get-SnipeitAlias
 
     }
@@ -45,6 +46,7 @@ function Update-SnipeitAlias() {
         }
     }
     end{
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         Write-Verbose "..replacing done"
     }
 

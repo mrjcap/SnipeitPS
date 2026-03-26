@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Add a file to a model in Snipe-it
+    Add a file to a model in Snipe-IT
 
     .DESCRIPTION
-    Add a file to a model in Snipe-it
+    Add a file to a model in Snipe-IT
 
     .PARAMETER id
     ID of the model to add the file to
@@ -15,10 +15,10 @@
     Optional notes for the file
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     New-SnipeitModelFile -id 1 -file "C:\path\to\file.pdf"
@@ -48,6 +48,7 @@ function New-SnipeitModelFile() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters `
@@ -77,6 +78,7 @@ function New-SnipeitModelFile() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

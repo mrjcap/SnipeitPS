@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitModel
 
 ## SYNOPSIS
-Add a new Model to Snipe-it asset system
+Add a new Model to Snipe-IT asset system
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ New-SnipeitModel [-name] <String> [[-model_number] <String>] [-category_id] <Int
 ```
 
 ## DESCRIPTION
-Add a new Model to Snipe-it asset system
+Add a new Model to Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ New-SnipeitModel -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-Category ID that the asset belongs to this can be got using Get-Category
+Category ID that the model belongs to. This can be obtained using Get-SnipeitCategory
 
 ```yaml
 Type: Int32
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-Manufacturer ID that the asset belongs to this can be got using Get-Manufacturer
+Manufacturer ID that the model belongs to. This can be obtained using Get-SnipeitManufacturer
 
 ```yaml
 Type: Int32
@@ -153,7 +153,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

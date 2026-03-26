@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitFieldset
 
 ## SYNOPSIS
-Create a new fieldset in Snipe-it
+Create a new fieldset in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ New-SnipeitFieldset [-name] <String> [[-url] <String>] [[-apiKey] <String>] [-Wh
 ```
 
 ## DESCRIPTION
-Create a new fieldset in Snipe-it
+Create a new fieldset in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ New-SnipeitFieldset -name "Laptop Fields"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

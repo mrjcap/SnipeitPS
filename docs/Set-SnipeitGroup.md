@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitGroup
 
 ## SYNOPSIS
-Set properties of a Snipe-it Group
+Set properties of a Snipe-IT Group
 
 ## SYNTAX
 
@@ -31,7 +31,7 @@ Set-SnipeitGroup -id 1 -name "Updated Group"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Group
+An ID of a specific Group
 
 ```yaml
 Type: Int32[]
@@ -106,8 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

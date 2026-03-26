@@ -1,27 +1,28 @@
 <#
 .SYNOPSIS
-Returns a fieldset or list of Snipe-it Fieldsets
+Returns a fieldset or list of Snipe-IT Fieldsets
 
 .PARAMETER id
-An id of specific fieldset
+An ID of a specific fieldset
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitFieldset
 Get all fieldsets
 
 .EXAMPLE
-Get-SnipeitFieldset  | Where-Object {$_.name -eq "Windows" }
+Get-SnipeitFieldset | Where-Object {$_.name -eq "Windows" }
 Gets fieldset by name
 
 #>
 
 function Get-SnipeitFieldset() {
+    [CmdletBinding()]
     Param(
         [int]$id,
 
@@ -32,6 +33,7 @@ function Get-SnipeitFieldset() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         if ($id) {
@@ -61,6 +63,7 @@ function Get-SnipeitFieldset() {
         $result
     }
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

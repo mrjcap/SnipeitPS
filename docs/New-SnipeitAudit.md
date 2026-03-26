@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitAudit
 
 ## SYNOPSIS
-Add a new Audit to Snipe-it asset system
+Add a new Audit to Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ New-SnipeitAudit [-tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <D
 ```
 
 ## DESCRIPTION
-Add a new Audit to Snipe-it asset system
+Add a new Audit to Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ New-SnipeitAudit -tag 1 -location_id 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

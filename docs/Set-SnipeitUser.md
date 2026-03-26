@@ -15,26 +15,27 @@ Updates a user on Snipe-IT system
 ```
 Set-SnipeitUser [-id] <Int32[]> [[-first_name] <String>] [[-last_name] <String>] [[-username] <String>]
  [[-jobtitle] <String>] [[-email] <String>] [[-phone] <String>] [[-password] <String>] [[-company_id] <Int32>]
- [[-location_id] <Int32>] [[-department_id] <Int32>] [[-manager_id] <Int32>] [[-employee_num] <String>]
- [[-activated] <Boolean>] [[-notes] <String>] [[-ldap_import] <Boolean>] [[-image] <String>] [-image_delete]
- [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-location_id] <Int32>] [[-department_id] <Int32>] [[-manager_id] <Int32>] [[-groups] <Int32[]>]
+ [[-employee_num] <String>] [[-activated] <Boolean>] [[-notes] <String>] [[-ldap_import] <Boolean>]
+ [[-image] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Updates a user on Snipe-IT system to Snipe-IT system
+Updates a user on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 Set-SnipeitUser -id 3 -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
-Updates user with id 3
+Updates user with ID 3
 ```
 
 ## PARAMETERS
 
 ### -activated
-Can user log in to snipe-it?
+Can user log in to Snipe-IT?
 
 ```yaml
 Type: Boolean
@@ -42,7 +43,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -50,7 +51,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -58,14 +59,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
+Position: 21
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -company_id
-ID number of company users belongs to
+ID number of company the user belongs to
 
 ```yaml
 Type: Int32
@@ -95,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -email
-email address
+Email address
 
 ```yaml
 Type: String
@@ -118,14 +119,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -first_name
-Users first name
+User's first name
 
 ```yaml
 Type: String
@@ -134,6 +135,21 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -groups
+ID numbers of groups
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -163,7 +179,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 18
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -185,7 +201,7 @@ Accept wildcard characters: False
 ```
 
 ### -jobtitle
-Users job title
+User's job title
 
 ```yaml
 Type: String
@@ -200,7 +216,7 @@ Accept wildcard characters: False
 ```
 
 ### -last_name
-Users last name
+User's last name
 
 ```yaml
 Type: String
@@ -215,7 +231,7 @@ Accept wildcard characters: False
 ```
 
 ### -ldap_import
-Mark user as import from ldap
+Mark user as imported from LDAP
 
 ```yaml
 Type: Boolean
@@ -223,7 +239,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 17
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -268,7 +284,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -305,24 +321,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 18
-Default value: Patch
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -331,6 +331,22 @@ Aliases:
 
 Required: False
 Position: 19
+Default value: Patch
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -url
+Deprecated parameter, please use Connect-SnipeitPS instead.
+URL of Snipe-IT system.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 20
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -390,6 +406,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-General notes
 
 ## RELATED LINKS

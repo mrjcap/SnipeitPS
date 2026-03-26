@@ -1,15 +1,15 @@
 <#
 .SYNOPSIS
-Updates accessory on Snipe-It system
+Updates accessory on Snipe-IT system
 
 .DESCRIPTION
-Updates accessory on Snipe-It system
+Updates accessory on Snipe-IT system
+
+.PARAMETER id
+An ID of a specific resource to update
 
 .PARAMETER name
 Accessory name
-
-.PARAMETER notes
-Notes about the accessory
 
 .PARAMETER qty
 Quantity of the accessory you have
@@ -51,13 +51,13 @@ Image file name and path for item
 Remove current image
 
 .PARAMETER RequestType
-Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 .EXAMPLE
 Set-SnipeitAccessory -id 1 -qty 3
 
@@ -114,6 +114,7 @@ function Set-SnipeitAccessory() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -122,7 +123,16 @@ function Set-SnipeitAccessory() {
             $Values['purchase_date'] = $Values['purchase_date'].ToString("yyyy-MM-dd")
         }
 
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
         }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
+    }
 
     process {
         foreach($accessory_id in $id) {
@@ -132,25 +142,15 @@ function Set-SnipeitAccessory() {
                 Body   = $Values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
        }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

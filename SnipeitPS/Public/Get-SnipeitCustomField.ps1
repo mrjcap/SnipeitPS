@@ -1,15 +1,15 @@
 <#
     .SYNOPSIS
-    Returns specific Snipe-IT custom field or a list of all custom field
+    Returns specific Snipe-IT custom field or a list of all custom fields
 
     .PARAMETER id
-    An id of specific field
+    An ID of a specific field
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     Get-SnipeitCustomField
@@ -23,6 +23,7 @@
 #>
 
 function Get-SnipeitCustomField() {
+    [CmdletBinding()]
     Param(
         [int]$id,
 
@@ -34,6 +35,7 @@ function Get-SnipeitCustomField() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         if ($id) {
@@ -64,6 +66,7 @@ function Get-SnipeitCustomField() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

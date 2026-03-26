@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Powershell API for Snipeit Asset Management
+PowerShell API for Snipe-IT Asset Management
 #>
 $scriptRoot = $PSScriptRoot + '\Public'
 
@@ -23,4 +23,5 @@ $SnipeitPSSession = [ordered]@{
     'apiKey' = $null
 }
 New-Variable -Name SnipeitPSSession  -Value $SnipeitPSSession -Scope Script -Force
+$script:IsPowerShell7 = $PSVersionTable.PSVersion -ge '7.0'
 

@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitAccessory
 
 ## SYNOPSIS
-Removes Accessory from Snipe-it asset system
+Removes Accessory from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitAccessory [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [
 ```
 
 ## DESCRIPTION
-Removes Accessory or multiple Accessoriers from Snipe-it asset system
+Removes Accessory or multiple Accessories from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitAccessory -ID 44 -Verbose
 
 ### EXAMPLE 2
 ```
-Get-SnipeitAccessory -search needle  | Remove-SnipeitAccessory
+Get-SnipeitAccessory -search needle | Remove-SnipeitAccessory
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For accessory to be removed
+Unique ID for accessory to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

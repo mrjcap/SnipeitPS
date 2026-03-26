@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Create a new status label in Snipe-it
+    Create a new status label in Snipe-IT
 
     .DESCRIPTION
-    Create a new status label in Snipe-it
+    Create a new status label in Snipe-IT
 
     .PARAMETER name
     Name of the status label
@@ -24,10 +24,10 @@
     Whether it should be the default label
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     New-SnipeitStatus -name "Ready to Deploy" -type deployable
@@ -63,6 +63,7 @@ function New-SnipeitStatus() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -87,12 +88,12 @@ function New-SnipeitStatus() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

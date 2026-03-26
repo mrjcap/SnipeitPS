@@ -1,19 +1,22 @@
 <#
 .SYNOPSIS
-Add a new Asset maintenance to Snipe-it asset system
+Add a new Asset maintenance to Snipe-IT asset system
 
 .DESCRIPTION
-Add a new Asset maintenance to Snipe-it asset system
+Add a new Asset maintenance to Snipe-IT asset system
 
-
-.PARAMETER title
-Required Title of maintenance
 
 .PARAMETER asset_id
-Required ID of the asset, this can be got using Get-Asset
+Required ID of the asset, this can be obtained using Get-SnipeitAsset
 
 .PARAMETER supplier_id
 Required maintenance supplier
+
+.PARAMETER asset_maintenance_type
+Type of maintenance: Maintenance, Repair, Upgrade, PAT, or Hardware Support
+
+.PARAMETER title
+Required Title of maintenance
 
 .PARAMETER start_date
 Required start date
@@ -31,13 +34,13 @@ Optional completion date
 Optional notes
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
-New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -title "replace keyboard" -start_date 2021-01-01
+New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" -title "replace keyboard" -start_date "2021-01-01"
 #>
 function New-SnipeitAssetMaintenance() {
     [CmdletBinding(
@@ -77,6 +80,7 @@ function New-SnipeitAssetMaintenance() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -110,12 +114,12 @@ function New-SnipeitAssetMaintenance() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

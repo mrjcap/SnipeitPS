@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SnipeitModel
 
 ## SYNOPSIS
-Gets a list of Snipe-it Models
+Gets a list of Snipe-IT Models
 
 ## SYNTAX
 
@@ -57,7 +57,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific model
+An ID of a specific model
 
 ```yaml
 Type: Int32
@@ -150,7 +150,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

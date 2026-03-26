@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Add a new Location to Snipe-it asset system
+    Add a new Location to Snipe-IT asset system
 
     .DESCRIPTION
-    Add a new Location to Snipe-it asset system
+    Add a new Location to Snipe-IT asset system
 
     .PARAMETER name
     Name of the Location
@@ -41,11 +41,14 @@
     .PARAMETER image
     Location Image filename and path
 
+    .PARAMETER image_delete
+    Remove current image
+
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     New-SnipeitLocation -name "Room 1" -address "123 Asset Street" -parent_id 14
@@ -94,6 +97,7 @@ function New-SnipeitLocation() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -118,12 +122,12 @@ function New-SnipeitLocation() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

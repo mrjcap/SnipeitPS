@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitAssetMaintenance
 
 ## SYNOPSIS
-Remove asset maintenance from Snipe-it asset system
+Remove asset maintenance from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitAssetMaintenance [-id] <Int32[]> [[-url] <String>] [[-apiKey] <Str
 ```
 
 ## DESCRIPTION
-Removes asset maintenance event or events from Snipe-it asset system by ID
+Removes asset maintenance event or events from Snipe-IT asset system by ID
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Remove-SnipeitAssetMaintenance -ID 44
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

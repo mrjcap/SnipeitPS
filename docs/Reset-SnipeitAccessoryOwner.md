@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Reset-SnipeitAccessoryOwner
 
 ## SYNOPSIS
-Checkin  accessories
+Checkin accessories
 
 ## SYNTAX
 
@@ -18,26 +18,26 @@ Reset-SnipeitAccessoryOwner [-assigned_pivot_id] <Int32> [[-url] <String>] [[-ap
 ```
 
 ## DESCRIPTION
-Checkin  accessories
+Checkin accessories
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To get the accessories_users table for specific accessory id number
+To get the accessories_users table for specific accessory ID number
 ```
 
 Get-SnipeitAccessoryOwner -id 1
 
-Thenselect  assigned_pivot_id for userid you like check in
+Then select assigned_pivot_id for the user ID you want to check in
 
-Get-SnipeitAccessoryOwner -assigned_pivot_id xxx
+Reset-SnipeitAccessoryOwner -assigned_pivot_id xxx
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -53,7 +53,7 @@ Accept wildcard characters: False
 
 ### -assigned_pivot_id
 This is the assigned_pivot_id of the accessory+user relationships in the accessories_users table
-Use Get-SnipeitAccessoryOwner to find out nooded value
+Use Get-SnipeitAccessoryOwner to find out needed value
 
 ```yaml
 Type: Int32
@@ -69,7 +69,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

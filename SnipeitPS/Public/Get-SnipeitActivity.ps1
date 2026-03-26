@@ -1,27 +1,30 @@
 <#
 .SYNOPSIS
-Gets and search Snipe-it Activity history
+Gets and searches Snipe-IT Activity history
 
 .DESCRIPTION
-Gets a list of Snipe-it activity history
+Gets a list of Snipe-IT activity history
 
 .PARAMETER search
 A text string to search the Activity history
 
 .PARAMETER target_type
-Type of target. One from following list 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
+Type of target. One of the following: 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
 
 .PARAMETER target_id
 Needed if target_type is specified
 
 .PARAMETER item_type
-Type of target. One from following list 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
+Type of item. One of the following: 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
 
 .PARAMETER item_id
-Needed if target_type is specified
+Needed if item_type is specified
 
 .PARAMETER action_type
-Type of action. One from following list "add seats", "checkin from", 'checkout' or 'update'
+Type of action. One of the following: "add seats", "checkin from", 'checkout' or 'update'
+
+.PARAMETER limit
+Specify the number of results to return
 
 .PARAMETER offset
 Result offset to use
@@ -30,10 +33,10 @@ Result offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitActivity -search Keyboard
@@ -44,6 +47,7 @@ Get-SnipeitActivity -target_type Asset -target_id 1
 #>
 
 function Get-SnipeitActivity() {
+    [CmdletBinding()]
     Param(
 
         [string]$search,
@@ -78,6 +82,9 @@ function Get-SnipeitActivity() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+
         if (($target_type -and -not $target_id) -or
             ($target_id -and -not $target_type)) {
             throw "Please specify both target_type and target_id"
@@ -131,6 +138,7 @@ function Get-SnipeitActivity() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

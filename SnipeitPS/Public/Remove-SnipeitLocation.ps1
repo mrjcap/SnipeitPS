@@ -1,21 +1,21 @@
 <#
     .SYNOPSIS
-    Removes Location from Snipe-it asset system
+    Removes Location from Snipe-IT asset system
     .DESCRIPTION
-    Removes location or multiple locations from Snipe-it asset system
+    Removes location or multiple locations from Snipe-IT asset system
     .PARAMETER ID
-    Unique ID For location to be removed
+    Unique ID for location to be removed
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     Remove-SnipeitLocation -ID 44
 
     .EXAMPLE
-    Get-SnipeitLocation -city Arkham  | Remove-SnipeitLocation
+    Get-SnipeitLocation -city Arkham | Remove-SnipeitLocation
 #>
 
 function Remove-SnipeitLocation () {
@@ -36,6 +36,18 @@ function Remove-SnipeitLocation () {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
     }
 
     process {
@@ -45,25 +57,15 @@ function Remove-SnipeitLocation () {
                 Method = 'Delete'
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
         }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

@@ -1,24 +1,27 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it consumables
+Gets a list of Snipe-IT consumables
 
 .PARAMETER search
 A text string to search the consumables
 
 .PARAMETER id
-An id of specific consumable
+An ID of a specific consumable
 
 .PARAMETER name
 Optionally restrict consumable results to this name field
 
 .PARAMETER company_id
-Id number of company
+ID number of company
 
 .PARAMETER category_id
-Id number of category
+ID number of category
 
 .PARAMETER manufacturer_id
-Id number of manufacturer
+ID number of manufacturer
+
+.PARAMETER location_id
+Location ID number of the consumable to filter by
 
 .PARAMETER sort
 Sort results by column
@@ -39,10 +42,10 @@ Offset to use
 Return all results
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitConsumable -all
@@ -50,10 +53,10 @@ Returns all consumables
 
 .EXAMPLE
 Get-SnipeitConsumable -search paper
-Returns search results containing string display
+Returns search results containing "paper"
 
 .EXAMPLE
-Get-Snipeitconsumable -id
+Get-SnipeitConsumable -id 1
 Returns specific consumable
 
 #>
@@ -109,6 +112,8 @@ function Get-SnipeitConsumable() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
@@ -140,9 +145,9 @@ function Get-SnipeitConsumable() {
                     while ($true) {
                         $callargs['offset'] = $offstart
                         $callargs['limit'] = $limit
-                        $res=Get-Snipeitconsumable @callargs
+                        $res=Get-SnipeitConsumable @callargs
                         $res
-                        if ($res.count -ne $limit) {
+                        if ($res.count -lt $limit) {
                             break
                         }
                         $offstart = $offstart + $limit
@@ -156,7 +161,7 @@ function Get-SnipeitConsumable() {
             'Get with ID' {
                 foreach($consumable_id in $id) {
                     $Parameters = @{
-                        Api           =  "$url/api/v1/consumables/$consumable_id"
+                        Api           = "/api/v1/consumables/$consumable_id"
                         Method        = 'Get'
                         GetParameters = $SearchParameter
                     }
@@ -169,6 +174,7 @@ function Get-SnipeitConsumable() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

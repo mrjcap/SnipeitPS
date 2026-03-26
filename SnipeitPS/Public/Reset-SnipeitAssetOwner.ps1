@@ -5,21 +5,21 @@
     Checks asset in from current user/location/asset
 
     .PARAMETER ID
-    Unique ID For asset to checkin
+    Unique ID for asset to checkin
 
     .PARAMETER status_id
     Change asset status to
 
     .PARAMETER location_id
-    Location id to change asset location to
+    Location ID to change asset location to
 
     .PARAMETER note
     Notes about checkin
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
     .EXAMPLE
     Reset-SnipeitAssetOwner -ID 44
 #>
@@ -46,39 +46,45 @@ function Reset-SnipeitAssetOwner() {
         [string]$apiKey
     )
 
-    Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+    begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-    $Values = @{
-        "note" = $note
+        $Values = @{}
+
+        if ($PSBoundParameters.ContainsKey('note')) { $Values.Add("note", $note) }
+        if ($PSBoundParameters.ContainsKey('location_id')) { $Values.Add("location_id", $location_id) }
+        if ($PSBoundParameters.ContainsKey('status_id')) { $Values.Add("status_id", $status_id) }
+
+        $Parameters = @{
+            Api    = "/api/v1/hardware/$id/checkin"
+            Method = 'POST'
+            Body   = $Values
+        }
+
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
     }
 
-    if ($PSBoundParameters.ContainsKey('location_id')) { $Values.Add("location_id", $location_id) }
-    if ($PSBoundParameters.ContainsKey('status_id')) { $Values.Add("status_id", $status_id) }
-
-    $Parameters = @{
-        Api    = "/api/v1/hardware/$id/checkin"
-        Method = 'POST'
-        Body   = $Values
+    process {
+        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            $result = Invoke-SnipeitMethod @Parameters
+            $result
+        }
     }
 
-    if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-        Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-        Set-SnipeitPSLegacyApiKey -apiKey $apikey
+    end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
+        # reset legacy sessions
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Reset-SnipeitPSLegacyApi
+        }
     }
-
-    if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-        Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-        Set-SnipeitPSLegacyUrl -url $url
-    }
-
-    if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
-        $result = Invoke-SnipeitMethod @Parameters
-    }
-
-    # reset legacy sessions
-    if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-        Reset-SnipeitPSLegacyApi
-    }
-
-    return $result
 }

@@ -1,28 +1,28 @@
 <#
 .SYNOPSIS
-Add a new Asset to Snipe-it asset system
+Add a new Asset to Snipe-IT asset system
 
 .DESCRIPTION
-Add a new Asset to Snipe-it asset system
+Add a new Asset to Snipe-IT asset system
 
 
 .PARAMETER status_id
-Required Status ID of the asset, this can be got using Get-Status
+Required Status ID of the asset, this can be obtained using Get-SnipeitStatus
 
 .PARAMETER model_id
-Required Model ID of the asset, this can be got using Get-Model
+Required Model ID of the asset, this can be obtained using Get-SnipeitModel
 
 .PARAMETER name
 Optional Name of the Asset
 
 .PARAMETER asset_tag
-Asset Tag for the Asset, not required when snipe asset_tag autogeneration is on.
+Asset Tag for the Asset, not required when Snipe-IT asset_tag autogeneration is on.
 
 .PARAMETER serial
 Optional Serial number of the Asset
 
 .PARAMETER company_id
-Optional Company id
+Optional Company ID
 
 .PARAMETER order_number
 Optional Order number
@@ -40,41 +40,41 @@ Optional Purchase cost of the Asset
 Optional Purchase date of the Asset
 
 .PARAMETER supplier_id
-Optional Supplier id of the Asset
+Optional Supplier ID of the Asset
 
 
 .PARAMETER rtd_location_id
-Optional Default location id for the asset
+Optional Default location ID for the asset
 
 .PARAMETER image
 Asset image filename and path
 
 .PARAMETER assigned_id
-Id of target user , location or asset
+ID of target user, location, or asset
 
 .PARAMETER checkout_to_type
-Checkout asset when creating to one of following types user, location or asset.
+Checkout asset when creating to one of the following types: location, asset, or user
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .PARAMETER customfields
-Hashtable of custom fields and extra fields that need passing through to Snipeit.
-Use internal field names from snipeit .You can use Get-CustomField to get internal field names.
+Hashtable of custom fields and extra fields that need passing through to Snipe-IT.
+Use internal field names from Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
 
 .EXAMPLE
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1"
-Create asset with automatic tag if tag generation is enabled on snipe-it, other wise without tag
+Create asset with automatic tag if tag generation is enabled on Snipe-IT, otherwise without tag
 
 .EXAMPLE
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1" -asset_tag "DEV123"
 Specifying asset tag when creating asset
 
 .EXAMPLE
-New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1" -customfields = @{ "_snipeit_os_5" = "Windows 10 Pro" }
+New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Windows 10 Pro" }
 Using customfields when creating asset.
 #>
 
@@ -149,6 +149,7 @@ function New-SnipeitAsset() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -169,7 +170,7 @@ function New-SnipeitAsset() {
                     'asset' { $Values += @{ "assigned_asset" = $assigned_id } }
             }
 
-            #This are not needed for API
+            #These are not needed for API
             if ($Values.ContainsKey('assigned_id')) {$Values.Remove('assigned_id')}
             if ($Values.ContainsKey('checkout_to_type')) {$Values.Remove('checkout_to_type')}
         }
@@ -194,12 +195,12 @@ function New-SnipeitAsset() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitStatus
 
 ## SYNOPSIS
-Create a new status label in Snipe-it
+Create a new status label in Snipe-IT
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ New-SnipeitStatus [-name] <String> [-type] <String> [[-notes] <String>] [[-color
 ```
 
 ## DESCRIPTION
-Create a new status label in Snipe-it
+Create a new status label in Snipe-IT
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ New-SnipeitStatus -name "Ready to Deploy" -type deployable
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -138,7 +138,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

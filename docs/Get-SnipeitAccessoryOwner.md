@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,17 +8,16 @@ schema: 2.0.0
 # Get-SnipeitAccessoryOwner
 
 ## SYNOPSIS
-Get list of checked out accessories
+Gets a list of checked out accessories
 
 ## SYNTAX
 
 ```
-Get-SnipeitAccessoryOwner [-id] <Int32> [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Get-SnipeitAccessoryOwner [-id] <Int32> [[-url] <String>] [[-apiKey] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get list of checked out accessories
+Gets a list of checked out accessories
 
 ## EXAMPLES
 
@@ -31,7 +30,7 @@ Get-SnipeitAccessoryOwner -id 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -46,7 +45,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For accessory to list
+Unique ID for accessory to list
 
 ```yaml
 Type: Int32
@@ -62,7 +61,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -71,37 +70,6 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

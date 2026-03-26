@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SnipeitConsumable
 
 ## SYNOPSIS
-Update a Consumable to Snipe-it asset system
+Update a Consumable on Snipe-IT asset system
 
 ## SYNTAX
 
@@ -21,21 +21,21 @@ Set-SnipeitConsumable [-id] <Int32[]> [[-name] <String>] [[-qty] <Int32>] [[-cat
 ```
 
 ## DESCRIPTION
-Update a Consumable on Snipe-it asset system
+Update a Consumable on Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-SnipeitConsumable -id 1 -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
-Create consumable with stock count 20 , alert when stock is  5 or lower
+Set-SnipeitConsumable -id 1 -name "Ink pack" -qty 20 -category_id 3 -min_amt 5
+Update consumable with stock count 20, alert when stock is 5 or lower
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-Required Category ID of the Consumable, this can be got using Get-SnipeitCategory
+Required Category ID of the Consumable, this can be obtained using Get-SnipeitCategory
 
 ```yaml
 Type: Int32
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-Optional Company id
+Optional Company ID
 
 ```yaml
 Type: Int32
@@ -80,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Optional  id number of the Consumable
+Optional ID number of the Consumable
 
 ```yaml
 Type: Int32[]
@@ -90,7 +90,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -140,7 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-Location id number of the consumable
+Location ID number of the consumable
 
 ```yaml
 Type: Int32
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-Manufacturer id number of the consumable
+Manufacturer ID number of the consumable
 
 ```yaml
 Type: Int32
@@ -200,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
-Optional  Name of the Consumable
+Optional Name of the Consumable
 
 ```yaml
 Type: String
@@ -230,7 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
-Optional Purchase date of the consumable
+Optional Purchase cost of the consumable
 
 ```yaml
 Type: String
@@ -290,8 +290,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -307,7 +307,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

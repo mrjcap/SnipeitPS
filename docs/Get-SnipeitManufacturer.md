@@ -8,14 +8,14 @@ schema: 2.0.0
 # Get-SnipeitManufacturer
 
 ## SYNOPSIS
-Gets a list of Snipe-it Manufacturers
+Gets a list of Snipe-IT Manufacturers
 
 ## SYNTAX
 
 ### Search (Default)
 ```
 Get-SnipeitManufacturer [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-name <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -37,7 +37,7 @@ Search all manufacturers for string HP
 ### EXAMPLE 2
 ```
 Get-SnipeitManufacturer -id 3
-Returns manufacturer with id 3
+Returns manufacturer with ID 3
 ```
 
 ## PARAMETERS
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Manufacturer
+An ID of a specific Manufacturer
 
 ```yaml
 Type: Int32
@@ -101,6 +101,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict Manufacturer results to this name field.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -152,7 +167,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

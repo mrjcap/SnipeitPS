@@ -1,12 +1,15 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Groups or a specific group
+Gets a list of Snipe-IT Groups or a specific group
 
 .PARAMETER search
 A text string to search the Groups data
 
 .PARAMETER id
-An id of specific Group
+An ID of a specific Group
+
+.PARAMETER order
+Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
@@ -18,10 +21,10 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitGroup -search "Admin"
@@ -60,6 +63,7 @@ function Get-SnipeitGroup() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -110,6 +114,7 @@ function Get-SnipeitGroup() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

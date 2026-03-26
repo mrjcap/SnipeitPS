@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Lists Snipe-it Assets Maintenances
+Lists Snipe-IT Asset Maintenances
 
 .PARAMETER asset_id
 Asset ID of the asset you'd like to return maintenances for
@@ -24,10 +24,10 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitAssetMaintenance
@@ -35,9 +35,11 @@ Get-SnipeitAssetMaintenance
 Get-SnipeitAssetMaintenance -search "myMachine"
 
 .EXAMPLE
-Get-SnipeitAssetMaintenance -search "myMachine"
+Get-SnipeitAssetMaintenance -asset_id 1
+Get maintenance records for a specific asset
 #>
 function Get-SnipeitAssetMaintenance() {
+    [CmdletBinding()]
     Param(
         [string]$search,
 
@@ -61,6 +63,7 @@ function Get-SnipeitAssetMaintenance() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -105,6 +108,7 @@ function Get-SnipeitAssetMaintenance() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

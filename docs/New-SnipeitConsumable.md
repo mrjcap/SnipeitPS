@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitConsumable
 
 ## SYNOPSIS
-Add a new Consumable to Snipe-it asset system
+Add a new Consumable to Snipe-IT asset system
 
 ## SYNTAX
 
@@ -21,21 +21,21 @@ New-SnipeitConsumable [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-
 ```
 
 ## DESCRIPTION
-Add a new Consumable to Snipe-it asset system
+Add a new Consumable to Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-SnipeitConsumable -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
-Create consumable with stock count 20 , alert when stock is  5 or lower
+New-SnipeitConsumable -name "Ink pack" -qty 20 -category_id 3 -min_amt 5
+Create consumable with stock count 20, alert when stock is 5 or lower
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
-Required Category ID of the Consumable, this can be got using Get-SnipeitCategory
+Required Category ID of the Consumable, this can be obtained using Get-SnipeitCategory
 
 ```yaml
 Type: Int32
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-Optional Company id
+Optional Company ID
 
 ```yaml
 Type: Int32
@@ -110,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
-Location id number of the consumable
+Location ID number of the consumable
 
 ```yaml
 Type: Int32
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
-Manufacturer id number of the consumable
+Manufacturer ID number of the consumable
 
 ```yaml
 Type: Int32
@@ -170,7 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
-Required  Name of the Consumable
+Required Name of the Consumable
 
 ```yaml
 Type: String
@@ -200,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
-Optional Purchase date of the consumable
+Optional Purchase cost of the consumable
 
 ```yaml
 Type: String
@@ -261,7 +261,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

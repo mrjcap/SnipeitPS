@@ -102,7 +102,7 @@ Describe "Get-SnipeitStatusAsset" {
         }
     }
 
-    It "Calls /api/v1/statuslabels/{id}/assetlist endpoint with id interpolated" {
+    It "Calls /api/v1/statuslabels/{id}/assetlist endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitStatusAsset -id 5
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -183,7 +183,7 @@ Describe "Get-SnipeitUserEula" {
         }
     }
 
-    It "Calls /api/v1/users/{id}/eulas endpoint with id interpolated" {
+    It "Calls /api/v1/users/{id}/eulas endpoint with ID interpolated" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitUserEula -id 7
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -245,7 +245,7 @@ Describe "Get-SnipeitAssetFile" {
         }
     }
 
-    It "Calls /api/v1/hardware/{id}/files endpoint when only id specified" {
+    It "Calls /api/v1/hardware/{id}/files endpoint when only ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitAssetFile -id 4
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -286,7 +286,7 @@ Describe "Get-SnipeitModelFile" {
         }
     }
 
-    It "Calls /api/v1/models/{id}/files endpoint when only id specified" {
+    It "Calls /api/v1/models/{id}/files endpoint when only ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitModelFile -id 6
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -337,7 +337,7 @@ Describe "Get-SnipeitGroup" {
         }
     }
 
-    It "Calls /api/v1/groups/{id} endpoint when id specified" {
+    It "Calls /api/v1/groups/{id} endpoint when ID specified" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitGroup -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {

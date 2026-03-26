@@ -1,36 +1,36 @@
 <#
 .SYNOPSIS
-Update a Consumable on Snipe-it asset system
+Update a Consumable on Snipe-IT asset system
 
 .DESCRIPTION
-Update a Consumable on Snipe-it asset system
+Update a Consumable on Snipe-IT asset system
 
 .PARAMETER id
-Optional  id number of the Consumable
+Optional ID number of the Consumable
 
 .PARAMETER name
-Optional  Name of the Consumable
+Optional Name of the Consumable
 
 .PARAMETER qty
 Optional Quantity of consumable
 
 .PARAMETER category_id
-Required Category ID of the Consumable, this can be got using Get-SnipeitCategory
+Required Category ID of the Consumable, this can be obtained using Get-SnipeitCategory
 
 .PARAMETER min_amt
 Optional minimum quantity of consumable
 
 .PARAMETER company_id
-Optional Company id
+Optional Company ID
 
 .PARAMETER order_number
 Optional Order number
 
 .PARAMETER manufacturer_id
-Manufacturer id number of the consumable
+Manufacturer ID number of the consumable
 
 .PARAMETER location_id
-Location id number of the consumable
+Location ID number of the consumable
 
 .PARAMETER requestable
 Is consumable requestable?
@@ -54,18 +54,18 @@ Image file name and path for item
 Remove current image
 
 .PARAMETER RequestType
-Http request type to send Snipe IT system. Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 
 .EXAMPLE
-Set-SnipeitConsumable -id 1 -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
-Create consumable with stock count 20 , alert when stock is  5 or lower
+Set-SnipeitConsumable -id 1 -name "Ink pack" -qty 20 -category_id 3 -min_amt 5
+Update consumable with stock count 20, alert when stock is 5 or lower
 
 #>
 
@@ -76,7 +76,7 @@ function Set-SnipeitConsumable() {
     )]
 
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
         [parameter(mandatory = $false)]
@@ -136,12 +136,24 @@ function Set-SnipeitConsumable() {
 
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['purchase_date']) {
             $Values['purchase_date'] = $Values['purchase_date'].ToString("yyyy-MM-dd")
         }
 
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
     }
 
     process {
@@ -152,25 +164,15 @@ function Set-SnipeitConsumable() {
                 Body   = $Values
             }
 
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apikey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
-            }
-
             if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
                 $result = Invoke-SnipeitMethod @Parameters
+                $result
             }
-
-            $result
             }
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

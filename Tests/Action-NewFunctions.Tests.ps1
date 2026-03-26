@@ -19,7 +19,7 @@ Describe "Restore-SnipeitAsset" {
         }
     }
 
-    It "Accepts pipeline input for id" {
+    It "Accepts pipeline input for ID" {
         InModuleScope 'SnipeitPS' {
             [PSCustomObject]@{ id = 7 } | Restore-SnipeitAsset -Confirm:$false
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
@@ -61,7 +61,7 @@ Describe "Restore-SnipeitUser" {
         }
     }
 
-    It "Accepts pipeline input for id" {
+    It "Accepts pipeline input for ID" {
         InModuleScope 'SnipeitPS' {
             [PSCustomObject]@{ id = 9 } | Restore-SnipeitUser -Confirm:$false
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {

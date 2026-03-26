@@ -19,7 +19,7 @@ New-SnipeitDepartment [-name] <String> [[-company_id] <Int32>] [[-location_id] <
 ```
 
 ## DESCRIPTION
-Creates a new department on Snipe-It system
+Creates a new department on Snipe-IT system
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ New-SnipeitDepartment -name "Department1" -company_id 1 -location_id 1 -manager_
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -153,7 +153,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

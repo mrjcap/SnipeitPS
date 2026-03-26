@@ -18,20 +18,20 @@ Set-SnipeitCompany [-id] <Int32[]> [-name] <String> [[-image] <String>] [-image_
 ```
 
 ## DESCRIPTION
-Updates companyt name on Snipe-It system
+Updates company name on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-An example
+Set-SnipeitCompany -id 1 -name "Acme Corp"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -106,8 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -176,6 +176,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-General notes
 
 ## RELATED LINKS

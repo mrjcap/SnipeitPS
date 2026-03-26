@@ -3,13 +3,13 @@
 Gets fields associated with a specific fieldset
 
 .PARAMETER id
-An id of specific Fieldset
+An ID of a specific Fieldset
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitFieldsetField -id 1
@@ -17,6 +17,7 @@ Get-SnipeitFieldsetField -id 1
 #>
 
 function Get-SnipeitFieldsetField() {
+    [CmdletBinding()]
     Param(
         [parameter(mandatory = $true)]
         [int]$id,
@@ -29,6 +30,7 @@ function Get-SnipeitFieldsetField() {
     )
 
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
@@ -54,6 +56,7 @@ function Get-SnipeitFieldsetField() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

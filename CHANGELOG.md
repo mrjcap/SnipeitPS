@@ -147,20 +147,20 @@ Added documentation for all 30 new functions in docs/.
 
 # [v.1.10.x] - 2021-09-03
 
-## New secure ways to connect Snipe it
+## New secure ways to connect Snipe-IT
 
-### -secureApiKey allow pass apiKey as SecureString
+### -secureApiKey allows passing apiKey as SecureString
 Connect-SnipeitPS -URL 'https://asset.example.com' -secureApiKey 'tokenKey'
 
 ### Set connection with safely saved credentials, first save credentials
-$SnipeCred= Get-Credential -message "Use url as username and apikey as password"
+$SnipeCred = Get-Credential -message "Use URL as username and API key as password"
 $SnipeCred | Export-CliXml snipecred.xml
 
 ### ..then use your saved credentials like
 Connect-SnipeitPS -siteCred (Import-CliXml snipecred.xml)
 
-## Fix for content encoding in invoke-snipeitmethod
-Version 1.9 introduced bug that converted non ascii characters to ascii
+## Fix for content encoding in Invoke-SnipeitMethod
+Version 1.9 introduced a bug that converted non-ASCII characters to ASCII
 during request.
 
 # [v.1.9.x] - 2021-07-14
@@ -168,13 +168,12 @@ during request.
 ## Image uploads
 
 ## New features
-Support for image upload and removes. Just specify filename for -image para-
-meter when creating or updating item on snipe.
-Remove image use -image_delete parameter.
+Support for image upload and removal. Just specify filename for -image parameter when creating or updating item in Snipe-IT.
+To remove an image, use the -image_delete parameter.
 
-*Snipe It version greater than 5.1.8 is needed to support image parameters.*
+*Snipe-IT version greater than 5.1.8 is needed to support image parameters.*
 
-Most of set-commands have new -RequestType parameter that defaults to Patch.
+Most Set-* commands have a new -RequestType parameter that defaults to Patch.
 If needed request method can be changed from default.
 
 ## New Functions
@@ -187,18 +186,18 @@ Following new commands have been added to SnipeitPS:
 
 # [v.1.8.x] - 2021-06-17
 
-## Support for new Snipe it endpoints
+## Support for new Snipe-IT endpoints
 
 ## New features
 
 Get-SnipeitAccessories -user_id
-returns accessories checked out to user id
+Returns accessories checked out to user ID
 
 Get-SnipeitAsset -user_id
-Return Assets checked out to user id
+Returns assets checked out to user ID
 
 Get-SnipeitAsset -component_id
-Returns assets with specific component id
+Returns assets with specific component ID
 
 Get-SnipeitLicense -user_id
 Get licenses checked out to user ID
@@ -207,7 +206,7 @@ Get-SnipeitLicense -asset_id
 Get licenses checked out to asset ID
 
 Get-SnipeitUser -accessory_id
-Get users that have specific accessory id checked out
+Get users that have specific accessory ID checked out
 
 # [v.1.7.x] - 2021-06-14
 
@@ -228,7 +227,7 @@ Added support for consumables
 ## Remove more things and set some more
 
 ### New features
-Added some set and remove functions. Pipelineinput supported
+Added some set and remove functions. Pipeline input is supported
 for all remove functions.
 
 ### New functions
@@ -254,18 +253,18 @@ for all remove functions.
 ## Piping input
 
 ### New features
-Most of "Set" command accepts piped input. Piped objects "id" attribute
+Most "Set" commands accept piped input. Piped objects "id" attribute
 is used to select asset set values. Like
 Get-SnipeitAsset -model_id 213 | Set-SnipeitAsset -notes 'This is nice!'
 
-Set command accept id parameter as array, so its easier to set multiple items
+Set commands accept the ID parameter as an array, so it's easier to set multiple items
 in one run.
 
-Parameter sets. Get commands have now parameters sets.This will make syntax more
-clear between search and get by ID use. Use get-help to
+Parameter sets. Get commands now have parameter sets. This will make syntax more
+clear between search and get by ID use. Use Get-Help to see parameter sets.
 
 ### Fixes
--Empty strings are accepted as input so it's possible to wipe field values if
+- Empty strings are accepted as input, so it's possible to wipe field values if
 needed
 
 # [v1.4.x] - 2021-05-27
@@ -273,16 +272,16 @@ needed
 ## More Activity
 
 ### New features
-Snipeit activity history is now searchable. So finding out checked out the
-asset is easy. Api support many different target or item types that can
-be uses as filter. Searchable types are 'Accessory','Asset','AssetMaintenance'
-,'AssetModel','Category','Company','Component','Consumable','CustomField',
-,'Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel',
+Snipe-IT activity history is now searchable. So finding out who checked out the
+asset is easy. API supports many different target or item types that can
+be used as a filter. Searchable types are 'Accessory','Asset','AssetMaintenance'
+'AssetModel','Category','Company','Component','Consumable','CustomField',
+'Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel',
 'Supplier','User'
 
 
 ### New Functions
-- Get-SnipeitActivity Get and search Snipe-It change history.
+- Get-SnipeitActivity Get and search Snipe-IT change history.
 
 
 # [v1.3.x] - 2021-05-27
@@ -290,17 +289,16 @@ be uses as filter. Searchable types are 'Accessory','Asset','AssetMaintenance'
 ## Checking out accessories
 
 ### New features
-You can specify Put or Patch for  Set-SnipeitAsset when updating assets.
+You can specify Put or Patch for Set-SnipeitAsset when updating assets.
 Set-SnipeitLocation new -city parameter
 
 ### New Functions
 - Set-SnipeitAccessoryOwner checkout accessory
-- Get-SnipeitAccessoryOwner list checkedout accessories
+- Get-SnipeitAccessoryOwner list checked-out accessories
 - Reset-SnipeitAccessoryOwner checkin accessory
 
 ### Fixes
 - Set-SnipeitAsset fixed datetime and name inputs #126,128
--
 
 # [v1.2.x] - 2021-05-24
 
@@ -309,27 +307,27 @@ Set-SnipeitLocation new -city parameter
 ### New Features
 All commands are now prefixed like Set-Info -> Set-SnipeitInfo.
 To keep compatibility all old commands are available as aliases.
-To update existing scripts theres Update-SnipeitAlias command.
+To update existing scripts there's the Update-SnipeitAlias command.
 
 ### New functions
 - Update-SnipeitAlias Tool to update existing scripts
-- Get-SnipeitLicenceSeat lists license seats
-- Set-SnipeitLicenseSeat Set and checkouts/in license seats
-Licenseseat api is supported from Snipe-It release => v5.1.5
+- Get-SnipeitLicenseSeat lists license seats
+- Set-SnipeitLicenseSeat Sets and checks out/in license seats
+License seat API is supported from Snipe-IT release >= v5.1.5
 
 ### New fixes
-Added -id parameter support to support Get-SnipeitCustomField and
-Get-SnipeitFieldSet commands
+Added -id parameter support for Get-SnipeitCustomField and
+Get-SnipeitFieldset commands
 
 # [v1.1.x] - 2021-05-18
 
 ## Pull request rollup release. Lots of new features including:
 
 ### New features
-- Powershell 7 compatibility. So you can use SnipeitPS on macos or linux .
-- Get every asset, model, licence with snipeit id by using -id parameter
-- Get assets also by -asset_tag -or serialnumber
-- Get functions also return all results from snipe when using -all parameter (by @PetriAsi)
+- PowerShell 7 compatibility. So you can use SnipeitPS on macOS or Linux.
+- Get every asset, model, license with Snipe-IT ID by using -id parameter
+- Get assets also by -asset_tag or serial number
+- Get functions also return all results from Snipe-IT when using -all parameter (by @PetriAsi)
 
 ### New functions
 - Reset-AssetOwner by @lunchboxrts
@@ -338,7 +336,7 @@ Get-SnipeitFieldSet commands
 - Remove-User @gvoynov
 
 ### Fixes
-- Fixed version number on powershell gallery
-- Fixed Set-AssetOwner when checking asset out to an other asset.
+- Fixed version number on PowerShell Gallery
+- Fixed Set-AssetOwner when checking asset out to another asset.
 
 ## [v1.0] - 2017-11-18

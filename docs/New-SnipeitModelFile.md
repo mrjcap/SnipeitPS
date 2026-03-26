@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SnipeitModelFile
 
 ## SYNOPSIS
-Add a file to a model in Snipe-it
+Add a file to a model in Snipe-IT
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ New-SnipeitModelFile [-id] <Int32> [-file] <String> [[-notes] <String>] [[-url] 
 ```
 
 ## DESCRIPTION
-Add a file to a model in Snipe-it
+Add a file to a model in Snipe-IT
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ New-SnipeitModelFile -id 1 -file "C:\path\to\file.pdf"
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

@@ -3,7 +3,7 @@
 Create a new component
 
 .DESCRIPTION
-Creates a new component on Snipe-It system
+Creates a new component on Snipe-IT system
 
 .PARAMETER name
 Component name
@@ -13,6 +13,9 @@ ID number of category
 
 .PARAMETER qty
 Quantity of the components you have
+
+.PARAMETER company_id
+ID number of company
 
 .PARAMETER location_id
 ID number of the location the component is assigned to
@@ -30,10 +33,10 @@ Cost of item being purchased.
 Component image filename and path
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 New-SnipeitComponent -name 'Display adapter' -category_id 3 -qty 10
@@ -77,6 +80,7 @@ function New-SnipeitComponent() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -105,12 +109,12 @@ function New-SnipeitComponent() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

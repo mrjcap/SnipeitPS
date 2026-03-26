@@ -7,7 +7,7 @@
 #
 ############################################################
 
-# powershell core and 5.1
+# PowerShell core and 5.1
 image:
     - Visual Studio 2017
     - Visual Studio 2019
@@ -62,7 +62,7 @@ test_script:
 before_deploy:
     - ps: Invoke-Build -Task Deploy
 
-#Build with powershell core
+#Build with PowerShell core
 for:
   -
     matrix:

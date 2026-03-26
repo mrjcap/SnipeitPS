@@ -3,7 +3,7 @@
 Gets licenses assigned to a specific asset
 
 .PARAMETER id
-An id of specific asset
+An ID of a specific asset
 
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
@@ -15,10 +15,10 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitAssetLicense -id 1
@@ -26,6 +26,7 @@ Get-SnipeitAssetLicense -id 1
 #>
 
 function Get-SnipeitAssetLicense() {
+    [CmdletBinding()]
     Param(
         [parameter(mandatory = $true)]
         [int]$id,
@@ -43,6 +44,7 @@ function Get-SnipeitAssetLicense() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'url', 'apiKey', 'Debug', 'Verbose'
@@ -89,6 +91,7 @@ function Get-SnipeitAssetLicense() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

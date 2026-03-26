@@ -8,15 +8,15 @@ schema: 2.0.0
 # Get-SnipeitComponent
 
 ## SYNOPSIS
-Gets a list of Snipe-it Components
+Gets a list of Snipe-IT Components
 
 ## SYNTAX
 
 ### Search (Default)
 ```
-Get-SnipeitComponent [-search <String>] [-category_id <Int32>] [-company_id <Int32>] [-location_id <Int32>]
- [-order <String>] [-sort <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>]
- [-apiKey <String>] [<CommonParameters>]
+Get-SnipeitComponent [-search <String>] [-name <String>] [-category_id <Int32>] [-company_id <Int32>]
+ [-location_id <Int32>] [-order <String>] [-sort <String>] [-limit <Int32>] [-offset <Int32>] [-all]
+ [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
@@ -38,12 +38,12 @@ Returns all components
 ### EXAMPLE 2
 ```
 Get-SnipeitComponent -search display
-Returns search results containing string display
+Returns search results containing "display"
 ```
 
 ### EXAMPLE 3
 ```
-Get-SnipeitComponent -id
+Get-SnipeitComponent -id 1
 Returns specific component
 ```
 
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -111,7 +111,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-An id of specific Component
+An ID of a specific Component
 
 ```yaml
 Type: Int32
@@ -153,6 +153,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Optionally restrict Component results to this name field
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -219,7 +234,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

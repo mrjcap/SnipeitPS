@@ -1,18 +1,18 @@
 <#
 .SYNOPSIS
-Gets a list of Snipe-it Accessories
+Gets a list of Snipe-IT Accessories
 
 .DESCRIPTION
-Gets a list of Snipe-it Accessories
+Gets a list of Snipe-IT Accessories
 
 .PARAMETER search
 A text string to search the Accessory data
 
 .PARAMETER user_id
-Return Accessories checked out to user id
+Return Accessories checked out to a user ID
 
 .PARAMETER id
-An id of specific Accessory
+An ID of a specific Accessory
 
 .PARAMETER company_id
 Optionally restrict Accessory results to this company_id field
@@ -26,6 +26,12 @@ Optionally restrict Accessory results to this manufacturer_id field
 .PARAMETER supplier_id
 Optionally restrict Accessory results to this supplier_id field
 
+.PARAMETER sort
+Column to sort on
+
+.PARAMETER order
+Sort order. Can be asc or desc.
+
 .PARAMETER limit
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
@@ -36,10 +42,10 @@ Result offset to use
 Return all results, works with -offset and other parameters
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Get-SnipeitAccessory -search Keyboard
@@ -101,6 +107,7 @@ function Get-SnipeitAccessory() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         switch($PsCmdlet.ParameterSetName) {
@@ -151,6 +158,7 @@ function Get-SnipeitAccessory() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

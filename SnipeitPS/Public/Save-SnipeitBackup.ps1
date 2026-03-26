@@ -9,10 +9,10 @@ The filename of the backup to download
 The directory path where the backup file will be saved
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 .EXAMPLE
 Save-SnipeitBackup -filename "2024-01-15-backup.sql" -path "C:\Backups"
@@ -37,6 +37,7 @@ function Save-SnipeitBackup() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
@@ -57,7 +58,7 @@ function Save-SnipeitBackup() {
             [string]$Url = $SnipeitPSSession.url
             $Token = (New-Object PSCredential "user",$SnipeitPSSession.apiKey).GetNetworkCredential().Password
         } else {
-            throw "Please use Connect-SnipeitPS to setup connection before any other commands."
+            throw "Please use Connect-SnipeitPS to set up a connection before any other commands."
         }
     }
 
@@ -94,6 +95,7 @@ function Save-SnipeitBackup() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

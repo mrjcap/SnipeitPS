@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -22,7 +22,7 @@ New-SnipeitLicense [-name] <String> [-seats] <Int32> [[-category_id] <Int32>] [[
 ```
 
 ## DESCRIPTION
-Creates a new license on Snipe-It system
+Creates a new license on Snipe-IT system
 
 ## EXAMPLES
 
@@ -35,7 +35,7 @@ New-SnipeitLicense -name "License" -seats 3 -company_id 1
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
-Id number of company license belongs to
+ID number of company the license belongs to
 
 ```yaml
 Type: Int32
@@ -306,7 +306,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

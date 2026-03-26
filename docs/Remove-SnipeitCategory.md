@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitCategory
 
 ## SYNOPSIS
-Removes category from Snipe-it asset system
+Removes category from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitCategory [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-
 ```
 
 ## DESCRIPTION
-Removes category or multiple categories from Snipe-it asset system
+Removes category or multiple categories from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitCategory -ID 44
 
 ### EXAMPLE 2
 ```
-Get-SnipeitCategory -search something  | Remove-SnipeitCategory
+Get-SnipeitCategory -search something | Remove-SnipeitCategory
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For categoryto be removed
+Unique ID for category to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

@@ -20,7 +20,7 @@ Set-SnipeitComponent [-id] <Int32[]> [-qty] <Int32> [[-min_amt] <Int32>] [[-name
 ```
 
 ## DESCRIPTION
-Updates component on Snipe-It system
+Updates component on Snipe-IT system
 
 ## EXAMPLES
 
@@ -34,7 +34,7 @@ Sets count of component with ID 42 to 12
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-Users API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -214,8 +214,8 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-Http request type to send Snipe IT system.
-Defaults to Patch you could use Put if needed.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -231,7 +231,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

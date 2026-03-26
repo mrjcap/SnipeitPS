@@ -77,7 +77,7 @@ task Test RapidTest
 
 # Synopsis: Using the "Fast" Test Suit
 task RapidTest PesterTests
-# Synopsis: Using the complete Test Suit, which includes all supported Powershell versions
+# Synopsis: Using the complete Test Suit, which includes all supported PowerShell versions
 task FullTest TestVersions
 
 # Synopsis: Warn about not empty git status if .git exists.
@@ -192,7 +192,7 @@ task Deploy -If (
     # Do not deploy if the commit contains the string "skip-deploy"
     # Meant for major/minor version publishes with a .0 build/patch version (like 2.1.0)
     $env:APPVEYOR_REPO_COMMIT_MESSAGE -notlike '*skip-deploy*' -and
-    # publish from one powershell version is enought
+    # publish from one PowerShell version is enough
     $env:PShell -eq '5'
 ) {
     Remove-Module SnipeitPS -ErrorAction SilentlyContinue
@@ -208,7 +208,7 @@ task PublishToGallery {
 # Synopsis: Push with a version tag.
 task PushRelease GitStatus, GetVersion, {
     # Done in appveyor.yml with deploy provider.
-    # This is needed, as I don't know how to athenticate (2-factor) in here.
+    # This is needed, as I don't know how to authenticate (2-factor) in here.
     exec { git checkout master }
     $changes = exec { git status --short }
     assert (!$changes) "Please, commit changes."

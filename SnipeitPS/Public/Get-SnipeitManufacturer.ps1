@@ -1,16 +1,19 @@
 <#
     .SYNOPSIS
-    Gets a list of Snipe-it Manufacturers
+    Gets a list of Snipe-IT Manufacturers
 
     .PARAMETER search
     A text string to search the Manufacturers data
 
     .PARAMETER id
-    An id of specific Manufacturer
+    An ID of a specific Manufacturer
 
     .PARAMETER name
     Optionally restrict Manufacturer results to this name field
-    
+
+    .PARAMETER order
+    Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
+
     .PARAMETER limit
     Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
@@ -21,10 +24,10 @@
     Return all results, works with -offset and other parameters
 
     .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
     .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
     .EXAMPLE
     Get-SnipeitManufacturer -search HP
@@ -32,7 +35,7 @@
 
     .EXAMPLE
     Get-SnipeitManufacturer -id 3
-    Returns manufacturer with id 3
+    Returns manufacturer with ID 3
 
 #>
 function Get-SnipeitManufacturer() {
@@ -67,6 +70,7 @@ function Get-SnipeitManufacturer() {
         [string]$apiKey
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
@@ -117,6 +121,7 @@ function Get-SnipeitManufacturer() {
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

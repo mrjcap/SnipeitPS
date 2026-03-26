@@ -1,33 +1,33 @@
 <#
 .SYNOPSIS
-Add a new Consumable to Snipe-it asset system
+Add a new Consumable to Snipe-IT asset system
 
 .DESCRIPTION
-Add a new Consumable to Snipe-it asset system
+Add a new Consumable to Snipe-IT asset system
 
 .PARAMETER name
-Required  Name of the Consumable
+Required Name of the Consumable
 
 .PARAMETER qty
 Required Quantity of consumable
 
 .PARAMETER category_id
-Required Category ID of the Consumable, this can be got using Get-SnipeitCategory
+Required Category ID of the Consumable, this can be obtained using Get-SnipeitCategory
 
 .PARAMETER min_amt
 Optional minimum quantity of consumable
 
 .PARAMETER company_id
-Optional Company id
+Optional Company ID
 
 .PARAMETER order_number
 Optional Order number
 
 .PARAMETER manufacturer_id
-Manufacturer id number of the consumable
+Manufacturer ID number of the consumable
 
 .PARAMETER location_id
-Location id number of the consumable
+Location ID number of the consumable
 
 .PARAMETER requestable
 Is consumable requestable?
@@ -48,15 +48,15 @@ Item number for the consumable
 Consumable Image filename and path
 
 .PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipeit system.
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 .PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. Users API Key for Snipeit.
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 
 .EXAMPLE
-New-Snipeitconsumable -name "Ink pack"  -qty 20 -category_id 3 -min_amt 5
-Create consumable with stock count 20 , alert when stock is  5 or lower
+New-SnipeitConsumable -name "Ink pack" -qty 20 -category_id 3 -min_amt 5
+Create consumable with stock count 20, alert when stock is 5 or lower
 
 #>
 
@@ -117,6 +117,9 @@ function New-SnipeitConsumable() {
 
     )
     begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['purchase_date']) {
@@ -143,12 +146,12 @@ function New-SnipeitConsumable() {
     process {
         if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
             $result = Invoke-SnipeitMethod @Parameters
+            $result
         }
-
-        $result
     }
 
     end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Reset-SnipeitPSLegacyApi

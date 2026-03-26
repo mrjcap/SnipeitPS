@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitSupplier
 
 ## SYNOPSIS
-Removes supplier from Snipe-it asset system
+Removes supplier from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitSupplier [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-
 ```
 
 ## DESCRIPTION
-Removes supplier or multiple suppliers from Snipe-it asset system
+Removes supplier or multiple suppliers from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitSupplier -ID 44
 
 ### EXAMPLE 2
 ```
-Get-SnipeitSupplier | Where-object {$_.name -like '*something*'}  | Remove-SnipeitSupplier
+Get-SnipeitSupplier | Where-object {$_.name -like '*something*'} | Remove-SnipeitSupplier
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For supplier to be removed
+Unique ID for supplier to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String

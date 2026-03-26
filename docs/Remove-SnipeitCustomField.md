@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SnipeitCustomField
 
 ## SYNOPSIS
-Removes custom field from Snipe-it asset system
+Removes custom field from Snipe-IT asset system
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Remove-SnipeitCustomField [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>]
 ```
 
 ## DESCRIPTION
-Removes custom field or multiple fields from Snipe-it asset system
+Removes custom field or multiple fields from Snipe-IT asset system
 
 ## EXAMPLES
 
@@ -29,14 +29,14 @@ Remove-SnipeitCustomField -ID 44 -Verbose
 
 ### EXAMPLE 2
 ```
-Get-SnipeitCustomField | Where-object {$_.name -like '*address*'}  | Remove-SnipeitCustomField
+Get-SnipeitCustomField | Where-object {$_.name -like '*address*'} | Remove-SnipeitCustomField
 ```
 
 ## PARAMETERS
 
 ### -apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipeit.
+User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
-Unique ID For field to be removed
+Unique ID for field to be removed
 
 ```yaml
 Type: Int32[]
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -url
 Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipeit system.
+URL of Snipe-IT system.
 
 ```yaml
 Type: String
