@@ -68,7 +68,7 @@ function Set-SnipeitFieldset() {
                 Body          = $Values
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("Fieldset ID $fieldset_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

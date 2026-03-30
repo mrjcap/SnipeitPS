@@ -147,7 +147,7 @@ function New-SnipeitUser() {
     }
 
     process {
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("User '$username'", $MyInvocation.MyCommand.Name)) {
             $result = Invoke-SnipeitMethod @Parameters
             $result
         }

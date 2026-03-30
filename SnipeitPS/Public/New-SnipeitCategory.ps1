@@ -94,7 +94,7 @@ function New-SnipeitCategory() {
             Body   = $Values
         }
 
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("Category '$name'", $MyInvocation.MyCommand.Name)) {
             $result = Invoke-SnipeitMethod @Parameters
             $result
         }

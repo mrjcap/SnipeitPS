@@ -111,7 +111,7 @@ function Set-SnipeitCustomField() {
                 Set-SnipeitPSLegacyUrl -url $url
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("Field ID $field_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

@@ -67,7 +67,7 @@ function New-SnipeitModelFile() {
     }
 
     process {
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("Model ID $id", $MyInvocation.MyCommand.Name)) {
             $Parameters = @{
                 Api    = "/api/v1/models/$id/files"
                 Method = 'Post'

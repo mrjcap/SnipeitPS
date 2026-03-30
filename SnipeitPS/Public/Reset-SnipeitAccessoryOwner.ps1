@@ -64,7 +64,7 @@ function Reset-SnipeitAccessoryOwner() {
             Body   = @{}
         }
 
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("Accessory pivot ID $assigned_pivot_id", $MyInvocation.MyCommand.Name)) {
             $result = Invoke-SnipeitMethod @Parameters
             $result
         }
