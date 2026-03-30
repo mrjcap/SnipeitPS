@@ -176,7 +176,7 @@ function Get-SnipeitAsset() {
         [int]$depreciation_id,
 
         [parameter(ParameterSetName='Search')]
-        [bool]$requestable = $false,
+        [switch]$requestable,
 
         [parameter(ParameterSetName='Search')]
         [string]$status,
