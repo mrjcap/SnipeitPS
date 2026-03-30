@@ -21,7 +21,7 @@
 function Remove-SnipeitDepartment () {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
@@ -56,7 +56,7 @@ function Remove-SnipeitDepartment () {
                 Method = 'Delete'
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("Department ID $department_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

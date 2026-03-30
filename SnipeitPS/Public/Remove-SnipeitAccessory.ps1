@@ -21,7 +21,7 @@
 function Remove-SnipeitAccessory () {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
@@ -57,7 +57,7 @@ function Remove-SnipeitAccessory () {
                 Method = 'Delete'
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("Accessory ID $accessory_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

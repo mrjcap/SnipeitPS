@@ -21,7 +21,7 @@ Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for S
 function Remove-SnipeitSupplier () {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
@@ -57,7 +57,7 @@ function Remove-SnipeitSupplier () {
                 Method = 'Delete'
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("Supplier ID $supplier_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

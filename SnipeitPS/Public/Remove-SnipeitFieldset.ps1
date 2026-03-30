@@ -19,7 +19,7 @@ Remove-SnipeitFieldset -id 1
 function Remove-SnipeitFieldset () {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
@@ -55,7 +55,7 @@ function Remove-SnipeitFieldset () {
                 Method = 'Delete'
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("Fieldset ID $fieldset_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

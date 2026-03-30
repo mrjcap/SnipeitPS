@@ -21,7 +21,7 @@
 function Remove-SnipeitLicense () {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
@@ -57,7 +57,7 @@ function Remove-SnipeitLicense () {
                 Method = 'Delete'
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("License ID $license_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

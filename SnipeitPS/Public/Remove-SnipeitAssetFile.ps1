@@ -22,7 +22,7 @@ Remove-SnipeitAssetFile -id 1 -file_id 10
 function Remove-SnipeitAssetFile () {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
@@ -60,7 +60,7 @@ function Remove-SnipeitAssetFile () {
     }
 
     process {
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("Asset ID $id file ID $file_id", $MyInvocation.MyCommand.Name)) {
             $result = Invoke-SnipeitMethod @Parameters
             $result
         }

@@ -21,7 +21,7 @@ function Remove-SnipeitAssetMaintenance {
 
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
     param (
         [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName)]
@@ -57,7 +57,7 @@ function Remove-SnipeitAssetMaintenance {
                 Method = 'Delete'
             }
 
-            if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            if ($PSCmdlet.ShouldProcess("Maintenance ID $maintenance_id", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }

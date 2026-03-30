@@ -22,7 +22,7 @@ Remove-SnipeitModelFile -id 1 -file_id 10
 function Remove-SnipeitModelFile () {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
@@ -60,7 +60,7 @@ function Remove-SnipeitModelFile () {
     }
 
     process {
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("Model ID $id file ID $file_id", $MyInvocation.MyCommand.Name)) {
             $result = Invoke-SnipeitMethod @Parameters
             $result
         }
