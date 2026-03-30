@@ -34,12 +34,12 @@ function Update-SnipeitAlias() {
 
     }
     process {
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("Script content", $MyInvocation.MyCommand.Name)) {
             ForEach ($st in $String) {
                 $result = $st
                 ForEach ($key in $SnipeitAliases.Keys ) {
                     #Write-Verbose "Replacing $key with $($SnipeitAliases[$key])"
-                    $result = $result -replace $key, $SnipeitAliases[$key]
+                    $result = $result -replace [regex]::Escape($key), $SnipeitAliases[$key]
                 }
                 $result
             }

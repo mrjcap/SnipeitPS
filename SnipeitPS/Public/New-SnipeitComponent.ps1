@@ -58,7 +58,7 @@ function New-SnipeitComponent() {
         [int]$category_id,
 
         [parameter(mandatory = $true)]
-        [string]$qty,
+        [int]$qty,
 
         [int]$company_id,
 
@@ -107,7 +107,7 @@ function New-SnipeitComponent() {
     }
 
     process {
-        if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($PSCmdlet.ShouldProcess("Component '$name'", $MyInvocation.MyCommand.Name)) {
             $result = Invoke-SnipeitMethod @Parameters
             $result
         }
