@@ -104,10 +104,10 @@ function Get-SnipeitUser() {
         [string]$search,
 
         [parameter(ParameterSetName='Get with ID')]
-        [string]$id,
+        [int]$id,
 
         [parameter(ParameterSetName='Get users a specific accessory id has been checked out to')]
-        [string]$accessory_id,
+        [int]$accessory_id,
 
         [parameter(ParameterSetName='Search')]
         [int]$company_id,
