@@ -98,7 +98,7 @@ function Invoke-SnipeitMethod {
 
     Process {
         # This can be done using $Body, maybe some day - PetriAsi
-        if ($GetParameters -and ($apiUri -notlike "*\?*")){
+        if ($GetParameters -and ($apiUri -notlike "*[?]*")){
             Write-Debug "Using `$GetParameters: $($GetParameters | Out-String)"
             [string]$apiUri = $apiUri + (ConvertTo-GetParameter $GetParameters)
             # Prevent recursive appends
@@ -216,7 +216,12 @@ function Invoke-SnipeitMethod {
         # Invoke the API
         try {
             Write-Verbose "[$($MyInvocation.MyCommand.Name)] Invoking method $Method to URI $apiUri"
-            Write-Debug "[$($MyInvocation.MyCommand.Name)] Invoke-WebRequest with: $($splatParameters | Out-String)"
+            $debugSplat = $splatParameters.Clone()
+            if ($debugSplat.ContainsKey('Headers') -and $debugSplat['Headers'].ContainsKey('Authorization')) {
+                $debugSplat['Headers'] = $debugSplat['Headers'].Clone()
+                $debugSplat['Headers']['Authorization'] = 'Bearer [REDACTED]'
+            }
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] Invoke-WebRequest with: $($debugSplat | Out-String)"
             $webResponse = Invoke-RestMethod @splatParameters
         }
         catch {

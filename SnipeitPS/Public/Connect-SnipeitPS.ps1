@@ -144,7 +144,7 @@ function Connect-SnipeitPS {
         }
 
         Write-Debug "Site-url $($SnipeitPSSession.url)"
-        Write-Debug "Site apikey: $($SnipeitPSSession.apiKey)"
+        Write-Debug "Site apikey: [REDACTED]"
 
         if (-not (Test-SnipeitPSConnection)) {
             throw "Cannot verify connection to Snipe-IT. Try checking the URL and provided API key or credential parameters."
