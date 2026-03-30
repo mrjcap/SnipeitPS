@@ -214,12 +214,12 @@ Describe "Get-SnipeitFieldsetField" {
         }
     }
 
-    It "Calls /api/v1/fieldsets/{id}/fields endpoint with POST method" {
+    It "Calls /api/v1/fieldsets/{id}/fields endpoint with GET method" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitFieldsetField -id 2
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
                 $Api -eq "/api/v1/fieldsets/2/fields" -and
-                $Method -eq "Post"
+                $Method -eq "Get"
             }
         }
     }
