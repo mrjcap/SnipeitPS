@@ -86,6 +86,16 @@ function Set-SnipeitCustomField() {
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
+
         if ($format -eq 'CUSTOM REGEX' -and (-not $custom_format)) {
             throw "Please specify regex validation with -custom_format when using -format 'CUSTOM REGEX'"
         }
@@ -99,16 +109,6 @@ function Set-SnipeitCustomField() {
                 Api    = "/api/v1/fields/$field_id"
                 Method = $RequestType
                 Body   = $Values
-            }
-
-            if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-                Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-            }
-
-            if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-                Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyUrl -url $url
             }
 
             if ($PSCmdlet.ShouldProcess("Field ID $field_id", $MyInvocation.MyCommand.Name)) {
