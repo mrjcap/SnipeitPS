@@ -70,7 +70,7 @@
 function Set-SnipeitSupplier() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "Medium"
     )]
 
     Param(
@@ -131,7 +131,7 @@ function Set-SnipeitSupplier() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
