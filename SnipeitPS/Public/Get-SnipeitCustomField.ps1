@@ -38,7 +38,7 @@ function Get-SnipeitCustomField() {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        if ($id) {
+        if ($PSBoundParameters.ContainsKey('id')) {
             $api= "/api/v1/fields/$id"
         } else {
             $api = "/api/v1/fields"

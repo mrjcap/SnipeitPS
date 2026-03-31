@@ -36,7 +36,7 @@ function Get-SnipeitFieldset() {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        if ($id) {
+        if ($PSBoundParameters.ContainsKey('id')) {
             $api = "/api/v1/fieldsets/$id"
         } else {
             $api = "/api/v1/fieldsets"

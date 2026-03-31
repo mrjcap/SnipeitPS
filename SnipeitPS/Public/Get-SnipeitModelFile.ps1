@@ -41,7 +41,7 @@ function Get-SnipeitModelFile() {
 
         $api = "/api/v1/models/$id/files"
 
-        if ($file_id) {
+        if ($PSBoundParameters.ContainsKey('file_id')) {
            $api= "/api/v1/models/$id/files/$file_id"
         }
 

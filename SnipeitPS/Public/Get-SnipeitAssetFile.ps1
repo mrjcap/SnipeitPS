@@ -41,7 +41,7 @@ function Get-SnipeitAssetFile() {
 
         $api = "/api/v1/hardware/$id/files"
 
-        if ($file_id) {
+        if ($PSBoundParameters.ContainsKey('file_id')) {
            $api= "/api/v1/hardware/$id/files/$file_id"
         }
 
