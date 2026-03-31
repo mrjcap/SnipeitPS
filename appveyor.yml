@@ -43,11 +43,11 @@ pull_requests:
 install:
     - ps: |
         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-        Install-Module InvokeBuild -Scope CurrentUser -Force
-        Install-Module BuildHelpers -Scope CurrentUser -Force
-        Install-Module platyPS -Scope CurrentUser -Force
-        Install-Module Pester -Scope CurrentUser -Force
-        Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+        Install-Module InvokeBuild -Scope CurrentUser -Force -MaximumVersion 5.99.0
+        Install-Module BuildHelpers -Scope CurrentUser -Force -MaximumVersion 2.99.0
+        Install-Module platyPS -Scope CurrentUser -Force -MaximumVersion 0.99.0
+        Install-Module Pester -Scope CurrentUser -Force -MaximumVersion 5.99.0
+        Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -MaximumVersion 1.99.0
         $env:releasePath = "$($pwd.Path)\Release"
 
 before_build:
@@ -72,11 +72,11 @@ for:
       PShell: '7'
     install:
       - pwsh: |
-          Install-Module InvokeBuild -Scope CurrentUser -Force
-          Install-Module BuildHelpers -Scope CurrentUser -Force
-          Install-Module platyPS -Scope CurrentUser -Force
-          Install-Module Pester -Scope CurrentUser -Force
-          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+          Install-Module InvokeBuild -Scope CurrentUser -Force -MaximumVersion 5.99.0
+          Install-Module BuildHelpers -Scope CurrentUser -Force -MaximumVersion 2.99.0
+          Install-Module platyPS -Scope CurrentUser -Force -MaximumVersion 0.99.0
+          Install-Module Pester -Scope CurrentUser -Force -MaximumVersion 5.99.0
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -MaximumVersion 1.99.0
           $env:releasePath = "$($pwd.Path)\Release"
     before_build:
       - pwsh: Invoke-Build -Task ShowDebug
