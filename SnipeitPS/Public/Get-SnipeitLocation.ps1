@@ -84,6 +84,7 @@ function Get-SnipeitLocation() {
         [string]$order = "desc",
 
         [parameter(ParameterSetName='Search')]
+        [ValidateRange(1,500)]
         [int]$limit = 50,
 
         [parameter(ParameterSetName='Search')]
@@ -106,7 +107,7 @@ function Get-SnipeitLocation() {
 
         $api = "/api/v1/locations"
 
-        if ($id) {
+        if ($PSBoundParameters.ContainsKey('id')) {
         $api= "/api/v1/locations/$id"
         }
 
@@ -130,7 +131,7 @@ function Get-SnipeitLocation() {
     process {
         if ($all) {
             $offstart = $(if ($offset) {$offset} Else {0})
-            $callargs = $SearchParameter
+            $callargs = $SearchParameter.Clone()
             $callargs.Remove('all')
 
             while ($true) {
@@ -142,6 +143,10 @@ function Get-SnipeitLocation() {
                     break
                 }
                 $offstart = $offstart + $limit
+                if ($offstart -gt 50000) {
+                    Write-Warning "Pagination exceeded 50000 offset, stopping to prevent infinite loop"
+                    break
+                }
             }
         } else {
             $result = Invoke-SnipeitMethod @Parameters

@@ -208,6 +208,7 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Assets overdue for auditing')]
         [parameter(ParameterSetName='Assets checked out to user id')]
         [parameter(ParameterSetName='Assets with component id')]
+        [ValidateRange(1,500)]
         [int]$limit = 50,
 
         [parameter(ParameterSetName='Search')]
@@ -277,7 +278,7 @@ function Get-SnipeitAsset() {
     process {
         if ($all) {
             $offstart = $(if ($offset) {$offset} Else {0})
-            $callargs = $SearchParameter
+            $callargs = $SearchParameter.Clone()
             Write-Verbose "Callargs: $($callargs | ConvertTo-Json)"
             $callargs.Remove('all')
 
@@ -290,6 +291,10 @@ function Get-SnipeitAsset() {
                     break
                 }
                 $offstart = $offstart + $limit
+                if ($offstart -gt 50000) {
+                    Write-Warning "Pagination exceeded 50000 offset, stopping to prevent infinite loop"
+                    break
+                }
             }
         } else {
             $result = Invoke-SnipeitMethod @Parameters

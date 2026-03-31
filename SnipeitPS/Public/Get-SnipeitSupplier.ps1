@@ -101,6 +101,7 @@ function Get-SnipeitSupplier() {
         [string]$notes,
         
         [parameter(ParameterSetName='Search')]
+        [ValidateRange(1,500)]
         [int]$limit = 50,
 
         [parameter(ParameterSetName='Search')]
@@ -124,7 +125,7 @@ function Get-SnipeitSupplier() {
 
         $api = "/api/v1/suppliers"
 
-        if ($id) {
+        if ($PSBoundParameters.ContainsKey('id')) {
         $api= "/api/v1/suppliers/$id"
         }
 
@@ -148,7 +149,7 @@ function Get-SnipeitSupplier() {
     process {
         if ($all) {
             $offstart = $(if ($offset) {$offset} Else {0})
-            $callargs = $SearchParameter
+            $callargs = $SearchParameter.Clone()
             $callargs.Remove('all')
 
             while ($true) {
@@ -160,6 +161,10 @@ function Get-SnipeitSupplier() {
                     break
                 }
                 $offstart = $offstart + $limit
+                if ($offstart -gt 50000) {
+                    Write-Warning "Pagination exceeded 50000 offset, stopping to prevent infinite loop"
+                    break
+                }
             }
         } else {
             $result = Invoke-SnipeitMethod @Parameters

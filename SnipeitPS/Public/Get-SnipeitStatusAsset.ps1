@@ -31,6 +31,7 @@ function Get-SnipeitStatusAsset() {
         [parameter(mandatory = $true)]
         [int]$id,
 
+        [ValidateRange(1,500)]
         [int]$limit = 50,
 
         [int]$offset,
@@ -47,7 +48,7 @@ function Get-SnipeitStatusAsset() {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'url', 'apiKey', 'Debug', 'Verbose'
+        $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'url', 'apiKey', 'Debug', 'Verbose'
 
         $api = "/api/v1/statuslabels/$id/assetlist"
 
@@ -71,8 +72,9 @@ function Get-SnipeitStatusAsset() {
     process {
         if ($all) {
             $offstart = $(if ($offset) {$offset} Else {0})
-            $callargs = $SearchParameter
+            $callargs = $SearchParameter.Clone()
             $callargs.Remove('all')
+            $callargs['id'] = $id
 
             while ($true) {
                 $callargs['offset'] = $offstart
@@ -83,6 +85,10 @@ function Get-SnipeitStatusAsset() {
                     break
                 }
                 $offstart = $offstart + $limit
+                if ($offstart -gt 50000) {
+                    Write-Warning "Pagination exceeded 50000 offset, stopping to prevent infinite loop"
+                    break
+                }
             }
         } else {
             $result = Invoke-SnipeitMethod @Parameters

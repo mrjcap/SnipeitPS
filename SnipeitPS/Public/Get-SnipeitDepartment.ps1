@@ -75,6 +75,7 @@ function Get-SnipeitDepartment() {
         [string]$order = "desc",
 
         [parameter(ParameterSetName='Search')]
+        [ValidateRange(1,500)]
         [int]$limit = 50,
 
         [parameter(ParameterSetName='Search')]
@@ -102,7 +103,7 @@ function Get-SnipeitDepartment() {
 
         $api = "/api/v1/departments"
 
-        if ($id) {
+        if ($PSBoundParameters.ContainsKey('id')) {
         $api= "/api/v1/departments/$id"
         }
 
@@ -125,7 +126,7 @@ function Get-SnipeitDepartment() {
     process {
         if ($all) {
             $offstart = $(if ($offset) {$offset} Else {0})
-            $callargs = $SearchParameter
+            $callargs = $SearchParameter.Clone()
             $callargs.Remove('all')
 
             while ($true) {
@@ -137,6 +138,10 @@ function Get-SnipeitDepartment() {
                     break
                 }
                 $offstart = $offstart + $limit
+                if ($offstart -gt 50000) {
+                    Write-Warning "Pagination exceeded 50000 offset, stopping to prevent infinite loop"
+                    break
+                }
             }
         } else {
             $result = Invoke-SnipeitMethod @Parameters
