@@ -51,7 +51,7 @@ function Set-SnipeitStatus() {
 
         [string]$name,
 
-        [parameter(Mandatory=$true)]
+        [parameter(Mandatory=$false)]
         [ValidateSet('deployable','undeployable','pending','archived')]
         [string]$type,
 

@@ -40,7 +40,7 @@ function Set-SnipeitCompany() {
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $false)]
         [string]$name,
 
         [ValidateScript({Test-Path $_})]

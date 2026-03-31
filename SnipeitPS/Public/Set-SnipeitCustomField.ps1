@@ -59,7 +59,7 @@ function Set-SnipeitCustomField() {
 
         [string]$help_text,
 
-        [parameter(Mandatory=$true)]
+        [parameter(Mandatory=$false)]
         [ValidateSet('text','textarea','listbox','checkbox','radio')]
         [string]$element ,
 
