@@ -83,7 +83,7 @@ function Set-SnipeitComponentOwner() {
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
             Reset-SnipeitPSLegacyApi
         }
     }

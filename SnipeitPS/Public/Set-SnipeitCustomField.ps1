@@ -103,7 +103,7 @@ function Set-SnipeitCustomField() {
 
             if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
                 Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-                Set-SnipeitPSLegacyApiKey -apiKey $apiKey
+                Set-SnipeitPSLegacyApiKey -apiKey $apikey
             }
 
             if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
@@ -120,7 +120,7 @@ function Set-SnipeitCustomField() {
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         # reset legacy sessions
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url -or $PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
             Reset-SnipeitPSLegacyApi
         }
     }
