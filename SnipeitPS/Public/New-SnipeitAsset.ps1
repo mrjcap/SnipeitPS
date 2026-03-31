@@ -162,6 +162,11 @@ function New-SnipeitAsset() {
             $Values += $customfields
         }
 
+        #These are not needed for the API; remove unconditionally to prevent
+        #checkout_to_type default value leaking into the body on non-checkout calls
+        if ($Values.ContainsKey('checkout_to_type')) {$Values.Remove('checkout_to_type')}
+        if ($Values.ContainsKey('assigned_id')) {$Values.Remove('assigned_id')}
+
         #Checkout asset when creating it
         if ($PsCmdlet.ParameterSetName -eq 'Checkout asset when creating') {
             switch ($checkout_to_type) {
@@ -169,10 +174,6 @@ function New-SnipeitAsset() {
                     'user' { $Values += @{ "assigned_user" = $assigned_id } }
                     'asset' { $Values += @{ "assigned_asset" = $assigned_id } }
             }
-
-            #These are not needed for API
-            if ($Values.ContainsKey('assigned_id')) {$Values.Remove('assigned_id')}
-            if ($Values.ContainsKey('checkout_to_type')) {$Values.Remove('checkout_to_type')}
         }
 
         $Parameters = @{
