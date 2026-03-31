@@ -52,7 +52,7 @@
     .EXAMPLE
     Build credential with apikey value from secret vault (Microsoft.PowerShell.SecretManagement)
     $siteurl = "https://mysnipeitsite.url"
-    $apikey = Get-SecretInfo -Name SnipeItApiKey
+    $apikey = Get-Secret -Name SnipeItApiKey
     $siteCred = New-Object -Type PSCredential -Argumentlist $siteurl,$apikey
     Connect-SnipeitPS -siteCred $siteCred
 
