@@ -147,7 +147,7 @@ function Get-SnipeitConsumable() {
                         $callargs['limit'] = $limit
                         $res=Get-SnipeitConsumable @callargs
                         $res
-                        if ($res.count -lt $limit) {
+                        if ( @($res).Count -lt $limit) {
                             break
                         }
                         $offstart = $offstart + $limit

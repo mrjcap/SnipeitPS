@@ -95,12 +95,12 @@ function Get-SnipeitLicenseSeat() {
                 $callargs['limit'] = $limit
                 $res=Get-SnipeitLicenseSeat @callargs
                 $res
-                if ($res.count -lt $limit) {
+                if (@($res).Count -lt $limit) {
                     break
                 }
                 $offstart = $offstart + $limit
-                if ($offstart -gt 50000) {
-                    Write-Warning "Pagination exceeded 50000 offset, stopping to prevent infinite loop"
+                if ($offstart -gt 10000000) {
+                    Write-Warning "Pagination exceeded 10,000,000 offset, stopping to prevent infinite loop"
                     break
                 }
             }
