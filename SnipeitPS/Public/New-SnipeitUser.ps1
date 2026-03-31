@@ -84,7 +84,7 @@ function New-SnipeitUser() {
         [parameter(mandatory = $true)]
         [string]$username,
 
-        [string]$password,
+        [object]$password,
 
         [bool]$activated = $false,
 
@@ -125,8 +125,16 @@ function New-SnipeitUser() {
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        if ($password ) {
-                $Values['password_confirmation'] = $password
+        if ($PSBoundParameters.ContainsKey('password')) {
+            if ($password -is [System.Security.SecureString]) {
+                $passwordPlain = (New-Object PSCredential "user", $password).GetNetworkCredential().Password
+            } elseif ($password -is [string]) {
+                $passwordPlain = $password
+            } else {
+                throw "Password must be a [string] or [SecureString]"
+            }
+            $Values['password'] = $passwordPlain
+            $Values['password_confirmation'] = $passwordPlain
         }
 
         $Parameters = @{
