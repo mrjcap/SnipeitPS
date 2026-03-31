@@ -21,7 +21,7 @@ Type of item. One of the following: 'Accessory','Asset','AssetMaintenance','Asse
 Needed if item_type is specified
 
 .PARAMETER action_type
-Type of action. One of the following: "add seats", "checkin from", 'checkout' or 'update'
+Type of action. One of the following: "add seats", "checkin from", "checkout", "update", "create", "delete", "restore", "upload", "accepted", "declined", "requested"
 
 .PARAMETER limit
 Specify the number of results to return
@@ -66,7 +66,7 @@ function Get-SnipeitActivity() {
         [Parameter(Mandatory=$false)]
         [int]$item_id,
 
-        [ValidateSet("add seats", "checkin from", 'checkout','update')]
+        [ValidateSet("add seats", "checkin from", "checkout", "update", "create", "delete", "restore", "upload", "accepted", "declined", "requested")]
         [string]$action_type ,
 
         [ValidateRange(1,500)]
@@ -126,7 +126,7 @@ function Get-SnipeitActivity() {
                 $callargs['offset'] = $offstart
                 $callargs['limit'] = $limit
                 $res=Get-SnipeitActivity @callargs
-                $res
+                if ($null -ne $res) { $res }
                 if (@($res).Count -lt $limit) {
                     break
                 }

@@ -108,7 +108,7 @@ function Get-SnipeitStatus() {
                 $callargs['offset'] = $offstart
                 $callargs['limit'] = $limit
                 $res=Get-SnipeitStatus @callargs
-                $res
+                if ($null -ne $res) { $res }
                 if (@($res).Count -lt $limit) {
                     break
                 }

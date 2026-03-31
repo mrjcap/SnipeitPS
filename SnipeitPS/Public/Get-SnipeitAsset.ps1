@@ -192,7 +192,7 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Assets overdue for auditing')]
         [parameter(ParameterSetName='Assets checked out to user id')]
         [parameter(ParameterSetName='Assets with component id')]
-        [ValidateSet('id','created_at','asset_tag','serial','order_number','model_id','category_id','manufacturer_id','company_id','location_id','status','status_id')]
+        [ValidateSet('id','created_at','asset_tag','serial','order_number','model_id','category_id','manufacturer_id','company_id','location_id','status','status_id','name','purchase_date','purchase_cost','notes','expected_checkin','last_checkout','assigned_to','supplier')]
         [string]$sort,
 
         [parameter(ParameterSetName='Search')]
@@ -286,7 +286,7 @@ function Get-SnipeitAsset() {
                 $callargs['offset'] = $offstart
                 $callargs['limit'] = $limit
                 $res=Get-SnipeitAsset @callargs
-                $res
+                if ($null -ne $res) { $res }
                 if ( @($res).Count -lt $limit) {
                     break
                 }

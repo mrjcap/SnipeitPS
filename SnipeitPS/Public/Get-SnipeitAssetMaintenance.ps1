@@ -96,7 +96,7 @@ function Get-SnipeitAssetMaintenance() {
                 $callargs['offset'] = $offstart
                 $callargs['limit'] = $limit
                 $res=Get-SnipeitAssetMaintenance @callargs
-                $res
+                if ($null -ne $res) { $res }
                 if (@($res).Count -lt $limit) {
                     break
                 }

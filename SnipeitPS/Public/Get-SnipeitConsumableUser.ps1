@@ -83,7 +83,7 @@ function Get-SnipeitConsumableUser() {
                 $callargs['offset'] = $offstart
                 $callargs['limit'] = $limit
                 $res=Get-SnipeitConsumableUser @callargs
-                $res
+                if ($null -ne $res) { $res }
                 if (@($res).Count -lt $limit) {
                     break
                 }

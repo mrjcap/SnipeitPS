@@ -80,7 +80,7 @@ function Get-SnipeitUserAsset() {
                 $callargs['offset'] = $offstart
                 $callargs['limit'] = $limit
                 $res=Get-SnipeitUserAsset @callargs
-                $res
+                if ($null -ne $res) { $res }
                 if (@($res).Count -lt $limit) {
                     break
                 }
