@@ -254,10 +254,10 @@ PrivateData = @{
         Tags = @('SnipeIT', 'Snipe-IT', 'AssetManagement', 'ITAM', 'Inventory', 'API', 'REST')
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/snazy2000/SnipeitPS/blob/master/LICENSE'
+        LicenseUri = 'https://github.com/mrjcap/SnipeitPS/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/snazy2000/SnipeitPS'
+        ProjectUri = 'https://github.com/mrjcap/SnipeitPS'
 
         # A URL to an icon representing this module.
         # IconUri = ''
