@@ -171,7 +171,7 @@ function Get-SnipeitLicense() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
@@ -182,7 +182,7 @@ function Get-SnipeitLicense() {
 
     process {
         if ($all) {
-            $offstart = $(if ($offset) {$offset} Else {0})
+            $offstart = $(if ($PSBoundParameters.ContainsKey('offset')) {$offset} Else {0})
             $callargs = $SearchParameter.Clone()
             $callargs.Remove('all')
 
