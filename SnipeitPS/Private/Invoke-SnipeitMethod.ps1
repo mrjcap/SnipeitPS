@@ -124,6 +124,8 @@ function Invoke-SnipeitMethod {
                     $Body['_method'] = $Method
                     $splatParameters["Method"] = 'POST'
                     $splatParameters["Form"] = $Body
+                    # Remove Content-Type header so -Form can set multipart/form-data
+                    $_headers.Remove('Content-Type')
                 } else {
                     # use base64 encoded images for PowerShell version < 7
                     $mimetype = 'application/octet-stream'
@@ -157,13 +159,19 @@ function Invoke-SnipeitMethod {
             }
         }
         if ($Body -and $splatParameters.Keys -notcontains 'Form') {
-            $splatParameters["Body"] =  [System.Text.Encoding]::UTF8.GetBytes(($Body | ConvertTo-Json))
+            $splatParameters["Body"] =  [System.Text.Encoding]::UTF8.GetBytes(($Body | ConvertTo-Json -Depth 10))
         }
 
         $script:PSDefaultParameterValues = $global:PSDefaultParameterValues
 
-        if ($DebugPreference -ne 'SilentlyContinue') {
-            Write-Debug "$($Body | ConvertTo-Json -Depth 4)"
+        if ($DebugPreference -ne 'SilentlyContinue' -and $null -ne $Body) {
+            $debugBody = $Body.Clone()
+            foreach ($key in @('password', 'password_confirmation')) {
+                if ($debugBody.ContainsKey($key)) {
+                    $debugBody[$key] = '[REDACTED]'
+                }
+            }
+            Write-Debug "$($debugBody | ConvertTo-Json -Depth 4)"
         }
 
         #Check throttle limit
@@ -226,7 +234,47 @@ function Invoke-SnipeitMethod {
         }
         catch {
             Write-Verbose "[$($MyInvocation.MyCommand.Name)] Failed to get an answer from the server"
-            $webResponse = $_.Exception.Response
+            $responseBody = $null
+            if ($script:IsPowerShell7) {
+                # PS7: ErrorDetails.Message contains the response body
+                if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
+                    $responseBody = $_.ErrorDetails.Message
+                }
+            } else {
+                # PS5: read from the response stream
+                try {
+                    $errResponse = $_.Exception.Response
+                    if ($null -ne $errResponse) {
+                        $stream = $errResponse.GetResponseStream()
+                        $reader = New-Object System.IO.StreamReader($stream)
+                        $responseBody = $reader.ReadToEnd()
+                        $reader.Close()
+                        $stream.Close()
+                    }
+                } catch {
+                    Write-Debug "[$($MyInvocation.MyCommand.Name)] Could not read error response stream: $_"
+                }
+            }
+
+            if ($responseBody) {
+                try {
+                    $webResponse = $responseBody | ConvertFrom-Json
+                } catch {
+                    $statusCode = ''
+                    if ($script:IsPowerShell7) {
+                        $statusCode = $_.Exception.Response.StatusCode
+                    } else {
+                        try { $statusCode = $errResponse.StatusCode } catch {}
+                    }
+                    Write-Error "HTTP $statusCode error from Snipe-IT API: $responseBody"
+                    $webResponse = $null
+                }
+            } else {
+                $statusCode = ''
+                try { $statusCode = $_.Exception.Response.StatusCode } catch {}
+                Write-Error "HTTP $statusCode error from Snipe-IT API with no response body."
+                $webResponse = $null
+            }
         }
 
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Executed WebRequest. Access $webResponse to see details"
