@@ -139,7 +139,7 @@ function Get-SnipeitConsumable() {
 
                 if ($all) {
                     $offstart = $(if ($PSBoundParameters.ContainsKey('offset')) {$offset} Else {0})
-                    $callargs = $SearchParameter
+                    $callargs = $SearchParameter.Clone()
                     $callargs.Remove('all')
 
                     while ($true) {
@@ -151,6 +151,10 @@ function Get-SnipeitConsumable() {
                             break
                         }
                         $offstart = $offstart + $limit
+                        if ($offstart -gt 10000000) {
+                            Write-Warning "Pagination exceeded 10,000,000 offset, stopping to prevent infinite loop"
+                            break
+                        }
                     }
                 } else {
                     $result = Invoke-SnipeitMethod @Parameters
