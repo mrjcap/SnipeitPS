@@ -23,7 +23,7 @@
 function Update-SnipeitAssetAudit() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "Medium"
     )]
 
     Param(

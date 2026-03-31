@@ -20,7 +20,7 @@
 function Unregister-SnipeitCustomField() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "High"
     )]
 
     Param(
