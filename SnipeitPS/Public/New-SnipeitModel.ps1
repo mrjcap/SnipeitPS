@@ -82,7 +82,7 @@ function New-SnipeitModel() {
         if ($PSBoundParameters.ContainsKey('fieldset_id')) { $Values.Add("fieldset_id", $fieldset_id) }
         if ($PSBoundParameters.ContainsKey('model_number')) { $Values.Add("model_number", $model_number) }
         if ($PSBoundParameters.ContainsKey('eol')) { $Values.Add("eol", $eol) }
-
+        if ($PSBoundParameters.ContainsKey('image')) { $Values.Add("image", $image) }
 
         $Parameters = @{
             Api    = "/api/v1/models"
@@ -92,7 +92,7 @@ function New-SnipeitModel() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
