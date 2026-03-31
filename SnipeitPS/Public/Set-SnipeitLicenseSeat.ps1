@@ -78,6 +78,7 @@ function Set-SnipeitLicenseSeat() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        $Values.Remove('seat_id')
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
