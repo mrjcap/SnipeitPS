@@ -45,7 +45,7 @@ Set-SnipeitCategory -id 4 -name "Laptops"
 function Set-SnipeitCategory() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "Medium"
     )]
 
     Param(
@@ -59,11 +59,11 @@ function Set-SnipeitCategory() {
 
         [string]$eula_text,
 
-        [bool]$use_default_eula,
+        [Nullable[bool]]$use_default_eula,
 
-        [bool]$require_acceptance,
+        [Nullable[bool]]$require_acceptance,
 
-        [bool]$checkin_email,
+        [Nullable[bool]]$checkin_email,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
@@ -89,7 +89,7 @@ function Set-SnipeitCategory() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {

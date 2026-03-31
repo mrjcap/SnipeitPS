@@ -51,9 +51,9 @@ function New-SnipeitStatus() {
 
         [string]$color,
 
-        [bool]$show_in_nav,
+        [Nullable[bool]]$show_in_nav,
 
-        [bool]$default_label,
+        [Nullable[bool]]$default_label,
 
         [parameter(mandatory = $false)]
         [string]$url,
@@ -76,7 +76,7 @@ function New-SnipeitStatus() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {

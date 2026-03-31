@@ -115,11 +115,11 @@ function Set-SnipeitUser() {
 
         [string]$employee_num,
 
-        [bool]$activated,
+        [Nullable[bool]]$activated,
 
         [string]$notes,
 
-        [bool]$ldap_import,
+        [Nullable[bool]]$ldap_import,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
@@ -155,7 +155,7 @@ function Set-SnipeitUser() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {

@@ -72,7 +72,7 @@ Update consumable with stock count 20, alert when stock is 5 or lower
 function Set-SnipeitConsumable() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "Medium"
     )]
 
     Param(
@@ -106,7 +106,7 @@ function Set-SnipeitConsumable() {
         [Nullable[System.Int32]]$location_id,
 
         [parameter(mandatory = $false)]
-        [bool]$requestable,
+        [Nullable[bool]]$requestable,
 
         [parameter(mandatory = $false)]
         [datetime]$purchase_date,
@@ -147,7 +147,7 @@ function Set-SnipeitConsumable() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {

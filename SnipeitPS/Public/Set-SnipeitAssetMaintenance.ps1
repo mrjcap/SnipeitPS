@@ -67,7 +67,7 @@ function Set-SnipeitAssetMaintenance() {
 
         [datetime]$completion_date,
 
-        [bool]$is_warranty,
+        [Nullable[bool]]$is_warranty,
 
         [decimal]$cost,
 
@@ -99,7 +99,7 @@ function Set-SnipeitAssetMaintenance() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {

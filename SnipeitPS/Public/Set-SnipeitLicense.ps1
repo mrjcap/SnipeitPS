@@ -76,7 +76,7 @@
 function Set-SnipeitLicense() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "Medium"
     )]
 
     Param(
@@ -102,7 +102,7 @@ function Set-SnipeitLicense() {
         [ValidateLength(1, 100)]
         [string]$license_name,
 
-        [bool]$maintained,
+        [Nullable[bool]]$maintained,
 
         [ValidateRange(1, [int]::MaxValue)]
         [int]$manufacturer_id,
@@ -116,7 +116,7 @@ function Set-SnipeitLicense() {
 
         [datetime]$purchase_date,
 
-        [bool]$reassignable,
+        [Nullable[bool]]$reassignable,
 
         [string]$serial,
 
@@ -154,7 +154,7 @@ function Set-SnipeitLicense() {
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
              Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apikey
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
         }
 
         if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
