@@ -3,7 +3,7 @@ function Test-SnipeitPSConnection {
     param()
     #test API connection
     $Parameters = @{
-        Api           = '/api/v1/statuslabels'
+        Api           = "$script:SnipeitApiPrefix/statuslabels"
         Method        = 'Get'
         GetParameters = @{'limit'=1}
     }

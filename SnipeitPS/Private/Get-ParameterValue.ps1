@@ -56,8 +56,8 @@ function Get-ParameterValue {
 
     #Convert switch parameters to booleans so it converts nicely to json
     foreach ( $key in @($ParameterValues.Keys)) {
-      if ($true -eq $ParameterValues[$key].IsPresent){
-        $ParameterValues[$key]=$true;
+      if ($ParameterValues[$key] -is [System.Management.Automation.SwitchParameter]){
+        $ParameterValues[$key] = $ParameterValues[$key].IsPresent
       }
     }
 

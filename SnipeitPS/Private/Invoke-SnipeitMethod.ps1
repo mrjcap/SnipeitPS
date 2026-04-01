@@ -3,7 +3,7 @@
     Make an API request to Snipe-IT
 
     .PARAMETER Api
-    API part of URL. prefix with slash ie. "/api/v1/hardware"
+    API part of URL. prefix with slash ie. "$script:SnipeitApiPrefix/hardware"
 
     .PARAMETER Method
     Method of the invocation, one of the following: "GET", "POST", "PUT", "PATCH" or "DELETE"
@@ -130,7 +130,7 @@ function Invoke-SnipeitMethod {
                     # use base64 encoded images for PowerShell version < 7
                     $mimetype = 'application/octet-stream'
                     try { Add-Type -AssemblyName "System.Web"; $mimetype = [System.Web.MimeMapping]::GetMimeMapping($body['image']) } catch {}
-                    $Body['image'] = 'data:@'+$mimetype+';base64,'+[Convert]::ToBase64String([IO.File]::ReadAllBytes($Body['image']))
+                    $Body['image'] = 'data:'+$mimetype+';base64,'+[Convert]::ToBase64String([IO.File]::ReadAllBytes($Body['image']))
                 }
             } catch {
                 Write-Error "Failed to process image file '$($body['image'])': $_"
@@ -195,8 +195,10 @@ function Invoke-SnipeitMethod {
                 }
 
                 "Constant" {
-                    $prevrequesttime =[Math]::Round(((Get-Date).ToFileTime() - ($SnipeitPSSession.throttledRequests[$SnipeitPSSession.throttledRequests.count - 1]))/10000)
-                    $naptime = [Math]::Round($SnipeitPSSession.throttlePeriod / $SnipeitPSSession.throttleLimit) - $prevrequesttime
+                    if ($SnipeitPSSession.throttledRequests.count -gt 0) {
+                        $prevrequesttime =[Math]::Round(((Get-Date).ToFileTime() - ($SnipeitPSSession.throttledRequests[$SnipeitPSSession.throttledRequests.count - 1]))/10000)
+                        $naptime = [Math]::Round($SnipeitPSSession.throttlePeriod / $SnipeitPSSession.throttleLimit) - $prevrequesttime
+                    }
                 }
 
                 "Adaptive" {
@@ -233,26 +235,30 @@ function Invoke-SnipeitMethod {
             $webResponse = Invoke-RestMethod @splatParameters
         }
         catch {
+            $httpError = $_
             Write-Verbose "[$($MyInvocation.MyCommand.Name)] Failed to get an answer from the server"
             $responseBody = $null
             if ($script:IsPowerShell7) {
                 # PS7: ErrorDetails.Message contains the response body
-                if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
-                    $responseBody = $_.ErrorDetails.Message
+                if ($httpError.ErrorDetails -and $httpError.ErrorDetails.Message) {
+                    $responseBody = $httpError.ErrorDetails.Message
                 }
             } else {
                 # PS5: read from the response stream
+                $stream = $null
+                $reader = $null
                 try {
-                    $errResponse = $_.Exception.Response
+                    $errResponse = $httpError.Exception.Response
                     if ($null -ne $errResponse) {
                         $stream = $errResponse.GetResponseStream()
                         $reader = New-Object System.IO.StreamReader($stream)
                         $responseBody = $reader.ReadToEnd()
-                        $reader.Close()
-                        $stream.Close()
                     }
                 } catch {
                     Write-Debug "[$($MyInvocation.MyCommand.Name)] Could not read error response stream: $_"
+                } finally {
+                    if ($null -ne $reader) { $reader.Close() }
+                    if ($null -ne $stream) { $stream.Close() }
                 }
             }
 
@@ -261,17 +267,13 @@ function Invoke-SnipeitMethod {
                     $webResponse = $responseBody | ConvertFrom-Json
                 } catch {
                     $statusCode = ''
-                    if ($script:IsPowerShell7) {
-                        $statusCode = $_.Exception.Response.StatusCode
-                    } else {
-                        try { $statusCode = $errResponse.StatusCode } catch {}
-                    }
+                    try { $statusCode = $httpError.Exception.Response.StatusCode } catch {}
                     Write-Error "HTTP $statusCode error from Snipe-IT API: $responseBody"
                     $webResponse = $null
                 }
             } else {
                 $statusCode = ''
-                try { $statusCode = $_.Exception.Response.StatusCode } catch {}
+                try { $statusCode = $httpError.Exception.Response.StatusCode } catch {}
                 Write-Error "HTTP $statusCode error from Snipe-IT API with no response body."
                 $webResponse = $null
             }
@@ -295,7 +297,7 @@ function Invoke-SnipeitMethod {
                     } elseif ( $webResponse.StatusCode -eq 'Unauthorized') {
                         Write-Verbose "[$($MyInvocation.MyCommand.Name)] An Unauthorized response was received"
                         Write-Error "Cannot connect to Snipe-IT: Unauthorized."
-                        return $false
+                        return
                     } else {
                         #update operations return payload
                         if ($webResponse.payload) {

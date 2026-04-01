@@ -24,4 +24,5 @@ $SnipeitPSSession = [ordered]@{
 }
 New-Variable -Name SnipeitPSSession  -Value $SnipeitPSSession -Scope Script -Force
 $script:IsPowerShell7 = $PSVersionTable.PSVersion -ge '7.0'
+$script:SnipeitApiPrefix = '/api/v1'
 
