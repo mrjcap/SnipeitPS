@@ -6,10 +6,10 @@ PowerShell API module for Snipe-IT Asset Management. Forked from [snazy2000/Snip
 
 - **Language**: PowerShell 5.1+
 - **License**: MIT
-- **Version**: 1.12.0
+- **Version**: 1.14.0
 - **Published**: PowerShell Gallery (`Install-Module SnipeitPS`)
 - **CI**: AppVeyor
-- **Tests**: 628 Pester v5 tests across 16 files
+- **Tests**: 699 Pester v5 tests across 16 files
 
 ## Project Structure
 
@@ -19,7 +19,7 @@ SnipeitPS/
 │   ├── SnipeitPS.psd1       # Module manifest
 │   ├── Public/              # 114 exported functions (one per file)
 │   └── Private/             # 10 internal helpers
-├── Tests/                   # 16 Pester v5 test files (628 tests)
+├── Tests/                   # 16 Pester v5 test files (699 tests)
 ├── docs/                    # Command documentation
 ├── build.ps1                # Build script
 ├── SnipeitPS.build.ps1      # InvokeBuild tasks
