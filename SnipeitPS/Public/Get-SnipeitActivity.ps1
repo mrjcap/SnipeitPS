@@ -100,7 +100,7 @@ function Get-SnipeitActivity() {
 
 
         $Parameters = @{
-            Api           = "/api/v1/reports/activity"
+            Api           = "$script:SnipeitApiPrefix/reports/activity"
             Method        = 'Get'
             GetParameters = $SearchParameter
         }

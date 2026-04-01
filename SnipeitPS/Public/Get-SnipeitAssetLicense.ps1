@@ -50,7 +50,7 @@ function Get-SnipeitAssetLicense() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/hardware/$id/licenses"
+        $api = "$script:SnipeitApiPrefix/hardware/$id/licenses"
 
         $Parameters = @{
             Api           = $api

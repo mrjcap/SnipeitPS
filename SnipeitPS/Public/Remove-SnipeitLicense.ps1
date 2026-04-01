@@ -53,7 +53,7 @@ function Remove-SnipeitLicense () {
     process {
         foreach($license_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/licenses/$license_id"
+                Api    = "$script:SnipeitApiPrefix/licenses/$license_id"
                 Method = 'Delete'
             }
 

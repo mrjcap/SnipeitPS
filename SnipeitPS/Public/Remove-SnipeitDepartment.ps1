@@ -52,7 +52,7 @@ function Remove-SnipeitDepartment () {
     process {
         foreach($department_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/departments/$department_id"
+                Api    = "$script:SnipeitApiPrefix/departments/$department_id"
                 Method = 'Delete'
             }
 

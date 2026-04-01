@@ -82,7 +82,7 @@ function New-SnipeitAccessory() {
 
         [string]$model_number,
 
-        [float]$purchase_cost,
+        [string]$purchase_cost,
 
         [datetime]$purchase_date,
 
@@ -114,7 +114,7 @@ function New-SnipeitAccessory() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/accessories"
+            Api    = "$script:SnipeitApiPrefix/accessories"
             Method = 'POST'
             Body   = $Values
         }

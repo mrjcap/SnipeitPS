@@ -55,10 +55,13 @@ function Set-SnipeitAssetMaintenance() {
         [parameter(Mandatory=$true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$asset_id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$supplier_id,
 
+        [ValidateSet("Maintenance","Repair","Upgrade","PAT Test","Calibration","Software Support","Hardware Support")]
         [string]$asset_maintenance_type,
 
         [string]$title,
@@ -111,7 +114,7 @@ function Set-SnipeitAssetMaintenance() {
     process {
         foreach($maintenance_id in $id) {
             $Parameters = @{
-                Api           = "/api/v1/maintenances/$maintenance_id"
+                Api           = "$script:SnipeitApiPrefix/maintenances/$maintenance_id"
                 Method        = $RequestType
                 Body          = $Values
             }

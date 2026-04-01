@@ -41,9 +41,6 @@
     .PARAMETER image
     Location Image filename and path
 
-    .PARAMETER image_delete
-    Remove current image
-
     .PARAMETER url
     Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
@@ -78,16 +75,16 @@ function New-SnipeitLocation() {
 
         [string]$currency,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$parent_id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$manager_id,
 
         [string]$ldap_ou,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
-
-        [switch]$image_delete=$false,
 
         [parameter(mandatory = $false)]
         [string]$url,
@@ -103,7 +100,7 @@ function New-SnipeitLocation() {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api    = "/api/v1/locations"
+            Api    = "$script:SnipeitApiPrefix/locations"
             Method = 'post'
             Body   = $Values
         }

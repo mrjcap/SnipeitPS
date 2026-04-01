@@ -28,7 +28,7 @@ function Get-SnipeitBackup() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api           = "/api/v1/settings/backups"
+            Api           = "$script:SnipeitApiPrefix/settings/backups"
             Method        = 'Get'
         }
 

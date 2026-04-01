@@ -53,7 +53,7 @@ function Get-SnipeitConsumableUser() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/consumables/$id/users"
+        $api = "$script:SnipeitApiPrefix/consumables/$id/users"
 
         $Parameters = @{
             Api           = $api

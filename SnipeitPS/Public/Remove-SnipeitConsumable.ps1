@@ -54,7 +54,7 @@ function Remove-SnipeitConsumable () {
     process {
         foreach($consumable_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/consumables/$consumable_id"
+                Api    = "$script:SnipeitApiPrefix/consumables/$consumable_id"
                 Method = 'Delete'
             }
 

@@ -11,6 +11,9 @@
     .PARAMETER name
     Optionally restrict Manufacturer results to this name field
 
+    .PARAMETER sort
+    Column to sort on
+
     .PARAMETER order
     Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -51,6 +54,9 @@ function Get-SnipeitManufacturer() {
         [string]$name,
         
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -76,10 +82,10 @@ function Get-SnipeitManufacturer() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/manufacturers"
+        $api = "$script:SnipeitApiPrefix/manufacturers"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/manufacturers/$id"
+        $api= "$script:SnipeitApiPrefix/manufacturers/$id"
         }
 
         $Parameters = @{

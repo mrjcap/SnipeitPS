@@ -103,10 +103,10 @@ function Get-SnipeitComponent() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/components"
+        $api = "$script:SnipeitApiPrefix/components"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/components/$id"
+        $api= "$script:SnipeitApiPrefix/components/$id"
         }
 
         $Parameters = @{

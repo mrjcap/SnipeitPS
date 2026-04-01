@@ -45,7 +45,7 @@ function New-SnipeitAssetLabel() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/hardware/labels"
+            Api    = "$script:SnipeitApiPrefix/hardware/labels"
             Method = 'Post'
             Body   = $Values
         }

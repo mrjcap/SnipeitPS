@@ -50,7 +50,7 @@ function Get-SnipeitUserAsset() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/users/$id/assets"
+        $api = "$script:SnipeitApiPrefix/users/$id/assets"
 
         $Parameters = @{
             Api           = $api

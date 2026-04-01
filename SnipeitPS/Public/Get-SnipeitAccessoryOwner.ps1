@@ -34,7 +34,7 @@ function Get-SnipeitAccessoryOwner() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api    = "/api/v1/accessories/$id/checkedout"
+            Api    = "$script:SnipeitApiPrefix/accessories/$id/checkedout"
             Method = 'GET'
         }
 

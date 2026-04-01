@@ -112,7 +112,7 @@ function Set-SnipeitAssetOwner() {
     process{
         foreach($asset_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/hardware/$asset_id/checkout"
+                Api    = "$script:SnipeitApiPrefix/hardware/$asset_id/checkout"
                 Method = 'POST'
                 Body   = $Values
             }

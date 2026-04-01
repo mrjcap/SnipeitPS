@@ -39,10 +39,10 @@ function Get-SnipeitAssetFile() {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        $api = "/api/v1/hardware/$id/files"
+        $api = "$script:SnipeitApiPrefix/hardware/$id/files"
 
         if ($PSBoundParameters.ContainsKey('file_id')) {
-           $api= "/api/v1/hardware/$id/files/$file_id"
+           $api= "$script:SnipeitApiPrefix/hardware/$id/files/$file_id"
         }
 
         $Parameters = @{

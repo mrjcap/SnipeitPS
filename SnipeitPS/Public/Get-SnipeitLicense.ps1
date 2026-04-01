@@ -157,10 +157,10 @@ function Get-SnipeitLicense() {
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         switch($PsCmdlet.ParameterSetName) {
-            'Search' {$api = "/api/v1/licenses"}
-            'Get with ID' {$api= "/api/v1/licenses/$id"}
-            'Get licenses checked out to user ID' {$api= "/api/v1/users/$user_id/licenses"}
-            'Get licenses checked out to asset ID' {$api= "/api/v1/hardware/$asset_id/licenses"}
+            'Search' {$api = "$script:SnipeitApiPrefix/licenses"}
+            'Get with ID' {$api= "$script:SnipeitApiPrefix/licenses/$id"}
+            'Get licenses checked out to user ID' {$api= "$script:SnipeitApiPrefix/users/$user_id/licenses"}
+            'Get licenses checked out to asset ID' {$api= "$script:SnipeitApiPrefix/hardware/$asset_id/licenses"}
         }
 
         $Parameters = @{

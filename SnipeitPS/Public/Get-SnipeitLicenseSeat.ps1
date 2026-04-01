@@ -58,11 +58,11 @@ function Get-SnipeitLicenseSeat() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'seat_id', 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/licenses/$id/seats"
+        $api = "$script:SnipeitApiPrefix/licenses/$id/seats"
 
 
-        if ($seat_id) {
-        $api= "/api/v1/licenses/$id/seats/$seat_id"
+        if ($PSBoundParameters.ContainsKey('seat_id')) {
+        $api= "$script:SnipeitApiPrefix/licenses/$id/seats/$seat_id"
         }
 
         $Parameters = @{
@@ -88,7 +88,9 @@ function Get-SnipeitLicenseSeat() {
             $callargs = $SearchParameter.Clone()
             $callargs.Remove('all')
             $callargs['id'] = $id
-            $callargs['seat_id'] = $seat_id
+            if ($PSBoundParameters.ContainsKey('seat_id')) {
+                $callargs['seat_id'] = $seat_id
+            }
 
             while ($true) {
                 $callargs['offset'] = $offstart

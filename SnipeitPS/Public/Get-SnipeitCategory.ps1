@@ -11,6 +11,9 @@ An ID of a specific Category
 .PARAMETER name
 Optionally restrict Category results to this Category name.
 
+.PARAMETER sort
+Column to sort on
+
 .PARAMETER order
 Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -50,6 +53,9 @@ function Get-SnipeitCategory() {
         [string]$name,
         
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -76,10 +82,10 @@ function Get-SnipeitCategory() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/categories"
+        $api = "$script:SnipeitApiPrefix/categories"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/categories/$id"
+        $api= "$script:SnipeitApiPrefix/categories/$id"
         }
 
         $Parameters = @{

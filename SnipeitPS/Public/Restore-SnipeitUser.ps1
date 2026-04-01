@@ -49,7 +49,7 @@ function Restore-SnipeitUser() {
     process{
         foreach($user_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/users/$user_id/restore"
+                Api    = "$script:SnipeitApiPrefix/users/$user_id/restore"
                 Method = 'POST'
                 Body   = @{}
             }

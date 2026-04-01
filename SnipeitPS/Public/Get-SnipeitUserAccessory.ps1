@@ -50,7 +50,7 @@ function Get-SnipeitUserAccessory() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/users/$id/accessories"
+        $api = "$script:SnipeitApiPrefix/users/$id/accessories"
 
         $Parameters = @{
             Api           = $api

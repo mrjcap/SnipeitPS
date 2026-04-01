@@ -89,7 +89,7 @@ function New-SnipeitCategory() {
     process {
 
         $Parameters = @{
-            Api    = "/api/v1/categories"
+            Api    = "$script:SnipeitApiPrefix/categories"
             Method = 'POST'
             Body   = $Values
         }

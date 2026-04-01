@@ -112,9 +112,9 @@ function Get-SnipeitAccessory() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         switch($PsCmdlet.ParameterSetName) {
-            'Search' {$api = "/api/v1/accessories"}
-            'Get by ID' {$api= "/api/v1/accessories/$id"}
-            'Accessories checked out to user id' {$api = "/api/v1/users/$user_id/accessories"}
+            'Search' {$api = "$script:SnipeitApiPrefix/accessories"}
+            'Get by ID' {$api= "$script:SnipeitApiPrefix/accessories/$id"}
+            'Accessories checked out to user id' {$api = "$script:SnipeitApiPrefix/users/$user_id/accessories"}
         }
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters

@@ -69,7 +69,7 @@ function New-SnipeitAssetFile() {
     process {
         if ($PSCmdlet.ShouldProcess("Asset ID $id", $MyInvocation.MyCommand.Name)) {
             $Parameters = @{
-                Api    = "/api/v1/hardware/$id/files"
+                Api    = "$script:SnipeitApiPrefix/hardware/$id/files"
                 Method = 'Post'
                 Body   = $Values
             }

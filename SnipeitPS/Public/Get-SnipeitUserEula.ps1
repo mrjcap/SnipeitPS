@@ -34,7 +34,7 @@ function Get-SnipeitUserEula() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api           = "/api/v1/users/$id/eulas"
+            Api           = "$script:SnipeitApiPrefix/users/$id/eulas"
             Method        = 'Get'
         }
 

@@ -113,7 +113,7 @@ function New-SnipeitSupplier() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/suppliers"
+            Api    = "$script:SnipeitApiPrefix/suppliers"
             Method = 'POST'
             Body   = $Values
         }

@@ -39,9 +39,9 @@ function Get-SnipeitCustomField() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         if ($PSBoundParameters.ContainsKey('id')) {
-            $api= "/api/v1/fields/$id"
+            $api= "$script:SnipeitApiPrefix/fields/$id"
         } else {
-            $api = "/api/v1/fields"
+            $api = "$script:SnipeitApiPrefix/fields"
         }
 
         $Parameters = @{

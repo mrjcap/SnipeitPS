@@ -44,7 +44,7 @@ function Remove-SnipeitModelFile () {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api    = "/api/v1/models/$id/files/$file_id/delete"
+            Api    = "$script:SnipeitApiPrefix/models/$id/files/$file_id/delete"
             Method = 'Delete'
         }
 

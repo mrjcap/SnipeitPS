@@ -8,6 +8,9 @@ A text string to search the Models data
 .PARAMETER id
 An ID of a specific model
 
+.PARAMETER sort
+Column to sort on
+
 .PARAMETER order
 Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -44,6 +47,9 @@ function Get-SnipeitModel() {
         [int]$id,
 
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -70,10 +76,10 @@ function Get-SnipeitModel() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/models"
+        $api = "$script:SnipeitApiPrefix/models"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/models/$id"
+        $api= "$script:SnipeitApiPrefix/models/$id"
         }
 
         $Parameters = @{

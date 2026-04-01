@@ -79,6 +79,7 @@ function New-SnipeitLicense() {
         [string]$name,
 
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$seats,
 
         [ValidateRange(1, [int]::MaxValue)]
@@ -104,7 +105,7 @@ function New-SnipeitLicense() {
 
         [string]$order_number,
 
-        [float]$purchase_cost,
+        [string]$purchase_cost,
 
         [datetime]$purchase_date,
 
@@ -142,7 +143,7 @@ function New-SnipeitLicense() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/licenses"
+            Api    = "$script:SnipeitApiPrefix/licenses"
             Method = 'POST'
             Body   = $Values
         }

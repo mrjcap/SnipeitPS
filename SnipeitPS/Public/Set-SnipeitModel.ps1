@@ -60,8 +60,10 @@ function Set-SnipeitModel() {
 
         [string]$model_number,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$category_id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$manufacturer_id,
 
         [Nullable[System.Int32]]$eol,
@@ -103,9 +105,9 @@ function Set-SnipeitModel() {
     process {
         foreach ($model_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/models/$model_id"
+                Api    = "$script:SnipeitApiPrefix/models/$model_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Model ID $model_id", $MyInvocation.MyCommand.Name)) {

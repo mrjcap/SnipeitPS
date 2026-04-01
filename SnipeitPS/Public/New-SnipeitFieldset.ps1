@@ -42,7 +42,7 @@ function New-SnipeitFieldset() {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api    = "/api/v1/fieldsets"
+            Api    = "$script:SnipeitApiPrefix/fieldsets"
             Method = 'Post'
             Body   = $Values
         }

@@ -89,9 +89,11 @@ function New-SnipeitAsset() {
 
         [parameter(ParameterSetName='Create asset',mandatory = $true)]
         [parameter(ParameterSetName='Checkout asset when creating',mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$status_id,
 
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$model_id,
 
         [parameter(mandatory = $false)]
@@ -105,6 +107,7 @@ function New-SnipeitAsset() {
         [string]$serial,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$company_id,
 
         [parameter(mandatory = $false)]
@@ -123,15 +126,18 @@ function New-SnipeitAsset() {
         [datetime]$purchase_date,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$supplier_id,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$rtd_location_id,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
         [parameter(ParameterSetName='Checkout asset when creating',mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$assigned_id,
 
         [parameter(ParameterSetName='Checkout asset when creating',mandatory = $true)]
@@ -177,7 +183,7 @@ function New-SnipeitAsset() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/hardware"
+            Api    = "$script:SnipeitApiPrefix/hardware"
             Method = 'Post'
             Body   = $Values
         }

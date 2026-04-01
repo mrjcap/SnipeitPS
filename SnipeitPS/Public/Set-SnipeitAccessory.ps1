@@ -88,7 +88,7 @@ function Set-SnipeitAccessory() {
 
         [string]$order_number,
 
-        [float]$purchase_cost,
+        [string]$purchase_cost,
 
         [datetime]$purchase_date,
 
@@ -137,9 +137,9 @@ function Set-SnipeitAccessory() {
     process {
         foreach($accessory_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/accessories/$accessory_id"
+                Api    = "$script:SnipeitApiPrefix/accessories/$accessory_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Accessory ID $accessory_id", $MyInvocation.MyCommand.Name)) {

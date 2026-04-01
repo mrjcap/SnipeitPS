@@ -106,7 +106,7 @@ function Set-SnipeitCustomField() {
     process{
         foreach($field_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/fields/$field_id"
+                Api    = "$script:SnipeitApiPrefix/fields/$field_id"
                 Method = $RequestType
                 Body   = $Values
             }

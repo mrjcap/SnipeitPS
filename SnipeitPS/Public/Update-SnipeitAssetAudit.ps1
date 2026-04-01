@@ -57,7 +57,7 @@ function Update-SnipeitAssetAudit() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/hardware/$id/audit"
+            Api    = "$script:SnipeitApiPrefix/hardware/$id/audit"
             Method = 'POST'
             Body   = $Values
         }

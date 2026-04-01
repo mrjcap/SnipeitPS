@@ -96,12 +96,16 @@ function New-SnipeitUser() {
 
         [string]$phone,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$company_id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$location_id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$department_id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$manager_id,
 
         [int[]]$groups,
@@ -138,7 +142,7 @@ function New-SnipeitUser() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/users"
+            Api    = "$script:SnipeitApiPrefix/users"
             Method = 'post'
             Body   = $Values
         }

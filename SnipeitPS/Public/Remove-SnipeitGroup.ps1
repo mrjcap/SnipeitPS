@@ -51,7 +51,7 @@ function Remove-SnipeitGroup () {
     process {
         foreach($group_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/groups/$group_id"
+                Api    = "$script:SnipeitApiPrefix/groups/$group_id"
                 Method = 'Delete'
             }
 

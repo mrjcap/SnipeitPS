@@ -34,7 +34,7 @@ function Get-SnipeitFieldsetField() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api           = "/api/v1/fieldsets/$id/fields"
+            Api           = "$script:SnipeitApiPrefix/fieldsets/$id/fields"
             Method        = 'Get'
         }
 

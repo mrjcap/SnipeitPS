@@ -69,7 +69,7 @@ function New-SnipeitStatus() {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api    = "/api/v1/statuslabels"
+            Api    = "$script:SnipeitApiPrefix/statuslabels"
             Method = 'Post'
             Body   = $Values
         }

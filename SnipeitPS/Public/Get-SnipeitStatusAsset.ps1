@@ -50,7 +50,7 @@ function Get-SnipeitStatusAsset() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/statuslabels/$id/assetlist"
+        $api = "$script:SnipeitApiPrefix/statuslabels/$id/assetlist"
 
         $Parameters = @{
             Api           = $api

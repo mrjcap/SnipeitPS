@@ -59,7 +59,7 @@ function Reset-SnipeitAccessoryOwner() {
 
     process {
         $Parameters = @{
-            Api    = "/api/v1/accessories/$assigned_pivot_id/checkin"
+            Api    = "$script:SnipeitApiPrefix/accessories/$assigned_pivot_id/checkin"
             Method = 'Post'
             Body   = @{}
         }

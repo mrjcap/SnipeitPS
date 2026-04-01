@@ -78,7 +78,7 @@ function Set-SnipeitAccessoryOwner() {
     process {
         foreach($accessory_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/accessories/$accessory_id/checkout"
+                Api    = "$script:SnipeitApiPrefix/accessories/$accessory_id/checkout"
                 Method = 'POST'
                 Body   = $Values
             }

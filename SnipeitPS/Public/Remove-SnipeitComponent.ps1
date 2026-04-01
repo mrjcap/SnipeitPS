@@ -53,7 +53,7 @@ function Remove-SnipeitComponent () {
     process {
         foreach($component_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/components/$component_id"
+                Api    = "$script:SnipeitApiPrefix/components/$component_id"
                 Method = 'Delete'
             }
 

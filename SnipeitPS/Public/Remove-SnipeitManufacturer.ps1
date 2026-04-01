@@ -53,7 +53,7 @@ function Remove-SnipeitManufacturer () {
     process {
         foreach($manufacturer_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/manufacturers/$manufacturer_id"
+                Api    = "$script:SnipeitApiPrefix/manufacturers/$manufacturer_id"
                 Method = 'Delete'
             }
 

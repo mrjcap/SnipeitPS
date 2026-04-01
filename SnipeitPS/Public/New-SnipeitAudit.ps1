@@ -29,6 +29,7 @@ function New-SnipeitAudit() {
         [parameter(mandatory = $true)]
         [string]$tag,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$location_id,
 
         [parameter(mandatory = $false)]
@@ -60,7 +61,7 @@ function New-SnipeitAudit() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/hardware/audit"
+            Api    = "$script:SnipeitApiPrefix/hardware/audit"
             Method = 'Post'
             Body   = $Values
         }

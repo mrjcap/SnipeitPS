@@ -51,7 +51,7 @@ function Remove-SnipeitUser () {
     process {
         foreach($user_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/users/$user_id"
+                Api    = "$script:SnipeitApiPrefix/users/$user_id"
                 Method = 'Delete'
             }
 

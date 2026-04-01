@@ -63,7 +63,7 @@ function Save-SnipeitBackup() {
     }
 
     process {
-        $apiUri = "$Url/api/v1/settings/backups/download/$filename"
+        $apiUri = "$Url$script:SnipeitApiPrefix/settings/backups/download/$filename"
         $outFile = Join-Path $path $filename
 
         if ($PSCmdlet.ShouldProcess($filename, "Download backup")) {

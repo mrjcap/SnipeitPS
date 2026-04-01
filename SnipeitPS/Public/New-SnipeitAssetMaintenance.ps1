@@ -50,12 +50,15 @@ function New-SnipeitAssetMaintenance() {
 
     Param(
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$asset_id,
 
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$supplier_id,
 
         [parameter(mandatory = $true)]
+        [ValidateSet("Maintenance","Repair","Upgrade","PAT Test","Calibration","Software Support","Hardware Support")]
         [string]$asset_maintenance_type,
 
         [parameter(mandatory = $true)]
@@ -95,7 +98,7 @@ function New-SnipeitAssetMaintenance() {
 
 
         $Parameters = @{
-            Api    = "/api/v1/maintenances"
+            Api    = "$script:SnipeitApiPrefix/maintenances"
             Method = 'Post'
             Body   = $Values
         }

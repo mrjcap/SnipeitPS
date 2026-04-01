@@ -55,20 +55,23 @@ function New-SnipeitComponent() {
         [string]$name,
 
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$category_id,
 
         [parameter(mandatory = $true)]
         [int]$qty,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$company_id,
 
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$location_id,
 
         [string]$order_number,
 
         [datetime]$purchase_date,
 
-        [float]$purchase_cost,
+        [string]$purchase_cost,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
@@ -90,7 +93,7 @@ function New-SnipeitComponent() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/components"
+            Api    = "$script:SnipeitApiPrefix/components"
             Method = 'POST'
             Body   = $Values
         }

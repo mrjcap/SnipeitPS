@@ -48,7 +48,7 @@ function New-SnipeitCompany() {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api    = "/api/v1/companies"
+            Api    = "$script:SnipeitApiPrefix/companies"
             Method = 'POST'
             Body   = $Values
         }

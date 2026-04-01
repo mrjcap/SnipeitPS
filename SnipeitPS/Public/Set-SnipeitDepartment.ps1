@@ -98,9 +98,9 @@ function Set-SnipeitDepartment() {
     process {
         foreach ($department_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/departments/$department_id"
+                Api    = "$script:SnipeitApiPrefix/departments/$department_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Department ID $department_id", $MyInvocation.MyCommand.Name)) {

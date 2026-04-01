@@ -63,7 +63,7 @@ function Set-SnipeitFieldset() {
     process {
         foreach($fieldset_id in $id) {
             $Parameters = @{
-                Api           = "/api/v1/fieldsets/$fieldset_id"
+                Api           = "$script:SnipeitApiPrefix/fieldsets/$fieldset_id"
                 Method        = $RequestType
                 Body          = $Values
             }

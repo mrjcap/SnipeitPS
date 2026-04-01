@@ -53,7 +53,7 @@ function Remove-SnipeitModel () {
     process {
         foreach($model_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/models/$model_id"
+                Api    = "$script:SnipeitApiPrefix/models/$model_id"
                 Method = 'Delete'
             }
 

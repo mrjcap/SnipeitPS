@@ -101,10 +101,10 @@ function Get-SnipeitDepartment() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/departments"
+        $api = "$script:SnipeitApiPrefix/departments"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/departments/$id"
+        $api= "$script:SnipeitApiPrefix/departments/$id"
         }
 
         $Parameters = @{

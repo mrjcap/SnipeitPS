@@ -53,7 +53,7 @@ function Remove-SnipeitAccessory () {
     process {
         foreach($accessory_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/accessories/$accessory_id"
+                Api    = "$script:SnipeitApiPrefix/accessories/$accessory_id"
                 Method = 'Delete'
             }
 

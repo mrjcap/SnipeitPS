@@ -50,7 +50,7 @@ function Get-SnipeitUserLicense() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/users/$id/licenses"
+        $api = "$script:SnipeitApiPrefix/users/$id/licenses"
 
         $Parameters = @{
             Api           = $api

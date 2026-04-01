@@ -28,7 +28,7 @@ function Get-SnipeitVersion() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api           = "/api/v1/version"
+            Api           = "$script:SnipeitApiPrefix/version"
             Method        = 'Get'
         }
 

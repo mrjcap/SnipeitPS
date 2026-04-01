@@ -26,6 +26,9 @@ Optionally restrict Location results to this Location zip.
 .PARAMETER country
 Optionally restrict Location results to this Location country.
 
+.PARAMETER sort
+Column to sort on
+
 .PARAMETER order
 Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -80,6 +83,9 @@ function Get-SnipeitLocation() {
         [string]$country,
         
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -105,10 +111,10 @@ function Get-SnipeitLocation() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/locations"
+        $api = "$script:SnipeitApiPrefix/locations"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/locations/$id"
+        $api= "$script:SnipeitApiPrefix/locations/$id"
         }
 
         $Parameters = @{

@@ -97,6 +97,7 @@ function Get-SnipeitConsumable() {
         [switch]$expand,
 
         [parameter(ParameterSetName='Search')]
+        [ValidateRange(1,500)]
         [int]$limit = 50,
 
         [parameter(ParameterSetName='Search')]
@@ -132,7 +133,7 @@ function Get-SnipeitConsumable() {
         switch ($PSCmdlet.ParameterSetName) {
             'Search' {
                 $Parameters = @{
-                    Api           = "/api/v1/consumables"
+                    Api           = "$script:SnipeitApiPrefix/consumables"
                     Method        = 'Get'
                     GetParameters = $SearchParameter
                 }
@@ -165,7 +166,7 @@ function Get-SnipeitConsumable() {
             'Get with ID' {
                 foreach($consumable_id in $id) {
                     $Parameters = @{
-                        Api           = "/api/v1/consumables/$consumable_id"
+                        Api           = "$script:SnipeitApiPrefix/consumables/$consumable_id"
                         Method        = 'Get'
                         GetParameters = $SearchParameter
                     }

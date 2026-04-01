@@ -168,9 +168,9 @@ function Set-SnipeitUser() {
     process{
         foreach($user_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/users/$user_id"
+                Api    = "$script:SnipeitApiPrefix/users/$user_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("User ID $user_id", $MyInvocation.MyCommand.Name)) {

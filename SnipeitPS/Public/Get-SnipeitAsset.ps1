@@ -179,6 +179,7 @@ function Get-SnipeitAsset() {
         [switch]$requestable,
 
         [parameter(ParameterSetName='Search')]
+        [ValidateSet("RTD","Deployed","Undeployable","Pending","Archived","Requestable","Deleted")]
         [string]$status,
 
         [parameter(ParameterSetName='Search')]
@@ -248,14 +249,14 @@ function Get-SnipeitAsset() {
         }
 
         switch ($PsCmdlet.ParameterSetName) {
-            'Search' { $api = "/api/v1/hardware" }
-            'Get with id'  {$api= "/api/v1/hardware/$id"}
-            'Get with asset tag' {$api= "/api/v1/hardware/bytag/$asset_tag"}
-            'Get with serial' { $api= "/api/v1/hardware/byserial/$serial"}
-            'Assets due auditing soon' {$api = "/api/v1/hardware/audit/due"}
-            'Assets overdue for auditing' {$api = "/api/v1/hardware/audit/overdue"}
-            'Assets checked out to user id'{$api = "/api/v1/users/$user_id/assets"}
-            'Assets with component id' {$api = "/api/v1/components/$component_id/assets"}
+            'Search' { $api = "$script:SnipeitApiPrefix/hardware" }
+            'Get with id'  {$api= "$script:SnipeitApiPrefix/hardware/$id"}
+            'Get with asset tag' {$api= "$script:SnipeitApiPrefix/hardware/bytag/$asset_tag"}
+            'Get with serial' { $api= "$script:SnipeitApiPrefix/hardware/byserial/$serial"}
+            'Assets due auditing soon' {$api = "$script:SnipeitApiPrefix/hardware/audit/due"}
+            'Assets overdue for auditing' {$api = "$script:SnipeitApiPrefix/hardware/audit/overdue"}
+            'Assets checked out to user id'{$api = "$script:SnipeitApiPrefix/users/$user_id/assets"}
+            'Assets with component id' {$api = "$script:SnipeitApiPrefix/components/$component_id/assets"}
         }
 
         $Parameters = @{

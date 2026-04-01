@@ -68,9 +68,11 @@ function Connect-SnipeitPS {
     param (
         [Parameter(ParameterSetName='Connect with url and apikey',Mandatory=$true)]
         [Parameter(ParameterSetName='Connect with url and secure apikey',Mandatory=$true)]
+        [ValidateScript({$_.Scheme -in @('http','https')})]
         [Uri]$url,
 
         [Parameter(ParameterSetName='Connect with url and apikey',Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         [String]$apiKey,
 
         [Parameter(ParameterSetName='Connect with url and secure apikey',Mandatory=$true)]
@@ -104,6 +106,8 @@ function Connect-SnipeitPS {
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
+        # Enforce TLS 1.2 — PS5.1 with older .NET may default to TLS 1.0/1.1
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
     }
 
     PROCESS {

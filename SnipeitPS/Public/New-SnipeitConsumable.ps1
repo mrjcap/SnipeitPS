@@ -74,21 +74,25 @@ function New-SnipeitConsumable() {
         [int]$qty,
 
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$category_id,
 
         [parameter(mandatory = $false)]
         [int]$min_amt,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$company_id,
 
         [parameter(mandatory = $false)]
         [string]$order_number,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$manufacturer_id,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$location_id,
 
         [parameter(mandatory = $false)]
@@ -127,7 +131,7 @@ function New-SnipeitConsumable() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/consumables"
+            Api    = "$script:SnipeitApiPrefix/consumables"
             Method = 'Post'
             Body   = $Values
         }

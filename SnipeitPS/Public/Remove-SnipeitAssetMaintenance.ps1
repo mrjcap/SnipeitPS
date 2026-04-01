@@ -53,7 +53,7 @@ function Remove-SnipeitAssetMaintenance {
     process {
         foreach($maintenance_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/maintenances/$maintenance_id"
+                Api    = "$script:SnipeitApiPrefix/maintenances/$maintenance_id"
                 Method = 'Delete'
             }
 

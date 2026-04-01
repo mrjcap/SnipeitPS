@@ -52,7 +52,7 @@ function Remove-SnipeitCategory () {
     process {
         foreach($category_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/categories/$category_id"
+                Api    = "$script:SnipeitApiPrefix/categories/$category_id"
                 Method = 'Delete'
             }
 

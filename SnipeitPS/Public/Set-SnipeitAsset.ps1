@@ -121,11 +121,12 @@ function Set-SnipeitAsset() {
 
         [Nullable[System.Int32]]$warranty_months,
 
-        [double]$purchase_cost,
+        [string]$purchase_cost,
 
         [datetime]$purchase_date,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$supplier_id,
 
         [Nullable[bool]]$requestable,
@@ -163,6 +164,10 @@ function Set-SnipeitAsset() {
             $Values['purchase_date'] = $Values['purchase_date'].ToString("yyyy-MM-dd")
         }
 
+        if ($Values['last_checkout']) {
+            $Values['last_checkout'] = $Values['last_checkout'].ToString("yyyy-MM-dd")
+        }
+
         if ($customfields) {
             $Values += $customfields
         }
@@ -182,9 +187,9 @@ function Set-SnipeitAsset() {
     process {
         foreach($asset_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/hardware/$asset_id"
+                Api    = "$script:SnipeitApiPrefix/hardware/$asset_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Asset ID $asset_id", $MyInvocation.MyCommand.Name)) {

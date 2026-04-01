@@ -101,9 +101,9 @@ function Set-SnipeitCategory() {
     process {
         foreach($category_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/categories/$category_id"
+                Api    = "$script:SnipeitApiPrefix/categories/$category_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Category ID $category_id", $MyInvocation.MyCommand.Name)) {

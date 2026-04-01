@@ -61,7 +61,7 @@ function Reset-SnipeitComponentOwner() {
         if ($PSBoundParameters.ContainsKey('note')) { $Values.Add("note", $note) }
 
         $Parameters = @{
-            Api    = "/api/v1/components/$id/checkin"
+            Api    = "$script:SnipeitApiPrefix/components/$id/checkin"
             Method = 'POST'
             Body   = $Values
         }

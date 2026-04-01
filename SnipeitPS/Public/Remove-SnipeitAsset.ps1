@@ -53,7 +53,7 @@ function Remove-SnipeitAsset () {
     process {
         foreach($asset_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/hardware/$asset_id"
+                Api    = "$script:SnipeitApiPrefix/hardware/$asset_id"
                 Method = 'Delete'
             }
 

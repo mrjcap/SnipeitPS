@@ -44,7 +44,7 @@ function Remove-SnipeitAssetFile () {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api    = "/api/v1/hardware/$id/files/$file_id/delete"
+            Api    = "$script:SnipeitApiPrefix/hardware/$id/files/$file_id/delete"
             Method = 'Delete'
         }
 

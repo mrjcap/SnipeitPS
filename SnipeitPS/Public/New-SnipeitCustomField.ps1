@@ -84,7 +84,7 @@ function New-SnipeitCustomField() {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api    = "/api/v1/fields"
+            Api    = "$script:SnipeitApiPrefix/fields"
             Method = 'post'
             Body   = $Values
         }

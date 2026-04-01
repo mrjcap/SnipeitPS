@@ -62,6 +62,9 @@ Optionally restrict User results to those with the specified accessories count
 .PARAMETER consumables_count
 Optionally restrict User results to those with the specified consumables count
 
+.PARAMETER sort
+Column to sort on
+
 .PARAMETER order
 Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -161,6 +164,9 @@ function Get-SnipeitUser() {
         [int]$consumables_count,
         
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -188,9 +194,9 @@ function Get-SnipeitUser() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
         switch ($PsCmdlet.ParameterSetName) {
-            'Search' { $api = "/api/v1/users"}
-            'Get with id'  {$api= "/api/v1/users/$id"}
-            'Get users a specific accessory id has been checked out to' {$api= "/api/v1/accessories/$accessory_id/checkedout"}
+            'Search' { $api = "$script:SnipeitApiPrefix/users"}
+            'Get with id'  {$api= "$script:SnipeitApiPrefix/users/$id"}
+            'Get users a specific accessory id has been checked out to' {$api= "$script:SnipeitApiPrefix/accessories/$accessory_id/checkedout"}
         }
 
         $Parameters = @{

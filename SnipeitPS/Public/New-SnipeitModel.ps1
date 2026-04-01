@@ -49,14 +49,17 @@ function New-SnipeitModel() {
         [string]$model_number,
 
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$category_id,
 
         [parameter(mandatory = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$manufacturer_id,
 
         [int]$eol,
 
         [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$fieldset_id,
 
         [ValidateScript({Test-Path $_})]
@@ -85,7 +88,7 @@ function New-SnipeitModel() {
         if ($PSBoundParameters.ContainsKey('image')) { $Values.Add("image", $image) }
 
         $Parameters = @{
-            Api    = "/api/v1/models"
+            Api    = "$script:SnipeitApiPrefix/models"
             Method = 'post'
             Body   = $Values
         }

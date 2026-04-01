@@ -70,7 +70,7 @@ function Get-SnipeitAssetMaintenance() {
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api           = "/api/v1/maintenances"
+            Api           = "$script:SnipeitApiPrefix/maintenances"
             Method        = 'Get'
             GetParameters = $SearchParameter
         }

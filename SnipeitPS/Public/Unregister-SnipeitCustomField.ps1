@@ -44,7 +44,7 @@ function Unregister-SnipeitCustomField() {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api    = "/api/v1/fields/$id/disassociate"
+            Api    = "$script:SnipeitApiPrefix/fields/$id/disassociate"
             Method = 'POST'
             Body   = $Values
         }

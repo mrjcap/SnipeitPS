@@ -28,7 +28,7 @@ function Get-SnipeitCurrentUser() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api           = "/api/v1/users/me"
+            Api           = "$script:SnipeitApiPrefix/users/me"
             Method        = 'Get'
         }
 

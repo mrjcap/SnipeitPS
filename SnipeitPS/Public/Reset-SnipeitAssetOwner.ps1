@@ -57,7 +57,7 @@ function Reset-SnipeitAssetOwner() {
         if ($PSBoundParameters.ContainsKey('status_id')) { $Values.Add("status_id", $status_id) }
 
         $Parameters = @{
-            Api    = "/api/v1/hardware/$id/checkin"
+            Api    = "$script:SnipeitApiPrefix/hardware/$id/checkin"
             Method = 'POST'
             Body   = $Values
         }

@@ -51,7 +51,7 @@ function Remove-SnipeitStatus () {
     process {
         foreach($status_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/statuslabels/$status_id"
+                Api    = "$script:SnipeitApiPrefix/statuslabels/$status_id"
                 Method = 'Delete'
             }
 

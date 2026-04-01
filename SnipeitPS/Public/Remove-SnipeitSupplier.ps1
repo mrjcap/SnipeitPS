@@ -53,7 +53,7 @@ function Remove-SnipeitSupplier () {
     process {
         foreach($supplier_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/suppliers/$supplier_id"
+                Api    = "$script:SnipeitApiPrefix/suppliers/$supplier_id"
                 Method = 'Delete'
             }
 

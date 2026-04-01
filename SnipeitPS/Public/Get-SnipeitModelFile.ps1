@@ -39,10 +39,10 @@ function Get-SnipeitModelFile() {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
-        $api = "/api/v1/models/$id/files"
+        $api = "$script:SnipeitApiPrefix/models/$id/files"
 
         if ($PSBoundParameters.ContainsKey('file_id')) {
-           $api= "/api/v1/models/$id/files/$file_id"
+           $api= "$script:SnipeitApiPrefix/models/$id/files/$file_id"
         }
 
         $Parameters = @{

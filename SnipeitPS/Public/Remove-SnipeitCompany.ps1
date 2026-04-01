@@ -52,7 +52,7 @@ function Remove-SnipeitCompany () {
     process {
         foreach($company_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/companies/$company_id"
+                Api    = "$script:SnipeitApiPrefix/companies/$company_id"
                 Method = 'Delete'
             }
 

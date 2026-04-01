@@ -52,7 +52,7 @@ function New-SnipeitGroup() {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
-            Api    = "/api/v1/groups"
+            Api    = "$script:SnipeitApiPrefix/groups"
             Method = 'Post'
             Body   = $Values
         }

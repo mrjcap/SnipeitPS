@@ -28,7 +28,7 @@ function Get-SnipeitSetting() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         $Parameters = @{
-            Api           = "/api/v1/settings"
+            Api           = "$script:SnipeitApiPrefix/settings"
             Method        = 'Get'
         }
 

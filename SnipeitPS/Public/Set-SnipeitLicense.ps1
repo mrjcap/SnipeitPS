@@ -112,7 +112,7 @@ function Set-SnipeitLicense() {
 
         [string]$order_number,
 
-        [float]$purchase_cost,
+        [string]$purchase_cost,
 
         [datetime]$purchase_date,
 
@@ -166,7 +166,7 @@ function Set-SnipeitLicense() {
     process {
         foreach($license_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/licenses/$license_id"
+                Api    = "$script:SnipeitApiPrefix/licenses/$license_id"
                 Method = $RequestType
                 Body   = $Values
             }

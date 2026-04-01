@@ -129,9 +129,9 @@ function Set-SnipeitLocation() {
     process{
         foreach ($location_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/locations/$location_id"
+                Api    = "$script:SnipeitApiPrefix/locations/$location_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Location ID $location_id", $MyInvocation.MyCommand.Name)) {

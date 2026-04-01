@@ -14,9 +14,6 @@
     .PARAMETER manufacturer_url
     Website URL of the manufacturer. Named manufacturer_url to avoid conflict with the deprecated -url parameter.
 
-    .PARAMETER image_delete
-    Remove current image
-
     .PARAMETER url
     Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
@@ -42,8 +39,6 @@ function New-SnipeitManufacturer() {
 
         [string]$manufacturer_url,
 
-        [switch]$image_delete=$false,
-
         [parameter(mandatory = $false)]
         [string]$url,
 
@@ -63,7 +58,7 @@ function New-SnipeitManufacturer() {
         }
 
         $Parameters = @{
-            Api    = "/api/v1/manufacturers"
+            Api    = "$script:SnipeitApiPrefix/manufacturers"
             Method = 'POST'
             Body   = $Values
         }

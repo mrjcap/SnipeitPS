@@ -62,7 +62,7 @@ function Set-SnipeitComponent() {
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $false)]
         [int]$qty,
 
         [Nullable[System.Int32]]$min_amt,
@@ -78,7 +78,7 @@ function Set-SnipeitComponent() {
 
         [datetime]$purchase_date,
 
-        [float]$purchase_cost,
+        [string]$purchase_cost,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
@@ -118,9 +118,9 @@ function Set-SnipeitComponent() {
     process {
         foreach($component_id in $id) {
         $Parameters = @{
-            Api    = "/api/v1/components/$component_id"
+            Api    = "$script:SnipeitApiPrefix/components/$component_id"
             Method = $RequestType
-            Body   = $Values
+            Body   = $Values.Clone()
         }
 
         if ($PSCmdlet.ShouldProcess("Component ID $component_id", $MyInvocation.MyCommand.Name)) {

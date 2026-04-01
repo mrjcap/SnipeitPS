@@ -68,7 +68,7 @@ function Set-SnipeitComponentOwner() {
     process{
         foreach($component_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/components/$component_id/checkout"
+                Api    = "$script:SnipeitApiPrefix/components/$component_id/checkout"
                 Method = 'POST'
                 Body   = $Values
             }

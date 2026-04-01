@@ -142,9 +142,9 @@ function Set-SnipeitSupplier() {
     process {
         foreach ($supplier_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/suppliers/$supplier_id"
+                Api    = "$script:SnipeitApiPrefix/suppliers/$supplier_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Supplier ID $supplier_id", $MyInvocation.MyCommand.Name)) {

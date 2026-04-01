@@ -11,6 +11,9 @@ An ID of a specific Company
 .PARAMETER name
 Optionally restrict company results to this company name.
 
+.PARAMETER sort
+Column to sort on
+
 .PARAMETER order
 Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -51,6 +54,9 @@ function Get-SnipeitCompany() {
         [string]$name,
         
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -77,10 +83,10 @@ function Get-SnipeitCompany() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/companies"
+        $api = "$script:SnipeitApiPrefix/companies"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/companies/$id"
+        $api= "$script:SnipeitApiPrefix/companies/$id"
         }
 
         $Parameters = @{

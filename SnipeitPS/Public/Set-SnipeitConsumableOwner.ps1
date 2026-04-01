@@ -67,7 +67,7 @@ function Set-SnipeitConsumableOwner() {
     process{
         foreach($consumable_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/consumables/$consumable_id/checkout"
+                Api    = "$script:SnipeitApiPrefix/consumables/$consumable_id/checkout"
                 Method = 'POST'
                 Body   = $Values
             }

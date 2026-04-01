@@ -49,7 +49,7 @@ function Restore-SnipeitAsset() {
     process{
         foreach($asset_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/hardware/$asset_id/restore"
+                Api    = "$script:SnipeitApiPrefix/hardware/$asset_id/restore"
                 Method = 'POST'
                 Body   = @{}
             }

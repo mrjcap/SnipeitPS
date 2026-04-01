@@ -8,6 +8,9 @@ A text string to search the Groups data
 .PARAMETER id
 An ID of a specific Group
 
+.PARAMETER sort
+Column to sort on
+
 .PARAMETER order
 Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -44,6 +47,9 @@ function Get-SnipeitGroup() {
         [int]$id,
 
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -69,10 +75,10 @@ function Get-SnipeitGroup() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/groups"
+        $api = "$script:SnipeitApiPrefix/groups"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-           $api= "/api/v1/groups/$id"
+           $api= "$script:SnipeitApiPrefix/groups/$id"
         }
 
         $Parameters = @{

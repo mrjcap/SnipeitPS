@@ -44,7 +44,7 @@ function Get-SnipeitAuditOverdue() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/hardware/audit/overdue"
+        $api = "$script:SnipeitApiPrefix/hardware/audit/overdue"
 
         $Parameters = @{
             Api           = $api

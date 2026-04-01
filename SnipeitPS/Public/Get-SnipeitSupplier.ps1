@@ -8,6 +8,9 @@ A text string to search the Suppliers data
 .PARAMETER id
 An ID of a specific Supplier
 
+.PARAMETER sort
+Column to sort on
+
 .PARAMETER order
 Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
@@ -70,6 +73,9 @@ function Get-SnipeitSupplier() {
         [int]$id,
 
         [parameter(ParameterSetName='Search')]
+        [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
         [ValidateSet("asc", "desc")]
         [string]$order = "desc",
 
@@ -123,10 +129,10 @@ function Get-SnipeitSupplier() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $api = "/api/v1/suppliers"
+        $api = "$script:SnipeitApiPrefix/suppliers"
 
         if ($PSBoundParameters.ContainsKey('id')) {
-        $api= "/api/v1/suppliers/$id"
+        $api= "$script:SnipeitApiPrefix/suppliers/$id"
         }
 
         $Parameters = @{

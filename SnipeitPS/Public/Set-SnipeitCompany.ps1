@@ -78,9 +78,9 @@ function Set-SnipeitCompany() {
     process{
         foreach($company_id in $id) {
             $Parameters = @{
-                Api    = "/api/v1/companies/$company_id"
+                Api    = "$script:SnipeitApiPrefix/companies/$company_id"
                 Method = $RequestType
-                Body   = $Values
+                Body   = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Company ID $company_id", $MyInvocation.MyCommand.Name)) {

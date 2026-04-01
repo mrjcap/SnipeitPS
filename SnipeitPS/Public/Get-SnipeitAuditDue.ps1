@@ -44,7 +44,7 @@ function Get-SnipeitAuditDue() {
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'url', 'apiKey', 'Debug', 'Verbose'
 
-        $api = "/api/v1/hardware/audit/due"
+        $api = "$script:SnipeitApiPrefix/hardware/audit/due"
 
         $Parameters = @{
             Api           = $api

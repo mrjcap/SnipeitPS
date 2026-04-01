@@ -37,9 +37,9 @@ function Get-SnipeitFieldset() {
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
         if ($PSBoundParameters.ContainsKey('id')) {
-            $api = "/api/v1/fieldsets/$id"
+            $api = "$script:SnipeitApiPrefix/fieldsets/$id"
         } else {
-            $api = "/api/v1/fieldsets"
+            $api = "$script:SnipeitApiPrefix/fieldsets"
         }
 
         $Parameters = @{
