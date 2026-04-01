@@ -70,7 +70,7 @@ Accept wildcard characters: False
 1 or 0 - determine whether it should be bubbled up to the top of the list of available statuses
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -146,7 +146,7 @@ Accept wildcard characters: False
 1 or 0 - determine whether the status label should show in the left-side nav of the web GUI
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -165,7 +165,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 3
 Default value: None
 Accept pipeline input: False

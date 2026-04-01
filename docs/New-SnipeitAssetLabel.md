@@ -5,26 +5,26 @@ online version:
 schema: 2.0.0
 ---
 
-# Set-SnipeitCompany
+# New-SnipeitAssetLabel
 
 ## SYNOPSIS
-Updates company name
+Generate printable asset labels from the Snipe-IT asset system
 
 ## SYNTAX
 
 ```
-Set-SnipeitCompany [-id] <Int32[]> [-name] <String> [[-image] <String>] [-image_delete]
- [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SnipeitAssetLabel [-asset_ids] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Updates company name on Snipe-IT system
+Generate printable asset labels from the Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-SnipeitCompany -id 1 -name "Acme Corp"
+New-SnipeitAssetLabel -asset_ids 1,2,3
 ```
 
 ## PARAMETERS
@@ -39,14 +39,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
-ID number of company
+### -asset_ids
+An array of asset IDs to generate labels for
 
 ```yaml
 Type: Int32[]
@@ -56,67 +56,6 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -image
-Image file name and path for item
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -image_delete
-Remove current image
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-Company name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RequestType
-HTTP request type to send to Snipe-IT system.
-Defaults to Patch. You could use Put if needed.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: Patch
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -131,7 +70,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -176,5 +115,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-
-## RELATED LINKS

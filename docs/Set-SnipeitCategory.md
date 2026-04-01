@@ -66,7 +66,7 @@ Accept wildcard characters: False
 Should the user be emailed the EULA and/or an acceptance confirmation email when this item is checked in?
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -172,7 +172,7 @@ Accept wildcard characters: False
 If switch is present, require users to confirm acceptance of assets in this category
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -203,7 +203,7 @@ Accept wildcard characters: False
 If switch is present, use the primary default EULA
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 

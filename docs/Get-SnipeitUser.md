@@ -69,7 +69,7 @@ Get users that accessory ID 3 has been checked out to
 Get users that a specific accessory ID has been checked out to
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: Get users a specific accessory id has been checked out to
 Aliases:
 
@@ -265,7 +265,7 @@ Accept wildcard characters: False
 An ID of a specific User
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: Get with ID
 Aliases:
 
@@ -349,6 +349,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -sort
+Column to sort on.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: Created_at
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

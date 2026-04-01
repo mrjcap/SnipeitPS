@@ -94,7 +94,7 @@ Accept wildcard characters: False
 Whether the field is required in the fieldset
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 

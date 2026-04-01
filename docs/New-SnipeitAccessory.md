@@ -187,7 +187,7 @@ Accept wildcard characters: False
 Cost of item being purchased.
 
 ```yaml
-Type: Single
+Type: String
 Parameter Sets: (All)
 Aliases:
 
