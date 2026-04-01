@@ -248,7 +248,7 @@ Accept wildcard characters: False
 Is consumable requestable?
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 

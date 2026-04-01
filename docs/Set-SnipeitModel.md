@@ -66,7 +66,7 @@ Accept wildcard characters: False
 Fieldset ID that the asset uses (Custom fields)
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases: fieldset_id
 
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 Number of months until end of life
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 

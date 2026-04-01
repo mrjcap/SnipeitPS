@@ -133,6 +133,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -sort
+Column to sort on.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: Created_at
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -order
 Sort order. Can be 'asc' or 'desc'.
 

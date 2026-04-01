@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ID number of the company
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -112,7 +112,7 @@ Accept wildcard characters: False
 ID number of the location the component is assigned to
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -127,7 +127,7 @@ Accept wildcard characters: False
 Minimum Quantity of the components before alert is triggered
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -172,7 +172,7 @@ Accept wildcard characters: False
 Cost of item being purchased.
 
 ```yaml
-Type: Single
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -206,7 +206,7 @@ Type: Int32
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: 0
 Accept pipeline input: False

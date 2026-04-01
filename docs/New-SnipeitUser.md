@@ -263,7 +263,7 @@ Accept wildcard characters: False
 Password for user
 
 ```yaml
-Type: String
+Type: Object
 Parameter Sets: (All)
 Aliases:
 

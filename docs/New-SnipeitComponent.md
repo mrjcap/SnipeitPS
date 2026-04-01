@@ -140,7 +140,7 @@ Accept wildcard characters: False
 Cost of item being purchased.
 
 ```yaml
-Type: Single
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -170,7 +170,7 @@ Accept wildcard characters: False
 Quantity of the components you have
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 

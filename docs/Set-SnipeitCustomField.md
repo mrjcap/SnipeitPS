@@ -70,7 +70,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 4
 Default value: None
 Accept pipeline input: False
@@ -82,7 +82,7 @@ Whether the field should be encrypted.
 (This can cause issues if you change it after the field was created.)
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -188,7 +188,7 @@ Accept wildcard characters: False
 Whether or not to show the custom field in email notifications
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 

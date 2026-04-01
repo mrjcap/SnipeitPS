@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ID number of company
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -110,7 +110,7 @@ Accept wildcard characters: False
 ID number of location
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ID number of manager
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 

@@ -415,7 +415,7 @@ Accept wildcard characters: False
 Optionally restrict asset results to those set as requestable
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: Search
 Aliases:
 

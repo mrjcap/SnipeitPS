@@ -126,7 +126,7 @@ Accept wildcard characters: False
 Whether maintenance is under warranty
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 

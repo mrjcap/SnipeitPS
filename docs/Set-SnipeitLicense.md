@@ -68,7 +68,7 @@ Accept wildcard characters: False
 ID number of company the license belongs to
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -143,7 +143,7 @@ Accept wildcard characters: False
 Maintained status of license
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -218,7 +218,7 @@ Accept wildcard characters: False
 Cost of license
 
 ```yaml
-Type: Single
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -248,7 +248,7 @@ Accept wildcard characters: False
 Is license reassignable?
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -309,7 +309,7 @@ Accept wildcard characters: False
 ID number of license supplier
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 

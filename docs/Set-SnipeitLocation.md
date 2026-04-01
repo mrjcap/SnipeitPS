@@ -186,7 +186,7 @@ Accept wildcard characters: False
 Location manager as id
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -216,7 +216,7 @@ Accept wildcard characters: False
 Parent location as id
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 

@@ -64,7 +64,7 @@ Whether or not the asset is archived.
 Archived assets cannot be checked out and do not show up in the deployable asset screens
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -94,7 +94,7 @@ Accept wildcard characters: False
 The ID of the user the asset is currently checked out to
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -109,7 +109,7 @@ Accept wildcard characters: False
 The ID of an associated company ID
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -259,7 +259,7 @@ Accept wildcard characters: False
 Purchase cost of the asset, without a currency symbol
 
 ```yaml
-Type: Double
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -289,7 +289,7 @@ Accept wildcard characters: False
 Whether or not the asset can be requested by users with the permission to request assets
 
 ```yaml
-Type: Boolean
+Type: Nullable[Boolean]
 Parameter Sets: (All)
 Aliases:
 
@@ -320,7 +320,7 @@ Accept wildcard characters: False
 The ID that corresponds to the location where the asset is usually located when not checked out
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
@@ -396,7 +396,7 @@ Accept wildcard characters: False
 Number of months for the asset warranty
 
 ```yaml
-Type: Int32
+Type: Nullable[Int32]
 Parameter Sets: (All)
 Aliases:
 
