@@ -4,7 +4,7 @@ param(
 
 
 
-function Install-Dependency([string] $Name)
+function Install-Dependency([string] $Name, [string] $MaxVersion)
 {
     $policy = Get-PSRepository -Name "PSGallery" | Select-Object -ExpandProperty "InstallationPolicy"
     if($policy -ne "Trusted") {
@@ -12,7 +12,7 @@ function Install-Dependency([string] $Name)
     }
 
     if (!(Get-Module -Name $Name -ListAvailable)) {
-        Install-Module -Name $Name -Scope CurrentUser
+        Install-Module -Name $Name -Scope CurrentUser -MaximumVersion $MaxVersion
     }
 }
 
@@ -88,8 +88,8 @@ foreach($task in $Tasks){
     switch($task)
     {
         "test" {
-            Install-Dependency -Name "PSScriptAnalyzer"
-            Install-Dependency -Name "Pester"
+            Install-Dependency -Name "PSScriptAnalyzer" -MaxVersion "1.99.99"
+            Install-Dependency -Name "Pester" -MaxVersion "5.99.99"
             Write-Output "Running Pester Tests..."
             Run-Tests
         }

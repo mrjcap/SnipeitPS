@@ -20,7 +20,7 @@ environment:
 version: 1.12.{build}
 
 # Don't rebuild when I tag a release on GitHub
-skip_tags: true
+skip_tags: false
 
 # Ignore testing a commit if only the readme changed
 # Or if I include "skip-tests" in the commit message
@@ -43,11 +43,11 @@ pull_requests:
 install:
     - ps: |
         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-        Install-Module InvokeBuild -Scope CurrentUser -Force -MaximumVersion 5.99.0
-        Install-Module BuildHelpers -Scope CurrentUser -Force -MaximumVersion 2.99.0
-        Install-Module platyPS -Scope CurrentUser -Force -MaximumVersion 0.99.0
-        Install-Module Pester -Scope CurrentUser -Force -MaximumVersion 5.99.0
-        Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -MaximumVersion 1.99.0
+        Install-Module InvokeBuild -Scope CurrentUser -Force -MaximumVersion '5.99.99'
+        Install-Module BuildHelpers -Scope CurrentUser -Force -MaximumVersion '2.99.99'
+        Install-Module platyPS -Scope CurrentUser -Force -MaximumVersion '0.14.99'
+        Install-Module Pester -Scope CurrentUser -Force -MaximumVersion '5.99.99'
+        Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -MaximumVersion '1.99.99'
         $env:releasePath = "$($pwd.Path)\Release"
 
 before_build:
@@ -72,11 +72,11 @@ for:
       PShell: '7'
     install:
       - pwsh: |
-          Install-Module InvokeBuild -Scope CurrentUser -Force -MaximumVersion 5.99.0
-          Install-Module BuildHelpers -Scope CurrentUser -Force -MaximumVersion 2.99.0
-          Install-Module platyPS -Scope CurrentUser -Force -MaximumVersion 0.99.0
-          Install-Module Pester -Scope CurrentUser -Force -MaximumVersion 5.99.0
-          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -MaximumVersion 1.99.0
+          Install-Module InvokeBuild -Scope CurrentUser -Force -MaximumVersion '5.99.99'
+          Install-Module BuildHelpers -Scope CurrentUser -Force -MaximumVersion '2.99.99'
+          Install-Module platyPS -Scope CurrentUser -Force -MaximumVersion '0.14.99'
+          Install-Module Pester -Scope CurrentUser -Force -MaximumVersion '5.99.99'
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -MaximumVersion '1.99.99'
           $env:releasePath = "$($pwd.Path)\Release"
     before_build:
       - pwsh: Invoke-Build -Task ShowDebug
@@ -100,4 +100,4 @@ deploy:
     prerelease: false
     on:
         branch: master                  # release from master branch only
-        appveyor_repo_tag: false        # deploy on tag push only
+        appveyor_repo_tag: true         # deploy on tag push only
