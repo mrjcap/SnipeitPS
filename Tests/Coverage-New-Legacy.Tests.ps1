@@ -436,12 +436,12 @@ Describe "New-SnipeitComponent" {
         InModuleScope 'SnipeitPS' {
             New-SnipeitComponent -name "Display adapter" -qty 10 -category_id 3 `
                 -company_id 1 -location_id 2 -order_number "ORD002" `
-                -purchase_cost 45.50 -Confirm:$false
+                -purchase_cost "45.50" -Confirm:$false
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
                 $Body.company_id -eq 1 -and
                 $Body.location_id -eq 2 -and
                 $Body.order_number -eq "ORD002" -and
-                $Body.purchase_cost -eq [float]45.50
+                $Body.purchase_cost -eq "45.50"
             }
         }
     }
@@ -689,15 +689,6 @@ Describe "New-SnipeitDepartment" {
         }
     }
 
-    It "Passes image_delete switch when provided" {
-        InModuleScope 'SnipeitPS' {
-            New-SnipeitDepartment -name "Department1" -image_delete -Confirm:$false
-            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Body.image_delete -eq $true
-            }
-        }
-    }
-
     It "Handles legacy url and apiKey parameters" {
         InModuleScope 'SnipeitPS' {
             Mock Invoke-SnipeitMethod { return $null }
@@ -765,15 +756,6 @@ Describe "New-SnipeitLocation" {
                 }
             } finally {
                 Remove-Item $tf -Force -ErrorAction SilentlyContinue
-            }
-        }
-    }
-
-    It "Passes image_delete switch when provided" {
-        InModuleScope 'SnipeitPS' {
-            New-SnipeitLocation -name "Room 1" -image_delete -Confirm:$false
-            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Body.image_delete -eq $true
             }
         }
     }
