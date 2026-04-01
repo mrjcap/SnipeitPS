@@ -5,6 +5,111 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# [v.1.14.0] - 2026-04-01
+
+## Security hardening, data integrity fixes, and parameter validation sweep
+
+### Security
+- Added TLS 1.2 enforcement in Connect-SnipeitPS (`[Net.ServicePointManager]::SecurityProtocol`)
+  for PS5.1 environments that may default to TLS 1.0/1.1
+- Added URI scheme validation (http/https only) on Connect-SnipeitPS `-url` parameter
+- Added `[ValidateNotNullOrEmpty()]` on Connect-SnipeitPS `-apiKey` parameter
+- Redacted API key from `Write-Debug` output in Invoke-SnipeitMethod and Connect-SnipeitPS
+
+### Bug Fixes
+- Fixed shared mutable `$Values` hashtable corruption on multi-ID image uploads in 12 Set-*
+  functions by cloning per iteration (Set-SnipeitAccessory, Set-SnipeitAsset,
+  Set-SnipeitCategory, Set-SnipeitCompany, Set-SnipeitComponent, Set-SnipeitConsumable,
+  Set-SnipeitDepartment, Set-SnipeitLicense, Set-SnipeitLocation, Set-SnipeitManufacturer,
+  Set-SnipeitModel, Set-SnipeitSupplier, Set-SnipeitUser)
+- Fixed malformed `data:@mimetype` base64 URI prefix in PS5 image uploads
+  (removed spurious `@` in Invoke-SnipeitMethod)
+- Fixed `$last_checkout` DateTime not formatted as `yyyy-MM-dd` in Set-SnipeitAsset
+- Removed spurious `/delete` suffix from Remove-SnipeitAssetFile and Remove-SnipeitModelFile
+  API paths (Snipe-IT uses DELETE method, not a `/delete` endpoint)
+- Fixed `$_` shadowing in catch blocks losing HTTP status code in Invoke-SnipeitMethod
+  (saved to `$httpError` before nested try/catch)
+- Fixed StreamReader not disposed on PS5 error path in Invoke-SnipeitMethod
+  (moved `.Close()` to `finally` block)
+- Fixed `$false` from auth failure leaking into pipeline output in Invoke-SnipeitMethod
+  (changed `return $false` to bare `return`)
+- Fixed Get-ParameterValue not converting negated switches (`-Param:$false`); now checks
+  `[SwitchParameter]` type and uses `.IsPresent` value instead of only detecting `$true`
+- Fixed Constant throttle mode arithmetic going negative on first request when no
+  previous requests exist
+- Fixed Get-SnipeitAsset `$requestable` silently filtering all searches (`[bool]` defaulted
+  to `$false`; changed to `[switch]`)
+- Fixed Get-SnipeitFieldsetField using POST instead of GET
+- Fixed Get-SnipeitUser `$id` and `$accessory_id` typed as `[string]` instead of `[int]`
+- Fixed Get-SnipeitLicenseSeat and 3 other non-paginated Get-* functions using falsy `if($id)`
+  check; replaced with `$PSBoundParameters.ContainsKey`
+- Fixed `$offset` falsy check replaced with `$PSBoundParameters.ContainsKey('offset')` in
+  pagination logic
+- Fixed New-SnipeitComponent `$qty` type mismatch
+- Fixed Update-SnipeitAlias regex injection vulnerability
+- Fixed `checkout_to_type` default leaking into API body on non-checkout creates in
+  New-SnipeitAsset
+- Removed `checkout_to_type` from `$Values` body in Set-SnipeitAssetOwner
+- Removed `seat_id` from API body in Set-SnipeitLicenseSeat
+- Fixed `$null` pipeline leak in pagination loops across 27 Get-* functions
+- Fixed pagination PS7 compatibility and raised offset safety cap to 10M
+- Fixed Get-SnipeitConsumable missing `.Clone()` on search parameters for pagination
+- Removed dead `image_delete` switch from New-SnipeitLocation and New-SnipeitDepartment
+  (not applicable to create operations)
+- Fixed `$apikey` variable case to `$apiKey` for consistency
+- Fixed `$Values` casing in Set-SnipeitCategory
+- Fixed LF line endings to CRLF in 4 source/test files
+
+### Parameter Validation
+- Added `[ValidateRange(1, [int]::MaxValue)]` on foreign-key ID parameters across 12+
+  functions (New-SnipeitAsset, New-SnipeitAssetMaintenance, New-SnipeitAudit,
+  New-SnipeitComponent, New-SnipeitConsumable, New-SnipeitDepartment, New-SnipeitLicense,
+  New-SnipeitLocation, New-SnipeitModel, New-SnipeitUser, Set-SnipeitAsset,
+  Set-SnipeitAssetMaintenance, Set-SnipeitModel)
+- Added `[ValidateSet]` on `$asset_maintenance_type` in New-SnipeitAssetMaintenance and
+  Set-SnipeitAssetMaintenance (Maintenance, Repair, Upgrade, PAT Test, Calibration,
+  Software Support, Hardware Support)
+- Added `[ValidateRange(1, [int]::MaxValue)]` on `$seats` in New-SnipeitLicense
+- Standardized `$purchase_cost` from `[float]` to `[string]` across 7 functions
+  (New-SnipeitAccessory, New-SnipeitComponent, New-SnipeitLicense, Set-SnipeitAccessory,
+  Set-SnipeitAsset, Set-SnipeitComponent, Set-SnipeitLicense) to match Snipe-IT API
+  expectations and avoid floating-point precision issues
+- Changed optional `[bool]` parameters to `[Nullable[bool]]` to prevent `$false` default
+  injection into API body
+- Made Set-SnipeitComponent `$qty` optional for partial updates
+- Removed mandatory constraint from Set-SnipeitCustomField, Set-SnipeitStatus,
+  Set-SnipeitCompany (allows partial updates)
+- Added missing `$sort` parameter to 9 Get-* functions (Get-SnipeitCategory,
+  Get-SnipeitCompany, Get-SnipeitGroup, Get-SnipeitLocation, Get-SnipeitManufacturer,
+  Get-SnipeitModel, Get-SnipeitStatus, Get-SnipeitSupplier, Get-SnipeitUser)
+- Added `$image` parameter to `$Values` body in New-SnipeitModel (was silently ignored)
+- Accept `[SecureString]` for password in New-SnipeitUser and Set-SnipeitUser
+
+### Code Quality
+- Set ConfirmImpact to `High` on all 20 Remove-* functions with meaningful ShouldProcess
+  targets
+- Set ConfirmImpact to `Medium` on all Set-* functions
+- Set ConfirmImpact to `High` on Unregister-SnipeitCustomField, `Medium` on
+  Update-SnipeitAssetAudit
+- Replaced ShouldProcess placeholder strings with meaningful resource identifiers across
+  74 functions
+- Added explicit parentheses to operator precedence in `end{}` legacy reset condition
+- Moved legacy param handling from `process{}` to `begin{}` in Set-SnipeitCustomField
+- Fixed pagination bugs across 26 Get-* functions: clone search params, validate offsets,
+  guard against infinite loops
+- Removed dead commented-out tests from SnipeitPS.Tests.ps1
+
+### Documentation
+- Updated README badge URLs from archived repo to maintained fork
+- Added `$sort` parameter documentation to 9 Get-* docs
+- Fixed Connect-SnipeitPS example syntax
+
+### Infrastructure
+- Updated ProjectUri and LicenseUri in module manifest to point to maintained fork
+- Pinned CI module install versions (PSScriptAnalyzer < 2.0, Pester < 6.0) to prevent
+  breaking changes from new major releases
+- Updated build.ps1 `Install-Dependency` to accept `-MaxVersion` parameter
+
 # [v.1.13.0] - 2026-03-26
 
 ### New Functions
