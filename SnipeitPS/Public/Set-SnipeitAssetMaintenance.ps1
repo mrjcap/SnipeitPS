@@ -61,7 +61,6 @@ function Set-SnipeitAssetMaintenance() {
         [ValidateRange(1, [int]::MaxValue)]
         [int]$supplier_id,
 
-        [ValidateSet("Maintenance","Repair","Upgrade","PAT Test","Calibration","Software Support","Hardware Support")]
         [string]$asset_maintenance_type,
 
         [string]$title,
@@ -75,6 +74,11 @@ function Set-SnipeitAssetMaintenance() {
         [decimal]$cost,
 
         [string]$notes,
+
+        [Nullable[System.Int32]]$assigned_to,
+
+        [Alias('responsible_party')]
+        [Nullable[System.Int32]]$responsible_party_id,
 
         [ValidateSet("Put","Patch")]
         [string]$RequestType = "Patch",

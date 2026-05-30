@@ -103,7 +103,8 @@ function Set-SnipeitUser() {
 
         [object]$password,
 
-        [Nullable[System.Int32]]$company_id,
+        [Alias("company_id")]
+        [int[]]$companies,
 
         [Nullable[System.Int32]]$location_id,
 

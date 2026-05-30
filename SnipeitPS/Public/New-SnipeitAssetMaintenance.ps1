@@ -58,7 +58,6 @@ function New-SnipeitAssetMaintenance() {
         [int]$supplier_id,
 
         [parameter(mandatory = $true)]
-        [ValidateSet("Maintenance","Repair","Upgrade","PAT Test","Calibration","Software Support","Hardware Support")]
         [string]$asset_maintenance_type,
 
         [parameter(mandatory = $true)]
@@ -75,6 +74,15 @@ function New-SnipeitAssetMaintenance() {
         [decimal]$cost,
 
         [string]$notes,
+
+        [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
+        [int]$assigned_to,
+
+        [parameter(mandatory = $false)]
+        [ValidateRange(1, [int]::MaxValue)]
+        [Alias('responsible_party')]
+        [int]$responsible_party_id,
 
         [parameter(mandatory = $false)]
         [string]$url,
