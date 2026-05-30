@@ -96,8 +96,8 @@ function New-SnipeitUser() {
 
         [string]$phone,
 
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$company_id,
+        [Alias("company_id")]
+        [int[]]$companies,
 
         [ValidateRange(1, [int]::MaxValue)]
         [int]$location_id,
