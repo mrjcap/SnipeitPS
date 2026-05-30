@@ -872,7 +872,7 @@ Describe "New-SnipeitUser" {
                 $Body.jobtitle -eq "Admin" -and
                 $Body.email -eq "test@test.com" -and
                 $Body.phone -eq "555-0100" -and
-                $Body.company_id -eq 1 -and
+                $Body.companies -contains 1 -and
                 $Body.location_id -eq 2 -and
                 $Body.department_id -eq 3 -and
                 $Body.manager_id -eq 4 -and
