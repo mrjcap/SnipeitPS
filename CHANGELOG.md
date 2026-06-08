@@ -148,21 +148,26 @@ Update-SnipeitAssetAudit
   validate offsets,
 guard against infinite loops
 - Removed dead commented-out tests from SnipeitPS.Tests.ps1
+- Added `Coverage-Invoke-Method.Tests.ps1` and
+  `Coverage-LoopPrevention.Tests.ps1` test files
+- Updated `Coverage-New-Legacy.Tests.ps1` and
+  `Coverage-Set-Legacy.Tests.ps1`
 
 ### Documentation
 
 - Updated README badge URLs from archived repo to maintained fork
 - Added `$sort` parameter documentation to 9 Get-\* docs
 - Fixed Connect-SnipeitPS example syntax
+- Updated `New-SnipeitAssetMaintenance` `$asset_maintenance_type` parameter
+  help to note that custom maintenance types are also accepted
 
 ### Infrastructure
 
+- Removed AppVeyor CI (`appveyor.yml`, `SnipeitPS.build.ps1`, `build.ps1`)
+- Added `.gitignore` for build artifacts (`coverage.xml`, `Release/`,
+  `TestResult.xml`)
 - Updated ProjectUri and LicenseUri in module manifest to point to maintained
   fork
-- Pinned CI module install versions (PSScriptAnalyzer < 2.0, Pester < 6.0) to
-  prevent
-breaking changes from new major releases
-- Updated build.ps1 `Install-Dependency` to accept `-MaxVersion` parameter
 
 ## [v.1.13.0] - 2026-03-26
 

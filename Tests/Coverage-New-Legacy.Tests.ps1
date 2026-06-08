@@ -894,6 +894,29 @@ Describe "New-SnipeitUser" {
         }
     }
 
+    It "Accepts SecureString for password" {
+        InModuleScope 'SnipeitPS' {
+            $secPwd = ConvertTo-SecureString "SecStrP@ss1" -AsPlainText -Force
+            New-SnipeitUser -first_name "It" -last_name "Snipe" `
+                -username "snipeit" -activated $false `
+                -password $secPwd -Confirm:$false
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Body.password -eq "SecStrP@ss1" -and
+                $Body.password_confirmation -eq "SecStrP@ss1"
+            }
+        }
+    }
+
+    It "Throws error when password is an invalid type" {
+        InModuleScope 'SnipeitPS' {
+            {
+                New-SnipeitUser -first_name "It" -last_name "Snipe" `
+                    -username "snipeit" -activated $false `
+                    -password 12345 -Confirm:$false
+            } | Should -Throw "Password must be a ``[string``] or ``[SecureString``]"
+        }
+    }
+
     It "Passes image parameter when a valid file is provided" {
         InModuleScope 'SnipeitPS' {
             $tf = [System.IO.Path]::GetTempFileName()

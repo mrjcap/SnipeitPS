@@ -142,6 +142,15 @@ Describe "Set-SnipeitAsset" {
         }
     }
 
+    It "Formats last_checkout as yyyy-MM-dd string" {
+        InModuleScope 'SnipeitPS' {
+            Set-SnipeitAsset -id 4 -last_checkout ([datetime]"2025-01-01") -Confirm:$false
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Body.last_checkout -eq "2025-01-01"
+            }
+        }
+    }
+
     It "Uses Put method when RequestType is Put" {
         InModuleScope 'SnipeitPS' {
             Set-SnipeitAsset -id 5 -name "PC05" -RequestType "Put" -Confirm:$false
@@ -931,6 +940,25 @@ Describe "Set-SnipeitUser" {
                 $Body.password -eq "Secret123" -and
                 $Body.password_confirmation -eq "Secret123"
             }
+        }
+    }
+
+    It "Accepts SecureString for password" {
+        InModuleScope 'SnipeitPS' {
+            $secPwd = ConvertTo-SecureString "SecStrP@ss1" -AsPlainText -Force
+            Set-SnipeitUser -id 3 -password $secPwd -Confirm:$false
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Body.password -eq "SecStrP@ss1" -and
+                $Body.password_confirmation -eq "SecStrP@ss1"
+            }
+        }
+    }
+
+    It "Throws error when password is an invalid type" {
+        InModuleScope 'SnipeitPS' {
+            {
+                Set-SnipeitUser -id 3 -password 12345 -Confirm:$false
+            } | Should -Throw "Password must be a ``[string``] or ``[SecureString``]"
         }
     }
 
