@@ -8,7 +8,7 @@ PowerShell API module for Snipe-IT Asset Management. Forked from [snazy2000/Snip
 - **License**: MIT
 - **Version**: 1.14.0
 - **Published**: PowerShell Gallery (`Install-Module SnipeitPS`)
-- **CI**: AppVeyor
+- **CI**: None (manual publish to PSGallery)
 - **Tests**: 699 Pester v5 tests across 16 files
 
 ## Project Structure
@@ -17,14 +17,11 @@ PowerShell API module for Snipe-IT Asset Management. Forked from [snazy2000/Snip
 SnipeitPS/
 ├── SnipeitPS/
 │   ├── SnipeitPS.psd1       # Module manifest
-│   ├── Public/              # 114 exported functions (one per file)
+│   ├── Public/              # 115 exported functions (one per file)
 │   └── Private/             # 10 internal helpers
-├── Tests/                   # 16 Pester v5 test files (699 tests)
+├── Tests/                   # Pester v5 test files
 ├── docs/                    # Command documentation
-├── build.ps1                # Build script
-├── SnipeitPS.build.ps1      # InvokeBuild tasks
-├── run-tests.ps1            # Test runner
-└── appveyor.yml             # CI configuration
+└── run-tests.ps1            # Test runner
 ```
 
 ## Commands
@@ -41,8 +38,6 @@ Invoke-Pester -Path Tests/
 # Run a single test file
 Invoke-Pester -Path Tests/SnipeitPS.Tests.ps1
 
-# Build
-./build.ps1
 
 # Publish to PSGallery (requires API key)
 Publish-Module -Name SnipeitPS -NuGetApiKey $env:PS_GALLERY_API_KEY

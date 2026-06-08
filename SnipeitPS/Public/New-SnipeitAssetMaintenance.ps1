@@ -13,7 +13,8 @@ Required ID of the asset, this can be obtained using Get-SnipeitAsset
 Required maintenance supplier
 
 .PARAMETER asset_maintenance_type
-Type of maintenance: Maintenance, Repair, Upgrade, PAT, or Hardware Support
+Type of maintenance. Built-in types include Maintenance, Repair, Upgrade, PAT, and Hardware Support.
+Custom types created in the Snipe-IT GUI are also accepted.
 
 .PARAMETER title
 Required Title of maintenance
