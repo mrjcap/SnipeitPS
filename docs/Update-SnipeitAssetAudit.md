@@ -8,6 +8,7 @@ schema: 2.0.0
 # Update-SnipeitAssetAudit
 
 ## SYNOPSIS
+
 Audit an asset by ID in Snipe-IT
 
 ## SYNTAX
@@ -18,11 +19,13 @@ Update-SnipeitAssetAudit [-id] <Int32> [[-location_id] <Int32>] [[-next_audit_da
 ```
 
 ## DESCRIPTION
+
 Audit an asset by ID in Snipe-IT
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```
 Update-SnipeitAssetAudit -id 1 -location_id 5
 ```
@@ -30,8 +33,8 @@ Update-SnipeitAssetAudit -id 1 -location_id 5
 ## PARAMETERS
 
 ### -apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -45,7 +48,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -asset_tag
+
+Asset tag of the asset to audit (Snipe-IT 8.7+ quickscan audit)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -id
+
 Unique ID of the asset to audit
 
 ```yaml
@@ -53,14 +73,31 @@ Type: Int32
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -serial
+
+Serial number of the asset to audit (Snipe-IT 8.7+ quickscan audit)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -location_id
+
 ID of the location to associate with the audit
 
 ```yaml
@@ -76,6 +113,7 @@ Accept wildcard characters: False
 ```
 
 ### -next_audit_date
+
 Due date for the asset's next audit
 
 ```yaml
@@ -91,8 +129,8 @@ Accept wildcard characters: False
 ```
 
 ### -url
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -107,6 +145,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -122,8 +161,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -138,7 +177,11 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
+-Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

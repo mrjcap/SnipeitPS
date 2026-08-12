@@ -241,7 +241,7 @@ Describe "New-SnipeitAssetMaintenance" {
                 -start_date ([datetime]"2025-06-15") `
                 -completion_date ([datetime]"2025-07-20") -Confirm:$false
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Body.completion_date -eq "2025-07-20"
+                $Body.expected_completion_date -eq "2025-07-20"
             }
         }
     }

@@ -8,6 +8,7 @@ schema: 2.0.0
 # Set-SnipeitCompany
 
 ## SYNOPSIS
+
 Updates company name
 
 ## SYNTAX
@@ -18,11 +19,13 @@ Set-SnipeitCompany [-id] <Int32[]> [-name] <String> [[-image] <String>] [-image_
 ```
 
 ## DESCRIPTION
+
 Updates company name on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```
 Set-SnipeitCompany -id 1 -name "Acme Corp"
 ```
@@ -30,8 +33,8 @@ Set-SnipeitCompany -id 1 -name "Acme Corp"
 ## PARAMETERS
 
 ### -apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -46,6 +49,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID number of company
 
 ```yaml
@@ -61,6 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -76,6 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -90,7 +96,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -parent_id
+
+ID number of the parent company (Snipe-IT 8.7+ company hierarchy)
+
+```yaml
+Type: Nullable`1[System.Int32]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -name
+
 Company name
 
 ```yaml
@@ -106,8 +129,9 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
-HTTP request type to send to Snipe-IT system.
-Defaults to Patch. You could use Put if needed.
+
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if
+needed.
 
 ```yaml
 Type: String
@@ -122,8 +146,8 @@ Accept wildcard characters: False
 ```
 
 ### -url
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -138,6 +162,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -153,8 +178,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -169,7 +194,11 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
+-Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
