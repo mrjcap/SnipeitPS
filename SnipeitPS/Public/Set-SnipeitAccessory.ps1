@@ -101,6 +101,8 @@ function Set-SnipeitAccessory() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
+        [Nullable[bool]]$requestable,
+
         [switch]$image_delete=$false,
 
         [ValidateSet("Put","Patch")]

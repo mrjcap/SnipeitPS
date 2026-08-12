@@ -97,6 +97,8 @@ function New-SnipeitAccessory() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
+        [Nullable[bool]]$requestable,
+
         [parameter(mandatory = $false)]
         [string]$url,
 
