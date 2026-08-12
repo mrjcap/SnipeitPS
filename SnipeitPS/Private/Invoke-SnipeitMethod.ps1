@@ -1,4 +1,4 @@
-﻿<#
+<#
     .SYNOPSIS
     Make an API request to Snipe-IT
 
@@ -31,7 +31,9 @@ function Invoke-SnipeitMethod {
 
         [Hashtable]$Body,
 
-        [Hashtable]$GetParameters
+        [Hashtable]$GetParameters,
+
+        [switch]$Paginate
     )
 
     BEGIN {
