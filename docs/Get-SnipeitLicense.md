@@ -8,12 +8,14 @@ schema: 2.0.0
 # Get-SnipeitLicense
 
 ## SYNOPSIS
+
 Gets a list of Snipe-IT Licenses
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitLicense [-search <String>] [-name <String>] [-company_id <Int32>] [-product_key <String>]
  [-order_number <String>] [-purchase_order <String>] [-license_name <String>] [-license_email <MailAddress>]
  [-manufacturer_id <Int32>] [-supplier_id <Int32>] [-depreciation_id <Int32>] [-category_id <Int32>]
@@ -22,38 +24,45 @@ Get-SnipeitLicense [-search <String>] [-name <String>] [-company_id <Int32>] [-p
 ```
 
 ### Get with ID
-```
+
+```powershell
 Get-SnipeitLicense [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get licenses checked out to user ID
-```
+
+```powershell
 Get-SnipeitLicense [-user_id <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get licenses checked out to asset ID
-```
+
+```powershell
 Get-SnipeitLicense [-asset_id <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT licenses or a specific license by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitLicense -search SomeLicense
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitLicense -id 1
 ```
 
 ## PARAMETERS
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -69,6 +78,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -85,6 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_id
+
 ID of the asset to filter by.
 
 ```yaml
@@ -100,6 +111,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
+
 ID of the category to filter by.
 
 ```yaml
@@ -115,6 +127,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 ID of the company to filter by.
 
 ```yaml
@@ -130,6 +143,7 @@ Accept wildcard characters: False
 ```
 
 ### -depreciation_id
+
 ID of the depreciation to filter by.
 
 ```yaml
@@ -145,6 +159,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific License
 
 ```yaml
@@ -160,6 +175,7 @@ Accept wildcard characters: False
 ```
 
 ### -license_email
+
 Contact email address for the license.
 
 ```yaml
@@ -175,6 +191,7 @@ Accept wildcard characters: False
 ```
 
 ### -license_name
+
 Display name of the license.
 
 ```yaml
@@ -190,6 +207,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -207,6 +225,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
+
 ID of the manufacturer to filter by.
 
 ```yaml
@@ -222,6 +241,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of the license to filter by.
 
 ```yaml
@@ -237,6 +257,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -252,6 +273,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
@@ -267,6 +289,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
+
 Order number to filter by.
 
 ```yaml
@@ -282,6 +305,7 @@ Accept wildcard characters: False
 ```
 
 ### -product_key
+
 Product key to filter by.
 
 ```yaml
@@ -297,6 +321,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_order
+
 Purchase order number to filter by.
 
 ```yaml
@@ -312,6 +337,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the Licenses data
 
 ```yaml
@@ -327,6 +353,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Column to sort on.
 
 ```yaml
@@ -342,6 +369,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
+
 ID of the supplier to filter by.
 
 ```yaml
@@ -357,6 +385,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -373,6 +402,7 @@ Accept wildcard characters: False
 ```
 
 ### -user_id
+
 ID of the user to filter by.
 
 ```yaml
@@ -388,7 +418,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

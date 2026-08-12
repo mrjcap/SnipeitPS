@@ -8,33 +8,38 @@ schema: 2.0.0
 # Remove-SnipeitSupplier
 
 ## SYNOPSIS
+
 Removes supplier from Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 Remove-SnipeitSupplier [-id] <Int32[]> [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Removes supplier or multiple suppliers from Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Remove-SnipeitSupplier -ID 44
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitSupplier | Where-object {$_.name -like '*something*'} | Remove-SnipeitSupplier
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -51,6 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 Unique ID for supplier to be removed
 
 ```yaml
@@ -66,6 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -82,6 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -97,6 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -113,7 +122,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

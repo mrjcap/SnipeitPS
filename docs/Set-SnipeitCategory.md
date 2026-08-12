@@ -8,11 +8,12 @@ schema: 2.0.0
 # Set-SnipeitCategory
 
 ## SYNOPSIS
+
 Update a Snipe-IT Category
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitCategory [-id] <Int32[]> [[-name] <String>] [[-category_type] <String>] [[-eula_text] <String>]
  [[-use_default_eula] <Boolean>] [[-require_acceptance] <Boolean>] [[-checkin_email] <Boolean>]
  [[-image] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
@@ -20,18 +21,21 @@ Set-SnipeitCategory [-id] <Int32[]> [[-name] <String>] [[-category_type] <String
 ```
 
 ## DESCRIPTION
+
 Update a specific Category in the Snipe-IT asset system.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitCategory -id 4 -name "Laptops"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -48,6 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_type
+
 Type of category (asset, accessory, consumable, component, license)
 
 ```yaml
@@ -63,6 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -checkin_email
+
 Should the user be emailed the EULA and/or an acceptance confirmation email when this item is checked in?
 
 ```yaml
@@ -78,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -eula_text
+
 This allows you to customize your EULAs for specific types of assets
 
 ```yaml
@@ -93,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 Unique ID of the category or array of IDs
 
 ```yaml
@@ -108,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -123,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -138,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of the category
 
 ```yaml
@@ -153,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -169,6 +181,7 @@ Accept wildcard characters: False
 ```
 
 ### -require_acceptance
+
 If switch is present, require users to confirm acceptance of assets in this category
 
 ```yaml
@@ -184,6 +197,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -200,6 +214,7 @@ Accept wildcard characters: False
 ```
 
 ### -use_default_eula
+
 If switch is present, use the primary default EULA
 
 ```yaml
@@ -215,6 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -230,6 +246,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -246,7 +263,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

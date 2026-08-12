@@ -8,29 +8,33 @@ schema: 2.0.0
 # New-SnipeitCategory
 
 ## SYNOPSIS
+
 Create a new Snipe-IT Category
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitCategory [-name] <String> [-category_type] <String> [[-eula_text] <String>] [-use_default_eula]
  [-require_acceptance] [-checkin_email] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Create a new Category to Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 New-SnipeitCategory -name "Laptops" -category_type asset
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -47,6 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_type
+
 Type of new category to be created (asset, accessory, consumable, component, license)
 
 ```yaml
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -checkin_email
+
 If switch is present, send email to user on checkin/checkout
 
 ```yaml
@@ -77,6 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -eula_text
+
 This allows you to customize your EULAs for specific types of assets
 
 ```yaml
@@ -92,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Category image filename and path
 
 ```yaml
@@ -107,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of new category to be created
 
 ```yaml
@@ -122,6 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -require_acceptance
+
 If switch is present, require users to confirm acceptance of assets in this category
 
 ```yaml
@@ -137,6 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -153,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -use_default_eula
+
 If switch is present, use the primary default EULA
 
 ```yaml
@@ -168,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -183,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -199,7 +213,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

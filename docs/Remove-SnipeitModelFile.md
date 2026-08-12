@@ -8,28 +8,32 @@ schema: 2.0.0
 # Remove-SnipeitModelFile
 
 ## SYNOPSIS
+
 Removes a file from a model in Snipe-IT
 
 ## SYNTAX
 
-```
+```powershell
 Remove-SnipeitModelFile [-id] <Int32> [-file_id] <Int32> [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Removes a file from a model in Snipe-IT
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Remove-SnipeitModelFile -id 1 -file_id 10
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -46,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -file_id
+
 ID of the file to be removed
 
 ```yaml
@@ -61,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID of the model
 
 ```yaml
@@ -76,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -92,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -107,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -123,7 +132,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

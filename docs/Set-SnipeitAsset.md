@@ -8,11 +8,12 @@ schema: 2.0.0
 # Set-SnipeitAsset
 
 ## SYNOPSIS
+
 Update a specific Asset in the Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitAsset [-id] <Int32[]> [[-asset_tag] <String>] [[-name] <String>] [[-status_id] <Int32>]
  [[-model_id] <Int32>] [[-last_checkout] <DateTime>] [[-assigned_to] <Int32>] [[-company_id] <Int32>]
  [[-serial] <String>] [[-order_number] <String>] [[-warranty_months] <Int32>] [[-purchase_cost] <Double>]
@@ -22,28 +23,34 @@ Set-SnipeitAsset [-id] <Int32[]> [[-asset_tag] <String>] [[-name] <String>] [[-s
 ```
 
 ## DESCRIPTION
+
 Update a specific Asset in the Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitAsset -id 1 -status_id 1 -model_id 1 -name "Machine1"
 ```
 
 ### EXAMPLE 2
-```
-Set-SnipeitAsset -id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Windows 10 Pro" ; "_snipeit_os_version" = "1909" }
+
+```powershell
+Set-SnipeitAsset -id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Windows 10 Pro" ; "_snipeit_os_version" = `
+  "1909" }
 ```
 
 ### EXAMPLE 3
-```
+
+```powershell
 Get-SnipeitAsset -serial 12345678 | Set-SnipeitAsset -notes 'Just updated'
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -60,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -archived
+
 Whether or not the asset is archived.
 Archived assets cannot be checked out and do not show up in the deployable asset screens
 
@@ -76,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_tag
+
 New tag for asset.
 
 ```yaml
@@ -91,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_to
+
 The ID of the user the asset is currently checked out to
 
 ```yaml
@@ -106,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 The ID of an associated company ID
 
 ```yaml
@@ -121,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -customfields
+
 Hashtable of custom fields and extra fields that need passing through to Snipe-IT
 
 ```yaml
@@ -136,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID of the Asset or array of IDs
 
 ```yaml
@@ -151,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -166,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -181,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -last_checkout
+
 Date the asset was last checked out
 
 ```yaml
@@ -196,6 +212,7 @@ Accept wildcard characters: False
 ```
 
 ### -model_id
+
 Model ID of the asset, this can be obtained using Get-SnipeitModel
 
 ```yaml
@@ -211,6 +228,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Asset name
 
 ```yaml
@@ -226,6 +244,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 Notes about asset
 
 ```yaml
@@ -241,6 +260,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
+
 Order number for the asset
 
 ```yaml
@@ -256,6 +276,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
+
 Purchase cost of the asset, without a currency symbol
 
 ```yaml
@@ -271,6 +292,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
+
 Date of asset purchase
 
 ```yaml
@@ -286,6 +308,7 @@ Accept wildcard characters: False
 ```
 
 ### -requestable
+
 Whether or not the asset can be requested by users with the permission to request assets
 
 ```yaml
@@ -301,6 +324,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -317,6 +341,7 @@ Accept wildcard characters: False
 ```
 
 ### -rtd_location_id
+
 The ID that corresponds to the location where the asset is usually located when not checked out
 
 ```yaml
@@ -332,6 +357,7 @@ Accept wildcard characters: False
 ```
 
 ### -serial
+
 Serial number of the asset
 
 ```yaml
@@ -347,6 +373,7 @@ Accept wildcard characters: False
 ```
 
 ### -status_id
+
 Status ID of the asset, this can be obtained using Get-SnipeitStatus
 
 ```yaml
@@ -362,6 +389,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
+
 Supplier ID of the Asset
 
 ```yaml
@@ -377,6 +405,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -393,6 +422,7 @@ Accept wildcard characters: False
 ```
 
 ### -warranty_months
+
 Number of months for the asset warranty
 
 ```yaml
@@ -408,6 +438,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -423,6 +454,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -439,7 +471,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

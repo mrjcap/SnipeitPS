@@ -8,11 +8,12 @@ schema: 2.0.0
 # Set-SnipeitComponent
 
 ## SYNOPSIS
+
 Updates component
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitComponent [-id] <Int32[]> [-qty] <Int32> [[-min_amt] <Int32>] [[-name] <String>]
  [[-company_id] <Int32>] [[-location_id] <Int32>] [[-order_number] <String>] [[-purchase_date] <DateTime>]
  [[-purchase_cost] <Single>] [[-image] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>]
@@ -20,12 +21,14 @@ Set-SnipeitComponent [-id] <Int32[]> [-qty] <Int32> [[-min_amt] <Int32>] [[-name
 ```
 
 ## DESCRIPTION
+
 Updates component on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitComponent -id 42 -qty 12
 Sets count of component with ID 42 to 12
 ```
@@ -33,6 +36,7 @@ Sets count of component with ID 42 to 12
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -49,6 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 ID number of the company
 
 ```yaml
@@ -64,6 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID number of component or array of IDs
 
 ```yaml
@@ -79,6 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -94,6 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -109,6 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 ID number of the location the component is assigned to
 
 ```yaml
@@ -124,6 +133,7 @@ Accept wildcard characters: False
 ```
 
 ### -min_amt
+
 Minimum Quantity of the components before alert is triggered
 
 ```yaml
@@ -139,6 +149,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Component name
 
 ```yaml
@@ -154,6 +165,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
+
 Order number for the component
 
 ```yaml
@@ -169,6 +181,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
+
 Cost of item being purchased.
 
 ```yaml
@@ -184,6 +197,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
+
 Date component was purchased
 
 ```yaml
@@ -199,6 +213,7 @@ Accept wildcard characters: False
 ```
 
 ### -qty
+
 Quantity of the components you have
 
 ```yaml
@@ -214,6 +229,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -230,6 +246,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -246,6 +263,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -261,6 +279,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -277,7 +296,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

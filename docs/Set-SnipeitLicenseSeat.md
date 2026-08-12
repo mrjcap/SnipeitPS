@@ -8,35 +8,40 @@ schema: 2.0.0
 # Set-SnipeitLicenseSeat
 
 ## SYNOPSIS
+
 Set license seat or checkout license seat
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitLicenseSeat [-id] <Int32[]> [-seat_id] <Int32> [[-assigned_to] <Int32>] [[-asset_id] <Int32>]
  [[-note] <String>] [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Checkout specific license seat to user, asset or both
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -assigned_id 3
 Checkout license to user ID 3
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -asset_id 3
 Checkout license to asset ID 3
 ```
 
 ### EXAMPLE 3
-```
+
+```powershell
 Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -asset_id $null -assigned_id $null
 Checkin license seat ID 1 of license ID 1
 ```
@@ -44,6 +49,7 @@ Checkin license seat ID 1 of license ID 1
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -60,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_id
+
 ID of target asset
 
 ```yaml
@@ -75,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_to
+
 ID of target user
 
 ```yaml
@@ -90,6 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 Unique ID for license to checkout or array of IDs
 
 ```yaml
@@ -105,6 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -note
+
 Notes about checkout
 
 ```yaml
@@ -120,6 +130,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -136,6 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -seat_id
+
 ID of the license seat
 
 ```yaml
@@ -151,6 +163,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -167,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -182,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -198,7 +213,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

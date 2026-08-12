@@ -8,28 +8,32 @@ schema: 2.0.0
 # Set-SnipeitAccessoryOwner
 
 ## SYNOPSIS
+
 Checkout accessory
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitAccessoryOwner [-id] <Int32[]> [-assigned_to] <Int32> [[-checkout_to_type] <String>]
  [[-note] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Checkout accessory to user
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitAccessoryOwner -id 1 -assigned_to 1 -checkout_to_type user -note "testing check out to user"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -46,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_to
+
 ID of target user, asset, or location
 
 ```yaml
@@ -61,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -checkout_to_type
+
 Checkout accessory to one of the following types: user, asset, or location
 
 ```yaml
@@ -76,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 Unique ID for accessory or array of IDs to checkout
 
 ```yaml
@@ -91,6 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -note
+
 Notes about checkout
 
 ```yaml
@@ -106,6 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -122,6 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -137,6 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -153,7 +164,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

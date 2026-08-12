@@ -8,33 +8,38 @@ schema: 2.0.0
 # Get-SnipeitAssetMaintenance
 
 ## SYNOPSIS
+
 Lists Snipe-IT Asset Maintenances
 
 ## SYNTAX
 
-```
+```powershell
 Get-SnipeitAssetMaintenance [[-search] <String>] [[-asset_id] <Int32>] [[-sort] <String>] [[-order] <String>]
  [[-limit] <Int32>] [-all] [[-offset] <Int32>] [[-url] <String>] [[-apiKey] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets asset maintenance records from the Snipe-IT system.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitAssetMaintenance
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitAssetMaintenance -search "myMachine"
 ```
 
 ## PARAMETERS
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -50,6 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -66,6 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_id
+
 Asset ID of the asset you'd like to return maintenances for
 
 ```yaml
@@ -81,6 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -98,6 +106,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -113,6 +122,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Specify the order (asc or desc) you wish to order by on your sort column
 
 ```yaml
@@ -128,6 +138,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 Search string
 
 ```yaml
@@ -143,6 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Specify the column name you wish to sort by
 
 ```yaml
@@ -158,6 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -174,7 +187,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

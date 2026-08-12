@@ -8,29 +8,33 @@ schema: 2.0.0
 # Set-SnipeitDepartment
 
 ## SYNOPSIS
+
 Updates a department
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitDepartment [-id] <Int32[]> [[-name] <String>] [[-company_id] <Int32>] [[-location_id] <Int32>]
  [[-manager_id] <Int32>] [[-notes] <String>] [[-image] <String>] [-image_delete] [[-RequestType] <String>]
  [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Updates the department on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitDepartment -id 4 -manager_id 3
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -47,6 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 ID number of company
 
 ```yaml
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID number of Department
 
 ```yaml
@@ -77,6 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -92,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -107,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 ID number of location
 
 ```yaml
@@ -122,6 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -manager_id
+
 ID number of manager
 
 ```yaml
@@ -137,6 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Department Name
 
 ```yaml
@@ -152,6 +163,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 Notes about the department
 
 ```yaml
@@ -167,6 +179,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -183,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -199,6 +213,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -214,6 +229,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -230,7 +246,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

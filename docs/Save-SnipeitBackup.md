@@ -8,28 +8,32 @@ schema: 2.0.0
 # Save-SnipeitBackup
 
 ## SYNOPSIS
+
 Downloads a Snipe-IT backup file
 
 ## SYNTAX
 
-```
+```powershell
 Save-SnipeitBackup [-filename] <String> [-path] <String> [-url <String>] [-apiKey <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Downloads a Snipe-IT backup file to a local directory.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Save-SnipeitBackup -filename "2024-01-15-backup.sql" -path "C:\Backups"
 ```
 
 ## PARAMETERS
 
 ### -filename
+
 The filename of the backup to download. Must not contain path separators or directory traversal sequences.
 
 ```yaml
@@ -45,6 +49,7 @@ Accept wildcard characters: False
 ```
 
 ### -path
+
 The directory path where the backup file will be saved
 
 ```yaml
@@ -60,6 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -76,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -92,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -108,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -123,7 +132,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

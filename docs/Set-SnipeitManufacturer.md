@@ -8,29 +8,33 @@ schema: 2.0.0
 # Set-SnipeitManufacturer
 
 ## SYNOPSIS
+
 Updates an existing Manufacturer in Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitManufacturer [-id] <Int32[]> [[-Name] <String>] [[-image] <String>]
  [[-manufacturer_url] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>]
  [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Updates manufacturer on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitManufacturer -id 1 -name "HP Inc."
 ```
 
 ## PARAMETERS
 
 ### -id
+
 ID number of the Manufacturer to update
 
 ```yaml
@@ -46,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -77,6 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -92,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
+
 Name of the Manufacturer
 
 ```yaml
@@ -107,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_url
+
 Website URL of the manufacturer.
 Named manufacturer_url to avoid conflict with the deprecated -url parameter.
 
@@ -123,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -139,6 +149,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -155,6 +166,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -170,6 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -186,7 +199,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

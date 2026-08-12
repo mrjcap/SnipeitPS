@@ -8,11 +8,12 @@ schema: 2.0.0
 # New-SnipeitLicense
 
 ## SYNOPSIS
+
 Creates a license
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitLicense [-name] <String> [-seats] <Int32> [[-category_id] <Int32>] [[-company_id] <Int32>]
  [[-expiration_date] <DateTime>] [[-license_email] <String>] [[-license_name] <String>]
  [[-maintained] <Boolean>] [[-manufacturer_id] <Int32>] [[-notes] <String>] [[-order_number] <String>]
@@ -22,18 +23,21 @@ New-SnipeitLicense [-name] <String> [-seats] <Int32> [[-category_id] <Int32>] [[
 ```
 
 ## DESCRIPTION
+
 Creates a new license on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 New-SnipeitLicense -name "License" -seats 3 -company_id 1
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -50,6 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
+
 ID number of license category
 
 ```yaml
@@ -65,6 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 ID number of company the license belongs to
 
 ```yaml
@@ -80,6 +86,7 @@ Accept wildcard characters: False
 ```
 
 ### -expiration_date
+
 Date of license expiration
 
 ```yaml
@@ -95,6 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -license_email
+
 Email address associated with license
 
 ```yaml
@@ -110,6 +118,7 @@ Accept wildcard characters: False
 ```
 
 ### -license_name
+
 Name of license contact person
 
 ```yaml
@@ -125,6 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -maintained
+
 Maintained status of license
 
 ```yaml
@@ -140,6 +150,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
+
 ID number of manufacturer of license.
 
 ```yaml
@@ -155,6 +166,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of license being created
 
 ```yaml
@@ -170,6 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 License Notes
 
 ```yaml
@@ -185,6 +198,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
+
 Order number of license purchase
 
 ```yaml
@@ -200,6 +214,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
+
 Cost of license
 
 ```yaml
@@ -215,6 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
+
 Date of license purchase
 
 ```yaml
@@ -230,6 +246,7 @@ Accept wildcard characters: False
 ```
 
 ### -reassignable
+
 Is license reassignable?
 
 ```yaml
@@ -245,6 +262,7 @@ Accept wildcard characters: False
 ```
 
 ### -seats
+
 Number of license seats owned.
 
 ```yaml
@@ -260,6 +278,7 @@ Accept wildcard characters: False
 ```
 
 ### -serial
+
 Serial number of license
 
 ```yaml
@@ -275,6 +294,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
+
 ID number of license supplier
 
 ```yaml
@@ -290,6 +310,7 @@ Accept wildcard characters: False
 ```
 
 ### -termination_date
+
 Termination date for license.
 
 ```yaml
@@ -305,6 +326,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -321,6 +343,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -336,6 +359,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -352,7 +376,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

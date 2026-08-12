@@ -8,28 +8,32 @@ schema: 2.0.0
 # Reset-SnipeitAssetOwner
 
 ## SYNOPSIS
+
 Checkin asset
 
 ## SYNTAX
 
-```
+```powershell
 Reset-SnipeitAssetOwner [-id] <Int32> [[-status_id] <Int32>] [[-location_id] <Int32>] [[-note] <String>]
  [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Checks asset in from current user/location/asset
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Reset-SnipeitAssetOwner -ID 44
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -46,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 Unique ID for asset to checkin
 
 ```yaml
@@ -61,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 Location ID to change asset location to
 
 ```yaml
@@ -76,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -note
+
 Notes about checkin
 
 ```yaml
@@ -91,6 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -status_id
+
 Change asset status to
 
 ```yaml
@@ -106,6 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -122,6 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -137,6 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -153,7 +164,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

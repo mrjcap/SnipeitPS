@@ -8,22 +8,25 @@ schema: 2.0.0
 # Reset-SnipeitAccessoryOwner
 
 ## SYNOPSIS
+
 Checkin accessories
 
 ## SYNTAX
 
-```
+```powershell
 Reset-SnipeitAccessoryOwner [-assigned_pivot_id] <Int32> [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Checkin accessories
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 To get the accessories_users table for specific accessory ID number
 ```
 
@@ -36,6 +39,7 @@ Reset-SnipeitAccessoryOwner -assigned_pivot_id xxx
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -52,6 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_pivot_id
+
 This is the assigned_pivot_id of the accessory+user relationships in the accessories_users table
 Use Get-SnipeitAccessoryOwner to find out needed value
 
@@ -68,6 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -84,6 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -99,6 +106,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -115,7 +123,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

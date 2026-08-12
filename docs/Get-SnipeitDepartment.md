@@ -8,45 +8,53 @@ schema: 2.0.0
 # Get-SnipeitDepartment
 
 ## SYNOPSIS
+
 Gets a list of Snipe-IT Departments
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitDepartment [-search <String>] [-name <String>] [-manager_id <Int32>] [-company_id <Int32>]
  [-location_id <Int32>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-sort <String>]
  [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
-```
+
+```powershell
 Get-SnipeitDepartment [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT departments or a specific department by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitDepartment
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitDepartment -search Department1
 ```
 
 ### EXAMPLE 3
-```
+
+```powershell
 Get-SnipeitDepartment -id 1
 ```
 
 ## PARAMETERS
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -62,6 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -78,6 +87,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 Optionally restrict department results to this company ID.
 
 ```yaml
@@ -93,6 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific Department
 
 ```yaml
@@ -108,6 +119,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -125,6 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 Optionally restrict department results to this location ID.
 
 ```yaml
@@ -140,6 +153,7 @@ Accept wildcard characters: False
 ```
 
 ### -manager_id
+
 Optionally restrict department results to this manager ID.
 
 ```yaml
@@ -155,6 +169,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Optionally restrict department results to this department name.
 
 ```yaml
@@ -170,6 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -185,6 +201,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
@@ -200,6 +217,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the Departments data
 
 ```yaml
@@ -215,6 +233,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Column to sort on.
 
 ```yaml
@@ -230,6 +249,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -246,7 +266,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

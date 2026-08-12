@@ -8,27 +8,31 @@ schema: 2.0.0
 # Get-SnipeitFieldset
 
 ## SYNOPSIS
+
 Returns a fieldset or list of Snipe-IT Fieldsets
 
 ## SYNTAX
 
-```
+```powershell
 Get-SnipeitFieldset [[-id] <Int32>] [[-url] <String>] [[-apiKey] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets Snipe-IT fieldsets or a specific fieldset by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitFieldset
 Get all fieldsets
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitFieldset | Where-Object {$_.name -eq "Windows" }
 Gets fieldset by name
 ```
@@ -36,6 +40,7 @@ Gets fieldset by name
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -52,6 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific fieldset
 
 ```yaml
@@ -67,6 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -83,7 +90,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

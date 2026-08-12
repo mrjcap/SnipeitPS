@@ -8,11 +8,12 @@ schema: 2.0.0
 # New-SnipeitConsumable
 
 ## SYNOPSIS
+
 Add a new Consumable to Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitConsumable [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-min_amt] <Int32>]
  [[-company_id] <Int32>] [[-order_number] <String>] [[-manufacturer_id] <Int32>] [[-location_id] <Int32>]
  [[-requestable] <Boolean>] [[-purchase_date] <DateTime>] [[-purchase_cost] <String>]
@@ -21,12 +22,14 @@ New-SnipeitConsumable [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-
 ```
 
 ## DESCRIPTION
+
 Add a new Consumable to Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 New-SnipeitConsumable -name "Ink pack" -qty 20 -category_id 3 -min_amt 5
 Create consumable with stock count 20, alert when stock is 5 or lower
 ```
@@ -34,6 +37,7 @@ Create consumable with stock count 20, alert when stock is 5 or lower
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -50,6 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
+
 Required Category ID of the Consumable, this can be obtained using Get-SnipeitCategory
 
 ```yaml
@@ -65,6 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 Optional Company ID
 
 ```yaml
@@ -80,6 +86,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Consumable Image filename and path
 
 ```yaml
@@ -95,6 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -item_no
+
 Item number for the consumable
 
 ```yaml
@@ -110,6 +118,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 Location ID number of the consumable
 
 ```yaml
@@ -125,6 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
+
 Manufacturer ID number of the consumable
 
 ```yaml
@@ -140,6 +150,7 @@ Accept wildcard characters: False
 ```
 
 ### -min_amt
+
 Optional minimum quantity of consumable
 
 ```yaml
@@ -155,6 +166,7 @@ Accept wildcard characters: False
 ```
 
 ### -model_number
+
 Model number of the consumable
 
 ```yaml
@@ -170,6 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Required Name of the Consumable
 
 ```yaml
@@ -185,6 +198,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
+
 Optional Order number
 
 ```yaml
@@ -200,6 +214,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
+
 Optional Purchase cost of the consumable
 
 ```yaml
@@ -215,6 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
+
 Optional Purchase date of the consumable
 
 ```yaml
@@ -230,6 +246,7 @@ Accept wildcard characters: False
 ```
 
 ### -qty
+
 Required Quantity of consumable
 
 ```yaml
@@ -245,6 +262,7 @@ Accept wildcard characters: False
 ```
 
 ### -requestable
+
 Is consumable requestable?
 
 ```yaml
@@ -260,6 +278,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -276,6 +295,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -291,6 +311,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -307,7 +328,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

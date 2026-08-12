@@ -8,41 +8,48 @@ schema: 2.0.0
 # Get-SnipeitComponent
 
 ## SYNOPSIS
+
 Gets a list of Snipe-IT Components
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitComponent [-search <String>] [-name <String>] [-category_id <Int32>] [-company_id <Int32>]
  [-location_id <Int32>] [-order <String>] [-sort <String>] [-limit <Int32>] [-offset <Int32>] [-all]
  [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
-```
+
+```powershell
 Get-SnipeitComponent [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT components or a specific component by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitComponent
 Returns all components
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitComponent -search display
 Returns search results containing "display"
 ```
 
 ### EXAMPLE 3
-```
+
+```powershell
 Get-SnipeitComponent -id 1
 Returns specific component
 ```
@@ -50,6 +57,7 @@ Returns specific component
 ## PARAMETERS
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -65,6 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -81,6 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
+
 Optionally restrict Component results to this category_id field
 
 ```yaml
@@ -96,6 +106,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 Optionally restrict Component results to this company_id field
 
 ```yaml
@@ -111,6 +122,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific Component
 
 ```yaml
@@ -126,6 +138,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -143,6 +156,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 Optionally restrict Component results to this location_id field
 
 ```yaml
@@ -158,6 +172,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Optionally restrict Component results to this name field
 
 ```yaml
@@ -173,6 +188,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -188,6 +204,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
@@ -203,6 +220,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the Components data
 
 ```yaml
@@ -218,6 +236,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Column to sort on.
 
 ```yaml
@@ -233,6 +252,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -249,7 +269,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

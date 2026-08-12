@@ -8,11 +8,12 @@ schema: 2.0.0
 # Set-SnipeitUser
 
 ## SYNOPSIS
+
 Updates a user on Snipe-IT system
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitUser [-id] <Int32[]> [[-first_name] <String>] [[-last_name] <String>] [[-username] <String>]
  [[-jobtitle] <String>] [[-email] <String>] [[-phone] <String>] [[-password] <String>] [[-company_id] <Int32>]
  [[-location_id] <Int32>] [[-department_id] <Int32>] [[-manager_id] <Int32>] [[-groups] <Int32[]>]
@@ -22,19 +23,23 @@ Set-SnipeitUser [-id] <Int32[]> [[-first_name] <String>] [[-last_name] <String>]
 ```
 
 ## DESCRIPTION
+
 Updates a user on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-Set-SnipeitUser -id 3 -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
+
+```powershell
+Set-SnipeitUser -id 3 -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 `
+  -department_id 1
 Updates user with ID 3
 ```
 
 ## PARAMETERS
 
 ### -activated
+
 Can user log in to Snipe-IT?
 
 ```yaml
@@ -50,6 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -66,6 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 ID number of company the user belongs to
 
 ```yaml
@@ -81,6 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -department_id
+
 ID number of department
 
 ```yaml
@@ -96,6 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -email
+
 Email address
 
 ```yaml
@@ -111,6 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -employee_num
+
 Employee number
 
 ```yaml
@@ -126,6 +136,7 @@ Accept wildcard characters: False
 ```
 
 ### -first_name
+
 User's first name
 
 ```yaml
@@ -141,6 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -groups
+
 ID numbers of groups
 
 ```yaml
@@ -156,6 +168,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID number of Snipe-IT user or array of IDs
 
 ```yaml
@@ -171,6 +184,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -186,6 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -201,6 +216,7 @@ Accept wildcard characters: False
 ```
 
 ### -jobtitle
+
 User's job title
 
 ```yaml
@@ -216,6 +232,7 @@ Accept wildcard characters: False
 ```
 
 ### -last_name
+
 User's last name
 
 ```yaml
@@ -231,6 +248,7 @@ Accept wildcard characters: False
 ```
 
 ### -ldap_import
+
 Mark user as imported from LDAP
 
 ```yaml
@@ -246,6 +264,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 ID number of location
 
 ```yaml
@@ -261,6 +280,7 @@ Accept wildcard characters: False
 ```
 
 ### -manager_id
+
 ID number of manager
 
 ```yaml
@@ -276,6 +296,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 User Notes
 
 ```yaml
@@ -291,6 +312,7 @@ Accept wildcard characters: False
 ```
 
 ### -password
+
 Password for user
 
 ```yaml
@@ -306,6 +328,7 @@ Accept wildcard characters: False
 ```
 
 ### -phone
+
 Phone number
 
 ```yaml
@@ -321,6 +344,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -337,6 +361,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -353,6 +378,7 @@ Accept wildcard characters: False
 ```
 
 ### -username
+
 Username for user
 
 ```yaml
@@ -368,6 +394,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -383,6 +410,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -399,7 +427,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

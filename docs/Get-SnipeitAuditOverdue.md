@@ -8,28 +8,32 @@ schema: 2.0.0
 # Get-SnipeitAuditOverdue
 
 ## SYNOPSIS
+
 Gets assets overdue for audit
 
 ## SYNTAX
 
-```
+```powershell
 Get-SnipeitAuditOverdue [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>]
  [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets assets that are overdue for audit from the Snipe-IT asset management system.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitAuditOverdue
 ```
 
 ## PARAMETERS
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -45,6 +49,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -61,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -78,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -93,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -109,7 +117,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

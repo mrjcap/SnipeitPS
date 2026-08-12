@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: SnipeitPS-help.xml
 Module Name: SnipeitPS
 online version:
@@ -8,21 +8,24 @@ schema: 2.0.0
 # Update-SnipeitAlias
 
 ## SYNOPSIS
+
 Replaces old SnipeitPS commands with new ones
 
 ## SYNTAX
 
-```
+```powershell
 Update-SnipeitAlias [-String] <String[]> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Replaces old SnipeitPS commands with new ones
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-Content [your-script.ps1] | Update-SnipeitAlias | Out-File [new-script-name.ps1]
 ```
 
@@ -32,6 +35,7 @@ After testing new file you can replace old file with new.
 ## PARAMETERS
 
 ### -String
+
 Input string
 
 ```yaml
@@ -47,6 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -78,7 +84,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

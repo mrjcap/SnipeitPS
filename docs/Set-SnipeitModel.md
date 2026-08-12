@@ -8,11 +8,12 @@ schema: 2.0.0
 # Set-SnipeitModel
 
 ## SYNOPSIS
+
 Updates Model on Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitModel [-id] <Int32[]> [[-name] <String>] [[-model_number] <String>] [[-category_id] <Int32>]
  [[-manufacturer_id] <Int32>] [[-eol] <Int32>] [[-custom_fieldset_id] <Int32>] [[-image] <String>]
  [-image_delete] [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
@@ -20,18 +21,21 @@ Set-SnipeitModel [-id] <Int32[]> [[-name] <String>] [[-model_number] <String>] [
 ```
 
 ## DESCRIPTION
+
 Updates Model on Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitModel -id 1 -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -48,6 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
+
 Category ID that the model belongs to. This can be obtained using Get-SnipeitCategory
 
 ```yaml
@@ -63,6 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -custom_fieldset_id
+
 Fieldset ID that the asset uses (Custom fields)
 
 ```yaml
@@ -78,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -eol
+
 Number of months until end of life
 
 ```yaml
@@ -93,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID number of the Asset Model or array of IDs
 
 ```yaml
@@ -108,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -123,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -138,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
+
 Manufacturer ID that the model belongs to. This can be obtained using Get-SnipeitManufacturer
 
 ```yaml
@@ -153,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -model_number
+
 Model number of the Asset Model
 
 ```yaml
@@ -168,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of the Asset Model
 
 ```yaml
@@ -183,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -199,6 +213,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -215,6 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -230,6 +246,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -246,7 +263,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

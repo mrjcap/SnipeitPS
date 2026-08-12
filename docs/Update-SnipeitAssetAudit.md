@@ -13,7 +13,7 @@ Audit an asset by ID in Snipe-IT
 
 ## SYNTAX
 
-```
+```powershell
 Update-SnipeitAssetAudit [-id] <Int32> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
  [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
@@ -26,7 +26,7 @@ Audit an asset by ID in Snipe-IT
 
 ### EXAMPLE 1
 
-```
+```powershell
 Update-SnipeitAssetAudit -id 1 -location_id 5
 ```
 

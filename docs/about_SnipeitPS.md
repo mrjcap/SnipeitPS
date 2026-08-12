@@ -1,16 +1,20 @@
 # About SnipeitPS
+
 ## about_SnipeitPS
 
-# SHORT DESCRIPTION
+## SHORT DESCRIPTION
+
 PowerShell API Wrapper for Snipe-IT.
 
-# LONG DESCRIPTION
+## LONG DESCRIPTION
+
 Collection of tools that makes interacting with Snipe-IT API more pleasant.
 
-# EXAMPLES
+## EXAMPLES
+
 Prepare connection to Snipe-IT with:
 
-Connect-SnipeitPS -url https://your.site -apikey YourVeryLongApiKey....
+Connect-SnipeitPS -url <https://your.site> -apikey YourVeryLongApiKey....
 
 For secure ways to pass API key to script, see Get-Help Connect-SnipeitPS -full
 
@@ -27,19 +31,21 @@ You can get specific items with -id parameter like
 
 Get-SnipeitModel -id 123
 
-# NOTE
+## NOTE
+
 Most of commands are using same parameters as in Snipe-IT API,
 but it's always a good idea to check syntax with Get-Help
 
-# TROUBLESHOOTING NOTE
+## TROUBLESHOOTING NOTE
+
 Check your API Key and certificate on server first.
 
-# SEE ALSO
+## SEE ALSO
 
 Report any issues to:
 [GitHub project page](https://github.com/snazy2000/SnipeitPS/issues)
 
-# KEYWORDS
+## KEYWORDS
 
 - Snipe-IT
 - asset management

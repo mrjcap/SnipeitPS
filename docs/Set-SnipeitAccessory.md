@@ -13,7 +13,7 @@ Updates accessory on Snipe-IT system
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitAccessory [-id] <Int32[]> [[-name] <String>] [[-qty] <Int32>] [[-category_id] <Int32>]
  [[-company_id] <Int32>] [[-manufacturer_id] <Int32>] [[-model_number] <String>] [[-order_number] <String>]
  [[-purchase_cost] <Single>] [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>]
@@ -29,7 +29,7 @@ Updates accessory on Snipe-IT system
 
 ### EXAMPLE 1
 
-```
+```powershell
 Set-SnipeitAccessory -id 1 -qty 3
 ```
 

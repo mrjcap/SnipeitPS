@@ -8,12 +8,14 @@ schema: 2.0.0
 # Get-SnipeitUser
 
 ## SYNOPSIS
+
 Gets a list of Snipe-IT Users
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitUser [-search <String>] [-company_id <Int32>] [-location_id <Int32>] [-group_id <Int32>]
  [-department_id <Int32>] [-username <String>] [-email <String>] [-employee_num <String>]
  [-state <String>] [-zip <String>] [-country <String>] [-deleted <Nullable`1>] [-ldap_import <Nullable`1>]
@@ -23,42 +25,50 @@ Get-SnipeitUser [-search <String>] [-company_id <Int32>] [-location_id <Int32>] 
 ```
 
 ### Get with ID
-```
+
+```powershell
 Get-SnipeitUser [-id <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get users a specific accessory id has been checked out to
-```
+
+```powershell
 Get-SnipeitUser [-accessory_id <String>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT users or a specific user by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitUser -search SomeSurname
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitUser -id 3
 ```
 
 ### EXAMPLE 3
-```
+
+```powershell
 Get-SnipeitUser -username someuser
 ```
 
 ### EXAMPLE 4
-```
+
+```powershell
 Get-SnipeitUser -email user@somedomain.com
 ```
 
 ### EXAMPLE 5
-```
+
+```powershell
 Get-SnipeitUser -accessory_id 3
 Get users that accessory ID 3 has been checked out to
 ```
@@ -66,6 +76,7 @@ Get users that accessory ID 3 has been checked out to
 ## PARAMETERS
 
 ### -accessory_id
+
 Get users that a specific accessory ID has been checked out to
 
 ```yaml
@@ -81,6 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -accessories_count
+
 Optionally restrict User results to those with the specified accessories count
 
 ```yaml
@@ -96,6 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -111,6 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -127,6 +141,7 @@ Accept wildcard characters: False
 ```
 
 ### -assets_count
+
 Optionally restrict User results to those with the specified assets count
 
 ```yaml
@@ -142,6 +157,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 Optionally restrict User results to this company_id field
 
 ```yaml
@@ -157,6 +173,7 @@ Accept wildcard characters: False
 ```
 
 ### -consumables_count
+
 Optionally restrict User results to those with the specified consumables count
 
 ```yaml
@@ -172,6 +189,7 @@ Accept wildcard characters: False
 ```
 
 ### -country
+
 Optionally restrict User results to this country field
 
 ```yaml
@@ -187,6 +205,7 @@ Accept wildcard characters: False
 ```
 
 ### -deleted
+
 Optionally restrict User results to deleted users only
 
 ```yaml
@@ -202,6 +221,7 @@ Accept wildcard characters: False
 ```
 
 ### -department_id
+
 Optionally restrict User results to this department_id field
 
 ```yaml
@@ -217,6 +237,7 @@ Accept wildcard characters: False
 ```
 
 ### -email
+
 Optionally restrict User results to this email field
 
 ```yaml
@@ -232,6 +253,7 @@ Accept wildcard characters: False
 ```
 
 ### -employee_num
+
 Optionally restrict User results to this employee_num field
 
 ```yaml
@@ -247,6 +269,7 @@ Accept wildcard characters: False
 ```
 
 ### -group_id
+
 Optionally restrict User results to this group_id field
 
 ```yaml
@@ -262,6 +285,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific User
 
 ```yaml
@@ -277,6 +301,7 @@ Accept wildcard characters: False
 ```
 
 ### -ldap_import
+
 Optionally restrict User results to those with specified ldap_import value
 
 ```yaml
@@ -292,6 +317,7 @@ Accept wildcard characters: False
 ```
 
 ### -licenses_count
+
 Optionally restrict User results to those with the specified licenses count
 
 ```yaml
@@ -307,6 +333,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -324,6 +351,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 Optionally restrict User results to this location_id field
 
 ```yaml
@@ -339,6 +367,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -354,6 +383,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Column to sort on.
 
 ```yaml
@@ -369,6 +399,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
@@ -384,6 +415,7 @@ Accept wildcard characters: False
 ```
 
 ### -remote
+
 Optionally restrict User results to those with specified remote worker value
 
 ```yaml
@@ -399,6 +431,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the User data
 
 ```yaml
@@ -414,6 +447,7 @@ Accept wildcard characters: False
 ```
 
 ### -state
+
 Optionally restrict User results to this state field
 
 ```yaml
@@ -429,6 +463,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -445,6 +480,7 @@ Accept wildcard characters: False
 ```
 
 ### -username
+
 Optionally restrict User results to this username field
 
 ```yaml
@@ -460,6 +496,7 @@ Accept wildcard characters: False
 ```
 
 ### -zip
+
 Optionally restrict User results to this zip field
 
 ```yaml
@@ -475,7 +512,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

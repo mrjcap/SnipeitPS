@@ -8,29 +8,33 @@ schema: 2.0.0
 # Set-SnipeitAssetOwner
 
 ## SYNOPSIS
+
 Checkout asset
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitAssetOwner [-id] <Int32[]> [-assigned_id] <Int32> [[-checkout_to_type] <String>] [[-name] <String>]
  [[-note] <String>] [[-expected_checkin] <DateTime>] [[-checkout_at] <DateTime>] [[-status_id] <Int32>]
  [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Checkout asset to user/location/asset
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitAssetOwner -id 1 -assigned_id 1 -checkout_to_type user -note "testing check out to user"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -47,6 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_id
+
 ID of target user, location, or asset
 
 ```yaml
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -checkout_at
+
 Optional date to override the checkout time of now
 
 ```yaml
@@ -77,6 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -checkout_to_type
+
 Checkout asset to one of the following types: location, asset, or user
 
 ```yaml
@@ -92,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -expected_checkin
+
 Optional date the asset is expected to be checked in
 
 ```yaml
@@ -107,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 Unique IDs For assets to checkout
 
 ```yaml
@@ -122,6 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Optional new asset name.
 This is useful for changing the asset's name on new checkout,
 for example, an asset that was named "Anna's Macbook Pro" could be renamed on the fly
@@ -140,6 +150,7 @@ Accept wildcard characters: False
 ```
 
 ### -note
+
 Notes about checkout
 
 ```yaml
@@ -155,6 +166,7 @@ Accept wildcard characters: False
 ```
 
 ### -status_id
+
 Optional status ID to set the asset to during checkout
 
 ```yaml
@@ -170,6 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -186,6 +199,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -201,6 +215,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -217,7 +232,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

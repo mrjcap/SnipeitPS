@@ -8,29 +8,33 @@ schema: 2.0.0
 # New-SnipeitStatus
 
 ## SYNOPSIS
+
 Create a new status label in Snipe-IT
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitStatus [-name] <String> [-type] <String> [[-notes] <String>] [[-color] <String>]
  [[-show_in_nav] <Boolean>] [[-default_label] <Boolean>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Create a new status label in Snipe-IT
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 New-SnipeitStatus -name "Ready to Deploy" -type deployable
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -47,6 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -color
+
 Hex color code for the status label
 
 ```yaml
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -default_label
+
 Whether it should be the default label
 
 ```yaml
@@ -77,6 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of the status label
 
 ```yaml
@@ -92,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 Optional notes for the status label
 
 ```yaml
@@ -107,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -show_in_nav
+
 Whether to show in the left-side nav of the web GUI
 
 ```yaml
@@ -122,6 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -type
+
 Type of the status label. Can be deployable, undeployable, pending or archived
 
 ```yaml
@@ -137,6 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -153,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -168,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -184,7 +197,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

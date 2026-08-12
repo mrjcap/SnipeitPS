@@ -8,28 +8,32 @@ schema: 2.0.0
 # Set-SnipeitGroup
 
 ## SYNOPSIS
+
 Set properties of a Snipe-IT Group
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitGroup [-id] <Int32[]> [[-name] <String>] [[-permissions] <Hashtable>] [[-notes] <String>]
  [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Update a Snipe-IT permission group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitGroup -id 1 -name "Updated Group"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -46,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific Group
 
 ```yaml
@@ -61,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of the Group
 
 ```yaml
@@ -76,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 Notes about the Group
 
 ```yaml
@@ -91,6 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -permissions
+
 Hashtable of permissions
 
 ```yaml
@@ -106,6 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -122,6 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -138,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -153,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -169,7 +181,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

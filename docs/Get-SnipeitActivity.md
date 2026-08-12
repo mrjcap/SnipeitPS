@@ -8,34 +8,39 @@ schema: 2.0.0
 # Get-SnipeitActivity
 
 ## SYNOPSIS
+
 Gets and searches Snipe-IT Activity history
 
 ## SYNTAX
 
-```
+```powershell
 Get-SnipeitActivity [[-search] <String>] [[-target_type] <String>] [[-target_id] <Int32>]
  [[-item_type] <String>] [[-item_id] <Int32>] [[-action_type] <String>] [[-limit] <Int32>] [[-offset] <Int32>]
  [-all] [[-url] <String>] [[-apiKey] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT activity history
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitActivity -search Keyboard
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitActivity -target_type Asset -target_id 1
 ```
 
 ## PARAMETERS
 
 ### -action_type
+
 Type of action.
 One of the following: "add seats", "checkin from", 'checkout' or 'update'
 
@@ -52,6 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -67,6 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -83,6 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -item_id
+
 Needed if target_type is specified
 
 ```yaml
@@ -98,8 +106,10 @@ Accept wildcard characters: False
 ```
 
 ### -item_type
+
 Type of target.
-One of the following: 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
+One of the following:
+'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
 
 ```yaml
 Type: String
@@ -114,6 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
 ```yaml
@@ -129,6 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Result offset to use
 
 ```yaml
@@ -144,6 +156,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the Activity history
 
 ```yaml
@@ -159,6 +172,7 @@ Accept wildcard characters: False
 ```
 
 ### -target_id
+
 Needed if target_type is specified
 
 ```yaml
@@ -174,8 +188,10 @@ Accept wildcard characters: False
 ```
 
 ### -target_type
+
 Type of target.
-One of the following: 'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
+One of the following:
+'Accessory','Asset','AssetMaintenance','AssetModel','Category','Company','Component','Consumable','CustomField','Depreciable','Depreciation','Group','Licence','LicenseSeat','Location','Manufacturer','Statuslabel','Supplier','User'
 
 ```yaml
 Type: String
@@ -190,6 +206,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -206,7 +223,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
