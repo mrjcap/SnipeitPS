@@ -67,7 +67,8 @@ function Set-SnipeitAssetMaintenance() {
 
         [datetime]$start_date,
 
-        [datetime]$completion_date,
+        [Alias('completion_date')]
+        [datetime]$expected_completion_date,
 
         [Nullable[bool]]$is_warranty,
 
@@ -100,8 +101,12 @@ function Set-SnipeitAssetMaintenance() {
             $Values['start_date'] = $Values['start_date'].ToString("yyyy-MM-dd")
         }
 
-        if ($Values['completion_date']) {
-            $Values['completion_date'] = $Values['completion_date'].ToString("yyyy-MM-dd")
+        if ($Values['completion_date'] -and -not $Values['expected_completion_date']) {
+            $Values['expected_completion_date'] = $Values['completion_date']
+        }
+        if ($Values['expected_completion_date']) {
+            $Values['expected_completion_date'] = $Values['expected_completion_date'].ToString("yyyy-MM-dd")
+            $Values.Remove('completion_date')
         }
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {

@@ -68,7 +68,8 @@ function New-SnipeitAssetMaintenance() {
         [datetime]$start_date,
 
         [parameter(mandatory = $false)]
-        [datetime]$completion_date,
+        [Alias('completion_date')]
+        [datetime]$expected_completion_date,
 
         [bool]$is_warranty = $false,
 
@@ -101,8 +102,12 @@ function New-SnipeitAssetMaintenance() {
             $Values['start_date'] = $Values['start_date'].ToString("yyyy-MM-dd")
         }
 
-        if ($Values['completion_date']) {
-            $Values['completion_date'] = $Values['completion_date'].ToString("yyyy-MM-dd")
+        if ($Values['completion_date'] -and -not $Values['expected_completion_date']) {
+            $Values['expected_completion_date'] = $Values['completion_date']
+        }
+        if ($Values['expected_completion_date']) {
+            $Values['expected_completion_date'] = $Values['expected_completion_date'].ToString("yyyy-MM-dd")
+            $Values.Remove('completion_date')
         }
 
 
