@@ -5,7 +5,7 @@ Post-fix review (after all 10 fixes). 60 agents: 20 Standard + 20 Hostile + 20 D
 ## All 10 Previous Fixes Confirmed Clean
 
 | Fix | Confirmed by | Status |
-|-|-|-|
+| - | - | - |
 | 1. API key redacted in Write-Debug | r3-std-1, r3-hostile-1, r3-hostile-19 | PASS |
 | 2. ConfirmImpact="High" on all 20 Remove-* | r3-hostile-3, r3-hostile-4 (all 19 checked) | PASS |
 | 3. Get-SnipeitFieldsetField uses GET | r3-std-4, r3-hostile-19 | PASS |
@@ -24,7 +24,7 @@ Post-fix review (after all 10 fixes). 60 agents: 20 Standard + 20 Hostile + 20 D
 ### Tier 1: High severity (flagged by multiple groups)
 
 | # | Issue | Files | Groups |
-|-|-|-|-|
+| - | - | - | - |
 | 1 | **Pagination bugs** (no .Clone(), no $limit validation, no max-iter) | ~27 Get-* | std, hostile, devil |
 | 2 | **Password as [string]** in New/Set-SnipeitUser | 2 files | std, hostile, devil |
 | 3 | **`if ($id)` falsy check** on [int] instead of $PSBoundParameters.ContainsKey | ~15 Get-* | std, hostile, devil |
@@ -39,7 +39,7 @@ Post-fix review (after all 10 fixes). 60 agents: 20 Standard + 20 Hostile + 20 D
 ### Tier 2: Medium severity
 
 | # | Issue | Files | Groups |
-|-|-|-|-|
+| - | - | - | - |
 | 11 | [bool] params with defaults ($activated, $ldap_import, $maintained, $reassignable) always inject false into body | 4 files | std-2, std-10, hostile-7 |
 | 12 | Set-SnipeitAsset $requestable still [bool] (only Get- was fixed to [switch]) | 1 file | std-2 |
 | 13 | Save-SnipeitBackup duplicates auth resolution without PS7 branch | 1 file | std-1, hostile-1, hostile-2 |
@@ -63,7 +63,7 @@ Post-fix review (after all 10 fixes). 60 agents: 20 Standard + 20 Hostile + 20 D
 ## Round 3 vs Round 2 vs Round 1 Comparison
 
 | Metric | R1 | R2 | R3 |
-|-|-|-|-|
+| - | - | - | - |
 | Critical bugs | 6 | 0 | 0 |
 | High severity | ~20 | ~15 | ~10 |
 | Medium severity | ~30 | ~25 | ~20 |
@@ -72,8 +72,10 @@ Post-fix review (after all 10 fixes). 60 agents: 20 Standard + 20 Hostile + 20 D
 
 ## Recommended Next Fix Batch
 
-1. **Pagination centralization** — new private `Invoke-SnipeitPaginatedRequest` (fixes 4 bugs in 1 place, reduces 27 files)
+1. **Pagination centralization** — new private `Invoke-SnipeitPaginatedRequest` (fixes 4 bugs in 1 place, reduces 27
+  files)
 2. **$id leaks into query string** — fix 6 sub-resource Get-* DefaultExcludeParameter to include 'id'
-3. **Mandatory params on Set-*** — remove Mandatory from $element, $type, $name on 3 Set-* functions
-4. **[bool] params → [switch]** or [Nullable[bool]] on $activated, $ldap_import, $maintained, $reassignable, $requestable (Set-SnipeitAsset)
+3. **Mandatory params on Set-***— remove Mandatory from $element, $type, $name on 3 Set-* functions
+4. **[bool] params → [switch]** or [Nullable[bool]] on $activated, $ldap_import, $maintained, $reassignable,
+  $requestable (Set-SnipeitAsset)
 5. **New-SnipeitModel $image** — add to $Values (currently silently dropped)

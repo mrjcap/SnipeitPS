@@ -8,27 +8,31 @@ schema: 2.0.0
 # Get-SnipeitCustomField
 
 ## SYNOPSIS
+
 Returns specific Snipe-IT custom field or a list of all custom fields
 
 ## SYNTAX
 
-```
+```powershell
 Get-SnipeitCustomField [[-id] <Int32>] [[-url] <String>] [[-apiKey] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets Snipe-IT custom fields or a specific custom field by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitCustomField
 Get all custom fields
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitCustomField -id 1
 Get custom field with ID 1
 ```
@@ -36,6 +40,7 @@ Get custom field with ID 1
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -52,6 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific field
 
 ```yaml
@@ -67,6 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -83,7 +90,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

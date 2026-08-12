@@ -13,7 +13,7 @@ Set properties of a Snipe-IT Asset Maintenance
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitAssetMaintenance [-id] <Int32[]> [[-asset_id] <Int32>] [[-supplier_id] <Int32>]
  [[-asset_maintenance_type] <String>] [[-title] <String>] [[-start_date] <DateTime>]
  [[-completion_date] <DateTime>] [[-is_warranty] <Boolean>] [[-cost] <Decimal>] [[-notes] <String>]
@@ -28,7 +28,7 @@ Update an asset maintenance record in the Snipe-IT system.
 
 ### EXAMPLE 1
 
-```
+```powershell
 Set-SnipeitAssetMaintenance -id 1 -title "Updated maintenance"
 ```
 

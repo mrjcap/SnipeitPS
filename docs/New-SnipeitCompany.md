@@ -13,7 +13,7 @@ Creates a new Company
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitCompany [-name] <String> [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
@@ -26,7 +26,7 @@ Creates a new company on Snipe-IT system
 
 ### EXAMPLE 1
 
-```
+```powershell
 New-SnipeitCompany -name "Acme Company"
 ```
 

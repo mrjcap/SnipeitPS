@@ -13,40 +13,49 @@ Post-fix review (after 5 critical fixes applied). 60 agents: 20 Standard + 20 Ho
 ## NEW Top Priority Issues (not in Round 1 top-5)
 
 ### 1. ShouldProcess("ShouldProcess?") placeholder — ALL ~70 mutating functions
+
 - **Consensus:** All 60 agents flagged this. Unanimous highest-priority remaining issue.
 - **Impact:** `-WhatIf` and `-Confirm` output is completely uninformative for bulk operations
 - **Fix:** `$PSCmdlet.ShouldProcess("$ResourceType ID $item_id", $MyInvocation.MyCommand.Name)`
 
 ### 2. Pagination bugs in ~27 Get-* functions (4 bugs, copy-pasted identically)
+
 - **Consensus:** hostile-12, hostile-17, devil-12 all confirmed all 4 bugs in all 6 sampled functions
-- **Bugs:** (a) `$callargs = $SearchParameter` — no `.Clone()`, mutates original (b) `$limit=0` infinite loop (c) no max-iteration guard (d) `$offset` falsy check
+- **Bugs:** (a) `$callargs = $SearchParameter` — no `.Clone()`, mutates original (b) `$limit=0` infinite loop (c) no
+  max-iteration guard (d) `$offset` falsy check
 - **Fix:** Centralize in new private helper or fix in-place across 27 files
 
 ### 3. $Values body pollution in Set-*/Owner functions (6+ functions)
+
 - **Consensus:** hostile-13 confirmed ALL 6 sampled functions leak `id`/`url`/`apiKey` into body
-- **Functions:** Set-SnipeitManufacturer, Set-SnipeitSupplier, Set-SnipeitComponent, Set-SnipeitConsumable, Set-SnipeitComponentOwner, Set-SnipeitConsumableOwner
+- **Functions:** Set-SnipeitManufacturer, Set-SnipeitSupplier, Set-SnipeitComponent, Set-SnipeitConsumable,
+  Set-SnipeitComponentOwner, Set-SnipeitConsumableOwner
 - **Fix:** Add `-DefaultExcludeParameter 'id','url','apiKey','RequestType'` to each `Get-ParameterValue` call
 
 ### 4. Password as plaintext [string] in New/Set-SnipeitUser
+
 - **Consensus:** hostile-6, hostile-16, devil-6 all flagged HIGH
 - **Fix:** Accept [SecureString] or at minimum add [REDACTED] to debug output
 
 ### 5. Invoke-SnipeitMethod query string guard is a no-op
+
 - **Consensus:** std-1, hostile-1 confirmed — `$apiUri -notlike "*\?*"` backslash has no meaning in -notlike
 - **Fix:** Change to `"*?*"` (literal `?` is valid in -notlike glob patterns)
 
 ### 6. New-SnipeitComponent $qty still typed as [string]
+
 - **Consensus:** std-6, std-15, devil-4 confirmed — should be [int]
 - **Note:** This was item #16 from Round 1 but was not in the top-5 fix batch
 
 ### 7. Update-SnipeitAlias regex injection via alias keys
+
 - **Consensus:** hostile-9 confirmed — `-replace $key` treats key as regex pattern
 - **Fix:** Use `[regex]::Escape($key)`
 
 ## Remaining Known Issues (from Round 1, still present)
 
 | # | Issue | Severity | Scope |
-|-|-|-|-|
+| - | - | - | - |
 | 8 | `if ($id)` falsy check on [int] across ~20 Get-* | Medium | Module-wide |
 | 9 | No HTTPS enforcement on Connect-SnipeitPS URL | High | 1 file |
 | 10 | Commented-out version/manifest tests | High | 2 files |
@@ -72,7 +81,7 @@ Post-fix review (after 5 critical fixes applied). 60 agents: 20 Standard + 20 Ho
 ## Round 2 vs Round 1 Comparison
 
 | Metric | Round 1 | Round 2 | Delta |
-|-|-|-|-|
+| - | - | - | - |
 | Critical bugs | 6 | 0 | -6 (all fixed) |
 | High severity | ~20 | ~15 | -5 |
 | Medium severity | ~30 | ~25 | -5 |

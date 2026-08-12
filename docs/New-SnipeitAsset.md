@@ -8,12 +8,14 @@ schema: 2.0.0
 # New-SnipeitAsset
 
 ## SYNOPSIS
+
 Add a new Asset to Snipe-IT asset system
 
 ## SYNTAX
 
 ### Create asset (Default)
-```
+
+```powershell
 New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_tag <String>] [-serial <String>]
  [-company_id <Int32>] [-order_number <String>] [-notes <String>] [-warranty_months <Int32>]
  [-purchase_cost <String>] [-purchase_date <DateTime>] [-supplier_id <Int32>] [-rtd_location_id <Int32>]
@@ -22,7 +24,8 @@ New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_t
 ```
 
 ### Checkout asset when creating
-```
+
+```powershell
 New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_tag <String>] [-serial <String>]
  [-company_id <Int32>] [-order_number <String>] [-notes <String>] [-warranty_months <Int32>]
  [-purchase_cost <String>] [-purchase_date <DateTime>] [-supplier_id <Int32>] [-rtd_location_id <Int32>]
@@ -31,24 +34,28 @@ New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_t
 ```
 
 ## DESCRIPTION
+
 Add a new Asset to Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1"
 Create asset with automatic tag if tag generation is enabled on Snipe-IT, otherwise without tag
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1" -asset_tag "DEV123"
 Specifying asset tag when creating asset
 ```
 
 ### EXAMPLE 3
-```
+
+```powershell
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Windows 10 Pro" }
 Using customfields when creating asset.
 ```
@@ -56,6 +63,7 @@ Using customfields when creating asset.
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -72,6 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_tag
+
 Asset Tag for the Asset, not required when Snipe-IT asset_tag autogeneration is on.
 
 ```yaml
@@ -87,6 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_id
+
 ID of target user, location, or asset
 
 ```yaml
@@ -102,6 +112,7 @@ Accept wildcard characters: False
 ```
 
 ### -checkout_to_type
+
 Checkout asset when creating to one of the following types: location, asset, or user
 
 ```yaml
@@ -117,6 +128,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 Optional Company ID
 
 ```yaml
@@ -132,6 +144,7 @@ Accept wildcard characters: False
 ```
 
 ### -customfields
+
 Hashtable of custom fields and extra fields that need passing through to Snipe-IT.
 Use internal field names from Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
 
@@ -148,6 +161,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Asset image filename and path
 
 ```yaml
@@ -163,6 +177,7 @@ Accept wildcard characters: False
 ```
 
 ### -model_id
+
 Required Model ID of the asset, this can be obtained using Get-SnipeitModel
 
 ```yaml
@@ -178,6 +193,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Optional Name of the Asset
 
 ```yaml
@@ -193,6 +209,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 Optional Notes
 
 ```yaml
@@ -208,6 +225,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
+
 Optional Order number
 
 ```yaml
@@ -223,6 +241,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
+
 Optional Purchase cost of the Asset
 
 ```yaml
@@ -238,6 +257,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
+
 Optional Purchase date of the Asset
 
 ```yaml
@@ -253,6 +273,7 @@ Accept wildcard characters: False
 ```
 
 ### -rtd_location_id
+
 Optional Default location ID for the asset
 
 ```yaml
@@ -268,6 +289,7 @@ Accept wildcard characters: False
 ```
 
 ### -serial
+
 Optional Serial number of the Asset
 
 ```yaml
@@ -283,6 +305,7 @@ Accept wildcard characters: False
 ```
 
 ### -status_id
+
 Required Status ID of the asset, this can be obtained using Get-SnipeitStatus
 
 ```yaml
@@ -298,6 +321,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
+
 Optional Supplier ID of the Asset
 
 ```yaml
@@ -313,6 +337,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -329,6 +354,7 @@ Accept wildcard characters: False
 ```
 
 ### -warranty_months
+
 Optional Warranty length of the Asset in months
 
 ```yaml
@@ -344,6 +370,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -359,6 +386,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -375,7 +403,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

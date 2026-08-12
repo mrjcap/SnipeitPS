@@ -8,34 +8,40 @@ schema: 2.0.0
 # Get-SnipeitAssetFile
 
 ## SYNOPSIS
+
 Gets files associated with an asset
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitAssetFile [-id] <Int32> [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with file ID
-```
+
+```powershell
 Get-SnipeitAssetFile [-id] <Int32> [-file_id <Int32>] [-url <String>] [-apiKey <String>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets files associated with a specific Snipe-IT asset.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitAssetFile -id 1
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -52,6 +58,7 @@ Accept wildcard characters: False
 ```
 
 ### -file_id
+
 An ID of a specific file
 
 ```yaml
@@ -67,6 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific Asset
 
 ```yaml
@@ -82,6 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -98,7 +107,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

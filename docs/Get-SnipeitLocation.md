@@ -8,40 +8,47 @@ schema: 2.0.0
 # Get-SnipeitLocation
 
 ## SYNOPSIS
+
 Gets a list of Snipe-IT Locations
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitLocation [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
  [-name <String>] [-address <String>] [-address2 <String>] [-city <String>] [-zip <String>]
  [-country <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
-```
+
+```powershell
 Get-SnipeitLocation [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT locations or a specific location by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitLocation -search Location1
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitLocation -id 3
 ```
 
 ## PARAMETERS
 
 ### -address
+
 Optionally restrict Location results to this Location address.
 
 ```yaml
@@ -57,6 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -address2
+
 Optionally restrict Location results to this Location address2.
 
 ```yaml
@@ -72,6 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -87,6 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -103,6 +113,7 @@ Accept wildcard characters: False
 ```
 
 ### -city
+
 Optionally restrict Location results to this Location city.
 
 ```yaml
@@ -118,6 +129,7 @@ Accept wildcard characters: False
 ```
 
 ### -country
+
 Optionally restrict Location results to this Location country.
 
 ```yaml
@@ -133,6 +145,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific Location
 
 ```yaml
@@ -148,6 +161,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -165,6 +179,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Optionally restrict Location results to this Location name.
 
 ```yaml
@@ -180,6 +195,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -195,6 +211,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Column to sort on.
 
 ```yaml
@@ -210,6 +227,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
@@ -225,6 +243,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the Locations data
 
 ```yaml
@@ -240,6 +259,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -256,6 +276,7 @@ Accept wildcard characters: False
 ```
 
 ### -zip
+
 Optionally restrict Location results to this Location zip.
 
 ```yaml
@@ -271,7 +292,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

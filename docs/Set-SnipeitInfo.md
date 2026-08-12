@@ -8,29 +8,33 @@ schema: 2.0.0
 # Set-SnipeitInfo
 
 ## SYNOPSIS
+
 Sets authentication information.
 Deprecated, use Connect-SnipeitPS instead.
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitInfo [-url] <Uri> [-apiKey] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Deprecated compatibility function that Sets API Key and URL used to connect to Snipe-IT system.
 Please use Connect-SnipeitPS instead.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitInfo -url $url -apiKey $myapikey -Verbose
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 User's API Key for Snipe-IT.
 
 ```yaml
@@ -46,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 URL of Snipe-IT system.
 
 ```yaml
@@ -61,7 +66,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

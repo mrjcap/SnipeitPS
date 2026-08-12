@@ -8,29 +8,34 @@ schema: 2.0.0
 # New-SnipeitCustomField
 
 ## SYNOPSIS
+
 Add a new Custom Field to Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitCustomField [-name] <String> [[-help_text] <String>] [-element] <String> [-format] <String>
  [[-field_values] <String>] [[-field_encrypted] <Boolean>] [[-show_in_email] <Boolean>]
  [[-custom_format] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Add a new Custom Field to Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-New-SnipeitCustomField -Name "AntivirusInstalled" -element text -Format "BOOLEAN" -HelpText "Is AntiVirus installed on Asset"
+
+```powershell
+New-SnipeitCustomField -Name "AntivirusInstalled" -element text -Format "BOOLEAN" -HelpText "Is AntiVirus installed on `
+  Asset"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -47,6 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -custom_format
+
 In the case of format 'CUSTOM REGEX', this should be the validation regex for this field
 
 ```yaml
@@ -62,6 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -element
+
 Form field type that should be displayed.
 
 ```yaml
@@ -77,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -field_encrypted
+
 Whether the field should be encrypted.
 (This can cause issues if you change it after the field was created.)
 
@@ -93,6 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -field_values
+
 In the case of list boxes, etc, this should be a list of the options available
 
 ```yaml
@@ -108,6 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -format
+
 How the field should be validated
 
 ```yaml
@@ -123,6 +133,7 @@ Accept wildcard characters: False
 ```
 
 ### -help_text
+
 Any additional text you wish to display under the form field to make it clearer what the values should be.
 
 ```yaml
@@ -138,6 +149,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 The field's name, which is also the form label
 
 ```yaml
@@ -153,6 +165,7 @@ Accept wildcard characters: False
 ```
 
 ### -show_in_email
+
 Whether or not to show the custom field in email notifications
 
 ```yaml
@@ -168,6 +181,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -184,6 +198,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -199,6 +214,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -215,7 +231,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

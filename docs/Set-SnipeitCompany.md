@@ -13,7 +13,7 @@ Updates company name
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitCompany [-id] <Int32[]> [-name] <String> [[-image] <String>] [-image_delete]
  [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
@@ -26,7 +26,7 @@ Updates company name on Snipe-IT system
 
 ### EXAMPLE 1
 
-```
+```powershell
 Set-SnipeitCompany -id 1 -name "Acme Corp"
 ```
 

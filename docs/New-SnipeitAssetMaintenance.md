@@ -13,7 +13,7 @@ Add a new Asset maintenance to Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitAssetMaintenance [-asset_id] <Int32> [-supplier_id] <Int32> [-asset_maintenance_type] <String>
  [-title] <String> [-start_date] <DateTime> [[-completion_date] <DateTime>] [[-is_warranty] <Boolean>]
  [[-cost] <Decimal>] [[-notes] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
@@ -28,7 +28,7 @@ Add a new Asset maintenance to Snipe-IT asset system
 
 ### EXAMPLE 1
 
-```
+```powershell
 New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" `
  -title "replace keyboard" -start_date "2021-01-01"
 ```

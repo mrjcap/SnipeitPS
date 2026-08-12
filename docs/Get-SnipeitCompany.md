@@ -8,34 +8,40 @@ schema: 2.0.0
 # Get-SnipeitCompany
 
 ## SYNOPSIS
+
 Gets a list of Snipe-IT Companies
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitCompany [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
  [-name <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get with ID
-```
+
+```powershell
 Get-SnipeitCompany [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT companies or a specific company by ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitCompany
 Gets all companies
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitCompany -id 1
 Gets specific company
 ```
@@ -43,6 +49,7 @@ Gets specific company
 ## PARAMETERS
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -58,6 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -74,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific Company
 
 ```yaml
@@ -89,6 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -106,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Optionally restrict company results to this company name.
 
 ```yaml
@@ -121,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Offset to use
 
 ```yaml
@@ -136,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Column to sort on.
 
 ```yaml
@@ -151,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
@@ -166,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the Companies data
 
 ```yaml
@@ -181,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -197,7 +213,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

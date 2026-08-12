@@ -5,6 +5,7 @@ Post-commit review (7 commits, all 10 fixes in place). 33 agents: 13 Standard + 
 ## All 10 Fixes Confirmed Clean (4th consecutive round)
 
 r4-hostile-10 verified all 10 fixes individually:
+
 1. Query string guard `*[?]*` — PASS
 2. API key redacted `[REDACTED]` in Invoke-SnipeitMethod — PASS
 3. API key redacted `[REDACTED]` in Connect-SnipeitPS — PASS
@@ -23,7 +24,7 @@ r4-hostile-10 verified all 10 fixes individually:
 ### Tier 1: Structural patterns needing architectural fix
 
 | # | Issue | Scope | Consensus |
-|-|-|-|-|
+| - | - | - | - |
 | 1 | **Pagination bugs** (no .Clone(), no $limit validation, no max-iter) | ~27 Get-* | All groups, all rounds |
 | 2 | **Password as [string]** in New/Set-SnipeitUser | 2 files | All groups |
 | 3 | **`if ($id)` falsy check** on [int] | ~15 Get-* | All groups |
@@ -33,7 +34,7 @@ r4-hostile-10 verified all 10 fixes individually:
 ### Tier 2: Medium severity
 
 | # | Issue | Scope |
-|-|-|-|
+| - | - | - |
 | 6 | [bool] params with defaults inject false into body | 4 files |
 | 7 | Save-SnipeitBackup duplicates auth without PS7 branch | 1 file |
 | 8 | New-SnipeitModel silently drops $image param | 1 file |
@@ -54,18 +55,22 @@ r4-hostile-10 verified all 10 fixes individually:
 ## Round 4 vs Previous Rounds
 
 | Metric | R1 | R2 | R3 | R4 |
-|-|-|-|-|-|
+| - | - | - | - | - |
 | Critical bugs | 6 | 0 | 0 | **0** |
 | High severity | ~20 | ~15 | ~10 | **~10** |
 | Medium severity | ~30 | ~25 | ~20 | **~20** |
 | Fixes verified | - | 5/5 | 10/10 | **10/10** |
 | New findings | 45 | 5 | 0 | **0** |
 
-**The codebase has stabilized.** Round 4 found zero new issues not already documented in Round 3. All findings are structural/design patterns that require architectural decisions (pagination centralization, legacy param removal, etc.) rather than line-level fixes.
+**The codebase has stabilized.** Round 4 found zero new issues not already documented in Round 3. All findings are
+structural/design patterns that require architectural decisions (pagination centralization, legacy param removal, etc.)
+rather than line-level fixes.
 
 ## Verdict
 
-The module is in a good state for a release. The 10 fixes address all critical and high-severity bugs found in Round 1. The remaining issues are:
+The module is in a good state for a release. The 10 fixes address all critical and high-severity bugs found in Round 1.
+The remaining issues are:
+
 - **Structural patterns** (pagination, boilerplate) — planned for future work
 - **Design decisions** (password type, mandatory params) — require breaking changes
 - **CI/infrastructure** (appveyor version, dead tests) — maintenance items

@@ -8,11 +8,12 @@ schema: 2.0.0
 # New-SnipeitSupplier
 
 ## SYNOPSIS
+
 Creates a supplier
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitSupplier [-name] <String> [[-address] <String>] [[-address2] <String>] [[-city] <String>]
  [[-state] <String>] [[-country] <String>] [[-zip] <String>] [[-phone] <String>] [[-fax] <String>]
  [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-supplier_url] <String>]
@@ -20,18 +21,21 @@ New-SnipeitSupplier [-name] <String> [[-address] <String>] [[-address2] <String>
 ```
 
 ## DESCRIPTION
+
 Creates a new supplier on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 New-SnipeitSupplier -name "Supplier1"
 ```
 
 ## PARAMETERS
 
 ### -address
+
 Address line 1 of supplier
 
 ```yaml
@@ -47,6 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -address2
+
 Address line 2 of supplier
 
 ```yaml
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -78,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -city
+
 City
 
 ```yaml
@@ -93,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -contact
+
 Contact person
 
 ```yaml
@@ -108,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -country
+
 Country
 
 ```yaml
@@ -123,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -email
+
 Email address
 
 ```yaml
@@ -138,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -fax
+
 Fax number
 
 ```yaml
@@ -153,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -168,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Supplier Name
 
 ```yaml
@@ -183,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 Notes about the supplier
 
 ```yaml
@@ -198,6 +212,7 @@ Accept wildcard characters: False
 ```
 
 ### -phone
+
 Phone number
 
 ```yaml
@@ -213,6 +228,7 @@ Accept wildcard characters: False
 ```
 
 ### -state
+
 State
 
 ```yaml
@@ -228,6 +244,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_url
+
 Website URL of the supplier.
 Named supplier_url to avoid conflict with the deprecated -url parameter.
 
@@ -244,6 +261,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -260,6 +278,7 @@ Accept wildcard characters: False
 ```
 
 ### -zip
+
 Zip code
 
 ```yaml
@@ -275,6 +294,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -290,6 +310,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -306,7 +327,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

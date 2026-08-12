@@ -11,12 +11,14 @@
 
 ## Key Discovery
 
-Parens fix (commit 1de5b50) was a REAL bug fix, not cosmetic. PowerShell evaluates -and/-or left-to-right (not C-style precedence). Original code `A -and B -or C -and D` evaluated as `((A&B)|C)&D`. When user passed only `-url`, Reset-SnipeitPSLegacyApi was never called — a real session leak.
+Parens fix (commit 1de5b50) was a REAL bug fix, not cosmetic. PowerShell evaluates -and/-or left-to-right (not C-style
+precedence). Original code `A -and B -or C -and D` evaluated as `((A&B)|C)&D`. When user passed only `-url`,
+Reset-SnipeitPSLegacyApi was never called — a real session leak.
 
 ## New Critical/High Issues Found
 
 | # | Issue | Scope |
-|-|-|-|
+| - | - | - |
 | 1 | Get-SnipeitConsumable missing .Clone() on $SearchParameter + missing 10M safety cap | 1 file |
 | 2 | $null leaks into pipeline on empty pagination results (all Get-* with -all) | ~27 files |
 | 3 | New-SnipeitAssetLabel.ps1 has LF line endings (rest of repo is CRLF) | 1 file |
@@ -26,7 +28,7 @@ Parens fix (commit 1de5b50) was a REAL bug fix, not cosmetic. PowerShell evaluat
 ## Medium Issues
 
 | # | Issue |
-|-|-|
+| - | - |
 | 6 | 29 param mismatches across 14 .md doc files (types, mandatory, syntax) |
 | 7 | CHANGELOG missing ~10 recent commits; manifest still 1.12.0 |
 | 8 | Unregister-SnipeitCustomField ConfirmImpact "Low" should be "High" |
@@ -38,7 +40,7 @@ Parens fix (commit 1de5b50) was a REAL bug fix, not cosmetic. PowerShell evaluat
 ## Low Issues
 
 | # | Issue |
-|-|-|
+| - | - |
 | 13 | Missing ValidateSet on asset_maintenance_type (2 files) |
 | 14 | Incomplete action_type ValidateSet on Get-SnipeitActivity |
 | 15 | Missing sort values in Get-SnipeitAsset ValidateSet |
@@ -48,7 +50,7 @@ Parens fix (commit 1de5b50) was a REAL bug fix, not cosmetic. PowerShell evaluat
 ## Architectural Recommendations
 
 | # | Recommendation | Impact |
-|-|-|-|
+| - | - | - |
 | A | Extract pagination into helper function | -400 LOC, eliminates offset/null-leak bugs |
 | B | Convert 6 remaining manual $Values builders to Get-ParameterValue | Eliminates dropped-param class |
 | C | Extract legacy API boilerplate into Enter/Exit-SnipeitLegacyApi | -2100 LOC |
@@ -56,12 +58,13 @@ Parens fix (commit 1de5b50) was a REAL bug fix, not cosmetic. PowerShell evaluat
 
 ## R5 Items Status
 
-All prior R5 items (1, 5, 11) confirmed fixed by devil-10. Only #2 (appveyor deploy condition) remains intentionally unaddressed.
+All prior R5 items (1, 5, 11) confirmed fixed by devil-10. Only #2 (appveyor deploy condition) remains intentionally
+unaddressed.
 
 ## Fix Grades (Devil's Advocate Consensus)
 
 | Fix | Grade |
-|-|-|
+| - | - |
 | [Nullable[bool]] | ESSENTIAL |
 | New-SnipeitModel $image | ESSENTIAL |
 | Operator precedence parens | ESSENTIAL (real bug) |

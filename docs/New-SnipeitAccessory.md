@@ -13,7 +13,7 @@ Creates a new accessory on Snipe-IT system
 
 ## SYNTAX
 
-```
+```powershell
 New-SnipeitAccessory [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-company_id] <Int32>]
  [[-manufacturer_id] <Int32>] [[-order_number] <String>] [[-model_number] <String>] [[-purchase_cost] <Single>]
  [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>] [[-location_id] <Int32>]
@@ -29,7 +29,7 @@ Creates a new accessory on Snipe-IT system
 
 ### EXAMPLE 1
 
-```
+```powershell
 New-SnipeitAccessory -name "Accessory" -qty 3 -category_id 1
 ```
 

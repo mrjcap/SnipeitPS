@@ -8,11 +8,12 @@ schema: 2.0.0
 # Set-SnipeitLocation
 
 ## SYNOPSIS
+
 Updates Location in Snipe-IT asset system
 
 ## SYNTAX
 
-```
+```powershell
 Set-SnipeitLocation [-id] <Int32[]> [[-name] <String>] [[-address] <String>] [[-address2] <String>]
  [[-state] <String>] [[-country] <String>] [[-zip] <String>] [[-city] <String>] [[-currency] <String>]
  [[-manager_id] <Int32>] [[-ldap_ou] <String>] [[-parent_id] <Int32>] [[-image] <String>] [-image_delete]
@@ -20,18 +21,21 @@ Set-SnipeitLocation [-id] <Int32[]> [[-name] <String>] [[-address] <String>] [[-
 ```
 
 ## DESCRIPTION
+
 Updates Location in Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Set-SnipeitLocation -id 123 -name "Some storage" -parent_id 100
 ```
 
 ## PARAMETERS
 
 ### -address
+
 Address line 1
 
 ```yaml
@@ -47,6 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -address2
+
 Address line 2
 
 ```yaml
@@ -62,6 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -78,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -city
+
 City of the location
 
 ```yaml
@@ -93,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -country
+
 Address Country
 
 ```yaml
@@ -108,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -currency
+
 Currency used at the location
 
 ```yaml
@@ -123,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 ID number of location or array of IDs
 
 ```yaml
@@ -138,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Image file name and path for item
 
 ```yaml
@@ -153,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -image_delete
+
 Remove current image
 
 ```yaml
@@ -168,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -ldap_ou
+
 LDAP OU of Location
 
 ```yaml
@@ -183,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -manager_id
+
 Location manager as id
 
 ```yaml
@@ -198,6 +212,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Name of Location
 
 ```yaml
@@ -213,6 +228,7 @@ Accept wildcard characters: False
 ```
 
 ### -parent_id
+
 Parent location as id
 
 ```yaml
@@ -228,6 +244,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequestType
+
 HTTP request type to send to Snipe-IT system.
 Defaults to Patch. You could use Put if needed.
 
@@ -244,6 +261,7 @@ Accept wildcard characters: False
 ```
 
 ### -state
+
 Address State
 
 ```yaml
@@ -259,6 +277,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -275,6 +294,7 @@ Accept wildcard characters: False
 ```
 
 ### -zip
+
 Address zipcode
 
 ```yaml
@@ -290,6 +310,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -305,6 +326,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -321,7 +343,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

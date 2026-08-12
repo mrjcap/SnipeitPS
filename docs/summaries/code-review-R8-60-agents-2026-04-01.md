@@ -6,7 +6,7 @@
 ## BLOCKERS — Must Fix Before Commit
 
 | # | Sev | Sources | Finding | Fix |
-|-|-|-|-|-|
+| - | - | - | - | - |
 | 1 | Critical | std-2, hostile-2, da-2, da-16 | TLS `=` replaces protocol instead of `-bor` — downgrades TLS 1.3 on PS7 | `[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12` |
 | 2 | Critical | std-7, da-3 | Get-SnipeitAsset `$status` ValidateSet lost in merge | Add `[ValidateSet("RTD","Deployed","Undeployable","Pending","Archived","Requestable","Deleted")]` |
 | 3 | Critical | hostile-12, da-7 | `/delete` suffix removal is a REGRESSION — Snipe-IT routes require it | Restore `/delete` in Remove-SnipeitAssetFile + Remove-SnipeitModelFile + tests |
@@ -18,7 +18,7 @@
 ## SHOULD FIX — Before Release
 
 | # | Sev | Sources | Finding |
-|-|-|-|-|
+| - | - | - | - |
 | 8 | Important | std-18, hostile-15, da-17 | CHANGELOG: Set-SnipeitLicense phantom in Clone() list (lists 13, should be 12) |
 | 9 | Important | std-18, da-8, da-18 | Manifest version not bumped (1.12.0), appveyor (1.12.{build}) — must match CHANGELOG |
 | 10 | Important | da-4 | `purchase_cost` should be `[decimal]` not `[string]` — preserves JSON numeric type + precision + input validation |
@@ -31,7 +31,7 @@
 ## ARCHITECTURAL INSIGHTS — For Future Sessions
 
 | # | Sources | Insight |
-|-|-|-|
+| - | - | - |
 | A | da-1 | Clone() should be ONE line in Invoke-SnipeitMethod (before mutations), not 12 caller-side clones. Current fix is incomplete — New-* image functions unprotected. |
 | B | da-5, da-13 | API prefix extraction is halfway refactor — either revert to literals or complete by moving prefix into Invoke-SnipeitMethod. Current state adds indirection with no real benefit. |
 | C | da-14 | 40 Set-*/Remove-* `$id` primary key params have NO ValidateRange — higher risk than FK IDs already covered (`Remove-SnipeitAsset -id 0` → `DELETE /hardware/0`). |
@@ -45,12 +45,19 @@
 ## CONFIRMED CLEAN — No Issues Found
 
 ### Standard (12/20 clean)
-std-1 (Invoke-SnipeitMethod), std-3 (Get-ParameterValue switch), std-4 ($Values.Clone()), std-5 (Remove-*File verified against API ref), std-6 (last_checkout), std-9 (sort params), std-12 (API prefix extraction), std-13 (API prefix Get-*), std-14 (API prefix New/Set/Remove), std-15 (doc type fixes), std-16 (New-SnipeitAssetLabel.md), std-17 (test changes), std-20 (module load 115 exports)
+
+std-1 (Invoke-SnipeitMethod), std-3 (Get-ParameterValue switch), std-4 ($Values.Clone()), std-5 (Remove-*File verified
+against API ref), std-6 (last_checkout), std-9 (sort params), std-12 (API prefix extraction), std-13 (API prefix Get-*),
+std-14 (API prefix New/Set/Remove), std-15 (doc type fixes), std-16 (New-SnipeitAssetLabel.md), std-17 (test changes),
+std-20 (module load 115 exports)
 
 ### Hostile (10/19 clean)
-hostile-1 (Clone holds), hostile-4 (API prefix clean), hostile-6 (switch fix correct), hostile-8 (base64 correct), hostile-11 (sort default valid), hostile-16 (PS5/PS7 compat clean), hostile-19 (all 23 DateTimes formatted)
+
+hostile-1 (Clone holds), hostile-4 (API prefix clean), hostile-6 (switch fix correct), hostile-8 (base64 correct),
+hostile-11 (sort default valid), hostile-16 (PS5/PS7 compat clean), hostile-19 (all 23 DateTimes formatted)
 
 ### Devil's Advocate (key verdicts)
+
 - da-2: TLS placement in Connect begin{} IS correct
 - da-3: ValidateSet on hardcoded server enums IS appropriate
 - da-10: Only 2 genuinely breaking changes (both fix incorrect usage)
@@ -61,7 +68,7 @@ hostile-1 (Clone holds), hostile-4 (API prefix clean), hostile-6 (switch fix cor
 ## STATISTICS
 
 | Wave | Agents | Clean | Findings | Key Issues |
-|-|-|-|-|-|
+| - | - | - | - | - |
 | Standard | 20 | 12 | 8 | 3 critical (TLS, ValidateSet, ValidateRange), 1 bug, 5 important |
 | Hostile | 19 | 10 | 9 | /delete regression, image_delete miss, siteCred bypass, FK gaps, doc fragility |
 | Devil's Advocate | 20 | n/a | 20 | Clone architecture, API prefix value, purchase_cost [decimal], sort leak, release readiness |

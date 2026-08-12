@@ -8,44 +8,52 @@ schema: 2.0.0
 # Get-SnipeitAccessory
 
 ## SYNOPSIS
+
 Gets a list of Snipe-IT Accessories
 
 ## SYNTAX
 
 ### Search (Default)
-```
+
+```powershell
 Get-SnipeitAccessory [-search <String>] [-company_id <Int32>] [-category_id <Int32>] [-manufacturer_id <Int32>]
  [-supplier_id <Int32>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
  [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Get by ID
-```
+
+```powershell
 Get-SnipeitAccessory [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ### Accessories checked out to user id
-```
+
+```powershell
 Get-SnipeitAccessory [-user_id <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Gets a list of Snipe-IT Accessories
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Get-SnipeitAccessory -search Keyboard
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Get-SnipeitAccessory -id 1
 ```
 
 ### EXAMPLE 3
-```
+
+```powershell
 Get-SnipeitAccessory -user_id 1
 Get accessories checked out to user ID 1
 ```
@@ -53,6 +61,7 @@ Get accessories checked out to user ID 1
 ## PARAMETERS
 
 ### -all
+
 Return all results, works with -offset and other parameters
 
 ```yaml
@@ -68,6 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -apiKey
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 User's API Key for Snipe-IT.
 
@@ -84,6 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
+
 Optionally restrict Accessory results to this category_id field
 
 ```yaml
@@ -99,6 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 Optionally restrict Accessory results to this company_id field
 
 ```yaml
@@ -114,6 +126,7 @@ Accept wildcard characters: False
 ```
 
 ### -id
+
 An ID of a specific Accessory
 
 ```yaml
@@ -129,6 +142,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+
 Specify the number of results you wish to return.
 Defaults to 50.
 Defines batch size for -all
@@ -146,6 +160,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
+
 Optionally restrict Accessory results to this manufacturer_id field
 
 ```yaml
@@ -161,6 +176,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+
 Result offset to use
 
 ```yaml
@@ -176,6 +192,7 @@ Accept wildcard characters: False
 ```
 
 ### -order
+
 Sort order. Can be 'asc' or 'desc'.
 
 ```yaml
@@ -191,6 +208,7 @@ Accept wildcard characters: False
 ```
 
 ### -search
+
 A text string to search the Accessory data
 
 ```yaml
@@ -206,6 +224,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort
+
 Column to sort on.
 
 ```yaml
@@ -221,6 +240,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
+
 Optionally restrict Accessory results to this supplier_id field
 
 ```yaml
@@ -236,6 +256,7 @@ Accept wildcard characters: False
 ```
 
 ### -url
+
 Deprecated parameter, please use Connect-SnipeitPS instead.
 URL of Snipe-IT system.
 
@@ -252,6 +273,7 @@ Accept wildcard characters: False
 ```
 
 ### -user_id
+
 Return Accessories checked out to a user ID
 
 ```yaml
@@ -267,7 +289,10 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
