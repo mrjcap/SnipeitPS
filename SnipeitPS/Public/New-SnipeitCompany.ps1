@@ -35,6 +35,8 @@ function New-SnipeitCompany() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
+        [Nullable[int]]$parent_id,
+
         [parameter(mandatory = $false)]
         [string]$url,
 

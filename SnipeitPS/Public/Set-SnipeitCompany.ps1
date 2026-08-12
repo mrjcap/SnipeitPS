@@ -46,6 +46,8 @@ function Set-SnipeitCompany() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
+        [Nullable[int]]$parent_id,
+
         [switch]$image_delete=$false,
 
         [ValidateSet("Put","Patch")]
