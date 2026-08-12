@@ -8,6 +8,7 @@ schema: 2.0.0
 # New-SnipeitAccessory
 
 ## SYNOPSIS
+
 Creates a new accessory on Snipe-IT system
 
 ## SYNTAX
@@ -21,11 +22,13 @@ New-SnipeitAccessory [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-c
 ```
 
 ## DESCRIPTION
+
 Creates a new accessory on Snipe-IT system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```
 New-SnipeitAccessory -name "Accessory" -qty 3 -category_id 1
 ```
@@ -33,8 +36,8 @@ New-SnipeitAccessory -name "Accessory" -qty 3 -category_id 1
 ## PARAMETERS
 
 ### -apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -49,6 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -category_id
+
 ID number of the category the accessory belongs to
 
 ```yaml
@@ -64,6 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -company_id
+
 ID Number of the company the accessory is assigned to
 
 ```yaml
@@ -79,6 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -image
+
 Accessory image filename and path
 
 ```yaml
@@ -94,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -location_id
+
 ID number of the location the accessory is assigned to
 
 ```yaml
@@ -109,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -manufacturer_id
+
 ID number of the manufacturer for this accessory.
 
 ```yaml
@@ -124,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -min_amt
+
 Min quantity of the accessory before alert is triggered
 
 ```yaml
@@ -139,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -model_number
+
 Model number for this accessory
 
 ```yaml
@@ -154,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -name
+
 Accessory name
 
 ```yaml
@@ -169,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -order_number
+
 Order number for this accessory.
 
 ```yaml
@@ -184,6 +196,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_cost
+
 Cost of item being purchased.
 
 ```yaml
@@ -199,6 +212,7 @@ Accept wildcard characters: False
 ```
 
 ### -purchase_date
+
 Date accessory was purchased
 
 ```yaml
@@ -213,7 +227,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -requestable
+
+Whether users can request this accessory (Snipe-IT 8.7+)
+
+```yaml
+Type: Nullable`1[System.Boolean]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -qty
+
 Quantity of the accessory you have
 
 ```yaml
@@ -229,6 +260,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
+
 ID number of the supplier for this accessory
 
 ```yaml
@@ -244,8 +276,8 @@ Accept wildcard characters: False
 ```
 
 ### -url
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -260,6 +292,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -275,8 +308,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -291,7 +324,11 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
+-Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

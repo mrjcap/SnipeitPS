@@ -8,6 +8,7 @@ schema: 2.0.0
 # New-SnipeitAssetMaintenance
 
 ## SYNOPSIS
+
 Add a new Asset maintenance to Snipe-IT asset system
 
 ## SYNTAX
@@ -20,20 +21,23 @@ New-SnipeitAssetMaintenance [-asset_id] <Int32> [-supplier_id] <Int32> [-asset_m
 ```
 
 ## DESCRIPTION
+
 Add a new Asset maintenance to Snipe-IT asset system
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```
-New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" -title "replace keyboard" -start_date "2021-01-01"
+New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" `
+ -title "replace keyboard" -start_date "2021-01-01"
 ```
 
 ## PARAMETERS
 
 ### -apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 ```yaml
 Type: String
@@ -48,6 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -asset_id
+
 Required ID of the asset, this can be obtained using Get-SnipeitAsset
 
 ```yaml
@@ -63,8 +68,9 @@ Accept wildcard characters: False
 ```
 
 ### -asset_maintenance_type
-Type of asset maintenance.
-Valid values are 'Maintenance', 'Repair', 'Upgrade', 'PAT', or 'Hardware Support'.
+
+Type of asset maintenance. Valid values are 'Maintenance', 'Repair', 'Upgrade', 'PAT',
+or 'Hardware Support'.
 
 ```yaml
 Type: String
@@ -78,13 +84,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -completion_date
-Optional completion date
+### -expected_completion_date
+
+Optional completion date for the asset maintenance (expected completion date).
 
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
+Aliases: completion_date
 
 Required: False
 Position: 6
@@ -94,6 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -cost
+
 Optional cost of the maintenance
 
 ```yaml
@@ -109,6 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -is_warranty
+
 Optional Maintenance done under warranty
 
 ```yaml
@@ -124,6 +133,7 @@ Accept wildcard characters: False
 ```
 
 ### -notes
+
 Optional notes
 
 ```yaml
@@ -139,6 +149,7 @@ Accept wildcard characters: False
 ```
 
 ### -start_date
+
 Required start date
 
 ```yaml
@@ -154,6 +165,7 @@ Accept wildcard characters: False
 ```
 
 ### -supplier_id
+
 Required maintenance supplier
 
 ```yaml
@@ -169,6 +181,7 @@ Accept wildcard characters: False
 ```
 
 ### -title
+
 Required Title of maintenance
 
 ```yaml
@@ -184,8 +197,8 @@ Accept wildcard characters: False
 ```
 
 ### -url
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 ```yaml
 Type: String
@@ -200,6 +213,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -215,8 +229,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -231,7 +245,11 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
+-Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
