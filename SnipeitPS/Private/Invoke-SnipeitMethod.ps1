@@ -94,7 +94,8 @@ function Invoke-SnipeitMethod {
         $_headers = @{
             "Authorization" = "Bearer $($Token)"
             'Content-Type'  = 'application/json; charset=utf-8'
-            "Accept" = "application/json"
+            "Accept"        = "application/json"
+            "User-Agent"    = "SnipeitPS/1.14.0"
         }
     }
 
