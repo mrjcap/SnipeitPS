@@ -13,7 +13,7 @@ adheres to [Semantic Versioning](http://semver.org/).
 - Updated maintenance completion date parameter to `-expected_completion_date` (with `-completion_date` alias) for
   Snipe-IT 8.7 maintenance API endpoints (`New-SnipeitAssetMaintenance` and `Set-SnipeitAssetMaintenance`)
   (grokability/snipe-it#19339).
-- Added explicit `SnipeitPS` `User-Agent` request header to `Invoke-SnipeitMethod` to satisfy Snipe-IT 8.7 API
+- Added explicit `SnipeitPS/1.15.0` `User-Agent` request header to `Invoke-SnipeitMethod` to satisfy Snipe-IT 8.7 API
   non-generic User-Agent requirement settings (grokability/snipe-it#19218).
 - Added `-serial` and `-asset_tag` parameters to `Update-SnipeitAssetAudit` to support quickscan asset auditing by
   serial number (grokability/snipe-it#19332).
@@ -21,7 +21,8 @@ adheres to [Semantic Versioning](http://semver.org/).
   (grokability/snipe-it#19169).
 - Added `-parent_id` parameter to `New-SnipeitCompany` and `Set-SnipeitCompany` for parent company hierarchies
   (grokability/snipe-it#19230).
-- Added Pester unit tests covering all Snipe-IT 8.7 feature updates.
+- Added Pester unit tests covering all Snipe-IT 8.7 feature updates and header verifications.
+- Formatted all module documentation files for markdownlint compliance.
 
 ## [v.1.14.0] - 2026-05-30
 
