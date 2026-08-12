@@ -27,8 +27,14 @@ function Update-SnipeitAssetAudit() {
     )]
 
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $false)]
         [int]$id,
+
+        [parameter(mandatory = $false)]
+        [string]$asset_tag,
+
+        [parameter(mandatory = $false)]
+        [string]$serial,
 
         [int]$location_id,
 
@@ -46,7 +52,19 @@ function Update-SnipeitAssetAudit() {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
+        if (-not $id -and -not $asset_tag -and -not $serial) {
+            throw "Must specify -id, -asset_tag, or -serial for audit."
+        }
+
         $Values = @{}
+
+        if ($PSBoundParameters.ContainsKey('asset_tag')) {
+            $Values += @{"asset_tag" = $asset_tag}
+        }
+
+        if ($PSBoundParameters.ContainsKey('serial')) {
+            $Values += @{"serial" = $serial}
+        }
 
         if ($PSBoundParameters.ContainsKey('location_id')) {
             $Values += @{"location_id" = $location_id}
@@ -56,8 +74,10 @@ function Update-SnipeitAssetAudit() {
             $Values += @{"next_audit_date" = ($next_audit_date).ToString("yyyy-MM-dd")}
         }
 
+        $ApiEndpoint = if ($id) { "$script:SnipeitApiPrefix/hardware/$id/audit" } else { "$script:SnipeitApiPrefix/hardware/audit" }
+
         $Parameters = @{
-            Api    = "$script:SnipeitApiPrefix/hardware/$id/audit"
+            Api    = $ApiEndpoint
             Method = 'POST'
             Body   = $Values
         }
