@@ -122,16 +122,21 @@ function New-SnipeitAudit() {
                 Body   = $bulkValues
             }
             $targetDesc = "Asset IDs $($id -join ', ')"
-        } else {
-            if ($PSBoundParameters.ContainsKey('id') -and $id.Count -eq 1 -and -not $PSBoundParameters.ContainsKey('tag')) {
-                $Values += @{"asset_tag" = $id[0]}
+        } elseif ($PSBoundParameters.ContainsKey('id') -and $id.Count -eq 1) {
+            $assetId = $id[0]
+            $Parameters = @{
+                Api    = "$script:SnipeitApiPrefix/hardware/$assetId/audit"
+                Method = 'Post'
+                Body   = $Values.Clone()
             }
+            $targetDesc = "Asset ID $assetId"
+        } else {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/audit"
                 Method = 'Post'
                 Body   = $Values.Clone()
             }
-            $targetDesc = if ($tag) { "Asset tag '$tag'" } else { "Asset ID $($id[0])" }
+            $targetDesc = "Asset tag '$tag'"
         }
 
         if ($PSCmdlet.ShouldProcess($targetDesc, $MyInvocation.MyCommand.Name)) {
