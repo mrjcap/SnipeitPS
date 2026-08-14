@@ -9,18 +9,37 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Audit an asset by ID in Snipe-IT
+Audit an asset by ID, tag, or serial in Snipe-IT (supports single and bulk audits)
 
 ## SYNTAX
 
+### ById (Default)
+
 ```powershell
-Update-SnipeitAssetAudit [-id] <Int32> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
- [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Update-SnipeitAssetAudit [-id] <Int32[]> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### ByTag
+
+```powershell
+Update-SnipeitAssetAudit [-asset_tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### BySerial
+
+```powershell
+Update-SnipeitAssetAudit [-serial] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Audit an asset by ID in Snipe-IT
+Audit an asset by ID, tag, or serial in Snipe-IT. Supports auditing multiple assets in bulk via array of IDs.
 
 ## EXAMPLES
 
@@ -28,6 +47,18 @@ Audit an asset by ID in Snipe-IT
 
 ```powershell
 Update-SnipeitAssetAudit -id 1 -location_id 5
+```
+
+### EXAMPLE 2
+
+```powershell
+Update-SnipeitAssetAudit -id 42, 43 -note "Q3 quarterly audit" -next_audit_date (Get-Date).AddMonths(3)
+```
+
+### EXAMPLE 3
+
+```powershell
+Update-SnipeitAssetAudit -id 1 -image "C:\photos\audit.jpg" -note "Physical check verified"
 ```
 
 ## PARAMETERS
@@ -54,35 +85,35 @@ Asset tag of the asset to audit (Snipe-IT 8.7+ quickscan audit)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: ByTag
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -id
 
-Unique ID of the asset to audit
+Unique ID of the asset or array of IDs to audit (bulk audit)
 
 ```yaml
-Type: Int32
-Parameter Sets: (All)
+Type: Int32[]
+Parameter Sets: ById
 Aliases:
 
-Required: False
+Required: True
 Position: 1
-Default value: 0
-Accept pipeline input: False
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -serial
+### -image
 
-Serial number of the asset to audit (Snipe-IT 8.7+ quickscan audit)
+Path to an image file to upload and attach to the audit log.
 
 ```yaml
 Type: String
@@ -96,6 +127,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -note
+
+Optional note for the audit log entry.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: notes
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -serial
+
+Serial number of the asset to audit (Snipe-IT 8.7+ quickscan audit)
+
+```yaml
+Type: String
+Parameter Sets: BySerial
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -location_id
 
 ID of the location to associate with the audit
@@ -106,7 +169,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -122,7 +185,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -138,7 +201,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

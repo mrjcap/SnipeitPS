@@ -9,18 +9,29 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Add a new Audit to Snipe-IT asset system
+Add a new Audit to Snipe-IT asset system (supports single and bulk audits)
 
 ## SYNTAX
 
+### ByTag (Default)
+
 ```powershell
-New-SnipeitAudit [-tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SnipeitAudit [-tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
+```
+
+### ById
+
+```powershell
+New-SnipeitAudit [-id] <Int32[]> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Add a new Audit to Snipe-IT asset system
+Add a new Audit to Snipe-IT asset system. Supports single asset tag/ID and bulk audits via array of IDs.
 
 ## EXAMPLES
 
@@ -28,6 +39,12 @@ Add a new Audit to Snipe-IT asset system
 
 ```powershell
 New-SnipeitAudit -tag 1 -location_id 1
+```
+
+### EXAMPLE 2
+
+```powershell
+New-SnipeitAudit -id 42, 43 -note "Annual audit" -next_audit_date (Get-Date).AddMonths(6)
 ```
 
 ## PARAMETERS
@@ -49,6 +66,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -id
+
+The unique ID or array of IDs of the asset(s) to audit (bulk audit)
+
+```yaml
+Type: Int32[]
+Parameter Sets: ById
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -image
+
+Path to an image file to upload and attach to the audit log.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -location_id
 
 ID of the location you want to associate with the audit
@@ -59,7 +108,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -75,7 +124,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -note
+
+Optional note for the audit log entry.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: notes
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -87,13 +152,13 @@ The asset tag of the asset you wish to audit
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
+Parameter Sets: ByTag
+Aliases: asset_tag
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -108,7 +173,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

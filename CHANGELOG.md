@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+### Fixed
+
+## [v1.15.1] - 2026-08-14
+
+### Added
+- Native bulk asset edit support in `Set-SnipeitAsset` via `PATCH /api/v1/hardware/bulk` when passing multiple IDs (grokability/snipe-it#19271).
+- Native bulk asset audit support in `Update-SnipeitAssetAudit` and `New-SnipeitAudit` via `POST /api/v1/hardware/audit/bulk` when passing multiple IDs (grokability/snipe-it#19271).
+- Added `-note` (alias: `notes`) and `-image` upload parameters to `Update-SnipeitAssetAudit` and `New-SnipeitAudit`.
+- Added comprehensive unit tests in `Tests/Coverage-BulkOperations.Tests.ps1`.
+- Added parameter set enforcement (`ById`, `ByTag`, `BySerial`) to `Update-SnipeitAssetAudit` and `New-SnipeitAudit` for mutual exclusion of identifier parameters.
+- Added guard against combining `-image` with bulk IDs on audit functions (multipart/form-data corrupts array serialization).
+
+### Fixed
+- Hardened bulk asset operations against empty arrays (`-id @()`) by adding `[ValidateNotNullOrEmpty()]` to prevent malformed empty API calls that silent-fail or hit incorrect endpoints.
+- Fixed pipeline binding leak in `Set-SnipeitAsset` where `$Values` was constructed in `begin {}`, dropping piped properties; moved evaluation to `process {}` block for safe streaming.
+- Fixed pipeline evaluation bug in `Update-SnipeitAssetAudit` where parameters were evaluated in `begin {}` block instead of per-item in `process {}`.
+- Normalized HTTP method casing to `'POST'` in `New-SnipeitAudit` (was inconsistently `'Post'`).
+
+### Breaking Changes
+- `Update-SnipeitAssetAudit` now uses parameter sets (`ById`, `ByTag`, `BySerial`). Passing `-id` with `-asset_tag` or `-serial` simultaneously is no longer allowed — PowerShell will reject the call at parameter binding.
+- `New-SnipeitAudit` now uses parameter sets (`ByTag`, `ById`). Passing `-tag` with `-id` simultaneously is no longer allowed.
+
 ## [v.1.15.0] - 2026-08-12
 
 ### Snipe-IT 8.7 Support and Compatibility

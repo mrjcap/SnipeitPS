@@ -161,10 +161,14 @@ Describe "Set-SnipeitAsset" {
         }
     }
 
-    It "Iterates foreach when given array of ids" {
+    It "Routes to bulk endpoint when given array of ids" {
         InModuleScope 'SnipeitPS' {
             Set-SnipeitAsset -id 1,2 -name "Batch" -Confirm:$false
-            Should -Invoke Invoke-SnipeitMethod -Times 2
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Api -eq "/api/v1/hardware/bulk" -and
+                $Body['ids'][0] -eq 1 -and
+                $Body['ids'][1] -eq 2
+            }
         }
     }
 
