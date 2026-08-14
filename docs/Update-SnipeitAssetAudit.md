@@ -13,9 +13,27 @@ Audit an asset by ID, tag, or serial in Snipe-IT (supports single and bulk audit
 
 ## SYNTAX
 
+### ById (Default)
+
 ```powershell
-Update-SnipeitAssetAudit [[-id] <Int32[]>] [[-asset_tag] <String>] [[-serial] <String>] [[-location_id] <Int32>]
- [[-next_audit_date] <DateTime>] [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
+Update-SnipeitAssetAudit [-id] <Int32[]> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### ByTag
+
+```powershell
+Update-SnipeitAssetAudit [-asset_tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### BySerial
+
+```powershell
+Update-SnipeitAssetAudit [-serial] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -67,13 +85,13 @@ Asset tag of the asset to audit (Snipe-IT 8.7+ quickscan audit)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: ByTag
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -83,10 +101,10 @@ Unique ID of the asset or array of IDs to audit (bulk audit)
 
 ```yaml
 Type: Int32[]
-Parameter Sets: (All)
+Parameter Sets: ById
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -131,10 +149,10 @@ Serial number of the asset to audit (Snipe-IT 8.7+ quickscan audit)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: BySerial
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

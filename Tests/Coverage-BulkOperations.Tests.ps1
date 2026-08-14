@@ -132,7 +132,7 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
                 New-SnipeitAudit -id 42, 43 -note "Bulk audit via New" -next_audit_date $date -Confirm:$false
                 Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
                     $Api -eq "/api/v1/hardware/audit/bulk" -and
-                    $Method -eq "Post" -and
+                    $Method -eq "POST" -and
                     $Body['ids'][0] -eq 42 -and
                     $Body['ids'][1] -eq 43 -and
                     $Body['note'] -eq "Bulk audit via New" -and
@@ -147,7 +147,7 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
                 New-SnipeitAudit -id 42 -note "Single audit via New" -Confirm:$false
                 Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
                     $Api -eq "/api/v1/hardware/42/audit" -and
-                    $Method -eq "Post" -and
+                    $Method -eq "POST" -and
                     $Body['note'] -eq "Single audit via New"
                 }
             }
@@ -171,6 +171,62 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
 
         It "Throws parameter validation error when non-existent file passed to -image" {
             { New-SnipeitAudit -tag "TAG456" -image "C:\nonexistent_path_12345.jpg" -Confirm:$false } | Should -Throw
+        }
+    }
+
+    Context "Parameter Set Mutual Exclusion" {
+        It "Throws when both -id and -asset_tag are passed to Update-SnipeitAssetAudit" {
+            { Update-SnipeitAssetAudit -id 42 -asset_tag "TAG123" -Confirm:$false } | Should -Throw "*Parameter set cannot be resolved*"
+        }
+
+        It "Throws when both -id and -serial are passed to Update-SnipeitAssetAudit" {
+            { Update-SnipeitAssetAudit -id 42 -serial "SN123" -Confirm:$false } | Should -Throw "*Parameter set cannot be resolved*"
+        }
+
+        It "Throws when both -id and -tag are passed to New-SnipeitAudit" {
+            { New-SnipeitAudit -id 42 -tag "TAG123" -Confirm:$false } | Should -Throw "*Parameter set cannot be resolved*"
+        }
+    }
+
+    Context "Bulk Audit + Image Guard (C2)" {
+        It "Throws when bulk IDs and -image are combined on Update-SnipeitAssetAudit" {
+            InModuleScope 'SnipeitPS' {
+                Mock Invoke-SnipeitMethod { return @{ status = "success" } }
+                $tempFile = [System.IO.Path]::GetTempFileName()
+                try {
+                    { Update-SnipeitAssetAudit -id 42, 43 -image $tempFile -note "Should fail" -Confirm:$false } | Should -Throw "*Bulk audit with -image is not supported*"
+                } finally {
+                    Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
+                }
+            }
+        }
+
+        It "Throws when bulk IDs and -image are combined on New-SnipeitAudit" {
+            InModuleScope 'SnipeitPS' {
+                Mock Invoke-SnipeitMethod { return @{ status = "success" } }
+                $tempFile = [System.IO.Path]::GetTempFileName()
+                try {
+                    { New-SnipeitAudit -id 42, 43 -image $tempFile -note "Should fail" -Confirm:$false } | Should -Throw "*Bulk audit with -image is not supported*"
+                } finally {
+                    Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
+                }
+            }
+        }
+
+        It "Allows single ID with -image on Update-SnipeitAssetAudit (no throw)" {
+            InModuleScope 'SnipeitPS' {
+                Mock Invoke-SnipeitMethod { return @{ status = "success" } }
+                $tempFile = [System.IO.Path]::GetTempFileName()
+                try {
+                    Update-SnipeitAssetAudit -id 42 -image $tempFile -note "Single OK" -Confirm:$false
+                    Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                        $Api -eq "/api/v1/hardware/42/audit" -and
+                        $Body['image'] -eq $tempFile
+                    }
+                } finally {
+                    Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
+                }
+            }
         }
     }
 }

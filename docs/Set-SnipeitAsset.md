@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Update a specific Asset in the Snipe-IT asset system
+Update a specific Asset or bulk update multiple Assets in the Snipe-IT asset system
 
 ## SYNTAX
 
@@ -24,7 +24,8 @@ Set-SnipeitAsset [-id] <Int32[]> [[-asset_tag] <String>] [[-name] <String>] [[-s
 
 ## DESCRIPTION
 
-Update a specific Asset in the Snipe-IT asset system
+Update a specific Asset or bulk update multiple Assets in the Snipe-IT asset system.
+When multiple IDs are passed, the function routes to `PATCH /api/v1/hardware/bulk` for a single API call.
 
 ## EXAMPLES
 
@@ -45,6 +46,12 @@ Set-SnipeitAsset -id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Wind
 
 ```powershell
 Get-SnipeitAsset -serial 12345678 | Set-SnipeitAsset -notes 'Just updated'
+```
+
+### EXAMPLE 4
+
+```powershell
+Set-SnipeitAsset -id 42, 43, 44 -notes "Moved to warehouse B" -rtd_location_id 5
 ```
 
 ## PARAMETERS

@@ -39,15 +39,16 @@ New-SnipeitAudit -id 42, 43 -note "Annual audit" -next_audit_date (Get-Date).Add
 function New-SnipeitAudit() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low"
+        ConfirmImpact = "Low",
+        DefaultParameterSetName = 'ByTag'
     )]
 
     Param(
-        [parameter(mandatory = $false, ValueFromPipelineByPropertyName = $true)]
+        [parameter(mandatory = $false, ParameterSetName = 'ByTag', ValueFromPipelineByPropertyName = $true)]
         [Alias('asset_tag')]
         [string]$tag,
 
-        [parameter(mandatory = $false, ValueFromPipelineByPropertyName = $true)]
+        [parameter(mandatory = $false, ParameterSetName = 'ById', ValueFromPipelineByPropertyName = $true)]
         [int[]]$id,
 
         [ValidateRange(1, [int]::MaxValue)]
@@ -113,12 +114,16 @@ function New-SnipeitAudit() {
             $Values += @{"image" = $image}
         }
 
+        if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1 -and $PSBoundParameters.ContainsKey('image')) {
+            throw "Bulk audit with -image is not supported. Image upload forces multipart/form-data which corrupts bulk ID array serialization. Audit assets individually when attaching images."
+        }
+
         if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1) {
             $bulkValues = $Values.Clone()
             $bulkValues['ids'] = $id
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/audit/bulk"
-                Method = 'Post'
+                Method = 'POST'
                 Body   = $bulkValues
             }
             $targetDesc = "Asset IDs $($id -join ', ')"
@@ -126,14 +131,14 @@ function New-SnipeitAudit() {
             $assetId = $id[0]
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/$assetId/audit"
-                Method = 'Post'
+                Method = 'POST'
                 Body   = $Values.Clone()
             }
             $targetDesc = "Asset ID $assetId"
         } else {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/audit"
-                Method = 'Post'
+                Method = 'POST'
                 Body   = $Values.Clone()
             }
             $targetDesc = "Asset tag '$tag'"
