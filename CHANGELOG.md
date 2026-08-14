@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+- Native bulk asset edit support in `Set-SnipeitAsset` via `PATCH /api/v1/hardware/bulk` when passing multiple IDs (grokability/snipe-it#19271).
+- Native bulk asset audit support in `Update-SnipeitAssetAudit` and `New-SnipeitAudit` via `POST /api/v1/hardware/audit/bulk` when passing multiple IDs (grokability/snipe-it#19271).
+- Added `-note` (alias: `notes`) and `-image` upload parameters to `Update-SnipeitAssetAudit` and `New-SnipeitAudit`.
+- Added comprehensive unit tests in `Tests/Coverage-BulkOperations.Tests.ps1`.
+
+### Fixed
+- Fixed pipeline evaluation bug in `Update-SnipeitAssetAudit` where parameters were evaluated in `begin {}` block instead of per-item in `process {}`.
+
 ## [v.1.15.0] - 2026-08-12
 
 ### Snipe-IT 8.7 Support and Compatibility

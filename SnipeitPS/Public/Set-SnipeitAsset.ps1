@@ -185,16 +185,31 @@ function Set-SnipeitAsset() {
     }
 
     process {
-        foreach($asset_id in $id) {
+        if ($id.Count -gt 1) {
+            $bulkValues = $Values.Clone()
+            $bulkValues['ids'] = $id
             $Parameters = @{
-                Api    = "$script:SnipeitApiPrefix/hardware/$asset_id"
+                Api    = "$script:SnipeitApiPrefix/hardware/bulk"
                 Method = $RequestType
-                Body   = $Values.Clone()
+                Body   = $bulkValues
             }
 
-            if ($PSCmdlet.ShouldProcess("Asset ID $asset_id", $MyInvocation.MyCommand.Name)) {
+            if ($PSCmdlet.ShouldProcess("Asset IDs $($id -join ', ')", $MyInvocation.MyCommand.Name)) {
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
+            }
+        } else {
+            foreach($asset_id in $id) {
+                $Parameters = @{
+                    Api    = "$script:SnipeitApiPrefix/hardware/$asset_id"
+                    Method = $RequestType
+                    Body   = $Values.Clone()
+                }
+
+                if ($PSCmdlet.ShouldProcess("Asset ID $asset_id", $MyInvocation.MyCommand.Name)) {
+                    $result = Invoke-SnipeitMethod @Parameters
+                    $result
+                }
             }
         }
     }
