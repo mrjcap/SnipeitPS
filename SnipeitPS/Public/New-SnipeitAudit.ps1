@@ -49,6 +49,7 @@ function New-SnipeitAudit() {
         [string]$tag,
 
         [parameter(mandatory = $false, ParameterSetName = 'ById', ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullOrEmpty()]
         [int[]]$id,
 
         [ValidateRange(1, [int]::MaxValue)]

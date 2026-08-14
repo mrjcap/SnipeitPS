@@ -95,6 +95,7 @@ function Set-SnipeitAsset() {
 
     Param(
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [int[]]$id,
 
         [parameter(Mandatory=$false)]
@@ -158,6 +159,19 @@ function Set-SnipeitAsset() {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
+
+    }
+
+    process {
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['purchase_date']) {
@@ -172,19 +186,6 @@ function Set-SnipeitAsset() {
             $Values += $customfields
         }
 
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
-
-    }
-
-    process {
         if ($id.Count -gt 1) {
             $bulkValues = $Values.Clone()
             $bulkValues['ids'] = $id

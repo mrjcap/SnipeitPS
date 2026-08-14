@@ -47,6 +47,7 @@ function Update-SnipeitAssetAudit() {
 
     Param(
         [parameter(mandatory = $false, ParameterSetName = 'ById', ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullOrEmpty()]
         [int[]]$id,
 
         [parameter(mandatory = $false, ParameterSetName = 'ByTag', ValueFromPipelineByPropertyName = $true)]
