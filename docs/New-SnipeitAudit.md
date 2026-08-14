@@ -13,8 +13,18 @@ Add a new Audit to Snipe-IT asset system (supports single and bulk audits)
 
 ## SYNTAX
 
+### ByTag (Default)
+
 ```powershell
-New-SnipeitAudit [[-tag] <String>] [[-id] <Int32[]>] [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+New-SnipeitAudit [-tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
+```
+
+### ById
+
+```powershell
+New-SnipeitAudit [-id] <Int32[]> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
  [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -62,10 +72,10 @@ The unique ID or array of IDs of the asset(s) to audit (bulk audit)
 
 ```yaml
 Type: Int32[]
-Parameter Sets: (All)
+Parameter Sets: ById
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -142,10 +152,10 @@ The asset tag of the asset you wish to audit
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: ByTag
 Aliases: asset_tag
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

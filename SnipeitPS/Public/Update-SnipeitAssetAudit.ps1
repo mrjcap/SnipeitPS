@@ -41,18 +41,19 @@
 function Update-SnipeitAssetAudit() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
+        ConfirmImpact = "Medium",
+        DefaultParameterSetName = 'ById'
     )]
 
     Param(
-        [parameter(mandatory = $false, ValueFromPipelineByPropertyName = $true)]
+        [parameter(mandatory = $false, ParameterSetName = 'ById', ValueFromPipelineByPropertyName = $true)]
         [int[]]$id,
 
-        [parameter(mandatory = $false, ValueFromPipelineByPropertyName = $true)]
+        [parameter(mandatory = $false, ParameterSetName = 'ByTag', ValueFromPipelineByPropertyName = $true)]
         [Alias('tag')]
         [string]$asset_tag,
 
-        [parameter(mandatory = $false, ValueFromPipelineByPropertyName = $true)]
+        [parameter(mandatory = $false, ParameterSetName = 'BySerial', ValueFromPipelineByPropertyName = $true)]
         [string]$serial,
 
         [ValidateRange(1, [int]::MaxValue)]
@@ -92,7 +93,7 @@ function Update-SnipeitAssetAudit() {
     }
 
     process {
-        if (-not $PSBoundParameters.ContainsKey('id') -and -not $PSBoundParameters.ContainsKey('asset_tag') -and -not $PSBoundParameters.ContainsKey('serial')) {
+        if (-not $PSBoundParameters.ContainsKey('id') -and -not $PSBoundParameters.ContainsKey('asset_tag') -and -not $PSBoundParameters.ContainsKey('serial') -and -not $PSBoundParameters.ContainsKey('tag')) {
             throw "Must specify -id, -asset_tag, or -serial for audit."
         }
 
@@ -120,6 +121,10 @@ function Update-SnipeitAssetAudit() {
 
         if ($PSBoundParameters.ContainsKey('image')) {
             $Values += @{"image" = $image}
+        }
+
+        if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1 -and $PSBoundParameters.ContainsKey('image')) {
+            throw "Bulk audit with -image is not supported. Image upload forces multipart/form-data which corrupts bulk ID array serialization. Audit assets individually when attaching images."
         }
 
         if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1) {
