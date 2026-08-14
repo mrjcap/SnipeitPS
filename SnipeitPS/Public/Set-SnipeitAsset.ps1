@@ -190,7 +190,7 @@ function Set-SnipeitAsset() {
             $bulkValues['ids'] = $id
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/bulk"
-                Method = $RequestType
+                Method = 'Patch'
                 Body   = $bulkValues
             }
 

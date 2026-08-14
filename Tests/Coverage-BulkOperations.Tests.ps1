@@ -28,6 +28,17 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
             }
         }
 
+        It "Forces Patch method for /hardware/bulk even when RequestType is Put" {
+            InModuleScope 'SnipeitPS' {
+                Mock Invoke-SnipeitMethod { return @{ status = "success" } }
+                Set-SnipeitAsset -id 42, 43 -notes "bulk patch enforced" -RequestType "Put" -Confirm:$false
+                Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                    $Api -eq "/api/v1/hardware/bulk" -and
+                    $Method -eq "Patch"
+                }
+            }
+        }
+
         It "Routes to /hardware/{id} for scalar ID" {
             InModuleScope 'SnipeitPS' {
                 Mock Invoke-SnipeitMethod { return @{ status = "success" } }
@@ -100,6 +111,10 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
             }
         }
 
+        It "Throws parameter validation error when non-existent file passed to -image" {
+            { Update-SnipeitAssetAudit -id 42 -image "C:\nonexistent_path_12345.jpg" -Confirm:$false } | Should -Throw
+        }
+
         It "Evaluates parameters per item when processed via pipeline" {
             InModuleScope 'SnipeitPS' {
                 Mock Invoke-SnipeitMethod { return @{ status = "success" } }
@@ -126,6 +141,18 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
             }
         }
 
+        It "Routes to /hardware/{id}/audit when single ID is passed" {
+            InModuleScope 'SnipeitPS' {
+                Mock Invoke-SnipeitMethod { return @{ status = "success" } }
+                New-SnipeitAudit -id 42 -note "Single audit via New" -Confirm:$false
+                Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                    $Api -eq "/api/v1/hardware/42/audit" -and
+                    $Method -eq "Post" -and
+                    $Body['note'] -eq "Single audit via New"
+                }
+            }
+        }
+
         It "Supports image parameter on New-SnipeitAudit" {
             InModuleScope 'SnipeitPS' {
                 Mock Invoke-SnipeitMethod { return @{ status = "success" } }
@@ -140,6 +167,10 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
                     Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
                 }
             }
+        }
+
+        It "Throws parameter validation error when non-existent file passed to -image" {
+            { New-SnipeitAudit -tag "TAG456" -image "C:\nonexistent_path_12345.jpg" -Confirm:$false } | Should -Throw
         }
     }
 }
