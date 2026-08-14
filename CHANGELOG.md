@@ -8,6 +8,12 @@ adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
+
+### Fixed
+
+## [v1.15.1] - 2026-08-14
+
+### Added
 - Native bulk asset edit support in `Set-SnipeitAsset` via `PATCH /api/v1/hardware/bulk` when passing multiple IDs (grokability/snipe-it#19271).
 - Native bulk asset audit support in `Update-SnipeitAssetAudit` and `New-SnipeitAudit` via `POST /api/v1/hardware/audit/bulk` when passing multiple IDs (grokability/snipe-it#19271).
 - Added `-note` (alias: `notes`) and `-image` upload parameters to `Update-SnipeitAssetAudit` and `New-SnipeitAudit`.
@@ -16,6 +22,8 @@ adheres to [Semantic Versioning](http://semver.org/).
 - Added guard against combining `-image` with bulk IDs on audit functions (multipart/form-data corrupts array serialization).
 
 ### Fixed
+- Hardened bulk asset operations against empty arrays (`-id @()`) by adding `[ValidateNotNullOrEmpty()]` to prevent malformed empty API calls that silent-fail or hit incorrect endpoints.
+- Fixed pipeline binding leak in `Set-SnipeitAsset` where `$Values` was constructed in `begin {}`, dropping piped properties; moved evaluation to `process {}` block for safe streaming.
 - Fixed pipeline evaluation bug in `Update-SnipeitAssetAudit` where parameters were evaluated in `begin {}` block instead of per-item in `process {}`.
 - Normalized HTTP method casing to `'POST'` in `New-SnipeitAudit` (was inconsistently `'Post'`).
 
