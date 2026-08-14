@@ -9,18 +9,19 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Audit an asset by ID in Snipe-IT
+Audit an asset by ID, tag, or serial in Snipe-IT (supports single and bulk audits)
 
 ## SYNTAX
 
 ```powershell
-Update-SnipeitAssetAudit [-id] <Int32> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
- [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Update-SnipeitAssetAudit [[-id] <Int32[]>] [[-asset_tag] <String>] [[-serial] <String>] [[-location_id] <Int32>]
+ [[-next_audit_date] <DateTime>] [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Audit an asset by ID in Snipe-IT
+Audit an asset by ID, tag, or serial in Snipe-IT. Supports auditing multiple assets in bulk via array of IDs.
 
 ## EXAMPLES
 
@@ -28,6 +29,18 @@ Audit an asset by ID in Snipe-IT
 
 ```powershell
 Update-SnipeitAssetAudit -id 1 -location_id 5
+```
+
+### EXAMPLE 2
+
+```powershell
+Update-SnipeitAssetAudit -id 42, 43 -note "Q3 quarterly audit" -next_audit_date (Get-Date).AddMonths(3)
+```
+
+### EXAMPLE 3
+
+```powershell
+Update-SnipeitAssetAudit -id 1 -image "C:\photos\audit.jpg" -note "Physical check verified"
 ```
 
 ## PARAMETERS

@@ -9,18 +9,19 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Add a new Audit to Snipe-IT asset system
+Add a new Audit to Snipe-IT asset system (supports single and bulk audits)
 
 ## SYNTAX
 
 ```powershell
-New-SnipeitAudit [-tag] <String> [[-location_id] <Int32>] [[-next_audit_date] <DateTime>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SnipeitAudit [[-tag] <String>] [[-id] <Int32[]>] [[-location_id] <Int32>] [[-next_audit_date] <DateTime>]
+ [[-note] <String>] [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Add a new Audit to Snipe-IT asset system
+Add a new Audit to Snipe-IT asset system. Supports single asset tag/ID and bulk audits via array of IDs.
 
 ## EXAMPLES
 
@@ -28,6 +29,12 @@ Add a new Audit to Snipe-IT asset system
 
 ```powershell
 New-SnipeitAudit -tag 1 -location_id 1
+```
+
+### EXAMPLE 2
+
+```powershell
+New-SnipeitAudit -id 42, 43 -note "Annual audit" -next_audit_date (Get-Date).AddMonths(6)
 ```
 
 ## PARAMETERS
