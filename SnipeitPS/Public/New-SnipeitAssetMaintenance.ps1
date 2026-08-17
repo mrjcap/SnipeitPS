@@ -110,6 +110,28 @@ function New-SnipeitAssetMaintenance() {
             $Values.Remove('completion_date')
         }
 
+        if ($Values['title']) {
+            $Values['name'] = $Values['title']
+        }
+        if ($Values['asset_maintenance_type']) {
+            $maintenanceTypeMap = @{
+                'Maintenance'          = 1
+                'Repair'               = 2
+                'Upgrade'              = 3
+                'PAT Test'             = 4
+                'PAT'                  = 4
+                'Calibration'          = 5
+                'Software Support'     = 6
+                'Hardware Support'     = 7
+                'Configuration Change' = 8
+            }
+            if ($Values['asset_maintenance_type'] -match '^\d+$') {
+                $Values['maintenance_type_id'] = [int]$Values['asset_maintenance_type']
+            } elseif ($maintenanceTypeMap.ContainsKey($Values['asset_maintenance_type'])) {
+                $Values['maintenance_type_id'] = $maintenanceTypeMap[$Values['asset_maintenance_type']]
+            }
+        }
+
 
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/maintenances"
