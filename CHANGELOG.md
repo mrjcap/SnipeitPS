@@ -11,25 +11,95 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [v1.15.2] - 2026-08-17
+
+### Added
+
+- **Labels & Asset Tags:** Added support for `-asset_tags` on `New-SnipeitAssetLabel` with auto-resolution of asset tags
+  from provided `-asset_ids` (`e8364ba`).
+- **Live Integration Test Framework:** Added comprehensive integration test suites (15 test files) covering 100% of
+  all public cmdlets with dedicated runner `run-integration-tests.ps1` (`d07d09d`, `1b8707a`, `0ed8305`).
+- **Targeted Core Hardening Unit Tests:** Added `Tests/Engine-Hardening.Tests.ps1` covering module export boundaries,
+  pipeline isolation, 429 adaptive throttling, and response normalization (`06b6c30`).
+
+### Fixed
+
+- **Module Manifest & Lifecycle Teardown:**
+  - Pinned `CmdletsToExport = @()` and `VariablesToExport = @()` in `SnipeitPS.psd1` while preserving all 37 legacy
+    aliases and declaring `CompatiblePSEditions = @('Desktop', 'Core')` (`ff662f2`).
+  - Standardized cross-platform script loading with `Join-Path` and added type-safe OnRemove cleanup hook in psm1
+    to clear `$SnipeitPSSession` on module unload (`ff662f2`).
+  - Silenced uncommanded pipeline output in `Set-SnipeitAlias` with `[void]` and added
+    `$env:SNIPEITPS_DISABLE_LEGACY_ALIASES` opt-out (`ff662f2`).
+- **Parameter Engine & Query Formatting:**
+  - Restricted `Get-ParameterValue` default variable resolution to Scope 0, preventing accidental leakage from caller
+    scopes (`7cbe69a`).
+  - Excluded CommonParameters (`Verbose`, `Debug`, `Confirm`, `WhatIf`, etc.) and engine automatic variables
+    (`$PID`, `$Host`, `$Profile`, `$Error`) from unbound parameter collection (`7cbe69a`).
+  - Replaced `System.Web.HttpUtility` with `System.Net.WebUtility` in `ConvertTo-GetParameter` for cross-platform
+    Linux/macOS support (`7cbe69a`).
+  - Formatted array query parameters using PHP bracket notation (`${key}%5B%5D=${val}`) and lowercased boolean
+    values (`'true'` / `'false'`) (`7cbe69a`).
+- **HTTP Transport & 429 Throttling:**
+  - Isolated `$_headers` per request in `PROCESS` block to prevent cross-request header leakage (`4fd03e6`).
+  - Added `MaximumRedirection = 0` to prevent unauthenticated 302 login redirect loops (`4fd03e6`).
+  - Hardened dual status code extraction across PowerShell 5.1 and 7+ (`4fd03e6`).
+  - Sanitized 502/504 HTML proxy error blobs and handled HTTP 204 No Content gracefully (`4fd03e6`).
+  - Normalized empty rows and total-0 envelope responses to emit empty arrays `@()` instead of container objects
+    (`4fd03e6`).
+  - Hardened sliding window calculations and protected against zero-count indexing in Burst, Constant, and Adaptive
+    throttling modes (`4fd03e6`).
+- **Audit Cmdlets & Pipeline Binding:**
+  - Standardized parameter naming on `$asset_tag` with alias `tag` and added `BySerial` parameter set on
+    `New-SnipeitAudit` (`37a10e0`).
+  - Fixed pipeline binding in `New-SnipeitAudit` and `Update-SnipeitAssetAudit` by checking variable values in
+    `process {}` block instead of `$PSBoundParameters.ContainsKey()` (`37a10e0`).
+  - Set `ConfirmImpact = "Medium"` on audit cmdlets (`37a10e0`).
+- **Cmdlet Bug Fixes:**
+  - `Set-SnipeitAsset`: Warns and overrides `-RequestType Put` to `PATCH` for bulk asset endpoints, and guards
+    against `-image` in bulk updates (`06b6c30`).
+  - `Set-SnipeitAsset`: Resolved API parameters per-item in `process {}` block for streaming pipeline input and
+    preserved `checkout_to_type` in asset checkout body (`567b78c`, `6e23f30`).
+  - `Reset-SnipeitPSLegacyApi`: Removed `SupportsShouldProcess` so legacy credential cleanup executes unconditionally
+    even under `-WhatIf` (`06b6c30`).
+  - `Get-SnipeitFieldsetField`: Switched to POST method with request body matching Snipe-IT API requirements
+    (`a33928c`, `535df17`, `e430622`).
+  - `New-SnipeitManufacturer` & `Set-SnipeitManufacturer`: Fixed parameter variable casing for `$name` (`0eeb7e4`,
+    `fc8d9a6`).
+  - `New-SnipeitAssetMaintenance` & `Set-SnipeitAssetMaintenance`: Mapped `$title` to `name` and friendly maintenance
+    types to numeric IDs on creation and update (`2b8017f`, `e86684a`).
+
 ## [v1.15.1] - 2026-08-14
 
 ### Added
-- Native bulk asset edit support in `Set-SnipeitAsset` via `PATCH /api/v1/hardware/bulk` when passing multiple IDs (grokability/snipe-it#19271).
-- Native bulk asset audit support in `Update-SnipeitAssetAudit` and `New-SnipeitAudit` via `POST /api/v1/hardware/audit/bulk` when passing multiple IDs (grokability/snipe-it#19271).
+
+- Native bulk asset edit support in `Set-SnipeitAsset` via `PATCH /api/v1/hardware/bulk` when passing
+  multiple IDs (grokability/snipe-it#19271).
+- Native bulk asset audit support in `Update-SnipeitAssetAudit` and `New-SnipeitAudit` via
+  `POST /api/v1/hardware/audit/bulk` when passing multiple IDs (grokability/snipe-it#19271).
 - Added `-note` (alias: `notes`) and `-image` upload parameters to `Update-SnipeitAssetAudit` and `New-SnipeitAudit`.
 - Added comprehensive unit tests in `Tests/Coverage-BulkOperations.Tests.ps1`.
-- Added parameter set enforcement (`ById`, `ByTag`, `BySerial`) to `Update-SnipeitAssetAudit` and `New-SnipeitAudit` for mutual exclusion of identifier parameters.
-- Added guard against combining `-image` with bulk IDs on audit functions (multipart/form-data corrupts array serialization).
+- Added parameter set enforcement (`ById`, `ByTag`, `BySerial`) to `Update-SnipeitAssetAudit` and `New-SnipeitAudit`
+  for mutual exclusion of identifier parameters.
+- Added guard against combining `-image` with bulk IDs on audit functions (multipart/form-data corrupts array
+  serialization).
 
 ### Fixed
-- Hardened bulk asset operations against empty arrays (`-id @()`) by adding `[ValidateNotNullOrEmpty()]` to prevent malformed empty API calls that silent-fail or hit incorrect endpoints.
-- Fixed pipeline binding leak in `Set-SnipeitAsset` where `$Values` was constructed in `begin {}`, dropping piped properties; moved evaluation to `process {}` block for safe streaming.
-- Fixed pipeline evaluation bug in `Update-SnipeitAssetAudit` where parameters were evaluated in `begin {}` block instead of per-item in `process {}`.
+
+- Hardened bulk asset operations against empty arrays (`-id @()`) by adding `[ValidateNotNullOrEmpty()]` to prevent
+  malformed empty API calls that silent-fail or hit incorrect endpoints.
+- Fixed pipeline binding leak in `Set-SnipeitAsset` where `$Values` was constructed in `begin {}`, dropping piped
+  properties; moved evaluation to `process {}` block for safe streaming.
+- Fixed pipeline evaluation bug in `Update-SnipeitAssetAudit` where parameters were evaluated in `begin {}` block
+  instead of per-item in `process {}`.
 - Normalized HTTP method casing to `'POST'` in `New-SnipeitAudit` (was inconsistently `'Post'`).
 
 ### Breaking Changes
-- `Update-SnipeitAssetAudit` now uses parameter sets (`ById`, `ByTag`, `BySerial`). Passing `-id` with `-asset_tag` or `-serial` simultaneously is no longer allowed — PowerShell will reject the call at parameter binding.
-- `New-SnipeitAudit` now uses parameter sets (`ByTag`, `ById`). Passing `-tag` with `-id` simultaneously is no longer allowed.
+
+- `Update-SnipeitAssetAudit` now uses parameter sets (`ById`, `ByTag`, `BySerial`). Passing `-id` with `-asset_tag`
+  or `-serial` simultaneously is no longer allowed — PowerShell will reject the call at parameter binding.
+- `New-SnipeitAudit` now uses parameter sets (`ByTag`, `ById`). Passing `-tag` with `-id` simultaneously is no
+  longer allowed.
 
 ## [v.1.15.0] - 2026-08-12
 

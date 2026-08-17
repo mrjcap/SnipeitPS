@@ -88,7 +88,7 @@ function Invoke-SnipeitMethod {
             "Authorization" = "Bearer $($Token)"
             'Content-Type'  = 'application/json; charset=utf-8'
             "Accept"        = "application/json"
-            "User-Agent"    = "SnipeitPS/1.15.0"
+            "User-Agent"    = "SnipeitPS/1.15.2"
         }
 
         $splatParameters = @{
