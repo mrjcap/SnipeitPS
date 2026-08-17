@@ -1,5 +1,6 @@
 $config = New-PesterConfiguration
 $config.Run.Path = "./Tests/"
+$config.Filter.ExcludeTag = "Integration"
 $config.Output.Verbosity = "Detailed"
 $config.Run.PassThru = $true
 $result = Invoke-Pester -Configuration $config
