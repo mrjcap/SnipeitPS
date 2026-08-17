@@ -32,7 +32,7 @@ function New-SnipeitManufacturer() {
 
     Param(
         [parameter(mandatory = $true)]
-        [string]$Name,
+        [string]$name,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
