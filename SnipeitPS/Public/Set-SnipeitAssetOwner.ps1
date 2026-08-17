@@ -92,10 +92,10 @@ function Set-SnipeitAssetOwner() {
             'user' { $Values += @{ "assigned_user" = $assigned_id } }
             'asset' { $Values += @{ "assigned_asset" = $assigned_id } }
         }
+        $Values['checkout_to_type'] = $checkout_to_type
 
         #These are routing parameters, not API body fields
         if ($Values.ContainsKey('assigned_id')) {$Values.Remove('assigned_id')}
-        if ($Values.ContainsKey('checkout_to_type')) {$Values.Remove('checkout_to_type')}
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
