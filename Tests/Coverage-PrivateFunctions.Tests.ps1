@@ -109,7 +109,7 @@ Describe "Reset-SnipeitPSLegacyApi" {
             try {
                 $SnipeitPSSession.legacyUrl = "https://test.com"
                 $SnipeitPSSession.legacyApiKey = ConvertTo-SecureString "key" -AsPlainText -Force
-                Reset-SnipeitPSLegacyApi -Confirm:$false
+                Reset-SnipeitPSLegacyApi
                 $SnipeitPSSession.legacyUrl | Should -BeNullOrEmpty
                 $SnipeitPSSession.legacyApiKey | Should -BeNullOrEmpty
             } finally {

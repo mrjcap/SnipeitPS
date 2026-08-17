@@ -187,6 +187,12 @@ function Set-SnipeitAsset() {
         }
 
         if ($id.Count -gt 1) {
+            if ($RequestType -eq 'Put') {
+                Write-Warning "Set-SnipeitAsset bulk endpoint only supports PATCH. Overriding -RequestType Put to PATCH for bulk update."
+            }
+            if ($image) {
+                throw "Bulk asset update with -image is not supported. Update assets individually when attaching images."
+            }
             $bulkValues = $Values.Clone()
             $bulkValues['ids'] = $id
             $Parameters = @{
