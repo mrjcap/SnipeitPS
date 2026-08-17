@@ -26,22 +26,43 @@ function New-SnipeitAssetLabel() {
     )]
 
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $false)]
         [int[]]$asset_ids,
+
+        [parameter(mandatory = $false)]
+        [string[]]$asset_tags,
 
         [parameter(mandatory = $false)]
         [string]$url,
 
         [parameter(mandatory = $false)]
         [string]$apiKey
-
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
+        $resolvedTags = @()
+        if ($PSBoundParameters.ContainsKey('asset_tags')) {
+            $resolvedTags += $asset_tags
+        }
+        if ($PSBoundParameters.ContainsKey('asset_ids') -and -not $PSBoundParameters.ContainsKey('asset_tags')) {
+            foreach ($aid in $asset_ids) {
+                try {
+                    $foundAsset = Get-SnipeitAsset -id $aid
+                    if ($foundAsset -and $foundAsset.asset_tag) {
+                        $resolvedTags += $foundAsset.asset_tag
+                    }
+                } catch {}
+            }
+        }
+
         $Values = @{
-            "asset_ids" = $asset_ids
+            "asset_tags" = $resolvedTags
+        }
+
+        if ($PSBoundParameters.ContainsKey('asset_ids')) {
+            $Values["asset_ids"] = $asset_ids
         }
 
         $Parameters = @{
