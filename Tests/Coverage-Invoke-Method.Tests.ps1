@@ -9,9 +9,9 @@ Describe "Invoke-SnipeitMethod coverage" {
             $script:SnipeitPSSession = [PSCustomObject]@{ Url = "http://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
             $prevDebug = $DebugPreference
             $DebugPreference = 'Continue'
-            
+
             Mock Invoke-RestMethod { return @{ status = "success" } }
-            
+
             try {
                 Invoke-SnipeitMethod -Api "/api/v1/test" -Method "Post" -Body @{ password = "SuperSecret"; other = "value" } | Out-Null
             } finally {
@@ -71,11 +71,11 @@ Describe "Invoke-SnipeitMethod coverage" {
                 $responseBody = '{"status":"error","messages":"PS5 JSON"}'
                 $bytes = [System.Text.Encoding]::UTF8.GetBytes($responseBody)
                 $global:MockStream1 = New-Object System.IO.MemoryStream(,$bytes)
-                
+
                 $responseMock = New-Object PSObject
                 $responseMock | Add-Member -MemberType ScriptMethod -Name "GetResponseStream" -Value { return $global:MockStream1 }
                 $responseMock | Add-Member -MemberType NoteProperty -Name "StatusCode" -Value 400
-                
+
                 $ex = New-Object System.Exception "err"
                 $ex | Add-Member -MemberType NoteProperty -Name "Response" -Value $responseMock
 
@@ -100,11 +100,11 @@ Describe "Invoke-SnipeitMethod coverage" {
                 $responseBody = 'Bad PS5 Data'
                 $bytes = [System.Text.Encoding]::UTF8.GetBytes($responseBody)
                 $global:MockStream2 = New-Object System.IO.MemoryStream(,$bytes)
-                
+
                 $responseMock = New-Object PSObject
                 $responseMock | Add-Member -MemberType ScriptMethod -Name "GetResponseStream" -Value { return $global:MockStream2 }
                 $responseMock | Add-Member -MemberType NoteProperty -Name "StatusCode" -Value 502
-                
+
                 $ex = New-Object System.Exception "err"
                 $ex | Add-Member -MemberType NoteProperty -Name "Response" -Value $responseMock
 
@@ -129,7 +129,7 @@ Describe "Invoke-SnipeitMethod coverage" {
                 $responseMock = New-Object PSObject
                 $responseMock | Add-Member -MemberType ScriptMethod -Name "GetResponseStream" -Value { throw "StreamError" }
                 $responseMock | Add-Member -MemberType NoteProperty -Name "StatusCode" -Value 500
-                
+
                 $ex = New-Object System.Exception "err"
                 $ex | Add-Member -MemberType NoteProperty -Name "Response" -Value $responseMock
 
