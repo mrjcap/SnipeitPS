@@ -94,21 +94,21 @@ function Update-SnipeitAssetAudit() {
     }
 
     process {
-        if (-not $PSBoundParameters.ContainsKey('id') -and -not $PSBoundParameters.ContainsKey('asset_tag') -and -not $PSBoundParameters.ContainsKey('serial') -and -not $PSBoundParameters.ContainsKey('tag')) {
+        if (-not $id -and -not $asset_tag -and -not $serial) {
             throw "Must specify -id, -asset_tag, or -serial for audit."
         }
 
         $Values = @{}
 
-        if ($PSBoundParameters.ContainsKey('asset_tag')) {
+        if ($asset_tag) {
             $Values += @{"asset_tag" = $asset_tag}
         }
 
-        if ($PSBoundParameters.ContainsKey('serial')) {
+        if ($serial) {
             $Values += @{"serial" = $serial}
         }
 
-        if ($PSBoundParameters.ContainsKey('location_id')) {
+        if ($location_id) {
             $Values += @{"location_id" = $location_id}
         }
 
@@ -116,19 +116,19 @@ function Update-SnipeitAssetAudit() {
             $Values += @{"next_audit_date" = ($next_audit_date).ToString("yyyy-MM-dd")}
         }
 
-        if ($PSBoundParameters.ContainsKey('note')) {
+        if ($note) {
             $Values += @{"note" = $note}
         }
 
-        if ($PSBoundParameters.ContainsKey('image')) {
+        if ($image) {
             $Values += @{"image" = $image}
         }
 
-        if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1 -and $PSBoundParameters.ContainsKey('image')) {
+        if ($id -and $id.Count -gt 1 -and $image) {
             throw "Bulk audit with -image is not supported. Image upload forces multipart/form-data which corrupts bulk ID array serialization. Audit assets individually when attaching images."
         }
 
-        if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1) {
+        if ($id -and $id.Count -gt 1) {
             $bulkValues = $Values.Clone()
             $bulkValues['ids'] = $id
             $Parameters = @{
@@ -137,7 +137,7 @@ function Update-SnipeitAssetAudit() {
                 Body   = $bulkValues
             }
             $targetDesc = "Asset IDs $($id -join ', ')"
-        } elseif ($PSBoundParameters.ContainsKey('id') -and $id.Count -eq 1) {
+        } elseif ($id -and $id.Count -eq 1) {
             $assetId = $id[0]
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/$assetId/audit"
@@ -162,7 +162,6 @@ function Update-SnipeitAssetAudit() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
         if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
             Reset-SnipeitPSLegacyApi
         }

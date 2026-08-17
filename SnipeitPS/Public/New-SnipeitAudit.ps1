@@ -5,11 +5,14 @@ Add a new Audit to Snipe-IT asset system
 .DESCRIPTION
 Add a new Audit to Snipe-IT asset system
 
-.PARAMETER Tag
+.PARAMETER asset_tag
 The asset tag of the asset you wish to audit
 
 .PARAMETER Id
 The unique ID or array of IDs of the asset(s) to audit (bulk audit)
+
+.PARAMETER serial
+Serial number of the asset to audit
 
 .PARAMETER next_audit_date
 Due date for the asset's next audit
@@ -39,18 +42,21 @@ New-SnipeitAudit -id 42, 43 -note "Annual audit" -next_audit_date (Get-Date).Add
 function New-SnipeitAudit() {
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Low",
-        DefaultParameterSetName = 'ByTag'
+        ConfirmImpact = "Medium",
+        DefaultParameterSetName = 'ById'
     )]
 
     Param(
-        [parameter(mandatory = $false, ParameterSetName = 'ByTag', ValueFromPipelineByPropertyName = $true)]
-        [Alias('asset_tag')]
-        [string]$tag,
-
         [parameter(mandatory = $false, ParameterSetName = 'ById', ValueFromPipelineByPropertyName = $true)]
         [ValidateNotNullOrEmpty()]
         [int[]]$id,
+
+        [parameter(mandatory = $false, ParameterSetName = 'ByTag', ValueFromPipelineByPropertyName = $true)]
+        [Alias('tag')]
+        [string]$asset_tag,
+
+        [parameter(mandatory = $false, ParameterSetName = 'BySerial', ValueFromPipelineByPropertyName = $true)]
+        [string]$serial,
 
         [ValidateRange(1, [int]::MaxValue)]
         [int]$location_id,
@@ -89,17 +95,21 @@ function New-SnipeitAudit() {
     }
 
     process {
-        if (-not $PSBoundParameters.ContainsKey('tag') -and -not $PSBoundParameters.ContainsKey('id')) {
-            throw "Must specify -tag (asset tag) or -id for audit."
+        if (-not $id -and -not $asset_tag -and -not $serial) {
+            throw "Must specify -id, -asset_tag (or -tag), or -serial for audit."
         }
 
         $Values = @{}
 
-        if ($PSBoundParameters.ContainsKey('tag')) {
-            $Values += @{"asset_tag" = $tag}
+        if ($asset_tag) {
+            $Values += @{"asset_tag" = $asset_tag}
         }
 
-        if ($PSBoundParameters.ContainsKey('location_id')) {
+        if ($serial) {
+            $Values += @{"serial" = $serial}
+        }
+
+        if ($location_id) {
             $Values += @{"location_id" = $location_id}
         }
 
@@ -107,19 +117,19 @@ function New-SnipeitAudit() {
             $Values += @{"next_audit_date" = ($next_audit_date).ToString("yyyy-MM-dd")}
         }
 
-        if ($PSBoundParameters.ContainsKey('note')) {
+        if ($note) {
             $Values += @{"note" = $note}
         }
 
-        if ($PSBoundParameters.ContainsKey('image')) {
+        if ($image) {
             $Values += @{"image" = $image}
         }
 
-        if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1 -and $PSBoundParameters.ContainsKey('image')) {
+        if ($id -and $id.Count -gt 1 -and $image) {
             throw "Bulk audit with -image is not supported. Image upload forces multipart/form-data which corrupts bulk ID array serialization. Audit assets individually when attaching images."
         }
 
-        if ($PSBoundParameters.ContainsKey('id') -and $id.Count -gt 1) {
+        if ($id -and $id.Count -gt 1) {
             $bulkValues = $Values.Clone()
             $bulkValues['ids'] = $id
             $Parameters = @{
@@ -128,7 +138,7 @@ function New-SnipeitAudit() {
                 Body   = $bulkValues
             }
             $targetDesc = "Asset IDs $($id -join ', ')"
-        } elseif ($PSBoundParameters.ContainsKey('id') -and $id.Count -eq 1) {
+        } elseif ($id -and $id.Count -eq 1) {
             $assetId = $id[0]
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/$assetId/audit"
@@ -142,7 +152,7 @@ function New-SnipeitAudit() {
                 Method = 'POST'
                 Body   = $Values.Clone()
             }
-            $targetDesc = "Asset tag '$tag'"
+            $targetDesc = if ($asset_tag) { "Asset tag '$asset_tag'" } else { "Asset serial '$serial'" }
         }
 
         if ($PSCmdlet.ShouldProcess($targetDesc, $MyInvocation.MyCommand.Name)) {
@@ -153,7 +163,6 @@ function New-SnipeitAudit() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
         if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
             Reset-SnipeitPSLegacyApi
         }
