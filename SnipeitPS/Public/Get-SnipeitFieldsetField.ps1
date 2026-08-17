@@ -35,7 +35,8 @@ function Get-SnipeitFieldsetField() {
 
         $Parameters = @{
             Api           = "$script:SnipeitApiPrefix/fieldsets/$id/fields"
-            Method        = 'Get'
+            Method        = 'Post'
+            Body          = @{}
         }
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
