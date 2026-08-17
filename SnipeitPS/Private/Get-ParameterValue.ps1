@@ -35,14 +35,24 @@ function Get-ParameterValue {
         throw "Get-ParameterValue must be dot-sourced, like this: . Get-ParameterValue"
     }
 
+    $commonParams = @(
+        'Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction',
+        'ErrorVariable', 'WarningVariable', 'InformationVariable', 'OutVariable',
+        'OutBuffer', 'PipelineVariable', 'WhatIf', 'Confirm',
+        'PID', 'Host', 'Profile', 'Error', 'ExecutionContext', 'PSBoundParameters',
+        'MyInvocation', 'PSScriptRoot', 'PSCommandPath', 'PSVersionTable'
+    )
+
+    $excludeLookup = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($item in $DefaultExcludeParameter) { [void]$excludeLookup.Add($item) }
+    foreach ($item in $commonParams) { [void]$excludeLookup.Add($item) }
 
     $ParameterValues = @{}
     foreach ($parameter in $Parameters.GetEnumerator()) {
-        # gm -in $parameter.Value | Out-Default
         $key = $parameter.Key
-        if ($key -notin $DefaultExcludeParameter) {
-            #Fill in default parameters values
-            if ($null -ne ($value = Get-Variable -Name $key -ValueOnly -ErrorAction Ignore )) {
+        if (-not $excludeLookup.Contains($key)) {
+            #Fill in default parameters values from scope 0 (local scope of dot-sourced caller)
+            if ($null -ne ($value = Get-Variable -Name $key -Scope 0 -ValueOnly -ErrorAction Ignore )) {
                 if ($value -ne ($null -as $parameter.Value.ParameterType)) {
                     $ParameterValues[$key] = $value
                 }

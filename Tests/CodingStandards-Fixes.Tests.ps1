@@ -171,14 +171,14 @@ Describe "Set-SnipeitLicenseSeat accepts pipeline input" {
 }
 
 # ============================================================
-# Fix 3: ConvertTo-GetParameter -ErrorAction Stop on Add-Type
+# Fix 3: ConvertTo-GetParameter cross-platform URL encoding
 # ============================================================
 
 Describe "ConvertTo-GetParameter error handling" {
-    It "Has -ErrorAction Stop on Add-Type call" {
+    It "Uses System.Net.WebUtility for cross-platform encoding" {
         InModuleScope 'SnipeitPS' {
             $funcDef = (Get-Command ConvertTo-GetParameter).ScriptBlock.ToString()
-            $funcDef | Should -Match 'Add-Type\s+-AssemblyName\s+System\.Web\s+-ErrorAction\s+Stop'
+            $funcDef | Should -Match '\[System\.Net\.WebUtility\]::UrlEncode'
         }
     }
 }
