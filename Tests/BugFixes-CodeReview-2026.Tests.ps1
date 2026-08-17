@@ -49,7 +49,7 @@ Describe "Remove-* functions ConfirmImpact" {
 }
 
 # ============================================================
-# Fix 3: Get-SnipeitFieldsetField uses GET not POST
+# Fix 3: Get-SnipeitFieldsetField uses POST with Body per Snipe-IT API
 # ============================================================
 
 Describe "Get-SnipeitFieldsetField HTTP method" {
@@ -59,20 +59,20 @@ Describe "Get-SnipeitFieldsetField HTTP method" {
         }
     }
 
-    It "Uses GET method, not POST" {
+    It "Uses POST method matching Snipe-IT API endpoint" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitFieldsetField -id 1
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Method -eq "Get"
+                $Method -eq "Post"
             }
         }
     }
 
-    It "Does not send a Body parameter" {
+    It "Sends a Body parameter" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitFieldsetField -id 1
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $null -eq $Body
+                $null -ne $Body
             }
         }
     }
