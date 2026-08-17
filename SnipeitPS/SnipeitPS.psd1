@@ -15,7 +15,7 @@ RootModule = 'SnipeitPS'
 ModuleVersion = '1.15.0'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Desktop', 'Core')
 
 # ID used to uniquely identify this module
 GUID = 'f86f4db4-1cb1-45c4-b7bf-6762531bfdeb'
@@ -188,10 +188,10 @@ FunctionsToExport = @(
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-#CmdletsToExport = '*'
+CmdletsToExport = @()
 
 # Variables to export from this module
-#VariablesToExport = '*'
+VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
 AliasesToExport = @(

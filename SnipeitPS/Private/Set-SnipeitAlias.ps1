@@ -5,6 +5,12 @@ function Set-SnipeitAlias()
         ConfirmImpact = "Low"
     )]
     param()
+
+    if ($env:SNIPEITPS_DISABLE_LEGACY_ALIASES -eq '1' -or $env:SNIPEITPS_DISABLE_LEGACY_ALIASES -eq 'true') {
+        Write-Verbose "Legacy aliases disabled via SNIPEITPS_DISABLE_LEGACY_ALIASES."
+        return
+    }
+
     Write-Verbose "Setting compatibility aliases."
     Write-Verbose "All aliases are deprecated."
     $SnipeitAliases = Get-SnipeitAlias
@@ -25,6 +31,6 @@ function Set-SnipeitAlias()
     $selectParams = @{
         Property = 'DisplayName','ResolvedCommand'
     }
-    Get-Command @getCommandParams | Select-Object @selectParams
+    $null = Get-Command @getCommandParams | Select-Object @selectParams
 
 }
