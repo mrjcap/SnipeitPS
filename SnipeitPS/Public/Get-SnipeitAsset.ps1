@@ -129,7 +129,7 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Search')]
         [string]$search,
 
-        [parameter(ParameterSetName='Get with id')]
+        [parameter(ParameterSetName='Get with id', ValueFromPipelineByPropertyName = $true)]
         [int]$id,
 
         [parameter(ParameterSetName='Get with asset tag')]
@@ -248,6 +248,18 @@ function Get-SnipeitAsset() {
             }
         }
 
+        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
+            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
+        }
+
+        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
+            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
+            Set-SnipeitPSLegacyUrl -url $url
+        }
+    }
+
+    process {
         switch ($PsCmdlet.ParameterSetName) {
             'Search' { $api = "$script:SnipeitApiPrefix/hardware" }
             'Get with id'  {$api= "$script:SnipeitApiPrefix/hardware/$id"}
@@ -265,18 +277,6 @@ function Get-SnipeitAsset() {
             GetParameters = $SearchParameter
         }
 
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
-    }
-
-    process {
         if ($all) {
             $offstart = $(if ($PSBoundParameters.ContainsKey('offset')) {$offset} Else {0})
             $callargs = $SearchParameter.Clone()
