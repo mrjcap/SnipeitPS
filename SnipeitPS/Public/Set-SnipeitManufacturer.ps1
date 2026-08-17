@@ -43,7 +43,7 @@ function Set-SnipeitManufacturer() {
         [parameter(mandatory = $true, ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
-        [string]$Name,
+        [string]$name,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
