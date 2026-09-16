@@ -6,20 +6,27 @@ Describe "Snipe-IT v8.7.0 Features and Compatibility" {
     BeforeAll {
         InModuleScope 'SnipeitPS' {
             $script:SnipeitPSSession = @{
-                url    = "http://localhost:8080"
+                url    = "https://localhost:8080"
                 apiKey = (ConvertTo-SecureString "testtoken123" -AsPlainText -Force)
             }
         }
     }
 
     Context "Maintenance expected_completion_date (grokability/snipe-it#19339)" {
+        BeforeEach {
+            InModuleScope 'SnipeitPS' {
+                Mock Invoke-SnipeitMethod { [pscustomobject]@{ id = 29; name = 'Maintenance' } } -ParameterFilter {
+                    $Method -eq 'GET' -and $Api -eq '/api/v1/maintenance-types'
+                }
+            }
+        }
         It "New-SnipeitAssetMaintenance passes expected_completion_date" {
             InModuleScope 'SnipeitPS' {
                 Mock Invoke-SnipeitMethod { return @{ status = "success" } }
                 $date = [datetime]"2026-12-31"
                 New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" -title "Test" -start_date $date -expected_completion_date $date -Confirm:$false
-                Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                    $Body['expected_completion_date'] -eq "2026-12-31"
+                Should -Invoke Invoke-SnipeitMethod -Times 1 -Exactly -ParameterFilter {
+                    $Method -eq 'Post' -and $Body['expected_completion_date'] -eq "2026-12-31"
                 }
             }
         }
@@ -29,8 +36,8 @@ Describe "Snipe-IT v8.7.0 Features and Compatibility" {
                 Mock Invoke-SnipeitMethod { return @{ status = "success" } }
                 $date = [datetime]"2026-12-31"
                 New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" -title "Test" -start_date $date -completion_date $date -Confirm:$false
-                Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                    $Body['expected_completion_date'] -eq "2026-12-31"
+                Should -Invoke Invoke-SnipeitMethod -Times 1 -Exactly -ParameterFilter {
+                    $Method -eq 'Post' -and $Body['expected_completion_date'] -eq "2026-12-31"
                 }
             }
         }
@@ -62,7 +69,7 @@ Describe "Snipe-IT v8.7.0 Features and Compatibility" {
         It "Invoke-SnipeitMethod includes User-Agent header" {
             InModuleScope 'SnipeitPS' {
                 $script:SnipeitPSSession = @{
-                    url    = "http://localhost:8080"
+                    url    = "https://localhost:8080"
                     apiKey = (ConvertTo-SecureString "testtoken123" -AsPlainText -Force)
                 }
                 Mock Invoke-RestMethod {
@@ -72,7 +79,7 @@ Describe "Snipe-IT v8.7.0 Features and Compatibility" {
                 }
                 Invoke-SnipeitMethod -Api "/test" -Method "GET"
                 Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter {
-                    $Headers['User-Agent'] -eq "SnipeitPS/1.15.2"
+                    $Headers['User-Agent'] -eq "SnipeitPS/1.16.0"
                 }
             }
         }
@@ -84,7 +91,8 @@ Describe "Snipe-IT v8.7.0 Features and Compatibility" {
                 Mock Invoke-SnipeitMethod { return @{ status = "success" } }
                 Update-SnipeitAssetAudit -serial "SN123456" -Confirm:$false
                 Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                    $Api -eq "/api/v1/hardware/audit" -and $Body['serial'] -eq "SN123456"
+                    $Api -eq "/api/v1/hardware/audit" -and $Body['audit_by_field'] -eq 'serial' -and
+                    $Body['audit_key'] -eq "SN123456" -and -not $Body.ContainsKey('serial')
                 }
             }
         }

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Creates a new Company
 
@@ -11,11 +11,13 @@ Company name
 .PARAMETER image
 Company image filename and path
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 New-SnipeitCompany -name "Acme Company"
@@ -27,6 +29,7 @@ function New-SnipeitCompany() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -37,32 +40,18 @@ function New-SnipeitCompany() {
 
         [Nullable[int]]$parent_id,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/companies"
             Method = 'POST'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -75,10 +64,6 @@ function New-SnipeitCompany() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }
 

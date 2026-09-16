@@ -1,12 +1,14 @@
-<#
+﻿<#
 .SYNOPSIS
 Gets a list of available Snipe-IT backups
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 Get-SnipeitBackup
@@ -15,31 +17,18 @@ Get-SnipeitBackup
 
 function Get-SnipeitBackup() {
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     Param(
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Parameters = @{
+$Parameters = @{
             Api           = "$script:SnipeitApiPrefix/settings/backups"
             Method        = 'Get'
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
+            Session = $Session
         }
     }
 
@@ -50,9 +39,5 @@ function Get-SnipeitBackup() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

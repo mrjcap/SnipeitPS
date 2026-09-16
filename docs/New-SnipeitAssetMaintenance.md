@@ -13,11 +13,11 @@ Add a new Asset maintenance to Snipe-IT asset system
 
 ## SYNTAX
 
-```powershell
+```
 New-SnipeitAssetMaintenance [-asset_id] <Int32> [-supplier_id] <Int32> [-asset_maintenance_type] <String>
- [-title] <String> [-start_date] <DateTime> [[-completion_date] <DateTime>] [[-is_warranty] <Boolean>]
- [[-cost] <Decimal>] [[-notes] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-title] <String> [-start_date] <DateTime> [[-expected_completion_date] <DateTime>] [[-is_warranty] <Boolean>]
+ [[-cost] <Decimal>] [[-notes] <String>] [[-assigned_to] <Int32>] [[-responsible_party_id] <Int32>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,22 +35,6 @@ New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "
 
 ## PARAMETERS
 
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -asset_id
 
 Required ID of the asset, this can be obtained using Get-SnipeitAsset
@@ -62,6 +46,22 @@ Aliases:
 
 Required: True
 Position: 1
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -supplier_id
+
+Required maintenance supplier
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -84,65 +84,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -expected_completion_date
+### -title
 
-Optional completion date for the asset maintenance (expected completion date).
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases: completion_date
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -cost
-
-Optional cost of the maintenance
-
-```yaml
-Type: Decimal
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -is_warranty
-
-Optional Maintenance done under warranty
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -notes
-
-Optional notes
+Required Title of maintenance
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 9
+Required: True
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -164,41 +116,57 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -supplier_id
+### -expected_completion_date
 
-Required maintenance supplier
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -title
-
-Required Title of maintenance
+Optional completion date for the asset maintenance (expected completion date).
 
 ```yaml
-Type: String
+Type: DateTime
 Parameter Sets: (All)
-Aliases:
+Aliases: completion_date
 
-Required: True
-Position: 4
+Required: False
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -is_warranty
 
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+Optional Maintenance done under warranty
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -cost
+
+Optional cost of the maintenance
+
+```yaml
+Type: Decimal
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+
+Optional notes
 
 ```yaml
 Type: String
@@ -206,7 +174,53 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_to
+ID of the user or supplier assigned to this maintenance.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: 10
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -responsible_party_id
+ID of the user responsible for managing this maintenance.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: responsible_party
+
+Required: False
+Position: 11
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -228,14 +242,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
 
 ```yaml
-Type: SwitchParameter
+Type: ActionPreference
 Parameter Sets: (All)
-Aliases: wi
+Aliases: proga
 
 Required: False
 Position: Named
@@ -245,16 +258,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
--Verbose, -WarningAction, and -WarningVariable. For more information, see
-[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
     Import-Module "$PSScriptRoot\..\SnipeitPS\SnipeitPS.psd1" -Force
 }
 
@@ -63,20 +63,6 @@ Describe "Reset-SnipeitAssetOwner" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Reset-SnipeitAssetOwner -id 1 -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 # ============================================================
@@ -106,20 +92,6 @@ Describe "Reset-SnipeitAccessoryOwner" {
                 $Api -eq "/api/v1/accessories/99/checkin" -and
                 $Body.Count -eq 0
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Reset-SnipeitAccessoryOwner -assigned_pivot_id 1 -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -261,6 +233,22 @@ Describe "Save-SnipeitBackup" {
         }
     }
 
+    It "Escapes the filename in the request URI without changing the output filename" {
+        InModuleScope 'SnipeitPS' {
+            $tempDir = [System.IO.Path]::GetTempPath()
+            $filename = "backup #1?100%.sql"
+
+            $result = Save-SnipeitBackup -filename $filename -path $tempDir -Confirm:$false
+
+            Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter {
+                $Uri -eq "https://snipeit.example.com/api/v1/settings/backups/download/backup%20%231%3F100%25.sql" -and
+                    $OutFile -eq (Join-Path $tempDir $filename)
+            }
+            $result.filename | Should -Be $filename
+            $result.path | Should -Be (Join-Path $tempDir $filename)
+        }
+    }
+
     It "Returns a success object with filename and path" {
         InModuleScope 'SnipeitPS' {
             $tempDir = [System.IO.Path]::GetTempPath()
@@ -282,27 +270,6 @@ Describe "Save-SnipeitBackup" {
             { Save-SnipeitBackup -filename "backup.sql" -path $tempDir -Confirm:$false } | Should -Throw
             $SnipeitPSSession.url = $savedUrl
             $SnipeitPSSession.apiKey = $savedKey
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-RestMethod {}
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            # Set up legacy session values for the auth resolution
-            $SnipeitPSSession.legacyUrl = "http://legacy.example.com"
-            $SnipeitPSSession.legacyApiKey = ConvertTo-SecureString "legacykey" -AsPlainText -Force
-            $tempDir = [System.IO.Path]::GetTempPath()
-            Save-SnipeitBackup -filename "backup.sql" -path $tempDir -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-            # Clean up
-            $SnipeitPSSession.legacyUrl = $null
-            $SnipeitPSSession.legacyApiKey = $null
         }
     }
 }

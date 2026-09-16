@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
     Import-Module "$PSScriptRoot\..\SnipeitPS\SnipeitPS.psd1" -Force
 }
 
@@ -69,20 +69,6 @@ Describe "New-SnipeitSupplier" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            New-SnipeitSupplier -name "Test" -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 # ============================================================
@@ -147,20 +133,6 @@ Describe "Set-SnipeitSupplier" {
                 $Body.url -eq "https://example.com" -and
                 -not $Body.ContainsKey('supplier_url')
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Set-SnipeitSupplier -id 1 -name "Test" -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -229,20 +201,6 @@ Describe "Set-SnipeitManufacturer" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Set-SnipeitManufacturer -id 1 -name "Test" -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 # ============================================================
@@ -287,20 +245,6 @@ Describe "New-SnipeitLicense" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            New-SnipeitLicense -name "Test" -seats 1 -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 # ============================================================
@@ -341,20 +285,6 @@ Describe "Set-SnipeitLicense" {
                 $Body.purchase_date -eq "2025-01-01" -and
                 $Body.termination_date -eq "2026-06-30"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Set-SnipeitLicense -id 1 -name "Test" -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -403,20 +333,6 @@ Describe "New-SnipeitManufacturer" {
                 $Body.url -eq "https://hp.com" -and
                 -not $Body.ContainsKey('manufacturer_url')
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            New-SnipeitManufacturer -name "Test" -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -485,20 +401,6 @@ Describe "Set-SnipeitAssetOwner" {
                 $Body.expected_checkin -eq "2025-12-31" -and
                 $Body.checkout_at -eq "2025-01-15"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Set-SnipeitAssetOwner -id 1 -assigned_id 10 -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }

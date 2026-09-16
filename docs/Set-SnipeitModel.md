@@ -13,10 +13,10 @@ Updates Model on Snipe-IT asset system
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitModel [-id] <Int32[]> [[-name] <String>] [[-model_number] <String>] [[-category_id] <Int32>]
  [[-manufacturer_id] <Int32>] [[-eol] <Int32>] [[-custom_fieldset_id] <Int32>] [[-image] <String>]
- [-image_delete] [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [-image_delete] [[-RequestType] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -34,10 +34,25 @@ Set-SnipeitModel -id 1 -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category
 
 ## PARAMETERS
 
-### -apiKey
+### -id
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+ID number of the Asset Model or array of IDs
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -name
+
+Name of the Asset Model
 
 ```yaml
 Type: String
@@ -45,7 +60,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -model_number
+
+Model number of the Asset Model
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -67,18 +98,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -custom_fieldset_id
+### -manufacturer_id
 
-Fieldset ID that the asset uses (Custom fields)
+Manufacturer ID that the model belongs to. This can be obtained using Get-SnipeitManufacturer
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
-Aliases: fieldset_id
+Aliases:
 
 Required: False
-Position: 7
-Default value: None
+Position: 5
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -88,7 +119,7 @@ Accept wildcard characters: False
 Number of months until end of life
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
@@ -99,19 +130,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
+### -custom_fieldset_id
 
-ID number of the Asset Model or array of IDs
+Fieldset ID that the asset uses (Custom fields)
 
 ```yaml
-Type: Int32[]
+Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: fieldset_id
 
-Required: True
-Position: 1
+Required: False
+Position: 7
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -147,54 +178,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -manufacturer_id
-
-Manufacturer ID that the model belongs to. This can be obtained using Get-SnipeitManufacturer
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -model_number
-
-Model number of the Asset Model
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Name of the Asset Model
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -RequestType
 
 HTTP request type to send to Snipe-IT system.
@@ -208,39 +191,6 @@ Aliases:
 Required: False
 Position: 9
 Default value: Patch
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -262,16 +212,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

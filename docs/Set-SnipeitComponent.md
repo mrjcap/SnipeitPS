@@ -13,11 +13,11 @@ Updates component
 
 ## SYNTAX
 
-```powershell
-Set-SnipeitComponent [-id] <Int32[]> [-qty] <Int32> [[-min_amt] <Int32>] [[-name] <String>]
+```
+Set-SnipeitComponent [-id] <Int32[]> [[-qty] <Int32>] [[-min_amt] <Int32>] [[-name] <String>]
  [[-company_id] <Int32>] [[-location_id] <Int32>] [[-order_number] <String>] [[-purchase_date] <DateTime>]
- [[-purchase_cost] <Single>] [[-image] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-purchase_cost] <String>] [[-image] <String>] [-image_delete] [[-RequestType] <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,39 +35,6 @@ Sets count of component with ID 42 to 12
 
 ## PARAMETERS
 
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 13
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -company_id
-
-ID number of the company
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -id
 
 ID number of component or array of IDs
@@ -81,6 +48,134 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -qty
+
+Quantity of the components you have
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -min_amt
+
+Minimum Quantity of the components before alert is triggered
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+
+Component name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -company_id
+
+ID number of the company
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -location_id
+
+ID number of the location the component is assigned to
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -order_number
+
+Order number for the component
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -purchase_date
+
+Date component was purchased
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -purchase_cost
+
+Cost of item being purchased.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: 0
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -116,118 +211,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -location_id
-
-ID number of the location the component is assigned to
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -min_amt
-
-Minimum Quantity of the components before alert is triggered
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Component name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -order_number
-
-Order number for the component
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -purchase_cost
-
-Cost of item being purchased.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 9
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -purchase_date
-
-Date component was purchased
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -qty
-
-Quantity of the components you have
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -RequestType
 
 HTTP request type to send to Snipe-IT system.
@@ -241,39 +224,6 @@ Aliases:
 Required: False
 Position: 11
 Default value: Patch
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 12
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -295,16 +245,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

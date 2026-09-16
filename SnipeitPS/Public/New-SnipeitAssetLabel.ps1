@@ -8,11 +8,13 @@ Generate printable asset labels from the Snipe-IT asset system
 .PARAMETER asset_ids
 An array of asset IDs to generate labels for
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 New-SnipeitAssetLabel -asset_ids 1,2,3
@@ -24,6 +26,7 @@ function New-SnipeitAssetLabel() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $false)]
@@ -32,28 +35,25 @@ function New-SnipeitAssetLabel() {
         [parameter(mandatory = $false)]
         [string[]]$asset_tags,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $resolvedTags = @()
+$resolvedTags = [System.Collections.Generic.List[string]]::new()
         if ($PSBoundParameters.ContainsKey('asset_tags')) {
-            $resolvedTags += $asset_tags
+            $resolvedTags.AddRange($asset_tags)
         }
         if ($PSBoundParameters.ContainsKey('asset_ids') -and -not $PSBoundParameters.ContainsKey('asset_tags')) {
             foreach ($aid in $asset_ids) {
                 try {
-                    $foundAsset = Get-SnipeitAsset -id $aid
+                    $foundAsset = Get-SnipeitAsset -id $aid -Session $Session
                     if ($foundAsset -and $foundAsset.asset_tag) {
-                        $resolvedTags += $foundAsset.asset_tag
+                        $resolvedTags.Add($foundAsset.asset_tag)
                     }
-                } catch {}
+                } catch {
+                    Write-Debug "Failed to resolve asset tag for asset ID '$aid': $_"
+                }
             }
         }
 
@@ -68,17 +68,8 @@ function New-SnipeitAssetLabel() {
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/hardware/labels"
             Method = 'Post'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -91,9 +82,5 @@ function New-SnipeitAssetLabel() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

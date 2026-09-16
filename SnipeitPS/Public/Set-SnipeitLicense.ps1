@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Updates a license
 
@@ -62,11 +62,13 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     Set-SnipeitLicense -id 1 -name "License" -seats 3 -company_id 1
@@ -78,6 +80,7 @@ function Set-SnipeitLicense() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true, ValueFromPipelineByPropertyName)]
@@ -90,9 +93,10 @@ function Set-SnipeitLicense() {
         [int]$seats,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitCategoryCompleter])]
         [int]$category_id,
 
-
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
         [Nullable[System.Int32]]$company_id,
 
         [datetime]$expiration_date,
@@ -105,10 +109,10 @@ function Set-SnipeitLicense() {
         [Nullable[bool]]$maintained,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitManufacturerCompleter])]
         [int]$manufacturer_id,
 
         [string]$notes,
-
 
         [string]$order_number,
 
@@ -120,6 +124,7 @@ function Set-SnipeitLicense() {
 
         [string]$serial,
 
+        [ArgumentCompleter([SnipeitSupplierCompleter])]
         [Nullable[System.Int32]]$supplier_id,
 
         [datetime]$termination_date,
@@ -127,18 +132,13 @@ function Set-SnipeitLicense() {
         [ValidateSet("Put","Patch")]
         [string]$RequestType = "Patch",
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin{
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['expiration_date']) {
             $Values['expiration_date'] = $Values['expiration_date'].ToString("yyyy-MM-dd")
@@ -151,16 +151,6 @@ function Set-SnipeitLicense() {
         if ($Values['termination_date']) {
             $Values['termination_date'] = $Values['termination_date'].ToString("yyyy-MM-dd")
         }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-             Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
     }
 
     process {
@@ -168,6 +158,7 @@ function Set-SnipeitLicense() {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/licenses/$license_id"
                 Method = $RequestType
+                Session = $Session
                 Body   = $Values
             }
 
@@ -179,9 +170,5 @@ function Set-SnipeitLicense() {
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

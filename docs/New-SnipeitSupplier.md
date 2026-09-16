@@ -13,11 +13,11 @@ Creates a supplier
 
 ## SYNTAX
 
-```powershell
+```
 New-SnipeitSupplier [-name] <String> [[-address] <String>] [[-address2] <String>] [[-city] <String>]
  [[-state] <String>] [[-country] <String>] [[-zip] <String>] [[-phone] <String>] [[-fax] <String>]
- [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-supplier_url] <String>]
- [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-supplier_url] <String>] [[-image] <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,6 +33,22 @@ New-SnipeitSupplier -name "Supplier1"
 ```
 
 ## PARAMETERS
+
+### -name
+
+Supplier Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -address
 
@@ -66,23 +82,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 16
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -city
 
 City
@@ -99,9 +98,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -contact
+### -state
 
-Contact person
+State
 
 ```yaml
 Type: String
@@ -109,7 +108,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -131,25 +130,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -email
+### -zip
 
-Email address
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -fax
-
-Fax number
+Zip code
 
 ```yaml
 Type: String
@@ -157,55 +140,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -image
-
-Image file name and path for item
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 14
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Supplier Name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -notes
-
-Notes about the supplier
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 12
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -227,9 +162,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -state
+### -fax
 
-State
+Fax number
 
 ```yaml
 Type: String
@@ -237,7 +172,55 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -email
+
+Email address
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -contact
+
+Contact person
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+
+Notes about the supplier
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -260,26 +243,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -image
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 15
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -zip
-
-Zip code
+Image file name and path for item
 
 ```yaml
 Type: String
@@ -287,23 +253,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -326,16 +276,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

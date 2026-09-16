@@ -13,10 +13,10 @@ Update a Snipe-IT Category
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitCategory [-id] <Int32[]> [[-name] <String>] [[-category_type] <String>] [[-eula_text] <String>]
  [[-use_default_eula] <Boolean>] [[-require_acceptance] <Boolean>] [[-checkin_email] <Boolean>]
- [[-image] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
+ [[-image] <String>] [-image_delete] [[-RequestType] <String>] [-ProgressAction <ActionPreference>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
@@ -34,10 +34,25 @@ Set-SnipeitCategory -id 4 -name "Laptops"
 
 ## PARAMETERS
 
-### -apiKey
+### -id
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+Unique ID of the category or array of IDs
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -name
+
+Name of the category
 
 ```yaml
 Type: String
@@ -45,7 +60,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -67,22 +82,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -checkin_email
-
-Should the user be emailed the EULA and/or an acceptance confirmation email when this item is checked in?
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -eula_text
 
 This allows you to customize your EULAs for specific types of assets
@@ -99,19 +98,51 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
+### -use_default_eula
 
-Unique ID of the category or array of IDs
+If switch is present, use the primary default EULA
 
 ```yaml
-Type: Int32[]
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
+Required: False
+Position: 5
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -require_acceptance
+
+If switch is present, require users to confirm acceptance of assets in this category
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -checkin_email
+
+Should the user be emailed the EULA and/or an acceptance confirmation email when this item is checked in?
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -147,22 +178,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -name
-
-Name of the category
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -RequestType
 
 HTTP request type to send to Snipe-IT system.
@@ -176,71 +191,6 @@ Aliases:
 Required: False
 Position: 9
 Default value: Patch
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -require_acceptance
-
-If switch is present, require users to confirm acceptance of assets in this category
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -use_default_eula
-
-If switch is present, use the primary default EULA
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -262,16 +212,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

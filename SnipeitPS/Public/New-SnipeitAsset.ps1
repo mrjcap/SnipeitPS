@@ -142,7 +142,7 @@ function New-SnipeitAsset() {
 
         [parameter(ParameterSetName='Checkout asset when creating',mandatory = $true)]
         [ValidateSet("location","asset","user")]
-        [string] $checkout_to_type = "user",
+        [string] $checkout_to_type,
 
         [parameter(mandatory = $false)]
         [string]$url,
@@ -151,12 +151,18 @@ function New-SnipeitAsset() {
         [string]$apiKey,
 
         [Alias('CustomValues')]
-        [hashtable] $customfields
+        [hashtable] $customfields,
+
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+        if (-not $PSBoundParameters.ContainsKey('checkout_to_type')) {
+            $checkout_to_type = 'user'
+        }
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
@@ -165,7 +171,9 @@ function New-SnipeitAsset() {
         }
 
         if ($customfields) {
-            $Values += $customfields
+            foreach ($entry in $customfields.GetEnumerator()) {
+                $Values[$entry.Key] = $entry.Value
+            }
         }
 
         #These are not needed for the API; remove unconditionally to prevent
@@ -176,16 +184,17 @@ function New-SnipeitAsset() {
         #Checkout asset when creating it
         if ($PsCmdlet.ParameterSetName -eq 'Checkout asset when creating') {
             switch ($checkout_to_type) {
-                    'location' { $Values += @{ "assigned_location" = $assigned_id } }
-                    'user' { $Values += @{ "assigned_user" = $assigned_id } }
-                    'asset' { $Values += @{ "assigned_asset" = $assigned_id } }
+                'location' { $Values['assigned_location'] = $assigned_id }
+                'user'     { $Values['assigned_user'] = $assigned_id }
+                'asset'    { $Values['assigned_asset'] = $assigned_id }
             }
         }
 
         $Parameters = @{
-            Api    = "$script:SnipeitApiPrefix/hardware"
-            Method = 'Post'
-            Body   = $Values
+            Api     = "$script:SnipeitApiPrefix/hardware"
+            Method  = 'Post'
+            Body    = $Values
+            Session = $Session
         }
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {

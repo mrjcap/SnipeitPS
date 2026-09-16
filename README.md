@@ -1,53 +1,110 @@
-[![GitHub release](https://img.shields.io/github/release/mrjcap/SnipeitPS.svg)](https://github.com/mrjcap/SnipeitPS/releases/latest) [![Build status](https://ci.appveyor.com/api/projects/status/dvuw4ggx543nx3h7/branch/master?svg=true)](https://ci.appveyor.com/project/snazy2000/snipeitps/branch/master) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/snipeitps.svg)](https://www.powershellgallery.com/packages/snipeitps) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+# SnipeitPS
 
-> **This fork is actively maintained.** The original repository by [snazy2000](https://github.com/snazy2000/SnipeitPS) has been archived. I use this module daily and plan to continue developing it. Pull requests and bug reports are welcome!
+[![GitHub release](https://img.shields.io/github/release/mrjcap/SnipeitPS.svg)](https://github.com/mrjcap/SnipeitPS/releases/latest)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/snipeitps.svg)](https://www.powershellgallery.com/packages/snipeitps)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+PowerShell module for the Snipe-IT REST API. Works in Windows PowerShell 5.1 and PowerShell 7 on Windows, Linux, and macOS.
 
 ---
 
-## Want to say thanks?
+## Features
 
-[![paypal](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XP29MAD7P3WDN&source=url)
+- **Tab completion.** Press Tab on ID parameters (`-model_id`, `-status_id`, `-location_id`, `-category_id`) to search by name and insert IDs automatically. Lookups are cached in memory for 5 minutes. Use `Clear-SnipeitCache` to refresh immediately.
+- **Default table formatting.** Objects are tagged with `PSTypeName` so PowerShell prints clean summary tables instead of dumping raw JSON.
+- **Pipeline binding.** Pipe objects between commands by property name (e.g. `Get-SnipeitUser | Get-SnipeitAsset`).
+- **Bulk operations.** `Update-SnipeitAssetBulk` and `Remove-SnipeitAssetBulk` call Snipe-IT's batch endpoints directly.
+- **Desired state sync.** `Sync-SnipeitAsset` checks for drift and updates or creates assets only when needed.
+- **Multi-tenant sessions.** Pass a `[SnipeitSession]` object to `-Session` to query multiple Snipe-IT servers in the same script.
+- **MCP server.** `mcp/SnipeitMcpServer.ps1` runs a Model Context Protocol server over stdio for AI tools.
+- **Offline help.** Shipped with compiled MAML XML help in `en-US/` for `Get-Help`.
 
-## Instructions
+---
 
-### Installation
+## Installation
 
-Install SnipeitPS from the PowerShell Gallery `Install-Module` requires PowerShellGet (included in PS v5, or download for v3/v4 via the gallery link)
+Install from the [PowerShell Gallery](https://www.powershellgallery.com/packages/SnipeitPS):
 
 ```powershell
-# One time only install: (requires an admin PowerShell window)
-Install-Module SnipeitPS
+Install-Module -Name SnipeitPS -Scope CurrentUser
+```
 
-# Check for updates occasionally:
-Update-Module SnipeitPS
+---
 
-# import module to session:
+## Quick start
+
+### 1. Connecting
+
+```powershell
 Import-Module SnipeitPS
 
-# Set connection
-Connect-SnipeitPS -URL 'https://asset.example.com' -apiKey 'tokenKey'
+# Connect with plain token
+Connect-SnipeitPS -url 'https://inventory.example.com' -apiKey 'your_token'
 
-# Or set connection with safely saved credentials, first save credentials
-$SnipeCred =Get-Credential -message "Use URL as username and API key as password"
-$SnipeCred | Export-CliXml snipecred.xml
-
-# ..then use your saved credentials like
-Connect-SnipeitPS -siteCred (Import-CliXml snipecred.xml)
-
-# OR use -secureApiKey that allows passing an API key as SecureString
-# if you are using Microsoft.PowerShell.SecretManagement or like
-Connect-SnipeitPS -URL 'https://asset.example.com' -secureApiKey 'tokenKey'
-
+# Or connect with SecureString
+$key = Read-Host -AsSecureString "Enter API token"
+Connect-SnipeitPS -url 'https://inventory.example.com' -secureApiKey $key
 ```
 
-### Usage
+### 2. Multi-tenant sessions
 
 ```powershell
-# Review the help at any time!
-Get-Help about_SnipeitPS
-Get-Command -Module SnipeitPS
-Get-Help Get-SnipeitAsset -Full   # or any other command
+$dev = [SnipeitSession]::new("https://dev.snipeit.local", $devToken)
+$prod = [SnipeitSession]::new("https://prod.snipeit.local", $prodToken)
+
+Get-SnipeitAsset -Session $dev -limit 5
+Get-SnipeitAsset -Session $prod -limit 5
 ```
-### Reporting bugs and issues
-Please use -Verbose switch with command you have problem with.
-Then create ticket here with all -Verbose output
+
+### 3. Tab completion
+
+```powershell
+# Press Tab to resolve names to IDs:
+New-SnipeitAsset -name "Workstation-01" -model_id <TAB> -status_id <TAB>
+
+# Clear cache after adding items in the web UI:
+Clear-SnipeitCache
+```
+
+### 4. Pipelines and bulk edits
+
+```powershell
+# Update all assets checked out to a user:
+Get-SnipeitUser -email "jsmith@example.com" | Get-SnipeitAsset | Update-SnipeitAssetBulk -notes "Verified in 2026 audit"
+
+# Preview a bulk delete with -WhatIf:
+Get-SnipeitAsset -status "Archived" | Remove-SnipeitAssetBulk -WhatIf
+```
+
+### 5. Desired state sync
+
+```powershell
+# Creates the asset if missing, updates only drifted fields:
+Sync-SnipeitAsset -asset_tag "SRV-01" -name "Core Router" -model_id 12 -status_id 1 -Ensure Present
+```
+
+---
+
+## Building documentation
+
+To rebuild markdown docs and recompile MAML XML help with platyPS:
+
+```powershell
+./build-docs.ps1 -UpdateMarkdown
+```
+
+---
+
+## Running tests
+
+Run the Pester test suite:
+
+```powershell
+./run-tests.ps1
+```
+
+---
+
+## License
+
+MIT

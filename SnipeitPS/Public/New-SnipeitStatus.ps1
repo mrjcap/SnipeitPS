@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Create a new status label in Snipe-IT
 
@@ -23,11 +23,13 @@
     .PARAMETER default_label
     Whether it should be the default label
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     New-SnipeitStatus -name "Ready to Deploy" -type deployable
@@ -38,6 +40,7 @@ function New-SnipeitStatus() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -55,33 +58,19 @@ function New-SnipeitStatus() {
 
         [Nullable[bool]]$default_label,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/statuslabels"
             Method = 'Post'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -94,9 +83,5 @@ function New-SnipeitStatus() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

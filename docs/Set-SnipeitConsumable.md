@@ -13,12 +13,12 @@ Update a Consumable on Snipe-IT asset system
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitConsumable [-id] <Int32[]> [[-name] <String>] [[-qty] <Int32>] [[-category_id] <Int32>]
  [[-min_amt] <Int32>] [[-company_id] <Int32>] [[-order_number] <String>] [[-manufacturer_id] <Int32>]
  [[-location_id] <Int32>] [[-requestable] <Boolean>] [[-purchase_date] <DateTime>] [[-purchase_cost] <String>]
  [[-model_number] <String>] [[-item_no] <String>] [[-image] <String>] [-image_delete] [[-RequestType] <String>]
- [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,10 +36,25 @@ Update consumable with stock count 20, alert when stock is 5 or lower
 
 ## PARAMETERS
 
-### -apiKey
+### -id
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+Optional ID number of the Consumable
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -name
+
+Optional Name of the Consumable
 
 ```yaml
 Type: String
@@ -47,8 +62,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -qty
+
+Optional Quantity of consumable
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -69,12 +100,28 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -min_amt
+
+Optional minimum quantity of consumable
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -company_id
 
 Optional Company ID
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
@@ -85,19 +132,131 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
+### -order_number
 
-Optional ID number of the Consumable
+Optional Order number
 
 ```yaml
-Type: Int32[]
+Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 1
+Required: False
+Position: 7
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manufacturer_id
+
+Manufacturer ID number of the consumable
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -location_id
+
+Location ID number of the consumable
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -requestable
+
+Is consumable requestable?
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -purchase_date
+
+Optional Purchase date of the consumable
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -purchase_cost
+
+Optional Purchase cost of the consumable
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -model_number
+
+Model number of the consumable
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -item_no
+
+Item number for the consumable
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -133,182 +292,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -item_no
-
-Item number for the consumable
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 14
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -location_id
-
-Location ID number of the consumable
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 9
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -manufacturer_id
-
-Manufacturer ID number of the consumable
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -min_amt
-
-Optional minimum quantity of consumable
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -model_number
-
-Model number of the consumable
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 13
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Optional Name of the Consumable
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -order_number
-
-Optional Order number
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -purchase_cost
-
-Optional Purchase cost of the consumable
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 12
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -purchase_date
-
-Optional Purchase date of the consumable
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -qty
-
-Optional Quantity of consumable
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -requestable
-
-Is consumable requestable?
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -RequestType
 
 HTTP request type to send to Snipe-IT system.
@@ -322,39 +305,6 @@ Aliases:
 Required: False
 Position: 16
 Default value: Patch
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 17
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -376,16 +326,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

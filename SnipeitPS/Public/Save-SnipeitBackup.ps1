@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Downloads a Snipe-IT backup file
 
@@ -8,11 +8,13 @@ The filename of the backup to download
 .PARAMETER path
 The directory path where the backup file will be saved
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 Save-SnipeitBackup -filename "2024-01-15-backup.sql" -path "C:\Backups"
@@ -21,6 +23,7 @@ Save-SnipeitBackup -filename "2024-01-15-backup.sql" -path "C:\Backups"
 
 function Save-SnipeitBackup() {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Medium")]
+    [OutputType([PSCustomObject])]
     Param(
         [parameter(mandatory = $true)]
         [ValidateScript({$_ -notmatch '[\\/]' -and $_ -notmatch '\.\.'})]
@@ -30,40 +33,36 @@ function Save-SnipeitBackup() {
         [ValidateScript({Test-Path $_ -PathType Container})]
         [string]$path,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+        $activeSession = if ($null -ne $Session) { $Session } else { $SnipeitPSSession }
 
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
+        if ($activeSession -is [System.Collections.IDictionary]) {
+            $sessionUrl = $activeSession['url']
+            $sessionApiKey = $activeSession['apiKey']
+            if ($null -ne $activeSession['legacyUrl'] -and $null -ne $activeSession['legacyApiKey']) {
+                $sessionUrl = $activeSession['legacyUrl']
+                $sessionApiKey = $activeSession['legacyApiKey']
+            }
+        } else {
+            $sessionUrl = $activeSession.Url
+            $sessionApiKey = $activeSession.ApiKey
         }
 
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
-
-        # Resolve auth the same way Invoke-SnipeitMethod does
-        if ( $null -ne $SnipeitPSSession.legacyUrl -and $null -ne $SnipeitPSSession.legacyApiKey ) {
-            [string]$Url = $SnipeitPSSession.legacyUrl
-            $Token = (New-Object PSCredential "user",$SnipeitPSSession.legacyApiKey).GetNetworkCredential().Password
-        } elseif ($null -ne $SnipeitPSSession.url -and $null -ne $SnipeitPSSession.apiKey) {
-            [string]$Url = $SnipeitPSSession.url
-            $Token = (New-Object PSCredential "user",$SnipeitPSSession.apiKey).GetNetworkCredential().Password
+        if ($null -ne $sessionUrl -and $null -ne $sessionApiKey) {
+            [string]$Url = ([string]$sessionUrl).TrimEnd('/')
+            $Token = (New-Object PSCredential "user",$sessionApiKey).GetNetworkCredential().Password
         } else {
             throw "Please use Connect-SnipeitPS to set up a connection before any other commands."
         }
     }
 
     process {
-        $apiUri = "$Url$script:SnipeitApiPrefix/settings/backups/download/$filename"
+        $escapedFilename = [Uri]::EscapeDataString($filename)
+        $apiUri = "$Url$script:SnipeitApiPrefix/settings/backups/download/$escapedFilename"
         $outFile = Join-Path $path $filename
 
         if ($PSCmdlet.ShouldProcess($filename, "Download backup")) {
@@ -96,9 +95,5 @@ function Save-SnipeitBackup() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

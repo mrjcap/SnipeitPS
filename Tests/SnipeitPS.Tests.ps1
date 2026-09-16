@@ -1,23 +1,24 @@
 #Requires -Modules PSScriptAnalyzer
 
-$here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$projectRoot = Split-Path -Parent $here
-$moduleRoot = "$projectRoot\SnipeitPS"
-
-$publicFunctions = "$moduleRoot\Public"
+$ruleData = @(Get-ScriptAnalyzerRule | Select-Object -ExpandProperty RuleName -Unique | ForEach-Object { @{ Rule = $_ } })
 
 Describe "SnipeitPS" {
-    Context "Style checking" {
-
-        # This section is again from the mastermind, Dave Wyatt. Again, credit
-        # goes to him for these tests.
+    BeforeAll {
+        $testDir = $PSScriptRoot
+        $projectRoot = Split-Path -Parent $testDir
+        $moduleRoot = (Resolve-Path "$projectRoot/SnipeitPS").Path
+        $settingsPath = (Resolve-Path "$projectRoot/PSScriptAnalyzerSettings.psd1").Path
 
         $files = @(
-            Get-ChildItem $here -Include *.ps1, *.psm1
-            Get-ChildItem $publicFunctions -Include *.ps1, *.psm1 -Recurse
+            Get-ChildItem -Path $testDir -Include *.ps1, *.psm1
+            Get-ChildItem -Path (Join-Path $moduleRoot "Public") -Include *.ps1, *.psm1 -Recurse
         )
+        $analysis = @(Invoke-ScriptAnalyzer -Path $moduleRoot -Recurse -Settings $settingsPath)
+    }
 
+    Context "Style checking" {
         It 'Source files contain no trailing whitespace' {
+            $files | Should -Not -BeNullOrEmpty
             $badLines = @(
                 foreach ($file in $files)
                 {
@@ -41,6 +42,7 @@ Describe "SnipeitPS" {
         }
 
         It 'Source files all end with a newline' {
+            $files | Should -Not -BeNullOrEmpty
             $badFiles = @(
                 foreach ($file in $files)
                 {
@@ -60,19 +62,21 @@ Describe "SnipeitPS" {
     }
 
     Context 'PSScriptAnalyzer Rules' {
-        $analysis = Invoke-ScriptAnalyzer -Path "$moduleRoot" -Recurse -Settings "$projectRoot\PSScriptAnalyzerSettings.psd1"
-        $scriptAnalyzerRules = Get-ScriptAnalyzerRule
+        It "Should pass <Rule>" -ForEach $ruleData {
+            param($Rule)
 
-        forEach ($rule in $scriptAnalyzerRules)
-        {
-            It "Should pass $rule" {
-                If (($analysis) -and ($analysis.RuleName -contains $rule))
-                {
-                    $analysis |
-                        Where-Object RuleName -EQ $rule -OutVariable failures |
-                        Out-Default
-                    $failures.Count | Should -Be 0
+            $failures = @($analysis | Where-Object RuleName -EQ $Rule)
+            if ($failures.Count -gt 0)
+            {
+                $details = $failures | ForEach-Object {
+                    "[{0}] {1}:{2} - {3}" -f $_.Severity, $_.ScriptName, $_.Line, $_.Message
                 }
+                $failureSummary = $details -join "`r`n"
+                $failures.Count | Should -Be 0 -Because "Rule '$Rule' failed with:`r`n$failureSummary"
+            }
+            else
+            {
+                $failures.Count | Should -Be 0
             }
         }
     }

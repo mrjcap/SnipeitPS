@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Add a new Location to Snipe-IT asset system
 
@@ -41,11 +41,13 @@
     .PARAMETER image
     Location Image filename and path
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     New-SnipeitLocation -name "Room 1" -address "123 Asset Street" -parent_id 14
@@ -56,6 +58,7 @@ function New-SnipeitLocation() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -76,9 +79,11 @@ function New-SnipeitLocation() {
         [string]$currency,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitLocationCompleter])]
         [int]$parent_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitUserCompleter])]
         [int]$manager_id,
 
         [string]$ldap_ou,
@@ -86,33 +91,19 @@ function New-SnipeitLocation() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/locations"
             Method = 'post'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -125,9 +116,5 @@ function New-SnipeitLocation() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
     Import-Module "$PSScriptRoot\..\SnipeitPS\SnipeitPS.psd1" -Force
 }
 
@@ -16,19 +16,6 @@ Describe "Get-SnipeitVersion" {
                 $Api -eq "/api/v1/version" -and
                 $Method -eq "Get"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitVersion -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -49,19 +36,6 @@ Describe "Get-SnipeitCurrentUser" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitCurrentUser -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 Describe "Get-SnipeitSetting" {
@@ -80,19 +54,6 @@ Describe "Get-SnipeitSetting" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitSetting -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 Describe "Get-SnipeitStatusAsset" {
@@ -106,7 +67,8 @@ Describe "Get-SnipeitStatusAsset" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitStatusAsset -id 5
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/statuslabels/5/assetlist" -and
+                $Route -eq "/api/v1/statuslabels/{id}/assetlist" -and
+                $PathParameter.id -eq 5 -and
                 $Method -eq "Get"
             }
         }
@@ -116,23 +78,11 @@ Describe "Get-SnipeitStatusAsset" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitStatusAsset -id 5 -limit 10 -offset 20
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/statuslabels/5/assetlist" -and
+                $Route -eq "/api/v1/statuslabels/{id}/assetlist" -and
+                $PathParameter.id -eq 5 -and
                 $Method -eq "Get" -and
                 $GetParameters -ne $null
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitStatusAsset -id 5 -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 
@@ -143,7 +93,9 @@ Describe "Get-SnipeitStatusAsset" {
             )}
             $result = Get-SnipeitStatusAsset -id 1 -all
             $result | Should -Not -BeNullOrEmpty
-            Should -Invoke Invoke-SnipeitMethod -Times 1
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Paginate -eq $true
+            }
         }
     }
 
@@ -154,24 +106,24 @@ Describe "Get-SnipeitStatusAsset" {
             )}
             $result = Get-SnipeitStatusAsset -id 1 -all -offset 10
             $result | Should -Not -BeNullOrEmpty
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Paginate -eq $true -and
+                $GetParameters.offset -eq 10
+            }
         }
     }
 
-    It "Handles -all pagination loop continuation" {
+    It "Handles -all pagination delegation" {
         InModuleScope 'SnipeitPS' {
-            $script:callCount = 0
             Mock Invoke-SnipeitMethod {
-                $script:callCount++
-                if ($script:callCount -eq 1) {
-                    $items = @()
-                    for ($i = 1; $i -le 50; $i++) { $items += [PSCustomObject]@{ id = $i; name = "Asset$i" } }
-                    return $items
-                } else {
-                    return @([PSCustomObject]@{ id = 51; name = "Asset51" })
-                }
+                return @([PSCustomObject]@{ id = 1; name = "Asset1" })
             }
             $result = Get-SnipeitStatusAsset -id 1 -all -limit 50
-            $result.Count | Should -Be 51
+            $result | Should -Not -BeNullOrEmpty
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Paginate -eq $true -and
+                $GetParameters.limit -eq 50
+            }
         }
     }
 }
@@ -187,22 +139,10 @@ Describe "Get-SnipeitUserEula" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitUserEula -id 7
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/users/7/eulas" -and
+                $Route -eq "/api/v1/users/{id}/eulas" -and
+                $PathParameter.id -eq 7 -and
                 $Method -eq "Get"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitUserEula -id 7 -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -218,22 +158,10 @@ Describe "Get-SnipeitFieldsetField" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitFieldsetField -id 2
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/fieldsets/2/fields" -and
+                $Route -eq "/api/v1/fieldsets/{id}/fields" -and
+                $PathParameter.id -eq 2 -and
                 $Method -eq "Post"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitFieldsetField -id 2 -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -249,7 +177,8 @@ Describe "Get-SnipeitAssetFile" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitAssetFile -id 4
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/hardware/4/files" -and
+                $Route -eq "/api/v1/hardware/{id}/files" -and
+                $PathParameter.id -eq 4 -and
                 $Method -eq "Get"
             }
         }
@@ -259,22 +188,11 @@ Describe "Get-SnipeitAssetFile" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitAssetFile -id 4 -file_id 10
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/hardware/4/files/10" -and
+                $Route -eq "/api/v1/hardware/{id}/files/{file_id}" -and
+                $PathParameter.id -eq 4 -and
+                $PathParameter.file_id -eq 10 -and
                 $Method -eq "Get"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitAssetFile -id 4 -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -290,7 +208,8 @@ Describe "Get-SnipeitModelFile" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitModelFile -id 6
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/models/6/files" -and
+                $Route -eq "/api/v1/models/{id}/files" -and
+                $PathParameter.id -eq 6 -and
                 $Method -eq "Get"
             }
         }
@@ -300,22 +219,11 @@ Describe "Get-SnipeitModelFile" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitModelFile -id 6 -file_id 12
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/models/6/files/12" -and
+                $Route -eq "/api/v1/models/{id}/files/{file_id}" -and
+                $PathParameter.id -eq 6 -and
+                $PathParameter.file_id -eq 12 -and
                 $Method -eq "Get"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitModelFile -id 6 -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -331,7 +239,7 @@ Describe "Get-SnipeitGroup" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitGroup
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/groups" -and
+                $Route -eq "/api/v1/groups" -and
                 $Method -eq "Get"
             }
         }
@@ -341,7 +249,8 @@ Describe "Get-SnipeitGroup" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitGroup -id 3
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/groups/3" -and
+                $Route -eq "/api/v1/groups/{id}" -and
+                $PathParameter.id -eq 3 -and
                 $Method -eq "Get"
             }
         }
@@ -351,23 +260,10 @@ Describe "Get-SnipeitGroup" {
         InModuleScope 'SnipeitPS' {
             Get-SnipeitGroup -search "Admin"
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Api -eq "/api/v1/groups" -and
+                $Route -eq "/api/v1/groups" -and
                 $Method -eq "Get" -and
                 $GetParameters -ne $null
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            Get-SnipeitGroup -url "http://test.snipeit.com" -apiKey "testkey"
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 
@@ -379,7 +275,9 @@ Describe "Get-SnipeitGroup" {
             )}
             $result = Get-SnipeitGroup -all
             $result | Should -Not -BeNullOrEmpty
-            Should -Invoke Invoke-SnipeitMethod -Times 1
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Paginate -eq $true
+            }
         }
     }
 
@@ -390,24 +288,25 @@ Describe "Get-SnipeitGroup" {
             )}
             $result = Get-SnipeitGroup -all -offset 10
             $result | Should -Not -BeNullOrEmpty
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Paginate -eq $true -and
+                $GetParameters.offset -eq 10
+            }
         }
     }
 
-    It "Handles -all pagination loop continuation" {
+    It "Handles -all pagination delegation" {
         InModuleScope 'SnipeitPS' {
-            $script:callCount = 0
             Mock Invoke-SnipeitMethod {
-                $script:callCount++
-                if ($script:callCount -eq 1) {
-                    $items = @()
-                    for ($i = 1; $i -le 50; $i++) { $items += [PSCustomObject]@{ id = $i; name = "Group$i" } }
-                    return $items
-                } else {
-                    return @([PSCustomObject]@{ id = 51; name = "Group51" })
-                }
+                return @([PSCustomObject]@{ id = 1; name = "Group1" })
             }
             $result = Get-SnipeitGroup -all -limit 50
-            $result.Count | Should -Be 51
+            $result | Should -Not -BeNullOrEmpty
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Paginate -eq $true -and
+                $GetParameters.limit -eq 50
+            }
         }
     }
 }
+

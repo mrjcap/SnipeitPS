@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Creates a new accessory on Snipe-IT system
 
@@ -44,11 +44,13 @@ Min quantity of the accessory before alert is triggered
 .PARAMETER image
 Accessory image filename and path
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 New-SnipeitAccessory -name "Accessory" -qty 3 -category_id 1
@@ -59,6 +61,7 @@ function New-SnipeitAccessory() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -70,12 +73,15 @@ function New-SnipeitAccessory() {
 
         [parameter(mandatory = $true)]
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitCategoryCompleter])]
         [int]$category_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
         [int]$company_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitManufacturerCompleter])]
         [int]$manufacturer_id,
 
         [string]$order_number,
@@ -89,9 +95,11 @@ function New-SnipeitAccessory() {
         [int]$min_amt,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitSupplierCompleter])]
         [int]$supplier_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitLocationCompleter])]
         [int]$location_id,
 
         [ValidateScript({Test-Path $_})]
@@ -99,17 +107,12 @@ function New-SnipeitAccessory() {
 
         [Nullable[bool]]$requestable,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($values['purchase_date']) {
             $values['purchase_date'] = $values['purchase_date'].ToString("yyyy-MM-dd")
@@ -118,17 +121,8 @@ function New-SnipeitAccessory() {
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/accessories"
             Method = 'POST'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -141,10 +135,6 @@ function New-SnipeitAccessory() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }
 

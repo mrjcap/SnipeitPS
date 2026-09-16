@@ -14,26 +14,23 @@ Gets a list of Snipe-IT Users
 ## SYNTAX
 
 ### Search (Default)
-
-```powershell
+```
 Get-SnipeitUser [-search <String>] [-company_id <Int32>] [-location_id <Int32>] [-group_id <Int32>]
- [-department_id <Int32>] [-username <String>] [-email <String>] [-employee_num <String>]
- [-state <String>] [-zip <String>] [-country <String>] [-deleted <Nullable`1>] [-ldap_import <Nullable`1>]
- [-remote <Nullable`1>] [-assets_count <Int32>] [-licenses_count <Int32>] [-accessories_count <Int32>]
- [-consumables_count <Int32>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>]
- [-apiKey <String>] [<CommonParameters>]
+ [-department_id <Int32>] [-username <String>] [-email <String>] [-employee_num <String>] [-state <String>]
+ [-zip <String>] [-country <String>] [-deleted <Boolean>] [-ldap_import <Boolean>] [-remote <Boolean>]
+ [-assets_count <Int32>] [-licenses_count <Int32>] [-accessories_count <Int32>] [-consumables_count <Int32>]
+ [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with ID
-
-```powershell
-Get-SnipeitUser [-id <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitUser [-id <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get users a specific accessory id has been checked out to
-
-```powershell
-Get-SnipeitUser [-accessory_id <String>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitUser [-accessory_id <Int32>] [-all] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -75,6 +72,38 @@ Get users that accessory ID 3 has been checked out to
 
 ## PARAMETERS
 
+### -search
+
+A text string to search the User data
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -id
+
+An ID of a specific User
+
+```yaml
+Type: Int32
+Parameter Sets: Get with ID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -accessory_id
 
 Get users that a specific accessory ID has been checked out to
@@ -87,72 +116,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -accessories_count
-
-Optionally restrict User results to those with the specified accessories count
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -all
-
-Return all results, works with -offset and other parameters
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Search, Get users a specific accessory id has been checked out to
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -assets_count
-
-Optionally restrict User results to those with the specified assets count
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -172,9 +136,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -consumables_count
+### -location_id
 
-Optionally restrict User results to those with the specified consumables count
+Optionally restrict User results to this location_id field
 
 ```yaml
 Type: Int32
@@ -188,34 +152,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -country
+### -group_id
 
-Optionally restrict User results to this country field
+Optionally restrict User results to this group_id field
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -deleted
-
-Optionally restrict User results to deleted users only
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -232,6 +180,22 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -username
+
+Optionally restrict User results to this username field
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -268,29 +232,61 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -group_id
+### -state
 
-Optionally restrict User results to this group_id field
+Optionally restrict User results to this state field
 
 ```yaml
-Type: Int32
+Type: String
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
+### -zip
 
-An ID of a specific User
+Optionally restrict User results to this zip field
 
 ```yaml
-Type: Int32
-Parameter Sets: Get with ID
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -country
+
+Optionally restrict User results to this country field
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -deleted
+
+Optionally restrict User results to deleted users only
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
 Aliases:
 
 Required: False
@@ -305,13 +301,45 @@ Accept wildcard characters: False
 Optionally restrict User results to those with specified ldap_import value
 
 ```yaml
-Type: Nullable[Boolean]
+Type: Boolean
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -remote
+
+Optionally restrict User results to those with specified remote worker value
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assets_count
+
+Optionally restrict User results to those with the specified assets count
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -332,27 +360,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -limit
+### -accessories_count
 
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 50
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -location_id
-
-Optionally restrict User results to this location_id field
+Optionally restrict User results to those with the specified accessories count
 
 ```yaml
 Type: Int32
@@ -366,9 +376,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -offset
+### -consumables_count
 
-Offset to use
+Optionally restrict User results to those with the specified consumables count
 
 ```yaml
 Type: Int32
@@ -414,95 +424,63 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -remote
+### -limit
 
-Optionally restrict User results to those with specified remote worker value
+Specify the number of results you wish to return.
+Defaults to 50.
+Defines batch size for -all
 
 ```yaml
-Type: Nullable[Boolean]
+Type: Int32
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 50
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -search
+### -offset
 
-A text string to search the User data
+Offset to use
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -state
+### -all
 
-Optionally restrict User results to this state field
+Return all results, works with -offset and other parameters
 
 ```yaml
-Type: String
-Parameter Sets: Search
+Type: SwitchParameter
+Parameter Sets: Search, Get users a specific accessory id has been checked out to
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
 
 ```yaml
-Type: String
+Type: ActionPreference
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -username
-
-Optionally restrict User results to this username field
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -zip
-
-Optionally restrict User results to this zip field
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
+Aliases: proga
 
 Required: False
 Position: Named
@@ -512,15 +490,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

@@ -13,13 +13,14 @@ Update a specific Asset or bulk update multiple Assets in the Snipe-IT asset sys
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitAsset [-id] <Int32[]> [[-asset_tag] <String>] [[-name] <String>] [[-status_id] <Int32>]
  [[-model_id] <Int32>] [[-last_checkout] <DateTime>] [[-assigned_to] <Int32>] [[-company_id] <Int32>]
- [[-serial] <String>] [[-order_number] <String>] [[-warranty_months] <Int32>] [[-purchase_cost] <Double>]
+ [[-serial] <String>] [[-order_number] <String>] [[-warranty_months] <Int32>] [[-purchase_cost] <String>]
  [[-purchase_date] <DateTime>] [[-supplier_id] <Int32>] [[-requestable] <Boolean>] [[-archived] <Boolean>]
  [[-rtd_location_id] <Int32>] [[-notes] <String>] [[-RequestType] <String>] [[-image] <String>] [-image_delete]
- [[-url] <String>] [[-apiKey] <String>] [[-customfields] <Hashtable>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-customfields] <Hashtable>] [[-Session] <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,104 +57,6 @@ Set-SnipeitAsset -id 42, 43, 44 -notes "Moved to warehouse B" -rtd_location_id 5
 
 ## PARAMETERS
 
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 22
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -archived
-
-Whether or not the asset is archived.
-Archived assets cannot be checked out and do not show up in the deployable asset screens
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 16
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -asset_tag
-
-New tag for asset.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -assigned_to
-
-The ID of the user the asset is currently checked out to
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -company_id
-
-The ID of an associated company ID
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -customfields
-
-Hashtable of custom fields and extra fields that need passing through to Snipe-IT
-
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-Aliases: CustomValues
-
-Required: False
-Position: 23
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -id
 
 ID of the Asset or array of IDs
@@ -170,9 +73,9 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -image
+### -asset_tag
 
-Image file name and path for item
+New tag for asset.
 
 ```yaml
 Type: String
@@ -180,56 +83,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
+Position: 2
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -image_delete
-
-Remove current image
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -last_checkout
-
-Date the asset was last checked out
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -model_id
-
-Model ID of the asset, this can be obtained using Get-SnipeitModel
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -250,9 +105,89 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -notes
+### -status_id
 
-Notes about asset
+Status ID of the asset, this can be obtained using Get-SnipeitStatus
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -model_id
+
+Model ID of the asset, this can be obtained using Get-SnipeitModel
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_checkout
+
+Date the asset was last checked out
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_to
+
+The ID of the user the asset is currently checked out to
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -company_id
+
+The ID of an associated company ID
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -serial
+
+Serial number of the asset
 
 ```yaml
 Type: String
@@ -260,7 +195,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -277,6 +212,22 @@ Aliases:
 
 Required: False
 Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -warranty_months
+
+Number of months for the asset warranty
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -314,18 +265,83 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -supplier_id
+
+Supplier ID of the Asset
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -requestable
 
 Whether or not the asset can be requested by users with the permission to request assets
 
 ```yaml
-Type: Nullable[Boolean]
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 15
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -archived
+
+Whether or not the asset is archived.
+Archived assets cannot be checked out and do not show up in the deployable asset screens
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -rtd_location_id
+
+The ID that corresponds to the location where the asset is usually located when not checked out
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+
+Notes about asset
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 18
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -347,25 +363,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -rtd_location_id
+### -image
 
-The ID that corresponds to the location where the asset is usually located when not checked out
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 17
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -serial
-
-Serial number of the asset
+Image file name and path for item
 
 ```yaml
 Type: String
@@ -373,53 +373,36 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 20
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -status_id
+### -image_delete
 
-Status ID of the asset, this can be obtained using Get-SnipeitStatus
+Remove current image
 
 ```yaml
-Type: Int32
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
-Default value: 0
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -supplier_id
+### -customfields
 
-Supplier ID of the Asset
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 14
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+Hashtable of custom fields and extra fields that need passing through to Snipe-IT
 
 ```yaml
-Type: String
+Type: Hashtable
 Parameter Sets: (All)
-Aliases:
+Aliases: CustomValues
 
 Required: False
 Position: 21
@@ -428,33 +411,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -warranty_months
-
-Number of months for the asset warranty
+### -Session
+Optional custom SnipeitSession instance specifying target URL and credentials. When omitted, uses the session established by Connect-SnipeitPS.
 
 ```yaml
-Type: Nullable[Int32]
+Type: SnipeitSession
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
+Position: 22
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -477,16 +443,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

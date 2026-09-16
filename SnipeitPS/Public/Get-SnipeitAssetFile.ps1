@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Gets files associated with an asset
 
@@ -8,11 +8,13 @@ An ID of a specific Asset
 .PARAMETER file_id
 An ID of a specific file
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 Get-SnipeitAssetFile -id 1
@@ -21,56 +23,43 @@ Get-SnipeitAssetFile -id 1
 
 function Get-SnipeitAssetFile() {
     [CmdletBinding(DefaultParameterSetName = 'Search')]
+    [OutputType([PSCustomObject])]
     Param(
-        [parameter(mandatory = $true)]
+        [parameter(mandatory = $true, ValueFromPipelineByPropertyName = $true)]
         [int]$id,
 
         [parameter(ParameterSetName='Get with file ID')]
         [int]$file_id,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+}
 
-        $api = "$script:SnipeitApiPrefix/hardware/$id/files"
-
+    process {
+        $pathParams = @{ id = $id }
         if ($PSBoundParameters.ContainsKey('file_id')) {
-           $api= "$script:SnipeitApiPrefix/hardware/$id/files/$file_id"
+            $route = "$script:SnipeitApiPrefix/hardware/{id}/files/{file_id}"
+            $pathParams['file_id'] = $file_id
+        } else {
+            $route = "$script:SnipeitApiPrefix/hardware/{id}/files"
         }
 
         $Parameters = @{
-            Api           = $api
+            Route         = $route
+            PathParameter = $pathParams
             Method        = 'Get'
+            Session = $Session
         }
 
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
-    }
-
-    process {
         $result = Invoke-SnipeitMethod @Parameters
         $result
     }
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

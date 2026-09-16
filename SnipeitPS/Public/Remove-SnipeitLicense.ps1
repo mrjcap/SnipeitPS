@@ -1,15 +1,17 @@
-<#
+﻿<#
     .SYNOPSIS
     Removes license from Snipe-IT asset system
     .DESCRIPTION
     Removes license or multiple licenses from Snipe-IT asset system
     .PARAMETER ID
     Unique ID for license to be removed
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     Remove-SnipeitLicense -ID 44
@@ -23,38 +25,26 @@ function Remove-SnipeitLicense () {
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
-    }
+}
 
     process {
         foreach($license_id in $id) {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/licenses/$license_id"
                 Method = 'Delete'
+                Session = $Session
             }
 
             if ($PSCmdlet.ShouldProcess("License ID $license_id", $MyInvocation.MyCommand.Name)) {
@@ -66,9 +56,5 @@ function Remove-SnipeitLicense () {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

@@ -13,10 +13,10 @@ Updates a Custom Field on Snipe-IT asset system
 
 ## SYNTAX
 
-```powershell
-Set-SnipeitCustomField [-id] <Int32[]> [[-name] <String>] [[-help_text] <String>] [-element] <String>
+```
+Set-SnipeitCustomField [-id] <Int32[]> [[-name] <String>] [[-help_text] <String>] [[-element] <String>]
  [[-format] <String>] [[-field_values] <String>] [[-field_encrypted] <Boolean>] [[-show_in_email] <Boolean>]
- [[-custom_format] <String>] [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf]
+ [[-custom_format] <String>] [[-RequestType] <String>] [-ProgressAction <ActionPreference>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
@@ -34,120 +34,6 @@ Set-SnipeitCustomField -id 1 -Name "AntivirusInstalled" -Format "BOOLEAN" -eleme
 ```
 
 ## PARAMETERS
-
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 12
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -custom_format
-
-In the case of format 'CUSTOM REGEX', this should be the validation regex for this field
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 9
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -element
-
-Form field type that should be displayed.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -field_encrypted
-
-Whether the field should be encrypted.
-(This can cause issues if you change it after the field was created.)
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -field_values
-
-In the case of list boxes, etc, this should be a list of the options available
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -format
-
-How the field should be validated
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -help_text
-
-Any additional text you wish to display under the form field to make it clearer what the values should be.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -id
 
@@ -181,6 +67,119 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -help_text
+
+Any additional text you wish to display under the form field to make it clearer what the values should be.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -element
+
+Form field type that should be displayed.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -format
+
+How the field should be validated
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -field_values
+
+In the case of list boxes, etc, this should be a list of the options available
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -field_encrypted
+
+Whether the field should be encrypted.
+(This can cause issues if you change it after the field was created.)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -show_in_email
+
+Whether or not to show the custom field in email notifications
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -custom_format
+
+In the case of format 'CUSTOM REGEX', this should be the validation regex for this field
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -RequestType
 
 HTTP request type to send to Snipe-IT system.
@@ -194,55 +193,6 @@ Aliases:
 Required: False
 Position: 10
 Default value: Put
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -show_in_email
-
-Whether or not to show the custom field in email notifications
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -264,16 +214,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

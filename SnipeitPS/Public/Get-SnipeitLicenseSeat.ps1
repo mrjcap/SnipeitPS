@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Gets a list of Snipe-IT License Seats or specific Seat
 
@@ -18,11 +18,13 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 Get-SnipeitLicenseSeat -id 1
@@ -32,6 +34,7 @@ Get-SnipeitLicenseSeat -id 1
 
 function Get-SnipeitLicenseSeat() {
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     Param(
 
         [parameter(mandatory = $true)]
@@ -46,78 +49,41 @@ function Get-SnipeitLicenseSeat() {
 
         [switch]$all = $false,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'seat_id', 'url', 'apiKey', 'Debug', 'Verbose'
-
-        $api = "$script:SnipeitApiPrefix/licenses/$id/seats"
-
-
-        if ($PSBoundParameters.ContainsKey('seat_id')) {
-        $api= "$script:SnipeitApiPrefix/licenses/$id/seats/$seat_id"
-        }
-
-        $Parameters = @{
-            Api           = $api
-            Method        = 'Get'
-            GetParameters = $SearchParameter
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
+$SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters -DefaultExcludeParameter 'id', 'seat_id', 'url', 'apiKey', 'Debug', 'Verbose'
     }
 
     process {
-        if ($all) {
-            $offstart = $(if ($PSBoundParameters.ContainsKey('offset')) {$offset} Else {0})
-            $callargs = $SearchParameter.Clone()
-            $callargs.Remove('all')
-            $callargs['id'] = $id
-            if ($PSBoundParameters.ContainsKey('seat_id')) {
-                $callargs['seat_id'] = $seat_id
-            }
-
-            while ($true) {
-                $callargs['offset'] = $offstart
-                $callargs['limit'] = $limit
-                $res=Get-SnipeitLicenseSeat @callargs
-                if ($null -ne $res) { $res }
-                if (@($res).Count -lt $limit) {
-                    break
-                }
-                $offstart = $offstart + $limit
-                if ($offstart -gt 10000000) {
-                    Write-Warning "Pagination exceeded 10,000,000 offset, stopping to prevent infinite loop"
-                    break
-                }
-            }
+        $pathParams = @{ id = $id }
+        if ($PSBoundParameters.ContainsKey('seat_id')) {
+            $route = "$script:SnipeitApiPrefix/licenses/{id}/seats/{seat_id}"
+            $pathParams['seat_id'] = $seat_id
         } else {
-            $result = Invoke-SnipeitMethod @Parameters
-            $result
+            $route = "$script:SnipeitApiPrefix/licenses/{id}/seats"
         }
+
+        if ($SearchParameter.ContainsKey('all')) {
+            $SearchParameter.Remove('all')
+        }
+
+        $Parameters = @{
+            Route         = $route
+            PathParameter = $pathParams
+            Method        = 'Get'
+            Session = $Session
+            GetParameters = $SearchParameter
+            Paginate      = [bool]$all
+        }
+
+        $result = Invoke-SnipeitMethod @Parameters
+        $result
     }
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }
-

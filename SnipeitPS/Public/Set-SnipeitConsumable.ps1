@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Update a Consumable on Snipe-IT asset system
 
@@ -56,11 +56,14 @@ Remove current image
 .PARAMETER RequestType
 HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+
+System.Management.Automation.PSCustomObject
+
 
 
 .EXAMPLE
@@ -74,6 +77,7 @@ function Set-SnipeitConsumable() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
@@ -128,31 +132,15 @@ function Set-SnipeitConsumable() {
         [ValidateSet("Put","Patch")]
         [string]$RequestType = "Patch",
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
-
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['purchase_date']) {
             $Values['purchase_date'] = $Values['purchase_date'].ToString("yyyy-MM-dd")
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -161,6 +149,7 @@ function Set-SnipeitConsumable() {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/consumables/$consumable_id"
                 Method = $RequestType
+                Session = $Session
                 Body   = $Values.Clone()
             }
 
@@ -173,9 +162,5 @@ function Set-SnipeitConsumable() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

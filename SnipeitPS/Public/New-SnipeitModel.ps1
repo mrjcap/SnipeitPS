@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Add a new Model to Snipe-IT asset system
 
@@ -26,11 +26,13 @@
     .PARAMETER image
     Asset model Image filename and path
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     New-SnipeitModel -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
@@ -41,6 +43,7 @@ function New-SnipeitModel() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -50,10 +53,12 @@ function New-SnipeitModel() {
 
         [parameter(mandatory = $true)]
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitCategoryCompleter])]
         [int]$category_id,
 
         [parameter(mandatory = $true)]
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitManufacturerCompleter])]
         [int]$manufacturer_id,
 
         [int]$eol,
@@ -65,18 +70,13 @@ function New-SnipeitModel() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = @{
+$Values = @{
             name            = $name
             category_id     = $category_id
             manufacturer_id = $manufacturer_id
@@ -90,17 +90,8 @@ function New-SnipeitModel() {
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/models"
             Method = 'post'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -113,9 +104,5 @@ function New-SnipeitModel() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

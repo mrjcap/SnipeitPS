@@ -13,11 +13,12 @@ Set properties of a Snipe-IT Asset Maintenance
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitAssetMaintenance [-id] <Int32[]> [[-asset_id] <Int32>] [[-supplier_id] <Int32>]
  [[-asset_maintenance_type] <String>] [[-title] <String>] [[-start_date] <DateTime>]
- [[-completion_date] <DateTime>] [[-is_warranty] <Boolean>] [[-cost] <Decimal>] [[-notes] <String>]
- [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-expected_completion_date] <DateTime>] [[-is_warranty] <Boolean>] [[-cost] <Decimal>] [[-notes] <String>]
+ [[-assigned_to] <Int32>] [[-responsible_party_id] <Int32>] [[-RequestType] <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,19 +35,19 @@ Set-SnipeitAssetMaintenance -id 1 -title "Updated maintenance"
 
 ## PARAMETERS
 
-### -apiKey
+### -id
 
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+An ID of a specific Asset Maintenance
 
 ```yaml
-Type: String
+Type: Int32[]
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 13
+Required: True
+Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -61,6 +62,22 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -supplier_id
+
+ID of the supplier
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -82,73 +99,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -expected_completion_date
+### -title
 
-Completion date of maintenance (expected completion date).
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases: completion_date
-
-Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -cost
-
-Cost of maintenance
-
-```yaml
-Type: Decimal
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 9
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -id
-
-An ID of a specific Asset Maintenance
-
-```yaml
-Type: Int32[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -is_warranty
-
-Whether maintenance is under warranty
-
-```yaml
-Type: Nullable[Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -notes
-
-Notes about the maintenance
+Title of maintenance
 
 ```yaml
 Type: String
@@ -156,25 +109,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 5
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RequestType
-
-HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if
-needed.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
-Default value: Patch
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -195,9 +131,72 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -supplier_id
+### -expected_completion_date
 
-ID of the supplier
+Completion date of maintenance (expected completion date).
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases: completion_date
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -is_warranty
+
+Whether maintenance is under warranty
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -cost
+
+Cost of maintenance
+
+```yaml
+Type: Decimal
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+
+Notes about the maintenance
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_to
+ID of the user or supplier assigned to this maintenance.
 
 ```yaml
 Type: Int32
@@ -205,31 +204,31 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -title
-
-Title of maintenance
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -responsible_party_id
+ID of the user responsible for managing this maintenance.
 
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: responsible_party
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestType
+
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if
+needed.
 
 ```yaml
 Type: String
@@ -237,7 +236,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 13
+Default value: Patch
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -259,14 +274,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
 
 ```yaml
-Type: SwitchParameter
+Type: ActionPreference
 Parameter Sets: (All)
-Aliases: wi
+Aliases: proga
 
 Required: False
 Position: Named
@@ -276,16 +290,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
--Verbose, -WarningAction, and -WarningVariable. For more information, see
-[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

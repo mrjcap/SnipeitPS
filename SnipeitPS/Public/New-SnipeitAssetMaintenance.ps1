@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Add a new Asset maintenance to Snipe-IT asset system
 
@@ -13,8 +13,8 @@ Required ID of the asset, this can be obtained using Get-SnipeitAsset
 Required maintenance supplier
 
 .PARAMETER asset_maintenance_type
-Type of maintenance. Built-in types include Maintenance, Repair, Upgrade, PAT, and Hardware Support.
-Custom types created in the Snipe-IT GUI are also accepted.
+Existing numeric maintenance type ID or exact unique catalog name.
+Names, including built-in types, are resolved through the server's maintenance-types catalog.
 
 .PARAMETER title
 Required Title of maintenance
@@ -34,11 +34,21 @@ Optional completion date
 .PARAMETER notes
 Optional notes
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER assigned_to
+Unsupported legacy input, rejected before HTTP. No automatic relationship mapping is possible.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.PARAMETER responsible_party_id
+Nullable ID of the User responsible for maintenance, not the asset checkout snapshot.
+
+The checkout snapshot is captured automatically by the server when maintenance is created.
+
+.PARAMETER Session
+Optional custom SnipeitSession instance.
+
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 New-SnipeitAssetMaintenance -asset_id 1 -supplier_id 1 -asset_maintenance_type "Maintenance" -title "replace keyboard" -start_date "2021-01-01"
@@ -48,6 +58,7 @@ function New-SnipeitAssetMaintenance() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -78,25 +89,22 @@ function New-SnipeitAssetMaintenance() {
         [string]$notes,
 
         [parameter(mandatory = $false)]
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$assigned_to,
+        [Nullable[int]]$assigned_to,
 
         [parameter(mandatory = $false)]
-        [ValidateRange(1, [int]::MaxValue)]
         [Alias('responsible_party')]
-        [int]$responsible_party_id,
+        [Nullable[int]]$responsible_party_id,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
+        if ($null -ne $responsible_party_id -and $responsible_party_id -lt 1) { throw 'responsible_party_id must be positive or null.' }
+        if ($PSBoundParameters.ContainsKey('assigned_to')) {
+            throw 'assigned_to is unsupported and was ignored by the server. Use responsible_party_id only for the responsible User; use Set-SnipeitAssetMaintenance checked_out_to_id/type only to edit the separate checkout snapshot. These relationships are not equivalent.'
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['start_date']) {
             $Values['start_date'] = $Values['start_date'].ToString("yyyy-MM-dd")
@@ -113,45 +121,20 @@ function New-SnipeitAssetMaintenance() {
         if ($Values['title']) {
             $Values['name'] = $Values['title']
         }
-        if ($Values['asset_maintenance_type']) {
-            $maintenanceTypeMap = @{
-                'Maintenance'          = 1
-                'Repair'               = 2
-                'Upgrade'              = 3
-                'PAT Test'             = 4
-                'PAT'                  = 4
-                'Calibration'          = 5
-                'Software Support'     = 6
-                'Hardware Support'     = 7
-                'Configuration Change' = 8
-            }
-            if ($Values['asset_maintenance_type'] -match '^\d+$') {
-                $Values['maintenance_type_id'] = [int]$Values['asset_maintenance_type']
-            } elseif ($maintenanceTypeMap.ContainsKey($Values['asset_maintenance_type'])) {
-                $Values['maintenance_type_id'] = $maintenanceTypeMap[$Values['asset_maintenance_type']]
-            }
-        }
+        $Values.Remove('asset_maintenance_type')
 
 
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/maintenances"
             Method = 'Post'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
     process {
         if ($PSCmdlet.ShouldProcess("Asset ID $asset_id", $MyInvocation.MyCommand.Name)) {
+            $Values['maintenance_type_id'] = Resolve-SnipeitMaintenanceTypeId -Name $asset_maintenance_type -Session $Session
             $result = Invoke-SnipeitMethod @Parameters
             $result
         }
@@ -159,9 +142,5 @@ function New-SnipeitAssetMaintenance() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

@@ -13,12 +13,12 @@ Creates a new user
 
 ## SYNTAX
 
-```powershell
-New-SnipeitUser [-first_name] <String> [-last_name] <String> [-username] <String> [[-password] <String>]
+```
+New-SnipeitUser [-first_name] <String> [-last_name] <String> [-username] <String> [[-password] <Object>]
  [[-activated] <Boolean>] [[-notes] <String>] [[-jobtitle] <String>] [[-email] <String>] [[-phone] <String>]
- [[-company_id] <Int32>] [[-location_id] <Int32>] [[-department_id] <Int32>] [[-manager_id] <Int32>]
+ [[-companies] <Int32[]>] [[-location_id] <Int32>] [[-department_id] <Int32>] [[-manager_id] <Int32>]
  [[-groups] <Int32[]>] [[-employee_num] <String>] [[-ldap_import] <Boolean>] [[-image] <String>]
- [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,103 +37,6 @@ Creates a new user who can't login to system
 
 ## PARAMETERS
 
-### -activated
-
-Can user log in to Snipe-IT?
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 19
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -company_id
-
-ID number of company the user belongs to
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -department_id
-
-ID number of department
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 12
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -email
-
-Email address
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -employee_num
-
-Employee number
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 15
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -first_name
 
 User's first name
@@ -145,54 +48,6 @@ Aliases:
 
 Required: True
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -groups
-
-ID numbers of groups
-
-```yaml
-Type: Int32[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 14
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -image
-
-User Image file name and path
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 17
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -jobtitle
-
-User's job title
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -214,65 +69,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ldap_import
+### -username
 
-Mark user as imported from LDAP
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 16
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -location_id
-
-ID number of location
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -manager_id
-
-ID number of manager
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 13
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -notes
-
-User Notes
+Username for user
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 6
+Required: True
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -294,6 +101,70 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -activated
+
+Can user log in to Snipe-IT?
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+
+User Notes
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -jobtitle
+
+User's job title
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -email
+
+Email address
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -phone
 
 Phone number
@@ -310,10 +181,88 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -companies
+Array of company IDs associated with the user.
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases: company_id
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -location_id
+
+ID number of location
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -department_id
+
+ID number of department
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manager_id
+
+ID number of manager
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -groups
+
+ID numbers of groups
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -employee_num
+
+Employee number
 
 ```yaml
 Type: String
@@ -321,39 +270,39 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -username
+### -ldap_import
 
-Username for user
+Mark user as imported from LDAP
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -image
+
+User Image file name and path
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
 Required: False
-Position: Named
+Position: 17
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -376,16 +325,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

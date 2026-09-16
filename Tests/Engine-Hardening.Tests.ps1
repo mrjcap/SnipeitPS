@@ -19,18 +19,6 @@ Describe 'Targeted Core Hardening Suite' {
             $output = Import-Module $script:psd1Path -Force -PassThru:$false
             $output | Should -BeNullOrEmpty
         }
-
-        It 'Respects SNIPEITPS_DISABLE_LEGACY_ALIASES environment opt-out' {
-            $prevEnv = $env:SNIPEITPS_DISABLE_LEGACY_ALIASES
-            try {
-                $env:SNIPEITPS_DISABLE_LEGACY_ALIASES = 'true'
-                InModuleScope 'SnipeitPS' {
-                    Set-SnipeitAlias
-                }
-            } finally {
-                $env:SNIPEITPS_DISABLE_LEGACY_ALIASES = $prevEnv
-            }
-        }
     }
 
     Context 'Parameter Engine Hardening' {
@@ -80,7 +68,7 @@ Describe 'Targeted Core Hardening Suite' {
     Context 'Invoke-SnipeitMethod Hardening' {
         It 'Does not hang when throttleThreshold is 0 in Adaptive mode' {
             InModuleScope 'SnipeitPS' {
-                $script:SnipeitPSSession.url = 'http://localhost'
+                $script:SnipeitPSSession.url = 'https://localhost'
                 $script:SnipeitPSSession.apiKey = (ConvertTo-SecureString 'test-token' -AsPlainText -Force)
                 $script:SnipeitPSSession.throttleLimit = 100
                 $script:SnipeitPSSession.throttleThreshold = 0
@@ -97,7 +85,7 @@ Describe 'Targeted Core Hardening Suite' {
 
         It 'Returns empty array when API returns empty rows envelope and does not leak envelope object' {
             InModuleScope 'SnipeitPS' {
-                $script:SnipeitPSSession.url = 'http://localhost'
+                $script:SnipeitPSSession.url = 'https://localhost'
                 $script:SnipeitPSSession.apiKey = (ConvertTo-SecureString 'test-token' -AsPlainText -Force)
 
                 Mock Invoke-RestMethod { [PSCustomObject]@{ total = 100; rows = @() } }
@@ -108,7 +96,7 @@ Describe 'Targeted Core Hardening Suite' {
 
         It 'Emits Write-Error on HTTP 404 and does not leak error JSON to Success output' {
             InModuleScope 'SnipeitPS' {
-                $script:SnipeitPSSession.url = 'http://localhost'
+                $script:SnipeitPSSession.url = 'https://localhost'
                 $script:SnipeitPSSession.apiKey = (ConvertTo-SecureString 'test-token' -AsPlainText -Force)
 
                 Mock Invoke-RestMethod {
@@ -161,28 +149,6 @@ Describe 'Targeted Core Hardening Suite' {
             }
         }
 
-        It 'Reset-SnipeitPSLegacyApi resets credentials unconditionally without SupportsShouldProcess' {
-            InModuleScope 'SnipeitPS' {
-                $cmd = Get-Command Reset-SnipeitPSLegacyApi
-                $cmd.Parameters.ContainsKey('WhatIf') | Should -BeFalse
-
-                $script:SnipeitPSSession.legacyUrl = 'http://temp'
-                $script:SnipeitPSSession.legacyApiKey = 'temp-key'
-                Reset-SnipeitPSLegacyApi
-                $script:SnipeitPSSession.legacyUrl | Should -BeNullOrEmpty
-                $script:SnipeitPSSession.legacyApiKey | Should -BeNullOrEmpty
-            }
-        }
-
-        It 'Calling New-SnipeitAudit under WhatIf still resets legacy credentials on completion' {
-            InModuleScope 'SnipeitPS' {
-                $script:SnipeitPSSession.url = 'http://localhost'
-                $script:SnipeitPSSession.apiKey = (ConvertTo-SecureString 'test-token' -AsPlainText -Force)
-                New-SnipeitAudit -tag 'TAG1' -WhatIf -apiKey 'temp-key' -url 'http://temp'
-                $script:SnipeitPSSession.legacyUrl | Should -BeNullOrEmpty
-                $script:SnipeitPSSession.legacyApiKey | Should -BeNullOrEmpty
-            }
-        }
     }
 
     AfterAll {

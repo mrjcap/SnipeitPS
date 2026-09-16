@@ -6,7 +6,7 @@ Describe "Snipe-IT Bulk Asset Operations and Auditing (grokability/snipe-it#1927
     BeforeAll {
         InModuleScope 'SnipeitPS' {
             $script:SnipeitPSSession = @{
-                url    = "http://localhost:8080"
+                url    = "https://localhost:8080"
                 apiKey = (ConvertTo-SecureString "testtoken123" -AsPlainText -Force)
             }
         }

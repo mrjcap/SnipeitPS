@@ -1,22 +1,22 @@
-<#
+﻿<#
     .SYNOPSIS
     Sets authentication information. Deprecated, use Connect-SnipeitPS instead.
 
     .DESCRIPTION
-    Deprecated compatibility function that Sets API Key and URL used to connect to Snipe-IT system.
+    Deprecated compatibility function that sets API Key and URL used to connect to Snipe-IT system.
     Please use Connect-SnipeitPS instead.
 
-    .PARAMETER url
-    URL of Snipe-IT system.
+    .OUTPUTS
 
-    .PARAMETER apiKey
-    User's API Key for Snipe-IT.
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     Set-SnipeitInfo -url $url -apiKey $myapikey -Verbose
 #>
 function Set-SnipeitInfo {
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseShouldProcessForStateChangingFunctions', '')]
     param (
         [parameter(Mandatory=$true)]

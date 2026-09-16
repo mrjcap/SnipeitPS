@@ -13,11 +13,11 @@ Creates a new accessory on Snipe-IT system
 
 ## SYNTAX
 
-```powershell
+```
 New-SnipeitAccessory [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-company_id] <Int32>]
- [[-manufacturer_id] <Int32>] [[-order_number] <String>] [[-model_number] <String>] [[-purchase_cost] <Single>]
+ [[-manufacturer_id] <Int32>] [[-order_number] <String>] [[-model_number] <String>] [[-purchase_cost] <String>]
  [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>] [[-location_id] <Int32>]
- [[-image] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm]
+ [[-image] <String>] [[-requestable] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -35,18 +35,34 @@ New-SnipeitAccessory -name "Accessory" -qty 3 -category_id 1
 
 ## PARAMETERS
 
-### -apiKey
+### -name
 
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+Accessory name
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 15
+Required: True
+Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -qty
+
+Quantity of the accessory you have
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -83,38 +99,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -image
-
-Accessory image filename and path
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 13
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -location_id
-
-ID number of the location the accessory is assigned to
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 12
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -manufacturer_id
 
 ID number of the manufacturer for this accessory.
@@ -131,18 +115,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -min_amt
+### -order_number
 
-Min quantity of the accessory before alert is triggered
+Order number for this accessory.
 
 ```yaml
-Type: Int32
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
-Default value: 0
+Position: 6
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -158,38 +142,6 @@ Aliases:
 
 Required: False
 Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Accessory name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -order_number
-
-Order number for this accessory.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -227,33 +179,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -requestable
+### -min_amt
 
-Whether users can request this accessory (Snipe-IT 8.7+)
-
-```yaml
-Type: Nullable`1[System.Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -qty
-
-Quantity of the accessory you have
+Min quantity of the accessory before alert is triggered
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 2
+Required: False
+Position: 10
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -275,9 +211,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -location_id
 
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+ID number of the location the accessory is assigned to
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -image
+
+Accessory image filename and path
 
 ```yaml
 Type: String
@@ -285,23 +237,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Confirm
+### -requestable
 
-Prompts you for confirmation before running the cmdlet.
+Whether users can request this accessory (Snipe-IT 8.7+)
 
 ```yaml
-Type: SwitchParameter
+Type: Boolean
 Parameter Sets: (All)
-Aliases: cf
+Aliases:
 
 Required: False
-Position: Named
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -323,17 +275,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
--Verbose, -WarningAction, and -WarningVariable. For more information, see
-[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

@@ -36,6 +36,11 @@
     used without delay, after threshold limit is reached next requests are delayed by dividing available requests
     over throttlePeriod.
 
+    .OUTPUTS
+
+    None
+
+
     .EXAMPLE
     Connect-SnipeitPS -Url $url -apiKey $myapikey
     Connect to Snipe-IT API.
@@ -63,12 +68,14 @@ function Connect-SnipeitPS {
     [CmdletBinding(
         DefaultParameterSetName = 'Connect with url and apikey'
     )]
+    [OutputType([void])]
     [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseShouldProcessForStateChangingFunctions', '')]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage('PSAvoidUsingConvertToSecureStringWithPlainText', '', Justification = 'Plaintext apiKey is accepted for backward compatibility and converted to SecureString for session storage')]
 
     param (
         [Parameter(ParameterSetName='Connect with url and apikey',Mandatory=$true)]
         [Parameter(ParameterSetName='Connect with url and secure apikey',Mandatory=$true)]
-        [ValidateScript({$_.Scheme -in @('http','https')})]
+        [ValidateScript({$_.Scheme -eq 'https'})]
         [Uri]$url,
 
         [Parameter(ParameterSetName='Connect with url and apikey',Mandatory=$true)]
@@ -106,45 +113,40 @@ function Connect-SnipeitPS {
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        # Enforce TLS 1.2 — PS5.1 with older .NET may default to TLS 1.0/1.1
-        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+        # Enforce TLS 1.2 - PS5.1 with older .NET may default to TLS 1.0/1.1
+        if (-not $script:IsPowerShell7) {
+            [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+        }
     }
 
     PROCESS {
-        switch ($PsCmdlet.ParameterSetName) {
-            'Connect with url and apikey' {
-                $SnipeitPSSession.url = $url.AbsoluteUri.TrimEnd('/')
-                $convertParams = @{
-                    String      = $apiKey
-                    AsPlainText = $true
-                    Force       = $true
-                }
-                $SnipeitPSSession.apiKey = ConvertTo-SecureString @convertParams
-            }
-
-            'Connect with url and secure apikey' {
-                $SnipeitPSSession.url = $url.AbsoluteUri.TrimEnd('/')
-                $SnipeitPSSession.apiKey = $secureApiKey
-            }
-
-            'Connect with credential' {
-                $SnipeitPSSession.url = ($siteCred.GetNetworkCredential().UserName).TrimEnd('/')
-                $SnipeitPSSession.apiKey = $siteCred.GetNetworkCredential().SecurePassword
-            }
+        $resolvedUrl = if ($siteCred) {
+            $siteCred.GetNetworkCredential().UserName
+        } else {
+            $url.AbsoluteUri
         }
+        $resolvedUri = $null
+        if (-not [System.Uri]::TryCreate($resolvedUrl, [System.UriKind]::Absolute, [ref]$resolvedUri) -or
+            $resolvedUri.Scheme -ne 'https') {
+            throw [System.ArgumentException]::new('Snipe-IT URL must be an absolute HTTPS URL.', 'url')
+        }
+        $SnipeitPSSession.url = $resolvedUrl.TrimEnd('/')
+
+        if ($siteCred) {
+            $SnipeitPSSession.apiKey = $siteCred.GetNetworkCredential().SecurePassword
+        } elseif ($secureApiKey) {
+            $SnipeitPSSession.apiKey = $secureApiKey
+        } else {
+            $SnipeitPSSession.apiKey = ConvertTo-SecureString -String $apiKey -AsPlainText -Force
+        }
+
         $SnipeitPSSession.throttleLimit = $throttleLimit
-
-        if($throttleThreshold -lt 1) { $throttleThreshold = 90}
-        $SnipeitPSSession.throttleThreshold = $throttleThreshold
-
-        if('' -eq $throttleMode) { $throttleMode = "Burst"}
-        $SnipeitPSSession.throttleMode = $throttleMode
+        $SnipeitPSSession.throttleThreshold = if ($throttleThreshold -ge 1) { $throttleThreshold } else { 90 }
+        $SnipeitPSSession.throttleMode = if ($throttleMode) { $throttleMode } else { "Burst" }
 
         if ($SnipeitPSSession.throttleLimit -gt 0) {
-            if(-not $PSBoundParameters.ContainsKey('throttlePeriod')) { $throttlePeriod = 60000}
-            $SnipeitPSSession.throttlePeriod = $throttlePeriod
-
-            $SnipeitPSSession.throttledRequests = [System.Collections.ArrayList]::new()
+            $SnipeitPSSession.throttlePeriod = if ($PSBoundParameters.ContainsKey('throttlePeriod')) { $throttlePeriod } else { 60000 }
+            $SnipeitPSSession.throttledRequests = [System.Collections.Generic.Queue[long]]::new()
         }
 
         Write-Debug "Site-url $($SnipeitPSSession.url)"

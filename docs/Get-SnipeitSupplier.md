@@ -14,18 +14,16 @@ Gets a list of Snipe-IT Suppliers
 ## SYNTAX
 
 ### Search (Default)
-
-```powershell
-Get-SnipeitSupplier [-search <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-name <String>] [-address <String>] [-address2 <String>] [-city <String>] [-zip <String>]
- [-country <String>] [-fax <String>] [-email <String>] [-notes <String>] [-url <String>]
- [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitSupplier [-search <String>] [-sort <String>] [-order <String>] [-name <String>] [-address <String>]
+ [-address2 <String>] [-city <String>] [-zip <String>] [-country <String>] [-fax <String>] [-email <String>]
+ [-notes <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Get with ID
-
-```powershell
-Get-SnipeitSupplier [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitSupplier [-id <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,122 +46,9 @@ Get-SnipeitSupplier -id 2
 
 ## PARAMETERS
 
-### -address
+### -search
 
-Optionally restrict Supplier results to this Supplier address.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -address2
-
-Optionally restrict Supplier results to this Supplier address2.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -all
-
-Return all results, works with -offset and other parameters
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -city
-
-Optionally restrict Supplier results to this Supplier city.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -country
-
-Optionally restrict Supplier results to this Supplier country.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -email
-
-Optionally restrict Supplier results to this Supplier email address.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -fax
-
-Optionally restrict Supplier results to this Supplier fax number.
+A text string to search the Suppliers data
 
 ```yaml
 Type: String
@@ -189,73 +74,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -limit
-
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 50
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Optionally restrict Supplier results to this Supplier name.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -notes
-
-Optionally restrict Supplier results to this Supplier notes field.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -offset
-
-Offset to use
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -291,9 +110,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -search
+### -name
 
-A text string to search the Suppliers data
+Optionally restrict Supplier results to this Supplier name.
 
 ```yaml
 Type: String
@@ -307,14 +126,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -address
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+Optionally restrict Supplier results to this Supplier address.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -address2
+
+Optionally restrict Supplier results to this Supplier address2.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -city
+
+Optionally restrict Supplier results to this Supplier city.
+
+```yaml
+Type: String
+Parameter Sets: Search
 Aliases:
 
 Required: False
@@ -340,16 +190,143 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -country
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Optionally restrict Supplier results to this Supplier country.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -fax
+
+Optionally restrict Supplier results to this Supplier fax number.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -email
+
+Optionally restrict Supplier results to this Supplier email address.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notes
+
+Optionally restrict Supplier results to this Supplier notes field.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -limit
+
+Specify the number of results you wish to return.
+Defaults to 50.
+Defines batch size for -all
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -offset
+
+Offset to use
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -all
+
+Return all results, works with -offset and other parameters
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

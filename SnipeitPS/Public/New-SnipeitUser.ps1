@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Creates a new user
 
@@ -32,8 +32,9 @@
     .PARAMETER phone
     Phone number
 
-    .PARAMETER company_id
-    ID number of company the user belongs to
+    .PARAMETER companies
+    Company IDs for the user's complete membership list (company_ids on the API).
+    The legacy company_id alias also supplies this replacement list, not an additive membership.
 
     .PARAMETER location_id
     ID number of location
@@ -56,11 +57,13 @@
     .PARAMETER image
     User Image file name and path
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     New-SnipeitUser -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
@@ -73,6 +76,7 @@ function New-SnipeitUser() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -97,15 +101,19 @@ function New-SnipeitUser() {
         [string]$phone,
 
         [Alias("company_id")]
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
         [int[]]$companies,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitLocationCompleter])]
         [int]$location_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitDepartmentCompleter])]
         [int]$department_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitUserCompleter])]
         [int]$manager_id,
 
         [int[]]$groups,
@@ -117,17 +125,17 @@ function New-SnipeitUser() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if ($PSBoundParameters.ContainsKey('companies')) {
+            $Values['company_ids'] = $companies
+            $Values.Remove('companies')
+        }
 
         if ($PSBoundParameters.ContainsKey('password')) {
             if ($password -is [System.Security.SecureString]) {
@@ -144,17 +152,8 @@ function New-SnipeitUser() {
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/users"
             Method = 'post'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -167,9 +166,5 @@ function New-SnipeitUser() {
 
      end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

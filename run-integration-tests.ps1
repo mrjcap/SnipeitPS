@@ -1,15 +1,46 @@
 [CmdletBinding()]
 param(
-    [string]$URL = ($env:SNIPEIT_TEST_URL ?? 'http://192.168.1.47'),
-    [string]$ApiKey = ($env:SNIPEIT_TEST_KEY ?? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMjk1OGM2ZWY2ZDU3ZTAxZWM4NmIxN2NjMGFlZjA1NGVkY2UwOThlMzllNzQ3MTZmMTE4NDhmMTdjNTVlYzc4ODFhMGNjMDE5ZDdiM2NiODYiLCJpYXQiOjE3ODY5MDkzNjIuNjQ5NDgzLCJuYmYiOjE3ODY5MDkzNjIuNjQ5NDksImV4cCI6MjQxODA2MTM2Mi42MjUwOTEsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.E3MaayqG_D3GJ4vBMyQjNJG261xR6Gl5MtZrVLcpUL9hWoCdz7gq3-ModyV2t36JjXMiG2_z_-wNYkmJSTH-K8BKetGjAP9ofUXVieNZbrsqthZffGZV23AZwHnMPDTfXFzkC9xRn9Qf0T55gyHytCGEWl524Zg4EkvUkeGbGBhlvsZ0hJfMg3RpvU1ONtEqAAvLlu4nCJUNscqEltoAuVvqbFhn4oYS20M8o1VJTvdj36V_oP-5BEXWP-x6i5_v2WDk2EF8BItj2g3Q3XGDmX63n3mvXKKuO1xFpLp5zNZISJ1Xl8FWqszrFRnP4x2qz8aWQMeXI2_-hAc4bOjKDZuw_4YUEYB9CE3PHKVjdXQtDpTOsbRu6t-661lk75oOwZpR6dUe-3LB7vQ0tBblJgRNX9wNr7AV0fm1DmLctwkSEFzhW0KqbnzBi_iba8NAwRoZksISUHz9AaBOkcV_kTD1P8NCLl8BkZ8YDuxlLVac0lQmhVIbaOov84qLW3sP_bOhGi64EQXE3FEapNae8cMfSk5_bzQWV2_4vIxsWtpzMjHt7IWpFvb07W6KyjzcQSZKRkbBFJWGduhy9_LcERPh5Gu2izKBP7nRili41JDLsGQ_7Pt0vnBoxdwOMuJBZtph5ZFjHWtOdrDkpJ-pLjQnNiRGIYSGYHC9XfvFaR4'),
+    [string]$URL,
+    [string]$ApiKey,
     [string]$Path = "./Tests/Integration/",
     [string]$Verbosity = "Detailed"
 )
 
+function ConvertTo-SafeIntegrationUrl {
+    param(
+        [string]$InputUrl
+    )
+
+    $parsedUri = $null
+    if (-not [System.Uri]::TryCreate($InputUrl, [System.UriKind]::Absolute, [ref]$parsedUri) -or
+        [string]::IsNullOrWhiteSpace($parsedUri.Scheme) -or
+        [string]::IsNullOrWhiteSpace($parsedUri.Host)) {
+        return "[invalid URL]"
+    }
+
+    $port = ""
+    if (-not $parsedUri.IsDefaultPort) {
+        $port = ":$($parsedUri.Port)"
+    }
+
+    return "{0}://{1}{2}{3}" -f $parsedUri.Scheme, $parsedUri.Host, $port, $parsedUri.AbsolutePath
+}
+
+if ([string]::IsNullOrWhiteSpace($URL)) {
+    $URL = $env:SNIPEIT_TEST_URL
+}
+if ([string]::IsNullOrWhiteSpace($ApiKey)) {
+    $ApiKey = $env:SNIPEIT_TEST_KEY
+}
+if ([string]::IsNullOrWhiteSpace($URL) -or [string]::IsNullOrWhiteSpace($ApiKey)) {
+    throw "Integration tests require SNIPEIT_TEST_URL and SNIPEIT_TEST_KEY. Supply them as environment variables or script parameters."
+}
+
 $env:SNIPEIT_TEST_URL = $URL
 $env:SNIPEIT_TEST_KEY = $ApiKey
 
-Write-Host "Targeting live Snipe-IT instance at $URL..." -ForegroundColor Cyan
+$safeURL = ConvertTo-SafeIntegrationUrl -InputUrl $URL
+Write-Host "Targeting live Snipe-IT instance at $safeURL..." -ForegroundColor Cyan
 
 $config = New-PesterConfiguration
 $config.Run.Path = $Path

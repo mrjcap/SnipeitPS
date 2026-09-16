@@ -28,7 +28,7 @@ function Get-ParameterValue {
         [parameter(mandatory = $true)]
         $BoundParameters,
 
-        [string[]]$DefaultExcludeParameter = @("id", "url", "apiKey", 'Debug', 'Verbose','RequestType','customfields')
+        [string[]]$DefaultExcludeParameter = @("id", "url", "apiKey", "Session", 'Debug', 'Verbose','RequestType','customfields')
     )
 
     if ($MyInvocation.Line[($MyInvocation.OffsetInLine - 1)] -ne '.') {
@@ -44,6 +44,7 @@ function Get-ParameterValue {
     )
 
     $excludeLookup = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    [void]$excludeLookup.Add('Session')
     foreach ($item in $DefaultExcludeParameter) { [void]$excludeLookup.Add($item) }
     foreach ($item in $commonParams) { [void]$excludeLookup.Add($item) }
 

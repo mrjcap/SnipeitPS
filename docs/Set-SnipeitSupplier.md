@@ -13,12 +13,12 @@ Modify the supplier
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitSupplier [-id] <Int32[]> [[-name] <String>] [[-address] <String>] [[-address2] <String>]
  [[-city] <String>] [[-state] <String>] [[-country] <String>] [[-zip] <String>] [[-phone] <String>]
  [[-fax] <String>] [[-email] <String>] [[-contact] <String>] [[-notes] <String>] [[-image] <String>]
- [[-supplier_url] <String>] [-image_delete] [[-RequestType] <String>] [[-url] <String>]
- [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-supplier_url] <String>] [-image_delete] [[-RequestType] <String>] [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +48,22 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -name
+
+Supplier Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -83,23 +99,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 18
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -city
 
 City
@@ -116,9 +115,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -contact
+### -state
 
-Contact person
+State
 
 ```yaml
 Type: String
@@ -126,7 +125,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -148,9 +147,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -email
+### -zip
 
-Email address
+Zip code
 
 ```yaml
 Type: String
@@ -158,7 +157,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -phone
+
+Phone number
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -180,9 +195,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -image
+### -email
 
-Image file name and path for item
+Email address
 
 ```yaml
 Type: String
@@ -190,31 +205,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -image_delete
+### -contact
 
-Remove current image
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Supplier Name
+Contact person
 
 ```yaml
 Type: String
@@ -222,7 +221,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -244,9 +243,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -phone
+### -image
 
-Phone number
+Image file name and path for item
 
 ```yaml
 Type: String
@@ -254,7 +253,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -277,6 +276,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -image_delete
+
+Remove current image
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -RequestType
 
 HTTP request type to send to Snipe-IT system.
@@ -290,71 +305,6 @@ Aliases:
 Required: False
 Position: 16
 Default value: Patch
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -state
-
-State
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 17
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -zip
-
-Zip code
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -376,16 +326,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

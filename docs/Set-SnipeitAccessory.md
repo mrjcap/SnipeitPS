@@ -13,12 +13,12 @@ Updates accessory on Snipe-IT system
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitAccessory [-id] <Int32[]> [[-name] <String>] [[-qty] <Int32>] [[-category_id] <Int32>]
  [[-company_id] <Int32>] [[-manufacturer_id] <Int32>] [[-model_number] <String>] [[-order_number] <String>]
- [[-purchase_cost] <Single>] [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>]
- [[-location_id] <Int32>] [[-image] <String>] [-image_delete] [[-RequestType] <String>]
- [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-purchase_cost] <String>] [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>]
+ [[-location_id] <Int32>] [[-image] <String>] [[-requestable] <Boolean>] [-image_delete]
+ [[-RequestType] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,9 +35,25 @@ Set-SnipeitAccessory -id 1 -qty 3
 
 ## PARAMETERS
 
-### -apiKey
+### -id
 
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+Unique ID of the accessory or array of IDs
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -name
+
+Accessory name
 
 ```yaml
 Type: String
@@ -45,8 +61,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -qty
+
+Quantity of the accessory you have
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -72,7 +104,7 @@ Accept wildcard characters: False
 ID Number of the company the accessory is assigned to
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
@@ -83,97 +115,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
-
-Unique ID of the accessory or array of IDs
-
-```yaml
-Type: Int32[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -image
-
-Image file name and path for item
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 14
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -image_delete
-
-Remove current image
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -location_id
-
-ID number of the location the accessory is assigned to
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 13
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -manufacturer_id
 
 ID number of the manufacturer for this accessory.
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -min_amt
-
-Minimum amount of the accessory, before alert is triggered
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -195,22 +147,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -name
-
-Accessory name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -order_number
 
 Order number for this accessory.
@@ -222,22 +158,6 @@ Aliases:
 
 Required: False
 Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -requestable
-
-Whether users can request this accessory (Snipe-IT 8.7+)
-
-```yaml
-Type: Nullable`1[System.Boolean]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -275,9 +195,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -qty
+### -min_amt
 
-Quantity of the accessory you have
+Minimum amount of the accessory, before alert is triggered
 
 ```yaml
 Type: Int32
@@ -285,8 +205,88 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
-Default value: 0
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -supplier_id
+
+ID number of the supplier for this accessory
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -location_id
+
+ID number of the location the accessory is assigned to
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -image
+
+Image file name and path for item
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -requestable
+
+Whether users can request this accessory (Snipe-IT 8.7+)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -image_delete
+
+Remove current image
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -302,39 +302,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: Patch
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -supplier_id
+### -WhatIf
 
-ID number of the supplier for this accessory
-
-```yaml
-Type: Nullable[Int32]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 12
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -url
-
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: wi
 
 Required: False
-Position: 16
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -356,14 +340,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
 
 ```yaml
-Type: SwitchParameter
+Type: ActionPreference
 Parameter Sets: (All)
-Aliases: wi
+Aliases: proga
 
 Required: False
 Position: Named
@@ -373,16 +356,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable,
--Verbose, -WarningAction, and -WarningVariable. For more information, see
-[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

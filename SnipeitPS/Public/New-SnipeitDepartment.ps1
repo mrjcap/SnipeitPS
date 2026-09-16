@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Creates a department
 
@@ -23,11 +23,13 @@
     .PARAMETER image
     Department Image filename and path
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     New-SnipeitDepartment -name "Department1" -company_id 1 -location_id 1 -manager_id 3
@@ -39,18 +41,22 @@ function New-SnipeitDepartment() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Low"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
         [string]$name,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
         [int]$company_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitLocationCompleter])]
         [int]$location_id,
 
         [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitUserCompleter])]
         [int]$manager_id,
 
         [string]$notes,
@@ -58,32 +64,18 @@ function New-SnipeitDepartment() {
         [ValidateScript({Test-Path $_})]
         [string]$image,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/departments"
             Method = 'POST'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -96,10 +88,6 @@ function New-SnipeitDepartment() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }
 

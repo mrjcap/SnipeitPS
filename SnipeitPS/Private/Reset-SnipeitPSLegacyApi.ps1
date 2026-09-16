@@ -1,9 +1,14 @@
 function Reset-SnipeitPSLegacyApi {
-    [CmdletBinding()]
+    [CmdletBinding(
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "Low"
+    )]
     param()
     process {
-        Write-Verbose 'Reset-SnipeitPSLegacyApi'
-        $SnipeitPSSession.legacyUrl = $null
-        $SnipeitPSSession.legacyApiKey = $null
+        if ($PSCmdlet.ShouldProcess("Legacy API Session", "Reset")) {
+            Write-Verbose 'Reset-SnipeitPSLegacyApi'
+            $SnipeitPSSession.legacyUrl = $null
+            $SnipeitPSSession.legacyApiKey = $null
+        }
     }
 }

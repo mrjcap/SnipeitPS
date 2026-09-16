@@ -14,59 +14,54 @@ Gets a list of Snipe-IT Assets or specific asset
 ## SYNTAX
 
 ### Search (Default)
-
-```powershell
+```
 Get-SnipeitAsset [-search <String>] [-name <String>] [-order_number <String>] [-model_id <Int32>]
  [-category_id <Int32>] [-manufacturer_id <Int32>] [-company_id <Int32>] [-location_id <Int32>]
- [-depreciation_id <Int32>] [-requestable <Boolean>] [-status <String>] [-status_id <Int32>]
- [-customfields <Hashtable>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-depreciation_id <Int32>] [-requestable] [-status <String>] [-status_id <Int32>] [-customfields <Hashtable>]
+ [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-Session <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with id
-
-```powershell
-Get-SnipeitAsset [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitAsset [-id <Int32>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Get with asset tag
-
-```powershell
-Get-SnipeitAsset [-asset_tag <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitAsset [-asset_tag <String>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Get with serial
-
-```powershell
-Get-SnipeitAsset [-serial <String>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitAsset [-serial <String>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Assets due auditing soon
-
-```powershell
+```
 Get-SnipeitAsset [-audit_due] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Assets overdue for auditing
-
-```powershell
+```
 Get-SnipeitAsset [-audit_overdue] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
- [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Assets checked out to user id
-
-```powershell
+```
 Get-SnipeitAsset [-user_id <Int32>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>]
- [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Assets with component id
-
-```powershell
+```
 Get-SnipeitAsset [-component_id <Int32>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>]
- [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -140,37 +135,35 @@ Get Assets with component ID 5
 
 ## PARAMETERS
 
-### -all
+### -search
 
-Return all results, works with -offset and other parameters
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets `
-  with component id
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+A text string to search the assets data
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -id
+
+ID number of exact Snipe-IT asset
+
+```yaml
+Type: Int32
+Parameter Sets: Get with id
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -182,6 +175,22 @@ Exact asset tag to query
 Type: String
 Parameter Sets: Get with asset tag
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -serial
+
+Exact asset serial number to query
+
+```yaml
+Type: String
+Parameter Sets: Get with serial
+Aliases: asset_serial
 
 Required: False
 Position: Named
@@ -222,35 +231,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -category_id
+### -user_id
 
-Optionally restrict asset results to this category ID
+Retrieve a list of assets checked out to user ID.
 
 ```yaml
 Type: Int32
-Parameter Sets: Search
-Aliases:
+Parameter Sets: Assets checked out to user id
+Aliases: assigned_user, assigned_id
 
 Required: False
 Position: Named
 Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -company_id
-
-Optionally restrict asset results to this company ID
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -266,18 +259,16 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -customfields
+### -name
 
-Hashtable of custom fields and extra fields for searching assets in Snipe-IT.
-Use internal field names from Snipe-IT.
-You can use Get-SnipeitCustomField to get internal field names.
+Optionally restrict asset results to this asset name
 
 ```yaml
-Type: Hashtable
+Type: String
 Parameter Sets: Search
 Aliases:
 
@@ -288,9 +279,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -depreciation_id
+### -order_number
 
-Optionally restrict asset results to this depreciation ID
+Optionally restrict asset results to this order number
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -model_id
+
+Optionally restrict asset results to this asset model ID
 
 ```yaml
 Type: Int32
@@ -304,44 +311,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
+### -category_id
 
-ID number of exact Snipe-IT asset
-
-```yaml
-Type: Int32
-Parameter Sets: Get with id
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -limit
-
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
-
-```yaml
-Type: Int32
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets `
-  with component id
-Aliases:
-
-Required: False
-Position: Named
-Default value: 50
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -location_id
-
-Optionally restrict asset results to this location ID
+Optionally restrict asset results to this category ID
 
 ```yaml
 Type: Int32
@@ -371,9 +343,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -model_id
+### -company_id
 
-Optionally restrict asset results to this asset model ID
+Optionally restrict asset results to this company ID
 
 ```yaml
 Type: Int32
@@ -387,30 +359,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -name
+### -location_id
 
-Optionally restrict asset results to this asset name
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -offset
-
-Offset to use
+Optionally restrict asset results to this location ID
 
 ```yaml
 Type: Int32
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets `
-  with component id
+Parameter Sets: Search
 Aliases:
 
 Required: False
@@ -420,35 +375,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -order
+### -depreciation_id
 
-Specify the order (asc or desc) you wish to order by on your sort column
-
-```yaml
-Type: String
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets `
-  with component id
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -order_number
-
-Optionally restrict asset results to this order number
+Optionally restrict asset results to this depreciation ID
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -465,55 +403,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -search
-
-A text string to search the assets data
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -serial
-
-Exact asset serial number to query
-
-```yaml
-Type: String
-Parameter Sets: Get with serial
-Aliases: asset_serial
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -sort
-
-Specify the column name you wish to sort by
-
-```yaml
-Type: String
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets `
-  with component id
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -551,13 +440,111 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -customfields
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+Hashtable of custom fields and extra fields for searching assets in Snipe-IT.
+Use internal field names from Snipe-IT.
+You can use Get-SnipeitCustomField to get internal field names.
+
+```yaml
+Type: Hashtable
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -sort
+
+Specify the column name you wish to sort by
 
 ```yaml
 Type: String
+Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -order
+
+Specify the order (asc or desc) you wish to order by on your sort column
+
+```yaml
+Type: String
+Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -limit
+
+Specify the number of results you wish to return.
+Defaults to 50.
+Defines batch size for -all
+
+```yaml
+Type: Int32
+Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Aliases:
+
+Required: False
+Position: Named
+Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -offset
+
+Offset to use
+
+```yaml
+Type: Int32
+Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -all
+
+Return all results, works with -offset and other parameters
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+Optional custom SnipeitSession instance specifying target URL and credentials. When omitted, uses the session established by Connect-SnipeitPS.
+
+```yaml
+Type: SnipeitSession
 Parameter Sets: (All)
 Aliases:
 
@@ -568,32 +555,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -user_id
-
-Retrieve a list of assets checked out to user ID.
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
 
 ```yaml
-Type: Int32
-Parameter Sets: Assets checked out to user id
-Aliases:
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### [PSCustomObject]
+### Emits Snipe-IT hardware asset objects returned by the API.
 ## NOTES
 
 ## RELATED LINKS

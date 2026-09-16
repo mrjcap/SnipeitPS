@@ -14,31 +14,27 @@ Gets a list of Snipe-IT Licenses
 ## SYNTAX
 
 ### Search (Default)
-
-```powershell
+```
 Get-SnipeitLicense [-search <String>] [-name <String>] [-company_id <Int32>] [-product_key <String>]
  [-order_number <String>] [-purchase_order <String>] [-license_name <String>] [-license_email <MailAddress>]
  [-manufacturer_id <Int32>] [-supplier_id <Int32>] [-depreciation_id <Int32>] [-category_id <Int32>]
- [-order <String>] [-sort <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>]
- [-apiKey <String>] [<CommonParameters>]
+ [-order <String>] [-sort <String>] [-limit <Int32>] [-offset <Int32>] [-all]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with ID
-
-```powershell
-Get-SnipeitLicense [-id <Int32>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitLicense [-id <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get licenses checked out to user ID
-
-```powershell
-Get-SnipeitLicense [-user_id <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitLicense [-user_id <Int32>] [-all] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get licenses checked out to asset ID
-
-```powershell
-Get-SnipeitLicense [-asset_id <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitLicense [-asset_id <Int32>] [-all] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,36 +57,51 @@ Get-SnipeitLicense -id 1
 
 ## PARAMETERS
 
-### -all
+### -search
 
-Return all results, works with -offset and other parameters
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Search, Get licenses checked out to user ID, Get licenses checked out to asset ID
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -apiKey
-
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+A text string to search the Licenses data
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -id
+
+An ID of a specific License
+
+```yaml
+Type: Int32
+Parameter Sets: Get with ID
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -user_id
+
+ID of the user to filter by.
+
+```yaml
+Type: Int32
+Parameter Sets: Get licenses checked out to user ID
+Aliases: assigned_user
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -101,27 +112,27 @@ ID of the asset to filter by.
 ```yaml
 Type: Int32
 Parameter Sets: Get licenses checked out to asset ID
-Aliases:
+Aliases: hardware_id
 
 Required: False
 Position: Named
 Default value: 0
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -category_id
+### -name
 
-ID of the category to filter by.
+Name of the license to filter by.
 
 ```yaml
-Type: Int32
+Type: String
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -142,57 +153,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -depreciation_id
+### -product_key
 
-ID of the depreciation to filter by.
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -id
-
-An ID of a specific License
-
-```yaml
-Type: Int32
-Parameter Sets: Get with ID
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -license_email
-
-Contact email address for the license.
-
-```yaml
-Type: MailAddress
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -license_name
-
-Display name of the license.
+Product key to filter by.
 
 ```yaml
 Type: String
@@ -202,88 +165,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -limit
-
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 50
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -manufacturer_id
-
-ID of the manufacturer to filter by.
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Name of the license to filter by.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -offset
-
-Offset to use
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -order
-
-Sort order. Can be 'asc' or 'desc'.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: Desc
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -291,22 +172,6 @@ Accept wildcard characters: False
 ### -order_number
 
 Order number to filter by.
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -product_key
-
-Product key to filter by.
 
 ```yaml
 Type: String
@@ -336,9 +201,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -search
+### -license_name
 
-A text string to search the Licenses data
+Display name of the license.
 
 ```yaml
 Type: String
@@ -352,18 +217,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -sort
+### -license_email
 
-Column to sort on.
+Contact email address for the license.
 
 ```yaml
-Type: String
+Type: MailAddress
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: Created_at
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manufacturer_id
+
+ID of the manufacturer to filter by.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -384,30 +265,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -depreciation_id
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -user_id
-
-ID of the user to filter by.
+ID of the depreciation to filter by.
 
 ```yaml
 Type: Int32
-Parameter Sets: Get licenses checked out to user ID
+Parameter Sets: Search
 Aliases:
 
 Required: False
@@ -417,16 +281,127 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -category_id
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+ID of the category to filter by.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -order
+
+Sort order. Can be 'asc' or 'desc'.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: Desc
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -sort
+
+Column to sort on.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: Created_at
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -limit
+
+Specify the number of results you wish to return.
+Defaults to 50.
+Defines batch size for -all
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -offset
+
+Offset to use
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -all
+
+Return all results, works with -offset and other parameters
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Search, Get licenses checked out to user ID, Get licenses checked out to asset ID
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

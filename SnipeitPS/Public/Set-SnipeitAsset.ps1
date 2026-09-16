@@ -153,7 +153,10 @@ function Set-SnipeitAsset() {
         [string]$apiKey,
 
         [Alias('CustomValues')]
-        [hashtable] $customfields
+        [hashtable] $customfields,
+
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin{
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
@@ -183,7 +186,9 @@ function Set-SnipeitAsset() {
         }
 
         if ($customfields) {
-            $Values += $customfields
+            foreach ($entry in $customfields.GetEnumerator()) {
+                $Values[$entry.Key] = $entry.Value
+            }
         }
 
         if ($id.Count -gt 1) {
@@ -196,9 +201,10 @@ function Set-SnipeitAsset() {
             $bulkValues = $Values.Clone()
             $bulkValues['ids'] = $id
             $Parameters = @{
-                Api    = "$script:SnipeitApiPrefix/hardware/bulk"
-                Method = 'Patch'
-                Body   = $bulkValues
+                Api     = "$script:SnipeitApiPrefix/hardware/bulk"
+                Method  = 'Patch'
+                Body    = $bulkValues
+                Session = $Session
             }
 
             if ($PSCmdlet.ShouldProcess("Asset IDs $($id -join ', ')", $MyInvocation.MyCommand.Name)) {
@@ -208,9 +214,10 @@ function Set-SnipeitAsset() {
         } else {
             foreach($asset_id in $id) {
                 $Parameters = @{
-                    Api    = "$script:SnipeitApiPrefix/hardware/$asset_id"
-                    Method = $RequestType
-                    Body   = $Values.Clone()
+                    Api     = "$script:SnipeitApiPrefix/hardware/$asset_id"
+                    Method  = $RequestType
+                    Body    = $Values.Clone()
+                    Session = $Session
                 }
 
                 if ($PSCmdlet.ShouldProcess("Asset ID $asset_id", $MyInvocation.MyCommand.Name)) {

@@ -14,17 +14,15 @@ Gets a list of Snipe-IT consumables
 ## SYNTAX
 
 ### Search (Default)
-
-```powershell
+```
 Get-SnipeitConsumable [-search <String>] [-name <String>] [-category_id <Int32>] [-company_id <Int32>]
  [-manufacturer_id <Int32>] [-location_id <Int32>] [-order <String>] [-sort <String>] [-expand]
- [-limit <Int32>] [-offset <Int32>] [-all] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+ [-limit <Int32>] [-offset <Int32>] [-all] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with ID
-
-```powershell
-Get-SnipeitConsumable [-id <Int32[]>] [-url <String>] [-apiKey <String>] [<CommonParameters>]
+```
+Get-SnipeitConsumable [-id <Int32[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,30 +54,45 @@ Returns specific consumable
 
 ## PARAMETERS
 
-### -all
+### -search
 
-Return all results
+A text string to search the consumables
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: Search
 Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -apiKey
+### -id
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+An ID of a specific consumable
+
+```yaml
+Type: Int32[]
+Parameter Sets: Get with ID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+
+Optionally restrict consumable results to this name field
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Search
 Aliases:
 
 Required: False
@@ -121,88 +134,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -expand
-
-Whether to include detailed information on categories, etc (true) or just the text name (false)
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -id
-
-An ID of a specific consumable
-
-```yaml
-Type: Int32[]
-Parameter Sets: Get with ID
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Optionally restrict consumable results to this name field
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -limit
-
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 50
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -location_id
-
-Optionally restrict consumable results to this location_id field
-
-```yaml
-Type: Int32
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -manufacturer_id
 
 ID number of manufacturer
@@ -219,9 +150,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -offset
+### -location_id
 
-Offset to use
+Optionally restrict consumable results to this location_id field
 
 ```yaml
 Type: Int32
@@ -251,22 +182,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -search
-
-A text string to search the consumables
-
-```yaml
-Type: String
-Parameter Sets: Search
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -sort
 
 Sort results by column
@@ -283,15 +198,79 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -expand
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+Whether to include detailed information on categories, etc (true) or just the text name (false)
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: SwitchParameter
+Parameter Sets: Search
 Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -limit
+
+Specify the number of results you wish to return.
+Defaults to 50.
+Defines batch size for -all
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -offset
+
+Offset to use
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -all
+
+Return all results
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named
@@ -301,15 +280,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

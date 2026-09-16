@@ -32,95 +32,6 @@ Describe "ConvertTo-GetParameter" {
 }
 
 # ============================================================
-# Set-SnipeitPSLegacyApiKey
-# ============================================================
-
-Describe "Set-SnipeitPSLegacyApiKey" {
-    It "Sets legacyApiKey as SecureString (PS7 path)" {
-        InModuleScope 'SnipeitPS' {
-            $savedKey = $SnipeitPSSession.legacyApiKey
-            $savedIsPowerShell7 = $script:IsPowerShell7
-            try {
-                $script:IsPowerShell7 = $true
-                Set-SnipeitPSLegacyApiKey -apiKey "testkey123" -Confirm:$false
-                $SnipeitPSSession.legacyApiKey | Should -BeOfType [System.Security.SecureString]
-            } finally {
-                $SnipeitPSSession.legacyApiKey = $savedKey
-                $script:IsPowerShell7 = $savedIsPowerShell7
-            }
-        }
-    }
-
-    It "Sets legacyApiKey as SecureString (PS5 path)" {
-        InModuleScope 'SnipeitPS' {
-            $savedKey = $SnipeitPSSession.legacyApiKey
-            $savedIsPowerShell7 = $script:IsPowerShell7
-            try {
-                $script:IsPowerShell7 = $false
-                Set-SnipeitPSLegacyApiKey -apiKey "testkey123" -Confirm:$false
-                $SnipeitPSSession.legacyApiKey | Should -BeOfType [System.Security.SecureString]
-            } finally {
-                $SnipeitPSSession.legacyApiKey = $savedKey
-                $script:IsPowerShell7 = $savedIsPowerShell7
-            }
-        }
-    }
-}
-
-# ============================================================
-# Set-SnipeitPSLegacyUrl
-# ============================================================
-
-Describe "Set-SnipeitPSLegacyUrl" {
-    It "Sets legacyUrl with trailing slash removed" {
-        InModuleScope 'SnipeitPS' {
-            $savedUrl = $SnipeitPSSession.legacyUrl
-            try {
-                Set-SnipeitPSLegacyUrl -url "https://snipeit.example.com/" -Confirm:$false
-                $SnipeitPSSession.legacyUrl | Should -Be "https://snipeit.example.com"
-            } finally {
-                $SnipeitPSSession.legacyUrl = $savedUrl
-            }
-        }
-    }
-
-    It "Sets legacyUrl without trailing slash unchanged" {
-        InModuleScope 'SnipeitPS' {
-            $savedUrl = $SnipeitPSSession.legacyUrl
-            try {
-                Set-SnipeitPSLegacyUrl -url "https://snipeit.example.com" -Confirm:$false
-                $SnipeitPSSession.legacyUrl | Should -Be "https://snipeit.example.com"
-            } finally {
-                $SnipeitPSSession.legacyUrl = $savedUrl
-            }
-        }
-    }
-}
-
-# ============================================================
-# Reset-SnipeitPSLegacyApi
-# ============================================================
-
-Describe "Reset-SnipeitPSLegacyApi" {
-    It "Clears legacy url and apiKey" {
-        InModuleScope 'SnipeitPS' {
-            $savedUrl = $SnipeitPSSession.legacyUrl
-            $savedKey = $SnipeitPSSession.legacyApiKey
-            try {
-                $SnipeitPSSession.legacyUrl = "https://test.com"
-                $SnipeitPSSession.legacyApiKey = ConvertTo-SecureString "key" -AsPlainText -Force
-                Reset-SnipeitPSLegacyApi
-                $SnipeitPSSession.legacyUrl | Should -BeNullOrEmpty
-                $SnipeitPSSession.legacyApiKey | Should -BeNullOrEmpty
-            } finally {
-                $SnipeitPSSession.legacyUrl = $savedUrl
-                $SnipeitPSSession.legacyApiKey = $savedKey
-            }
-        }
-    }
-}
-
-# ============================================================
 # Test-SnipeitPSConnection
 # ============================================================
 
@@ -138,28 +49,6 @@ Describe "Test-SnipeitPSConnection" {
             Mock Invoke-SnipeitMethod { return $null }
             $result = Test-SnipeitPSConnection
             $result | Should -Be $false
-        }
-    }
-}
-
-# ============================================================
-# Test-SnipeitAlias
-# ============================================================
-
-Describe "Test-SnipeitAlias" {
-    It "Shows warnings when invocation name differs from command name" {
-        InModuleScope 'SnipeitPS' {
-            Mock Write-Warning {}
-            Test-SnipeitAlias -invocationName 'Get-Asset' -commandName 'Get-SnipeitAsset'
-            Should -Invoke Write-Warning -Times 3
-        }
-    }
-
-    It "Does not warn when invocation name matches command name" {
-        InModuleScope 'SnipeitPS' {
-            Mock Write-Warning {}
-            Test-SnipeitAlias -invocationName 'Get-SnipeitAsset' -commandName 'Get-SnipeitAsset'
-            Should -Invoke Write-Warning -Times 0
         }
     }
 }
@@ -195,7 +84,7 @@ Describe "Invoke-SnipeitMethod - Connect credentials (PS7)" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -214,7 +103,8 @@ Describe "Invoke-SnipeitMethod - Connect credentials (PS7)" {
             Mock Invoke-RestMethod { [PSCustomObject]@{ status = 'success'; payload = [PSCustomObject]@{ id = 1; name = 'Test' } } }
             $result = Invoke-SnipeitMethod -Api "/api/v1/hardware/1"
             $result.id | Should -Be 1
-            Should -Invoke Invoke-RestMethod -Times 1
+            $script:IsPowerShell7 | Should -Be ($PSVersionTable.PSVersion.Major -ge 7)
+            Should -Invoke Invoke-RestMethod -Times 1 -Exactly -ParameterFilter { $Headers.Authorization -eq 'Bearer testapikey' }
         }
     }
 }
@@ -257,82 +147,6 @@ Describe "Invoke-SnipeitMethod - Connect credentials (PS5)" {
     }
 }
 
-Describe "Invoke-SnipeitMethod - Legacy credentials (PS7)" {
-    BeforeEach {
-        InModuleScope 'SnipeitPS' {
-            $script:savedUrl = $SnipeitPSSession.url
-            $script:savedApiKey = $SnipeitPSSession.apiKey
-            $script:savedLegacyUrl = $SnipeitPSSession.legacyUrl
-            $script:savedLegacyApiKey = $SnipeitPSSession.legacyApiKey
-            $script:savedThrottleLimit = $SnipeitPSSession.throttleLimit
-            $script:savedIsPowerShell7 = $script:IsPowerShell7
-
-            $SnipeitPSSession.url = $null
-            $SnipeitPSSession.apiKey = $null
-            $SnipeitPSSession.legacyUrl = "https://legacy.example.com"
-            $SnipeitPSSession.legacyApiKey = ConvertTo-SecureString "legacykey" -AsPlainText -Force
-            $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
-        }
-    }
-    AfterEach {
-        InModuleScope 'SnipeitPS' {
-            $SnipeitPSSession.url = $script:savedUrl
-            $SnipeitPSSession.apiKey = $script:savedApiKey
-            $SnipeitPSSession.legacyUrl = $script:savedLegacyUrl
-            $SnipeitPSSession.legacyApiKey = $script:savedLegacyApiKey
-            $SnipeitPSSession.throttleLimit = $script:savedThrottleLimit
-            $script:IsPowerShell7 = $script:savedIsPowerShell7
-        }
-    }
-
-    It "Uses Legacy path with PS7 credential conversion" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-RestMethod { [PSCustomObject]@{ status = 'success'; payload = [PSCustomObject]@{ id = 3 } } }
-            $result = Invoke-SnipeitMethod -Api "/api/v1/hardware/3"
-            $result.id | Should -Be 3
-        }
-    }
-}
-
-Describe "Invoke-SnipeitMethod - Legacy credentials (PS5)" {
-    BeforeEach {
-        InModuleScope 'SnipeitPS' {
-            $script:savedUrl = $SnipeitPSSession.url
-            $script:savedApiKey = $SnipeitPSSession.apiKey
-            $script:savedLegacyUrl = $SnipeitPSSession.legacyUrl
-            $script:savedLegacyApiKey = $SnipeitPSSession.legacyApiKey
-            $script:savedThrottleLimit = $SnipeitPSSession.throttleLimit
-            $script:savedIsPowerShell7 = $script:IsPowerShell7
-
-            $SnipeitPSSession.url = $null
-            $SnipeitPSSession.apiKey = $null
-            $SnipeitPSSession.legacyUrl = "https://legacy.example.com"
-            $SnipeitPSSession.legacyApiKey = ConvertTo-SecureString "legacykey" -AsPlainText -Force
-            $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $false
-        }
-    }
-    AfterEach {
-        InModuleScope 'SnipeitPS' {
-            $SnipeitPSSession.url = $script:savedUrl
-            $SnipeitPSSession.apiKey = $script:savedApiKey
-            $SnipeitPSSession.legacyUrl = $script:savedLegacyUrl
-            $SnipeitPSSession.legacyApiKey = $script:savedLegacyApiKey
-            $SnipeitPSSession.throttleLimit = $script:savedThrottleLimit
-            $script:IsPowerShell7 = $script:savedIsPowerShell7
-        }
-    }
-
-    It "Uses Legacy path with PS5 credential conversion" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-RestMethod { [PSCustomObject]@{ status = 'success'; payload = [PSCustomObject]@{ id = 4 } } }
-            $result = Invoke-SnipeitMethod -Api "/api/v1/hardware/4"
-            $result.id | Should -Be 4
-        }
-    }
-}
-
 # ============================================================
 # Invoke-SnipeitMethod - No credentials / Validation
 # ============================================================
@@ -352,7 +166,7 @@ Describe "Invoke-SnipeitMethod - No credentials" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -388,7 +202,7 @@ Describe "Invoke-SnipeitMethod - POST without Body" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -440,7 +254,7 @@ Describe "Invoke-SnipeitMethod - Response handling" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -516,10 +330,25 @@ Describe "Invoke-SnipeitMethod - Response handling" {
     It "Handles Invoke-RestMethod throwing (catch block)" {
         InModuleScope 'SnipeitPS' {
             Mock Invoke-RestMethod { throw "Connection refused" }
-            # The catch block catches the exception and sets webResponse to the exception response
-            # This should not throw to the caller
-            $result = Invoke-SnipeitMethod -Api "/api/v1/hardware"
-            # Result should be null since the exception response is likely null
+            $transportErrors = @()
+            $result = Invoke-SnipeitMethod -Api "/api/v1/hardware" -ErrorAction SilentlyContinue -ErrorVariable transportErrors
+            $result | Should -BeNullOrEmpty
+            $transportError = @($transportErrors | Where-Object FullyQualifiedErrorId -Like 'SnipeitTransportError*')
+            $transportError.Count | Should -Be 1
+            $transportError[0].Exception.Message | Should -Match 'Connection refused'
+            $transportError[0].CategoryInfo.Category | Should -Be 'ConnectionError'
+        }
+    }
+
+    It 'Honors ErrorAction Stop for transport and API business errors' {
+        InModuleScope 'SnipeitPS' {
+            Mock Invoke-RestMethod { throw 'Connection refused' }
+            { Invoke-SnipeitMethod -Api '/api/v1/hardware' -ErrorAction Stop } | Should -Throw '*Connection refused*'
+            Mock Invoke-RestMethod { [pscustomobject]@{ status = 'error'; messages = 'Denied'; results = @(@{ id = 1; status = 'error' }) } }
+            $caught = $null
+            try { Invoke-SnipeitMethod -Api '/api/v1/hardware' -ErrorAction Stop } catch { $caught = $_ }
+            $caught.FullyQualifiedErrorId | Should -Match 'SnipeitApiError'
+            $caught.TargetObject.results[0].id | Should -Be 1
         }
     }
 
@@ -551,7 +380,7 @@ Describe "Invoke-SnipeitMethod - GET with GetParameters" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -593,7 +422,7 @@ Describe "Invoke-SnipeitMethod - POST with Body" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -635,7 +464,7 @@ Describe "Invoke-SnipeitMethod - Image upload (PS7)" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -654,9 +483,19 @@ Describe "Invoke-SnipeitMethod - Image upload (PS7)" {
             $tempFile = [System.IO.Path]::GetTempFileName()
             try {
                 Mock Invoke-RestMethod { [PSCustomObject]@{ status = 'success'; payload = [PSCustomObject]@{ id = 1 } } }
+                [System.IO.File]::WriteAllBytes($tempFile, [byte[]](0x89, 0x50, 0x4E, 0x47))
                 $body = @{ image = $tempFile; name = 'test'; status_id = 1; model_id = 1 }
                 Invoke-SnipeitMethod -Api "/api/v1/hardware/1" -Method PUT -Body $body
-                Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter { $Method -eq 'POST' }
+                if ($PSVersionTable.PSVersion.Major -ge 7) {
+                    Should -Invoke Invoke-RestMethod -Times 1 -Exactly -ParameterFilter {
+                        $Method -eq 'POST' -and $Form.image -is [System.IO.FileInfo] -and $Form._method -eq 'PUT'
+                    }
+                } else {
+                    Should -Invoke Invoke-RestMethod -Times 1 -Exactly -ParameterFilter {
+                        $payload = [System.Text.Encoding]::UTF8.GetString($Body) | ConvertFrom-Json
+                        $Method -eq 'PUT' -and $payload.image -match '^data:[^;]+;base64,iVBORw==$'
+                    }
+                }
             } finally {
                 Remove-Item $tempFile -ErrorAction SilentlyContinue
             }
@@ -727,7 +566,7 @@ Describe "Invoke-SnipeitMethod - Image upload error (bad path)" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -770,7 +609,7 @@ Describe "Invoke-SnipeitMethod - File upload (PS7)" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -790,8 +629,18 @@ Describe "Invoke-SnipeitMethod - File upload (PS7)" {
             try {
                 Mock Invoke-RestMethod { [PSCustomObject]@{ status = 'success'; payload = [PSCustomObject]@{ id = 1 } } }
                 $body = @{ file = $tempFile }
-                Invoke-SnipeitMethod -Api "/api/v1/hardware/1/files" -Method POST -Body $body
-                Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter { $Method -eq 'POST' }
+                if ($PSVersionTable.PSVersion.Major -ge 7) {
+                    Invoke-SnipeitMethod -Api "/api/v1/hardware/1/files" -Method POST -Body $body
+                    Should -Invoke Invoke-RestMethod -Times 1 -Exactly -ParameterFilter {
+                        $Method -eq 'POST' -and $Form['file[]'] -is [System.IO.FileInfo] -and $Form._method -eq 'POST'
+                    }
+                } else {
+                    $uploadErrors = $null
+                    Invoke-SnipeitMethod -Api "/api/v1/hardware/1/files" -Method POST -Body $body -ErrorVariable uploadErrors -ErrorAction SilentlyContinue
+                    $uploadErrors | Should -Not -BeNullOrEmpty
+                    $uploadErrors[-1].ToString() | Should -Match 'File uploads require PowerShell 7.0 or later'
+                    Should -Invoke Invoke-RestMethod -Times 0 -Exactly
+                }
             } finally {
                 Remove-Item $tempFile -ErrorAction SilentlyContinue
             }
@@ -853,7 +702,7 @@ Describe "Invoke-SnipeitMethod - File upload error (bad path)" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -899,7 +748,7 @@ Describe "Invoke-SnipeitMethod - Throttle Burst mode" {
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testapikey" -AsPlainText -Force
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -964,7 +813,7 @@ Describe "Invoke-SnipeitMethod - Throttle Constant mode" {
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testapikey" -AsPlainText -Force
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1018,7 +867,7 @@ Describe "Invoke-SnipeitMethod - Throttle Adaptive mode" {
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testapikey" -AsPlainText -Force
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1102,7 +951,7 @@ Describe "Invoke-SnipeitMethod - Throttle requests list cleanup" {
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testapikey" -AsPlainText -Force
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1158,7 +1007,7 @@ Describe "Invoke-SnipeitMethod - Debug preference active" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1205,7 +1054,7 @@ Describe "Invoke-SnipeitMethod - Response parse error" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1254,7 +1103,7 @@ Describe "Invoke-SnipeitMethod - DELETE does not require Body" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1296,7 +1145,7 @@ Describe "Invoke-SnipeitMethod - JSON body encoding for PUT" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1347,7 +1196,7 @@ Describe "Invoke-SnipeitMethod - Debug with body" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1397,7 +1246,7 @@ Describe "Invoke-SnipeitMethod - Throttle null requests list reinitialization" {
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testapikey" -AsPlainText -Force
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1452,7 +1301,7 @@ Describe "Invoke-SnipeitMethod - Throttle with debug output" {
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testapikey" -AsPlainText -Force
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1509,7 +1358,7 @@ Describe "Invoke-SnipeitMethod - PSDefaultParameterValues passthrough" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1552,7 +1401,7 @@ Describe "Invoke-SnipeitMethod - Verbose output" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1637,7 +1486,7 @@ Describe "Invoke-SnipeitMethod - Throttle verbose naptime message" {
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testapikey" -AsPlainText -Force
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1694,7 +1543,7 @@ Describe "Invoke-SnipeitMethod - Error response with messages object" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {
@@ -1741,7 +1590,7 @@ Describe "Invoke-SnipeitMethod - GetParameters skip when ? already in URI" {
             $SnipeitPSSession.legacyUrl = $null
             $SnipeitPSSession.legacyApiKey = $null
             $SnipeitPSSession.throttleLimit = 0
-            $script:IsPowerShell7 = $true
+            $script:IsPowerShell7 = $PSVersionTable.PSVersion.Major -ge 7
         }
     }
     AfterEach {

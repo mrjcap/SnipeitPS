@@ -1,18 +1,37 @@
 stages:
   - test
-  - release
+  - verify
+  - integration
+
 variables:
-  GIT_SSL_NO_VERIFY: "true"
   ErrorActionPreference: STOP
+
 Test:
   stage: test
+  tags:
+    - windows
   script:
-   - .\build.ps1 -Tasks 'test'
+    - powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\run-tests.ps1
   except:
     - master
-Release:
-  stage: release
+
+Verification:
+  stage: verify
+  tags:
+    - windows
   script:
-   - .\build.ps1 -Tasks 'test','release'
+    - powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\run-tests.ps1
   only:
     - master
+
+Integration:
+  stage: integration
+  tags:
+    - windows
+  script:
+    - powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\run-integration-tests.ps1
+  rules:
+    - if: '$CI_COMMIT_REF_PROTECTED == "true"'
+      when: manual
+      allow_failure: true
+    - when: never

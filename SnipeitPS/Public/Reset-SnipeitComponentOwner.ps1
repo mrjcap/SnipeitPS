@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Checkin a component in Snipe-IT
 
@@ -17,11 +17,13 @@
     .PARAMETER note
     Notes about checkin
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     Reset-SnipeitComponentOwner -id 15 -checkin_qty 1
@@ -33,6 +35,7 @@ function Reset-SnipeitComponentOwner() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true)]
@@ -43,18 +46,13 @@ function Reset-SnipeitComponentOwner() {
 
         [string]$note,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = @{
+$Values = @{
             "checkin_qty" = $checkin_qty
         }
 
@@ -63,17 +61,8 @@ function Reset-SnipeitComponentOwner() {
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/components/$id/checkin"
             Method = 'POST'
+            Session = $Session
             Body   = $Values
-        }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
         }
     }
 
@@ -86,9 +75,5 @@ function Reset-SnipeitComponentOwner() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

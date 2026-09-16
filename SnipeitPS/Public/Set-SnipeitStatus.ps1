@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Sets Snipe-IT Status Labels
 
@@ -10,6 +10,7 @@ Name of the status label
 
 .PARAMETER type
 Type of status label. Valid values are deployable, undeployable, pending, and archived.
+Omitted type, color, and navigation/default flags are read from the current label before updating.
 
 .PARAMETER notes
 Notes about the status label
@@ -26,11 +27,13 @@ Hex code showing what color the status label should be on the pie chart in the d
 .PARAMETER RequestType
 HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+.PARAMETER Session
+Optional custom SnipeitSession instance.
 
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+System.Management.Automation.PSCustomObject
+
 
 .EXAMPLE
 Set-SnipeitStatus -id 1 -name "Ready to Deploy" -type deployable
@@ -45,6 +48,7 @@ function Set-SnipeitStatus() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
     )]
+    [OutputType([PSCustomObject])]
     Param(
         [parameter(Mandatory=$true,ValueFromPipelineByPropertyName)]
         [int[]]$id,
@@ -66,28 +70,13 @@ function Set-SnipeitStatus() {
         [ValidateSet("Put","Patch")]
         [string]$RequestType = "Patch",
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
     }
 
     process {
@@ -95,10 +84,34 @@ function Set-SnipeitStatus() {
             $Parameters = @{
                 Api           = "$script:SnipeitApiPrefix/statuslabels/$status_id"
                 Method        = $RequestType
-                Body          = $Values
+                Session = $Session
+                Body          = $Values.Clone()
             }
 
             if ($PSCmdlet.ShouldProcess("Status ID $status_id", $MyInvocation.MyCommand.Name)) {
+                $preservedFields = @('type', 'color', 'show_in_nav', 'default_label')
+                $missingFields = @($preservedFields | Where-Object { -not $Values.ContainsKey($_) })
+                if ($missingFields.Count -gt 0) {
+                    $current = Invoke-SnipeitMethod -Api $Parameters.Api -Method GET -Session $Session
+                    if ($null -eq $current) {
+                        Write-Error "Cannot preserve settings for status label $status_id because its lookup failed."
+                        continue
+                    }
+                    $incomplete = $false
+                    foreach ($field in $missingFields) {
+                        if (-not $current.PSObject.Properties[$field]) {
+                            Write-Error "Status label $status_id response is missing '$field'; update cancelled."
+                            $incomplete = $true
+                            break
+                        }
+                        $Parameters.Body[$field] = $current.$field
+                    }
+                    if ($incomplete) { continue }
+                    if ($Parameters.Body['type'] -notin @('deployable', 'undeployable', 'pending', 'archived')) {
+                        Write-Error "Status label $status_id has an unrecognized type; update cancelled."
+                        continue
+                    }
+                }
                 $result = Invoke-SnipeitMethod @Parameters
                 $result
             }
@@ -107,9 +120,5 @@ function Set-SnipeitStatus() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

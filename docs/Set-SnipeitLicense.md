@@ -13,13 +13,13 @@ Updates a license
 
 ## SYNTAX
 
-```powershell
+```
 Set-SnipeitLicense [-id] <Int32[]> [[-name] <String>] [[-seats] <Int32>] [[-category_id] <Int32>]
- [[-company_id] <Int32>] [[-expiration_date] <DateTime>] [[-license_email] <String>]
- [[-license_name] <String>] [[-maintained] <Boolean>] [[-manufacturer_id] <Int32>] [[-notes] <String>]
- [[-order_number] <String>] [[-purchase_cost] <Single>] [[-purchase_date] <DateTime>]
- [[-reassignable] <Boolean>] [[-serial] <String>] [[-supplier_id] <Int32>] [[-termination_date] <DateTime>]
- [[-RequestType] <String>] [[-url] <String>] [[-apiKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-company_id] <Int32>] [[-expiration_date] <DateTime>] [[-license_email] <String>] [[-license_name] <String>]
+ [[-maintained] <Boolean>] [[-manufacturer_id] <Int32>] [[-notes] <String>] [[-order_number] <String>]
+ [[-purchase_cost] <String>] [[-purchase_date] <DateTime>] [[-reassignable] <Boolean>] [[-serial] <String>]
+ [[-supplier_id] <Int32>] [[-termination_date] <DateTime>] [[-RequestType] <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,10 +36,25 @@ Set-SnipeitLicense -id 1 -name "License" -seats 3 -company_id 1
 
 ## PARAMETERS
 
-### -apiKey
+### -id
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-User's API Key for Snipe-IT.
+ID number of license or array of license IDs
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -name
+
+Name of license
 
 ```yaml
 Type: String
@@ -47,8 +62,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 21
+Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -seats
+
+Number of license seats owned.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -74,7 +105,7 @@ Accept wildcard characters: False
 ID number of company the license belongs to
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
@@ -98,22 +129,6 @@ Required: False
 Position: 6
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -id
-
-ID number of license or array of license IDs
-
-```yaml
-Type: Int32[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -154,7 +169,7 @@ Accept wildcard characters: False
 Maintained status of license
 
 ```yaml
-Type: Nullable[Boolean]
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
@@ -177,22 +192,6 @@ Aliases:
 Required: False
 Position: 10
 Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -name
-
-Name of license
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -266,46 +265,13 @@ Accept wildcard characters: False
 Is license reassignable?
 
 ```yaml
-Type: Nullable[Boolean]
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 15
 Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RequestType
-
-HTTP request type to send to Snipe-IT system.
-Defaults to Patch. You could use Put if needed.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 19
-Default value: Patch
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -seats
-
-Number of license seats owned.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -331,7 +297,7 @@ Accept wildcard characters: False
 ID number of license supplier
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
@@ -358,10 +324,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -url
+### -RequestType
 
-Deprecated parameter, please use Connect-SnipeitPS instead.
-URL of Snipe-IT system.
+HTTP request type to send to Snipe-IT system.
+Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -369,24 +335,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
+Position: 19
+Default value: Patch
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -408,16 +358,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
+### -Confirm
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

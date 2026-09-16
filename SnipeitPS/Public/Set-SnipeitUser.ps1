@@ -1,4 +1,4 @@
-<#
+﻿<#
     .SYNOPSIS
     Updates a user on Snipe-IT system
 
@@ -35,8 +35,9 @@
     .PARAMETER phone
     Phone number
 
-    .PARAMETER company_id
-    ID number of company the user belongs to
+    .PARAMETER companies
+    Replaces the user's complete company membership list (company_ids on the API).
+    The legacy company_id alias also replaces memberships. Omit to preserve existing memberships.
 
     .PARAMETER location_id
     ID number of location
@@ -65,11 +66,13 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     Set-SnipeitUser -id 3 -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
@@ -82,6 +85,7 @@ function Set-SnipeitUser() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
@@ -104,12 +108,16 @@ function Set-SnipeitUser() {
         [object]$password,
 
         [Alias("company_id")]
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
         [int[]]$companies,
 
+        [ArgumentCompleter([SnipeitLocationCompleter])]
         [Nullable[System.Int32]]$location_id,
 
+        [ArgumentCompleter([SnipeitDepartmentCompleter])]
         [Nullable[System.Int32]]$department_id,
 
+        [ArgumentCompleter([SnipeitUserCompleter])]
         [Nullable[System.Int32]]$manager_id,
 
         [int[]]$groups,
@@ -130,17 +138,17 @@ function Set-SnipeitUser() {
         [ValidateSet("Put","Patch")]
         [string]$RequestType = "Patch",
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
     begin{
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if ($PSBoundParameters.ContainsKey('companies')) {
+            $Values['company_ids'] = $companies
+            $Values.Remove('companies')
+        }
 
         if ($PSBoundParameters.ContainsKey('password')) {
             if ($password -is [System.Security.SecureString]) {
@@ -154,16 +162,6 @@ function Set-SnipeitUser() {
             $Values['password_confirmation'] = $passwordPlain
         }
 
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
-
     }
 
     process{
@@ -171,6 +169,7 @@ function Set-SnipeitUser() {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/users/$user_id"
                 Method = $RequestType
+                Session = $Session
                 Body   = $Values.Clone()
             }
 
@@ -183,9 +182,5 @@ function Set-SnipeitUser() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

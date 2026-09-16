@@ -30,11 +30,11 @@
     .PARAMETER status_id
     Optional status ID to set the asset to during checkout
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+    System.Management.Automation.PSCustomObject
 
     .EXAMPLE
     Set-SnipeitAssetOwner -id 1 -assigned_id 1 -checkout_to_type user -note "testing check out to user"
@@ -44,6 +44,7 @@ function Set-SnipeitAssetOwner() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
@@ -66,17 +67,12 @@ function Set-SnipeitAssetOwner() {
         [ValidateRange(1, [int]::MaxValue)]
         [int]$status_id,
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin{
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         if ($Values['expected_checkin']) {
@@ -88,24 +84,14 @@ function Set-SnipeitAssetOwner() {
         }
 
         switch ($checkout_to_type) {
-            'location' { $Values += @{ "assigned_location" = $assigned_id } }
-            'user' { $Values += @{ "assigned_user" = $assigned_id } }
-            'asset' { $Values += @{ "assigned_asset" = $assigned_id } }
+            'user'     { $Values['assigned_user'] = $assigned_id }
+            'asset'    { $Values['assigned_asset'] = $assigned_id }
+            'location' { $Values['assigned_location'] = $assigned_id }
         }
         $Values['checkout_to_type'] = $checkout_to_type
 
         #These are routing parameters, not API body fields
         if ($Values.ContainsKey('assigned_id')) {$Values.Remove('assigned_id')}
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
 
     }
 
@@ -114,6 +100,7 @@ function Set-SnipeitAssetOwner() {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/hardware/$asset_id/checkout"
                 Method = 'POST'
+                Session = $Session
                 Body   = $Values
             }
 
@@ -126,9 +113,5 @@ function Set-SnipeitAssetOwner() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }

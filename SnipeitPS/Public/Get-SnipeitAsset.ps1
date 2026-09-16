@@ -2,6 +2,13 @@
 .SYNOPSIS
 Gets a list of Snipe-IT Assets or specific asset
 
+.DESCRIPTION
+Retrieves hardware asset records from the Snipe-IT REST API based on search criteria, specific IDs, asset tags, serial numbers, audit schedules, user checkout relationships, or component associations. Supports automated client-side pagination via the -all switch.
+
+.OUTPUTS
+[PSCustomObject]
+Emits Snipe-IT hardware asset objects returned by the API.
+
 .PARAMETER search
 A text string to search the assets data
 
@@ -34,7 +41,7 @@ Optionally restrict asset results to this order number
 
 .PARAMETER model_id
 Optionally restrict asset results to this asset model ID
-        
+
 .PARAMETER category_id
 Optionally restrict asset results to this category ID
 
@@ -78,12 +85,6 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
-.PARAMETER url
-Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
-
-.PARAMETER apiKey
-Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
-
 .EXAMPLE
 Get-SnipeitAsset -all
 Returns all assets
@@ -125,6 +126,7 @@ Get Assets with component ID 5
 
 function Get-SnipeitAsset() {
     [CmdletBinding(DefaultParameterSetName = 'Search')]
+    [OutputType([PSCustomObject])]
     Param(
         [parameter(ParameterSetName='Search')]
         [string]$search,
@@ -145,10 +147,11 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Assets overdue for auditing')]
         [switch]$audit_overdue,
 
-        [parameter(ParameterSetName='Assets checked out to user id')]
+        [parameter(ParameterSetName='Assets checked out to user id', ValueFromPipelineByPropertyName = $true)]
+        [Alias('assigned_user', 'assigned_id')]
         [int]$user_id,
 
-        [parameter(ParameterSetName='Assets with component id')]
+        [parameter(ParameterSetName='Assets with component id', ValueFromPipelineByPropertyName = $true)]
         [int]$component_id,
 
         [parameter(ParameterSetName='Search')]
@@ -158,18 +161,23 @@ function Get-SnipeitAsset() {
         [string]$order_number,
 
         [parameter(ParameterSetName='Search')]
+        [ArgumentCompleter([SnipeitModelCompleter])]
         [int]$model_id,
 
         [parameter(ParameterSetName='Search')]
+        [ArgumentCompleter([SnipeitCategoryCompleter])]
         [int]$category_id,
 
         [parameter(ParameterSetName='Search')]
+        [ArgumentCompleter([SnipeitManufacturerCompleter])]
         [int]$manufacturer_id,
 
         [parameter(ParameterSetName='Search')]
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
         [int]$company_id,
 
         [parameter(ParameterSetName='Search')]
+        [ArgumentCompleter([SnipeitLocationCompleter])]
         [int]$location_id,
 
         [parameter(ParameterSetName='Search')]
@@ -183,6 +191,7 @@ function Get-SnipeitAsset() {
         [string]$status,
 
         [parameter(ParameterSetName='Search')]
+        [ArgumentCompleter([SnipeitStatusCompleter])]
         [int]$status_id,
 
         [parameter(ParameterSetName='Search')]
@@ -227,17 +236,12 @@ function Get-SnipeitAsset() {
         [switch]$all = $false,
 
         [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [SnipeitSession]$Session
     )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 
         # Add in custom fields.
         if ($customfields.Count -gt 0) {
@@ -247,74 +251,55 @@ function Get-SnipeitAsset() {
                 }
             }
         }
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
-        }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
-        }
     }
 
     process {
+        $pathParams = @{}
         switch ($PsCmdlet.ParameterSetName) {
-            'Search' { $api = "$script:SnipeitApiPrefix/hardware" }
-            'Get with id'  {$api= "$script:SnipeitApiPrefix/hardware/$id"}
-            'Get with asset tag' {$api= "$script:SnipeitApiPrefix/hardware/bytag/$asset_tag"}
-            'Get with serial' { $api= "$script:SnipeitApiPrefix/hardware/byserial/$serial"}
-            'Assets due auditing soon' {$api = "$script:SnipeitApiPrefix/hardware/audit/due"}
-            'Assets overdue for auditing' {$api = "$script:SnipeitApiPrefix/hardware/audit/overdue"}
-            'Assets checked out to user id'{$api = "$script:SnipeitApiPrefix/users/$user_id/assets"}
-            'Assets with component id' {$api = "$script:SnipeitApiPrefix/components/$component_id/assets"}
+            'Search' { $route = "$script:SnipeitApiPrefix/hardware" }
+            'Get with id' {
+                $route = "$script:SnipeitApiPrefix/hardware/{id}"
+                $pathParams['id'] = $id
+            }
+            'Get with asset tag' {
+                $route = "$script:SnipeitApiPrefix/hardware/bytag/{tag}"
+                $pathParams['tag'] = $asset_tag
+            }
+            'Get with serial' {
+                $route = "$script:SnipeitApiPrefix/hardware/byserial/{serial}"
+                $pathParams['serial'] = $serial
+            }
+            'Assets due auditing soon' { $route = "$script:SnipeitApiPrefix/hardware/audit/due" }
+            'Assets overdue for auditing' { $route = "$script:SnipeitApiPrefix/hardware/audit/overdue" }
+            'Assets checked out to user id' {
+                $route = "$script:SnipeitApiPrefix/users/{user_id}/assets"
+                $pathParams['user_id'] = $user_id
+            }
+            'Assets with component id' {
+                $route = "$script:SnipeitApiPrefix/components/{component_id}/assets"
+                $pathParams['component_id'] = $component_id
+            }
+        }
+
+        # Remove 'all' switch from query parameters before passing to dispatcher
+        if ($SearchParameter.ContainsKey('all')) {
+            $SearchParameter.Remove('all')
         }
 
         $Parameters = @{
-            Api           = $api
+            Route         = $route
+            PathParameter = $pathParams
             Method        = 'Get'
             GetParameters = $SearchParameter
+            Paginate      = [bool]$all
+            Session       = $Session
         }
 
-        if ($all) {
-            $offstart = $(if ($PSBoundParameters.ContainsKey('offset')) {$offset} Else {0})
-            $callargs = $SearchParameter.Clone()
-            Write-Verbose "Callargs: $($callargs | ConvertTo-Json)"
-            $callargs.Remove('all')
-
-            while ($true) {
-                $callargs['offset'] = $offstart
-                $callargs['limit'] = $limit
-                $res=Get-SnipeitAsset @callargs
-                if ($null -ne $res) { $res }
-                if ( @($res).Count -lt $limit) {
-                    break
-                }
-                $offstart = $offstart + $limit
-                if ($offstart -gt 10000000) {
-                    Write-Warning "Pagination exceeded 10,000,000 offset, stopping to prevent infinite loop"
-                    break
-                }
-            }
-        } else {
-            $result = Invoke-SnipeitMethod @Parameters
-            $result
-        }
+        $result = Invoke-SnipeitMethod @Parameters
+        $result
     }
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
-
 }
-
-
-
-
-
-

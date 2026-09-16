@@ -6,7 +6,7 @@ Describe "Invoke-SnipeitMethod coverage" {
 
     It "Redacts password from Debug stream when DebugPreference is Continue" {
         InModuleScope 'SnipeitPS' {
-            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "http://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
+            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "https://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
             $prevDebug = $DebugPreference
             $DebugPreference = 'Continue'
 
@@ -22,7 +22,7 @@ Describe "Invoke-SnipeitMethod coverage" {
 
     It "PS7: reads ErrorDetails.Message (Valid JSON)" {
         InModuleScope 'SnipeitPS' {
-            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "http://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
+            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "https://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
             Mock Invoke-RestMethod {
                 $ex = New-Object System.Exception "err"
                 $err = New-Object System.Management.Automation.ErrorRecord $ex, "id", "NotSpecified", $null
@@ -42,7 +42,7 @@ Describe "Invoke-SnipeitMethod coverage" {
 
     It "PS7: reads ErrorDetails.Message (Invalid JSON)" {
         InModuleScope 'SnipeitPS' {
-            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "http://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
+            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "https://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
             Mock Invoke-RestMethod {
                 $ex = New-Object System.Exception "err"
                 $responseMock = New-Object PSObject
@@ -66,7 +66,7 @@ Describe "Invoke-SnipeitMethod coverage" {
 
     It "PS5: reads response stream (Valid JSON)" {
         InModuleScope 'SnipeitPS' {
-            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "http://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
+            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "https://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
             Mock Invoke-RestMethod {
                 $responseBody = '{"status":"error","messages":"PS5 JSON"}'
                 $bytes = [System.Text.Encoding]::UTF8.GetBytes($responseBody)
@@ -95,7 +95,7 @@ Describe "Invoke-SnipeitMethod coverage" {
 
     It "PS5: reads response stream (Invalid JSON)" {
         InModuleScope 'SnipeitPS' {
-            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "http://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
+            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "https://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
             Mock Invoke-RestMethod {
                 $responseBody = 'Bad PS5 Data'
                 $bytes = [System.Text.Encoding]::UTF8.GetBytes($responseBody)
@@ -124,7 +124,7 @@ Describe "Invoke-SnipeitMethod coverage" {
 
     It "PS5: handles exception when reading response stream" {
         InModuleScope 'SnipeitPS' {
-            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "http://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
+            $script:SnipeitPSSession = [PSCustomObject]@{ Url = "https://test"; ApiKey = (ConvertTo-SecureString "key" -AsPlainText -Force); throttleLimit = 0 }
             Mock Invoke-RestMethod {
                 $responseMock = New-Object PSObject
                 $responseMock | Add-Member -MemberType ScriptMethod -Name "GetResponseStream" -Value { throw "StreamError" }

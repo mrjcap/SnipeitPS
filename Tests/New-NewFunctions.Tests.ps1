@@ -42,20 +42,6 @@ Describe "New-SnipeitStatus" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            New-SnipeitStatus -name "Test" -type deployable -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 Describe "New-SnipeitGroup" {
@@ -96,20 +82,6 @@ Describe "New-SnipeitGroup" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            New-SnipeitGroup -name "Test" -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-        }
-    }
 }
 
 Describe "New-SnipeitFieldset" {
@@ -127,20 +99,6 @@ Describe "New-SnipeitFieldset" {
                 $Method -eq "Post" -and
                 $Body.name -eq "Laptop Fields"
             }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            Mock Invoke-SnipeitMethod { return $null }
-            Mock Set-SnipeitPSLegacyApiKey {}
-            Mock Set-SnipeitPSLegacyUrl {}
-            Mock Reset-SnipeitPSLegacyApi {}
-            Mock Write-Warning {}
-            New-SnipeitFieldset -name "Test" -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-            Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-            Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-            Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
         }
     }
 }
@@ -185,25 +143,6 @@ Describe "New-SnipeitAssetFile" {
             }
         }
     }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            $tf = [System.IO.Path]::GetTempFileName()
-            try {
-                Mock Invoke-SnipeitMethod { return $null }
-                Mock Set-SnipeitPSLegacyApiKey {}
-                Mock Set-SnipeitPSLegacyUrl {}
-                Mock Reset-SnipeitPSLegacyApi {}
-                Mock Write-Warning {}
-                New-SnipeitAssetFile -id 1 -file $tf -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-                Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-                Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-                Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-            } finally {
-                Remove-Item $tf -Force -ErrorAction SilentlyContinue
-            }
-        }
-    }
 }
 
 Describe "New-SnipeitModelFile" {
@@ -243,25 +182,6 @@ Describe "New-SnipeitModelFile" {
             New-SnipeitModelFile -id 8 -file $tempFile -notes "spec sheet" -Confirm:$false
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
                 $Body.notes -eq "spec sheet"
-            }
-        }
-    }
-
-    It "Handles legacy url and apiKey parameters" {
-        InModuleScope 'SnipeitPS' {
-            $tf = [System.IO.Path]::GetTempFileName()
-            try {
-                Mock Invoke-SnipeitMethod { return $null }
-                Mock Set-SnipeitPSLegacyApiKey {}
-                Mock Set-SnipeitPSLegacyUrl {}
-                Mock Reset-SnipeitPSLegacyApi {}
-                Mock Write-Warning {}
-                New-SnipeitModelFile -id 1 -file $tf -url "http://test.snipeit.com" -apiKey "testkey" -Confirm:$false
-                Should -Invoke Set-SnipeitPSLegacyApiKey -Times 1
-                Should -Invoke Set-SnipeitPSLegacyUrl -Times 1
-                Should -Invoke Reset-SnipeitPSLegacyApi -Times 1
-            } finally {
-                Remove-Item $tf -Force -ErrorAction SilentlyContinue
             }
         }
     }

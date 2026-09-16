@@ -1,8 +1,8 @@
-<#
+﻿<#
     .SYNOPSIS
     Set license seat or checkout license seat
     .DESCRIPTION
-    Checkout specific license seat to user, asset or both
+    Checkout a specific license seat to a user or asset, or clear assignments with explicit nulls.
 
     .PARAMETER ID
     Unique ID for license to checkout or array of IDs
@@ -22,11 +22,13 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER url
-    Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+    .PARAMETER Session
+Optional custom SnipeitSession instance.
 
-    .PARAMETER apiKey
-    Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+.OUTPUTS
+
+    System.Management.Automation.PSCustomObject
+
 
     .EXAMPLE
     Set-SnipeitLicenseSeat -ID 1 -seat_id 1 -assigned_id 3
@@ -46,6 +48,7 @@ function Set-SnipeitLicenseSeat() {
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
     )]
+    [OutputType([PSCustomObject])]
 
     Param(
         [parameter(mandatory = $true,ValueFromPipelineByPropertyName)]
@@ -66,28 +69,20 @@ function Set-SnipeitLicenseSeat() {
         [ValidateSet("Put","Patch")]
         [string]$RequestType = "Patch",
 
-        [parameter(mandatory = $false)]
-        [string]$url,
-
-        [parameter(mandatory = $false)]
-        [string]$apiKey
+        [Parameter(Mandatory = $false)]
+        [SnipeitSession]$Session
     )
 
     begin{
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-        Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
-
-        $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+$Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
         $Values.Remove('seat_id')
-
-        if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {
-            Write-Warning "-apiKey parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyApiKey -apiKey $apiKey
+        if ($null -ne $assigned_to -and $null -ne $asset_id) {
+            throw 'Specify only one non-null assignment target: assigned_to or asset_id.'
         }
-
-        if ($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) {
-            Write-Warning "-url parameter is deprecated, please use Connect-SnipeitPS instead."
-            Set-SnipeitPSLegacyUrl -url $url
+        if ($PSBoundParameters.ContainsKey('note')) {
+            $Values['notes'] = $note
+            $Values.Remove('note')
         }
     }
 
@@ -96,6 +91,7 @@ function Set-SnipeitLicenseSeat() {
             $Parameters = @{
                 Api    = "$script:SnipeitApiPrefix/licenses/$license_id/seats/$seat_id"
                 Method = $RequestType
+                Session = $Session
                 Body   = $Values
             }
 
@@ -108,9 +104,5 @@ function Set-SnipeitLicenseSeat() {
 
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-        # reset legacy sessions
-        if (($PSBoundParameters.ContainsKey('url') -and '' -ne [string]$url) -or ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey)) {
-            Reset-SnipeitPSLegacyApi
-        }
     }
 }
