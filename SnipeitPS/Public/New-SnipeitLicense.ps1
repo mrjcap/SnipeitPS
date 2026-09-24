@@ -56,7 +56,16 @@
     .PARAMETER termination_date
     Termination date for license.
 
-    .PARAMETER Session
+    .PARAMETER depreciation_id
+ID of the depreciation schedule. The server requires purchase_date when this is set.
+
+.PARAMETER purchase_order
+Purchase order reference for the license.
+
+.PARAMETER min_amt
+Minimum seat quantity used for inventory alerts.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -67,6 +76,9 @@ Optional custom SnipeitSession instance.
     .EXAMPLE
     New-SnipeitLicense -name "License" -seats 3 -company_id 1
 
+.NOTES
+company_id, purchase_date, expiration_date, and termination_date accept explicit null.
+Unbound optional fields are omitted from the request.
 #>
 
 function New-SnipeitLicense() {
@@ -89,11 +101,10 @@ function New-SnipeitLicense() {
         [ArgumentCompleter([SnipeitCategoryCompleter])]
         [int]$category_id,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitCompanyCompleter])]
-        [int]$company_id,
+        [Nullable[int]]$company_id,
 
-        [datetime]$expiration_date,
+        [Nullable[datetime]]$expiration_date,
 
         [ValidateLength(1, 120)]
         [string]$license_email,
@@ -113,7 +124,7 @@ function New-SnipeitLicense() {
 
         [string]$purchase_cost,
 
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [Nullable[bool]]$reassignable,
 
@@ -123,12 +134,21 @@ function New-SnipeitLicense() {
         [ArgumentCompleter([SnipeitSupplierCompleter])]
         [int]$supplier_id,
 
-        [datetime]$termination_date,
+        [Nullable[datetime]]$termination_date,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[int]]$depreciation_id,
+
+        [string]$purchase_order,
+
+        [Nullable[int]]$min_amt
     )
     begin {
+        if ($null -ne $company_id -and $company_id -lt 1) {
+            throw [System.ArgumentOutOfRangeException]::new('company_id', 'Use a positive ID or null.')
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 

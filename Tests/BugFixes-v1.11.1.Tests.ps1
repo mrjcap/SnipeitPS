@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
     Import-Module "$PSScriptRoot\..\SnipeitPS\SnipeitPS.psd1" -Force
 }
 
@@ -245,6 +245,15 @@ Describe "New-SnipeitLicense" {
             }
         }
     }
+
+    It "Accepts purchase_order and passes it in request body" {
+        InModuleScope 'SnipeitPS' {
+            New-SnipeitLicense -name "PO Test" -seats 1 -purchase_order "PO-99123" -Confirm:$false
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Body.purchase_order -eq "PO-99123"
+            }
+        }
+    }
 }
 
 # ============================================================
@@ -284,6 +293,15 @@ Describe "Set-SnipeitLicense" {
                 $Body.expiration_date -eq "2025-12-31" -and
                 $Body.purchase_date -eq "2025-01-01" -and
                 $Body.termination_date -eq "2026-06-30"
+            }
+        }
+    }
+
+    It "Accepts purchase_order and passes it in request body" {
+        InModuleScope 'SnipeitPS' {
+            Set-SnipeitLicense -id 1 -purchase_order "PO-99124" -Confirm:$false
+            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
+                $Body.purchase_order -eq "PO-99124"
             }
         }
     }

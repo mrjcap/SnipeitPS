@@ -62,7 +62,16 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER Session
+    .PARAMETER depreciation_id
+ID of the depreciation schedule. Pass $null to clear it.
+
+.PARAMETER purchase_order
+Purchase order reference for the license.
+
+.PARAMETER min_amt
+Minimum seat quantity used for inventory alerts.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -99,7 +108,7 @@ function Set-SnipeitLicense() {
         [ArgumentCompleter([SnipeitCompanyCompleter])]
         [Nullable[System.Int32]]$company_id,
 
-        [datetime]$expiration_date,
+        [Nullable[datetime]]$expiration_date,
 
         [string]$license_email,
 
@@ -108,9 +117,8 @@ function Set-SnipeitLicense() {
 
         [Nullable[bool]]$maintained,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitManufacturerCompleter])]
-        [int]$manufacturer_id,
+        [Nullable[int]]$manufacturer_id,
 
         [string]$notes,
 
@@ -118,7 +126,7 @@ function Set-SnipeitLicense() {
 
         [string]$purchase_cost,
 
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [Nullable[bool]]$reassignable,
 
@@ -127,16 +135,25 @@ function Set-SnipeitLicense() {
         [ArgumentCompleter([SnipeitSupplierCompleter])]
         [Nullable[System.Int32]]$supplier_id,
 
-        [datetime]$termination_date,
+        [Nullable[datetime]]$termination_date,
 
         [ValidateSet("Put","Patch")]
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[int]]$depreciation_id,
+
+        [string]$purchase_order,
+
+        [Nullable[int]]$min_amt
     )
 
     begin{
+        if ($null -ne $manufacturer_id -and $manufacturer_id -lt 1) {
+            throw [System.ArgumentOutOfRangeException]::new('manufacturer_id', 'Use a positive ID or null to clear the manufacturer.')
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 

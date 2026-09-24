@@ -1,3 +1,4 @@
+$ConfirmPreference = 'None'
 $config = New-PesterConfiguration
 $config.Run.Path = "./Tests/"
 $config.Filter.ExcludeTag = "Integration"
