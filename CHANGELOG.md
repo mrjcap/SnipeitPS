@@ -5,37 +5,84 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [v1.16.0] - 2026-09-24
 
 ### Added
 
-- Maintenance-type commands: `Get-SnipeitMaintenanceType`, `New-SnipeitMaintenanceType`,
-  `Set-SnipeitMaintenanceType`, and `Remove-SnipeitMaintenanceType`.
-- Maintenance completion and journal commands: `Complete-SnipeitAssetMaintenance`,
+- Added tab completion for nine entity ID types using a five-minute cache, plus `Clear-SnipeitCache`.
+- Added typed output and default table views for assets, users, licenses, models, and locations.
+- Added bulk asset operations, `Sync-SnipeitAsset`, and multi-tenant `-Session` support.
+- Added the MCP server, compiled help, and documentation tests.
+- **Pre-defined Kit Management:** `Get-SnipeitKit`, `New-SnipeitKit`, `Set-SnipeitKit`, `Remove-SnipeitKit`,
+  `Get-SnipeitKitItem`, `Add-SnipeitKitItem`, `Set-SnipeitKitItem`, and `Remove-SnipeitKitItem` for managing kits and
+  attaching/updating models, licenses, accessories, and consumables.
+- **File & Attachment Operations:** `Get-SnipeitFile`, `New-SnipeitFile`, `Save-SnipeitFile`, and `Remove-SnipeitFile`
+  with multi-part upload transport adapter (`Send-SnipeitMultipart`) supporting 9 entity types.
+- **CSV Imports Management:** `Get-SnipeitImport`, `New-SnipeitImport`, `Invoke-SnipeitImport`, and `Remove-SnipeitImport`
+  for managing CSV files, column mappings, and import execution.
+- **Depreciations & Accounting Reports:** `Get-SnipeitDepreciation`, `New-SnipeitDepreciation`,
+  `Set-SnipeitDepreciation`, `Remove-SnipeitDepreciation`, and `Get-SnipeitDepreciationReport`.
+- **Universal SelectLists & Entity History:** `Get-SnipeitSelectList` supporting 13 entity types with auto-paging, and
+  `Get-SnipeitHistory` supporting 9 entity types with action and IP filtering.
+- **Assigned Inventory Queries:** `Get-SnipeitAssetAssignment`, `Get-SnipeitLocationAsset`, and
+  `Get-SnipeitLocationAssignment`.
+- **Account Requests & Tokens:** `Get-SnipeitAccountRequest`, `New-SnipeitAccountRequest`,
+  `Remove-SnipeitAccountRequest`, `Get-SnipeitRequestableAsset`, `Get-SnipeitAccountEula`,
+  `Get-SnipeitPersonalAccessToken`, `New-SnipeitPersonalAccessToken`, and `Remove-SnipeitPersonalAccessToken`.
+- **Asset Actions & Label Definitions:** `Get-SnipeitAssetDue`, `Get-SnipeitLabelDefinition`, `Get-SnipeitAssetNote`,
+  `New-SnipeitAssetNote`, `Set-SnipeitFieldsetOrder`, `Get-SnipeitStatusCount`, `Test-SnipeitStatusDeployable`,
+  `Restore-SnipeitManufacturer`, and `Get-SnipeitActivityChart`.
+- **Administrative Diagnostics & Sync:** `Test-SnipeitLdap`, `Test-SnipeitLdapCredential`, `Send-SnipeitTestMail`,
+  `Clear-SnipeitBarcode`, `Get-SnipeitLoginAttempt`, `Sync-SnipeitLdapUser`, and `Send-SnipeitUserInventory`.
+- **Maintenance Management:** `Get-SnipeitMaintenanceType`, `New-SnipeitMaintenanceType`,
+  `Set-SnipeitMaintenanceType`, `Remove-SnipeitMaintenanceType`, `Complete-SnipeitAssetMaintenance`,
   `Get-SnipeitAssetMaintenanceNote`, and `New-SnipeitAssetMaintenanceNote`.
-- License checkout and checkin commands: `Set-SnipeitLicenseOwner` and `Reset-SnipeitLicenseOwner`.
-- Reference documentation for all nine new commands.
-- Regression coverage for API contracts, singleton pagination, all nine argument completers,
-  cache reuse and clearing, empty results, and recovery after disconnection.
+- **License Management:** `Set-SnipeitLicenseOwner` and `Reset-SnipeitLicenseOwner`.
+- **Fail-Closed Offline Test Runner:** Added `Tests/Support/Invoke-SnipeitOfflineTest.ps1` with proxy guards preventing
+  unmocked network calls to `Invoke-RestMethod` and `Invoke-WebRequest`.
+- **API Parity Contract Ledger:** Added `Tests/Fixtures/ApiParity.Contracts.psd1` covering all 249 REST v1 operations.
+- **Table Formatting Views:** Tagged output types in `SnipeitPS.format.ps1xml` for kits, depreciations, files, imports,
+  login attempts, and backup downloads.
 
 ### Changed
 
-- Maintenance updates support paired checkout-snapshot fields, including explicit clearing.
-  Creation leaves the snapshot to the server instead of sending fields the server overwrites.
+- Multipart uploads spool to a temporary file instead of holding the full request in memory. The client sets no
+  upload-size cap; available temporary storage and the server's configured limit determine the maximum.
+- `Set-SnipeitAssetOwner` supports `-tag` for checking out assets by tag.
+- `Reset-SnipeitAssetOwner` supports `-tag` (in route) and body-based quickscan checkin via `-checkin_key` and
+  `-checkin_by_field`.
+- `Save-SnipeitBackup` supports `-Latest` parameter set and typed `SnipeitPS.BackupDownload` result.
+- `Get-SnipeitFieldsetField` supports optional `-model_id` for model-specific default values.
+- `New-SnipeitAssetLabel` moves asset tag lookups inside ShouldProcess for zero-HTTP `-WhatIf`.
+- `Get-SnipeitAssetMaintenance` supports `-id` single lookup and comprehensive query filters.
+- `New-SnipeitAssetMaintenance` supports bulk creation via `-asset_ids`.
+- Maintenance updates support paired checkout-snapshot fields, including explicit clearing. Creation leaves the
+  snapshot to the server instead of sending fields the server overwrites.
 - Maintenance completion uses the server timestamp and supports an optional journal note.
 - Status updates preserve omitted values while allowing explicit null and false values.
+- Existing resource commands expose audited query and writable fields, with explicit null, false, zero, array,
+  image, authorization-error, and per-record pipeline tests against the pinned server source.
+- Maintenance creation and updates support URL, completion metadata, nullable supplier, cost and duration fields.
+  Single-asset creation accepts images; bulk maintenance images remain unsupported.
+- Depreciation reports and due-asset listings support shared asset filters and validated custom-field columns.
+  Asset model filters accept multiple IDs, and asset sorting accepts server-supported custom-field columns.
+- Single-file reads and downloads support `-inline`. Binary reads use `-AsByteArray`; downloads preserve bytes.
+  The server honors inline disposition only for its safe file-extension allowlist.
 
 ### Breaking changes
 
-- `New-SnipeitAssetMaintenance` and `Set-SnipeitAssetMaintenance` reject the legacy `assigned_to`
-  parameter with migration guidance. Use `responsible_party_id` for the responsible user, or the
-  paired `checked_out_to_id` and `checked_out_to_type` fields when updating the checkout snapshot.
+- `New-SnipeitAssetMaintenance` and `Set-SnipeitAssetMaintenance` reject the legacy `assigned_to` parameter with
+  migration guidance. Use `responsible_party_id` for the responsible user, or the paired `checked_out_to_id` and
+  `checked_out_to_type` fields when updating the checkout snapshot.
 
 ### Fixed
 
+- Replaced sliding-window array copies with a timestamp queue in the rate limiter.
+- Added pipeline property binding for IDs across Get, Set, and Remove commands.
+- Corrected multiline backtick formatting in platyPS help.
 - User company assignments use the API's `company_ids` field.
-- Bulk asset updates use `PATCH /api/v1/hardware/bulk`; bulk removal uses per-asset DELETE requests
-  with results and errors correlated to each requested ID.
+- Bulk asset updates use `PATCH /api/v1/hardware/bulk`; bulk removal uses per-asset DELETE requests with results and
+  errors correlated to each requested ID.
 - Dispatcher handling of bulk response envelopes, structured API errors, and transport failures.
 - URI path escaping avoids double encoding.
 - Serial-based audits send the API's `audit_by_field` and `audit_key` fields.
@@ -44,40 +91,14 @@ adheres to [Semantic Versioning](http://semver.org/).
 - Singleton pagination preserves row counts on PS5, fixing skipped rows and maintenance-name lookups.
 - PS5 cache methods normalize empty pipeline output to null instead of throwing an index exception.
 - Argument completers bind fetch callbacks to the loaded module, restoring PS5 lookup and disconnected recovery.
-- Test fixtures use native PS5 and PS7 behavior for credential conversion, uploads, HTTP errors,
-  subprocess stderr, and file paths without skipping tests or weakening assertions.
+- Test fixtures use native PS5 and PS7 behavior for credential conversion, uploads, HTTP errors, subprocess stderr, and
+  file paths without skipping tests or weakening assertions.
 
 ### Verification
 
-- All 828 offline tests pass on both Windows PowerShell 5.1 and PowerShell 7, with no skipped tests.
-- Native model and status tab completion verified on both runtimes; independent code reviews passed.
-- Live-service integration testing was not run. Remaining API gaps beyond these commands are outside this change.
-
-## [v1.16.0] - 2026-08-28
-
-### Added
-
-- **Tab completion:** Added 9 `IArgumentCompleter` classes using `[SnipeitCache]` with 5-minute memory caching.
-  Resolves IDs for models, statuses, categories, locations, companies, suppliers, departments, manufacturers,
-  and users on Tab.
-- **Cache management:** Added `Clear-SnipeitCache` to invalidate cached entity lookups immediately.
-- **Table views:** Tagged output objects with `PSTypeName` (`SnipeitPS.Asset`, `SnipeitPS.User`, `SnipeitPS.License`,
-  `SnipeitPS.Model`, `SnipeitPS.Location`) and added `SnipeitPS.format.ps1xml` for default table formatting.
-- **Bulk operations:** Added `Update-SnipeitAssetBulk`, `Remove-SnipeitAssetBulk`, and `Set-SnipeitAssetCheckoutBulk`
-  targeting `/api/v1/hardware/bulkedit` and `/api/v1/hardware/bulkdelete`.
-- **Desired state sync:** Added `Sync-SnipeitAsset` supporting `Ensure = 'Present'|'Absent'` with property drift checking.
-- **Multi-tenant sessions:** Added `[SnipeitSession]` class and `-Session` parameter to pass connection targets per command.
-- **MCP server:** Added `mcp/SnipeitMcpServer.ps1` stdio JSON-RPC server for AI tools.
-- **Help compilation:** Added `build-docs.ps1` to compile MAML XML help (`SnipeitPS-help.xml`) and text topics using platyPS.
-- **Documentation tests:** Added `Tests/Documentation.Tests.ps1` to verify markdown docs and XML help coverage in CI.
-
-### Fixed & Optimized
-
-- **Rate limiter:** Replaced array copy sliding window in `Invoke-SnipeitMethod` with a `Queue[long]` timestamp queue
-  to remove allocation churn during bulk requests.
-- **Pipeline binding:** Added `ValueFromPipelineByPropertyName` to `-id`, `user_id`, `model_id`, and `component_id`
-  across `Get-*`, `Set-*`, and `Remove-*` commands.
-- **YAML help formatting:** Fixed multi-line backtick formatting errors across platyPS markdown documentation files.
+- PowerShell 7 offline tests: 1845 passed, 0 failed, 0 skipped on 2026-09-24.
+- PowerShell 5.1 and live-service integration tests were not rerun for this local release.
+- Passing offline tests does not establish complete deployed-server API parity.
 
 ## [v1.15.2] - 2026-08-17
 
