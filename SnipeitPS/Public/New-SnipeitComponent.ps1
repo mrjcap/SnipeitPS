@@ -32,6 +32,24 @@ Cost of item being purchased.
 .PARAMETER image
 Component image filename and path
 
+.PARAMETER supplier_id
+ID of the supplier associated with the component.
+
+.PARAMETER manufacturer_id
+ID of the component manufacturer.
+
+.PARAMETER model_number
+Manufacturer's model number.
+
+.PARAMETER serial
+Serial number recorded for the component.
+
+.PARAMETER notes
+Notes stored with the component.
+
+.PARAMETER min_amt
+Minimum stock quantity used for inventory alerts.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -44,6 +62,9 @@ System.Management.Automation.PSCustomObject
 New-SnipeitComponent -name 'Display adapter' -category_id 3 -qty 10
 
 
+.NOTES
+company_id, location_id, and purchase_date accept explicit null.
+Unbound optional fields are omitted from the request.
 #>
 
 function New-SnipeitComponent() {
@@ -64,15 +85,13 @@ function New-SnipeitComponent() {
         [parameter(mandatory = $true)]
         [int]$qty,
 
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$company_id,
+        [Nullable[int]]$company_id,
 
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$location_id,
+        [Nullable[int]]$location_id,
 
         [string]$order_number,
 
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [string]$purchase_cost,
 
@@ -80,9 +99,28 @@ function New-SnipeitComponent() {
         [string]$image,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [ArgumentCompleter([SnipeitSupplierCompleter])]
+        [Nullable[int]]$supplier_id,
+
+        [ArgumentCompleter([SnipeitManufacturerCompleter])]
+        [Nullable[int]]$manufacturer_id,
+
+        [string]$model_number,
+
+        [string]$serial,
+
+        [string]$notes,
+
+        [Nullable[int]]$min_amt
     )
     begin {
+        foreach ($field in @('company_id', 'location_id')) {
+            if ($null -ne $PSBoundParameters[$field] -and $PSBoundParameters[$field] -lt 1) {
+                throw [System.ArgumentOutOfRangeException]::new($field, 'Use a positive ID or null.')
+            }
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 

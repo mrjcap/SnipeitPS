@@ -216,18 +216,18 @@ Describe "Update-SnipeitAlias" {
 Describe "Save-SnipeitBackup" {
     BeforeAll {
         InModuleScope 'SnipeitPS' {
-            Mock Invoke-RestMethod {}
+            Mock Save-SnipeitApiFile { [pscustomobject]@{ Length = 0; ContentType = 'application/octet-stream' } }
             # Set up session
             $SnipeitPSSession.url = "https://snipeit.example.com"
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testkey" -AsPlainText -Force
         }
     }
 
-    It "Calls Invoke-RestMethod with correct URL" {
+    It "Calls the shared downloader with correct URL" {
         InModuleScope 'SnipeitPS' {
             $tempDir = [System.IO.Path]::GetTempPath()
             Save-SnipeitBackup -filename "backup.sql" -path $tempDir -Confirm:$false
-            Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter {
+            Should -Invoke Save-SnipeitApiFile -Times 1 -ParameterFilter {
                 $Uri -eq "https://snipeit.example.com/api/v1/settings/backups/download/backup.sql"
             }
         }
@@ -240,7 +240,7 @@ Describe "Save-SnipeitBackup" {
 
             $result = Save-SnipeitBackup -filename $filename -path $tempDir -Confirm:$false
 
-            Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter {
+            Should -Invoke Save-SnipeitApiFile -Times 1 -ParameterFilter {
                 $Uri -eq "https://snipeit.example.com/api/v1/settings/backups/download/backup%20%231%3F100%25.sql" -and
                     $OutFile -eq (Join-Path $tempDir $filename)
             }

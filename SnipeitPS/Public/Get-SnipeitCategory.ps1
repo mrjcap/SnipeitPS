@@ -26,6 +26,33 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER category_type
+Restrict results to an asset, accessory, component, consumable, or license category.
+
+.PARAMETER archived
+Include archived categories as supported by the server.
+
+.PARAMETER use_default_eula
+Filter categories by use of the default EULA.
+
+.PARAMETER require_acceptance
+Filter categories by their acceptance requirement.
+
+.PARAMETER checkin_email
+Filter categories by their checkin email setting.
+
+.PARAMETER created_by
+Restrict results to the creating user's ID.
+
+.PARAMETER created_at
+Exact creation timestamp in server format.
+
+.PARAMETER updated_at
+Exact last-update timestamp in server format.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -72,6 +99,33 @@ function Get-SnipeitCategory() {
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
 
+        [parameter(ParameterSetName='Search')]
+        [string]$category_type,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$archived,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$use_default_eula,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$require_acceptance,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$checkin_email,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$created_by,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$created_at,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$updated_at,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
+
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session
     )
@@ -79,6 +133,9 @@ function Get-SnipeitCategory() {
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        foreach ($field in @('use_default_eula', 'require_acceptance', 'checkin_email')) {
+            if ($null -ne $SearchParameter[$field]) { $SearchParameter[$field] = [int][bool]$SearchParameter[$field] }
+        }
     }
     process {
         $pathParams = @{}

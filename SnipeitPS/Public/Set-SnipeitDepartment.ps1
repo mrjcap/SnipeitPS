@@ -32,7 +32,16 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER Session
+    .PARAMETER phone
+Department contact phone number.
+
+.PARAMETER fax
+Department contact fax number.
+
+.PARAMETER tag_color
+Hexadecimal color used for the department tag.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -78,7 +87,13 @@ function Set-SnipeitDepartment() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$phone,
+
+        [string]$fax,
+
+        [string]$tag_color
     )
 
     begin {

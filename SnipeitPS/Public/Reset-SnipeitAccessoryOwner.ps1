@@ -9,6 +9,9 @@
     This is the assigned_pivot_id of the accessory+user relationships in the accessories_users table
     Use Get-SnipeitAccessoryOwner to find out needed value
 
+    .PARAMETER note
+    Note recorded for the accessory checkin.
+
     .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -39,7 +42,9 @@ function Reset-SnipeitAccessoryOwner() {
         [int]$assigned_pivot_id,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$note
     )
 
     begin {
@@ -47,11 +52,13 @@ function Reset-SnipeitAccessoryOwner() {
 }
 
     process {
+        $body = @{}
+        if ($PSBoundParameters.ContainsKey('note')) { $body['note'] = $note }
         $Parameters = @{
             Api    = "$script:SnipeitApiPrefix/accessories/$assigned_pivot_id/checkin"
             Method = 'Post'
             Session = $Session
-            Body   = @{}
+            Body   = $body
         }
 
         if ($PSCmdlet.ShouldProcess("Accessory pivot ID $assigned_pivot_id", $MyInvocation.MyCommand.Name)) {

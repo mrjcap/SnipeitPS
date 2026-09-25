@@ -19,6 +19,9 @@
     .PARAMETER Body
     Request body as hashtable. Needed for post, put and patch
 
+    .PARAMETER ImageFieldName
+    Wire field for the image upload. User endpoints require avatar; other endpoints use image.
+
     .PARAMETER GetParameters
     Get-Parameters as hashtable.
 
@@ -50,13 +53,16 @@ function Invoke-SnipeitMethod {
         [string]$Route,
 
         [Parameter(Mandatory = $false)]
-        [Alias('PathParameters')]
+        [Alias('PathParameters', 'RouteTokens')]
         [Hashtable]$PathParameter,
 
         [ValidateSet("GET", "POST", "PUT", "PATCH", "DELETE")]
         [string]$Method = "GET",
 
         [Hashtable]$Body,
+
+        [ValidateSet('image', 'avatar')]
+        [string]$ImageFieldName = 'image',
 
         [Hashtable]$GetParameters,
 
@@ -71,31 +77,8 @@ function Invoke-SnipeitMethod {
     BEGIN {
         $activeSession = if ($null -ne $Session) { $Session } else { $SnipeitPSSession }
 
-        # Helper to read session properties whether dictionary or object
         $sessUrl = if ($activeSession -is [System.Collections.IDictionary]) { $activeSession['url'] } else { $activeSession.Url }
-        $sessApiKey = if ($activeSession -is [System.Collections.IDictionary]) { $activeSession['apiKey'] } else { $activeSession.ApiKey }
-
-        if ($null -ne $sessUrl -and $null -ne $sessApiKey) {
-            $parsedUrl = $null
-            if (-not [System.Uri]::TryCreate([string]$sessUrl, [System.UriKind]::Absolute, [ref]$parsedUrl) -or
-                $parsedUrl.Scheme -ne 'https') {
-                throw [System.ArgumentException]::new('Snipe-IT URL must be an absolute HTTPS URL.', 'Session.Url')
-            }
-
-            [string]$Url = ([string]$sessUrl).TrimEnd('/')
-            Write-Debug "Invoke-SnipeitMethod url: $Url"
-            if ($sessApiKey -is [System.Security.SecureString]) {
-                if ($script:IsPowerShell7) {
-                    $Token = ConvertFrom-SecureString -SecureString $sessApiKey -AsPlainText
-                } else {
-                    $Token = (New-Object System.Management.Automation.PSCredential("user", $sessApiKey)).GetNetworkCredential().Password
-                }
-            } else {
-                $Token = [string]$sessApiKey
-            }
-        } else {
-            throw "Please use Connect-SnipeitPS to set up a connection before any other commands."
-        }
+        [string]$Url = ([string]$sessUrl).TrimEnd('/')
 
         # Validation of parameters
         if (($Method -in ("POST", "PUT", "PATCH")) -and (-not $Body)) {
@@ -148,24 +131,17 @@ function Invoke-SnipeitMethod {
             $GetParameters = $null
         }
 
-        # Per-request header isolation to prevent pipeline mutation leakage
-        $_headers = @{
-            "Authorization" = "Bearer $($Token)"
-            'Content-Type'  = 'application/json; charset=utf-8'
-            "Accept"        = "application/json"
-            "User-Agent"    = "SnipeitPS/$script:SnipeitModuleVersion"
-        }
-
         $splatParameters = @{
-            Uri                = $apiUri
-            Method             = $Method
-            Headers            = $_headers
-            UseBasicParsing    = $true
-            MaximumRedirection = 0
-            ErrorAction        = 'Stop'
+            Uri    = $apiUri
+            Method = $Method
         }
 
         $effectiveBody = if ($null -ne $Body) { $Body.Clone() } else { $null }
+        # Legacy maintenance callers retain title internally; the server consumes name only.
+        if ($null -ne $effectiveBody -and $effectiveBody.ContainsKey('name') -and
+            ([uri]$apiUri).AbsolutePath -match '/api/v1/maintenances(?:/[0-9]+)?$') {
+            $effectiveBody.Remove('title')
+        }
 
         # Send image requests as multipart/form-data if supported
         if ($null -ne $effectiveBody -and $effectiveBody.ContainsKey('image')) {
@@ -175,7 +151,6 @@ function Invoke-SnipeitMethod {
                     $effectiveBody['_method'] = $Method
                     $splatParameters["Method"] = 'POST'
                     $splatParameters["Form"] = $effectiveBody
-                    $_headers.Remove('Content-Type')
                 } else {
                     $mimetype = 'application/octet-stream'
                     try {
@@ -185,6 +160,10 @@ function Invoke-SnipeitMethod {
                         Write-Debug "MimeMapping resolution failed for '$($effectiveBody['image'])', defaulting to $($mimetype). Error: $_"
                     }
                     $effectiveBody['image'] = 'data:' + $mimetype + ';base64,' + [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($effectiveBody['image']))
+                }
+                if ($ImageFieldName -ne 'image') {
+                    $effectiveBody[$ImageFieldName] = $effectiveBody['image']
+                    $effectiveBody.Remove('image')
                 }
             } catch {
                 Write-Error "Failed to process image file '$($effectiveBody['image'])': $_"
@@ -201,7 +180,6 @@ function Invoke-SnipeitMethod {
                     $effectiveBody['_method'] = $Method
                     $splatParameters["Method"] = 'POST'
                     $splatParameters["Form"] = $effectiveBody
-                    $_headers.Remove('Content-Type')
                 } else {
                     throw "File uploads require PowerShell 7.0 or later."
                 }
@@ -217,7 +195,7 @@ function Invoke-SnipeitMethod {
 
         if ($DebugPreference -ne 'SilentlyContinue' -and $null -ne $effectiveBody) {
             $debugBody = $effectiveBody.Clone()
-            foreach ($key in @('password', 'password_confirmation', 'apiKey', 'api_key', 'token', 'secret')) {
+            foreach ($key in @('password', 'password_confirmation', 'ldaptest_password', 'apiKey', 'api_key', 'token', 'secret')) {
                 if ($debugBody.ContainsKey($key)) {
                     $debugBody[$key] = '[REDACTED]'
                 }
@@ -225,179 +203,8 @@ function Invoke-SnipeitMethod {
             Write-Debug "$($debugBody | ConvertTo-Json -Depth 4)"
         }
 
-        # Request throttling
-        $tLimit = if ($activeSession -is [System.Collections.IDictionary]) { [int]$activeSession['throttleLimit'] } else { [int]$activeSession.ThrottleLimit }
-        $tPeriod = if ($activeSession -is [System.Collections.IDictionary]) { [int]$activeSession['throttlePeriod'] } else { [int]$activeSession.ThrottlePeriod }
-        $tMode = if ($activeSession -is [System.Collections.IDictionary]) { [string]$activeSession['throttleMode'] } else { [string]$activeSession.ThrottleMode }
-        $tThreshold = if ($activeSession -is [System.Collections.IDictionary]) { [int]$activeSession['throttleThreshold'] } else { [int]$activeSession.ThrottleThreshold }
-
-        if ($tLimit -gt 0) {
-            Write-Verbose "Check for request throttling"
-            $nowFileTime = (Get-Date).ToFileTime()
-            $cutoff = $nowFileTime - ($tPeriod * 10000)
-
-            # Ensure throttledRequests is Queue[long]
-            $queue = if ($activeSession -is [System.Collections.IDictionary]) { $activeSession['throttledRequests'] } else { $activeSession.ThrottledRequests }
-            if ($null -eq $queue -or $queue -isnot [System.Collections.Generic.Queue[long]]) {
-                $existing = if ($null -ne $queue) { [long[]]$queue } else { @() }
-                $queue = [System.Collections.Generic.Queue[long]]::new()
-                foreach ($t in $existing) {
-                    if ($t -gt $cutoff -and $t -le $nowFileTime) {
-                        $queue.Enqueue($t)
-                    }
-                }
-                if ($activeSession -is [System.Collections.IDictionary]) { $activeSession['throttledRequests'] = $queue } else { $activeSession.ThrottledRequests = $queue }
-            }
-
-            $naptime = 0
-            [System.Threading.Monitor]::Enter($queue)
-            try {
-                while ($queue.Count -gt 0 -and $queue.Peek() -le $cutoff) {
-                    [void]$queue.Dequeue()
-                }
-
-                $reqCount = $queue.Count
-                switch ($tMode) {
-                    "Burst" {
-                        if ($reqCount -ge $tLimit -and $reqCount -gt 0) {
-                            $oldest = $queue.Peek()
-                            $elapsedMs = [Math]::Round(($nowFileTime - $oldest) / 10000)
-                            $naptime = [Math]::Max(0, ($tPeriod - $elapsedMs))
-                            if ($naptime -eq 0) { $naptime = 1 }
-                        }
-                    }
-
-                    "Constant" {
-                        $lastTime = if ($activeSession -is [System.Collections.IDictionary]) { [long]$activeSession['lastRequestFileTime'] } else { [long]$activeSession.LastRequestFileTime }
-                        if ($lastTime -gt 0 -and $tLimit -gt 0) {
-                            $prevRequestTime = [Math]::Round(($nowFileTime - $lastTime) / 10000)
-                            $intervalMs = [Math]::Round($tPeriod / $tLimit)
-                            $naptime = [Math]::Max(0, ($intervalMs - $prevRequestTime))
-                        }
-                    }
-
-                    "Adaptive" {
-                        $unThrottledRequests = $tLimit * ($tThreshold / 100)
-                        if ($reqCount -ge $unThrottledRequests -and $reqCount -gt 0) {
-                            $oldest = $queue.Peek()
-                            $elapsedMs = [Math]::Round(($nowFileTime - $oldest) / 10000)
-                            $remainingPeriodMs = [Math]::Max(0, ($tPeriod - $elapsedMs))
-                            $remaining = $tLimit - $reqCount
-                            if ($remaining -lt 1) { $remaining = 1 }
-                            $naptime = [Math]::Round($remainingPeriodMs / $remaining)
-                            if ($naptime -eq 0 -and $reqCount -ge $tLimit) {
-                                $naptime = 1
-                            }
-                        }
-                    }
-                }
-                $scheduledTime = $nowFileTime + ($naptime * 10000)
-                $queue.Enqueue($scheduledTime)
-                if ($activeSession -is [System.Collections.IDictionary]) {
-                    $activeSession['lastRequestFileTime'] = $scheduledTime
-                } else {
-                    $activeSession.LastRequestFileTime = $scheduledTime
-                }
-            } finally {
-                [System.Threading.Monitor]::Exit($queue)
-            }
-
-            if ($naptime -gt 0) {
-                $safeNap = [int][Math]::Min([int]::MaxValue, [Math]::Max(0, $naptime))
-                Write-Verbose "Throttling request for $safeNap ms"
-                Start-Sleep -Milliseconds $safeNap
-            }
-        }
-
-        # Invoke the API
-        $webResponse = $null
-        $statusCode = $null
-        try {
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Invoking method $Method to URI $apiUri"
-            $debugSplat = $splatParameters.Clone()
-            if ($debugSplat.ContainsKey('Headers') -and $debugSplat['Headers'].ContainsKey('Authorization')) {
-                $debugSplat['Headers'] = $debugSplat['Headers'].Clone()
-                $debugSplat['Headers']['Authorization'] = 'Bearer [REDACTED]'
-            }
-            if ($debugSplat.ContainsKey('Form') -and $debugSplat['Form'] -is [System.Collections.IDictionary]) {
-                $sanitizedForm = $debugSplat['Form'].Clone()
-                foreach ($k in @('password', 'password_confirmation', 'apiKey', 'api_key', 'token', 'secret')) {
-                    if ($sanitizedForm.ContainsKey($k)) { $sanitizedForm[$k] = '[REDACTED]' }
-                }
-                $debugSplat['Form'] = $sanitizedForm
-            }
-            if ($debugSplat.ContainsKey('Body') -and $debugSplat['Body'] -is [byte[]]) {
-                $debugSplat['Body'] = '[BYTE_ARRAY]'
-            }
-            Write-Debug "[$($MyInvocation.MyCommand.Name)] Invoke-WebRequest with: $($debugSplat | Out-String)"
-            $webResponse = Invoke-RestMethod @splatParameters
-        }
-        catch {
-            $httpError = $_
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Failed to get an answer from the server"
-            $responseBody = $null
-
-            # Extract status code safely across PS5.1 and PS7+
-            try {
-                if ($null -ne $httpError.Exception.Response) {
-                    $statusCode = [int]$httpError.Exception.Response.StatusCode
-                }
-            } catch {
-                Write-Debug "Failed to extract HTTP status code from error response: $_"
-            }
-
-            if ($script:IsPowerShell7) {
-                if ($httpError.ErrorDetails -and $httpError.ErrorDetails.Message) {
-                    $responseBody = $httpError.ErrorDetails.Message
-                }
-            } else {
-                $stream = $null
-                $reader = $null
-                try {
-                    $errResponse = $httpError.Exception.Response
-                    if ($null -ne $errResponse) {
-                        $stream = $errResponse.GetResponseStream()
-                        if ($null -ne $stream) {
-                            $reader = [System.IO.StreamReader]::new($stream)
-                            $responseBody = $reader.ReadToEnd()
-                        }
-                    }
-                } catch {
-                    Write-Debug "[$($MyInvocation.MyCommand.Name)] Could not read error response stream: $_"
-                } finally {
-                    if ($null -ne $reader) { $reader.Dispose() }
-                    if ($null -ne $stream) { $stream.Dispose() }
-                }
-            }
-
-            # Sanitize HTML proxy errors (e.g., 502/504)
-            if ($responseBody -match '(?si)<html.*?>.*?<title>(.*?)</title>') {
-                $htmlTitle = $matches[1].Trim()
-                $responseBody = "Server returned HTML error ($htmlTitle). Please check reverse proxy / server logs."
-            } elseif ($responseBody -match '(?si)<html') {
-                $responseBody = "Server returned HTML error response instead of JSON. Please check server availability."
-            }
-
-            if ($responseBody) {
-                try {
-                    $webResponse = $responseBody | ConvertFrom-Json
-                } catch {
-                    $codeDisplay = if ($statusCode) { "HTTP $statusCode " } else { "" }
-                    Write-Error "${codeDisplay}error from Snipe-IT API: $responseBody"
-                    $webResponse = $null
-                }
-            } else {
-                $codeDisplay = if ($statusCode) { "HTTP $statusCode " } else { "" }
-                $transportError = [System.Management.Automation.ErrorRecord]::new(
-                    [System.Exception]::new("${codeDisplay}error from Snipe-IT API with no response body: $($httpError.Exception.Message)", $httpError.Exception),
-                    'SnipeitTransportError',
-                    [System.Management.Automation.ErrorCategory]::ConnectionError,
-                    $apiUri
-                )
-                $PSCmdlet.WriteError($transportError)
-                $webResponse = $null
-            }
-        }
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Invoking method $Method to URI $apiUri"
+        $webResponse = Invoke-SnipeitHttpRequest -Request $splatParameters -Session $activeSession -LegacyErrors
 
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Executed WebRequest."
 
@@ -413,7 +220,19 @@ function Invoke-SnipeitMethod {
                 # Helper to tag PSTypeName based on route target
                 $targetRoute = if ($Route) { $Route } else { $Api }
                 $targetTypeName = $null
-                if ($targetRoute -match '(?i)/hardware|/audit') { $targetTypeName = 'SnipeitPS.Asset' }
+                if ($targetRoute -match '(?i)/selectlist') { $targetTypeName = 'SnipeitPS.SelectListItem' }
+                elseif ($targetRoute -match '(?i)/history') { $targetTypeName = 'SnipeitPS.HistoryEntry' }
+                elseif ($targetRoute -match '(?i)/account/personal-access-tokens') { $targetTypeName = 'SnipeitPS.PersonalAccessToken' }
+                elseif ($targetRoute -match '(?i)/account/requests') { $targetTypeName = 'SnipeitPS.AccountRequest' }
+                elseif ($targetRoute -match '(?i)/account/eulas') { $targetTypeName = 'SnipeitPS.AccountEula' }
+                elseif ($targetRoute -match '(?i)/account/requestable/hardware') { $targetTypeName = 'SnipeitPS.Asset' }
+                elseif ($targetRoute -match '(?i)/hardware/[^/]+/assigned/accessories') { $targetTypeName = 'SnipeitPS.AssetAssignedAccessory' }
+                elseif ($targetRoute -match '(?i)/hardware/[^/]+/assigned/components') { $targetTypeName = 'SnipeitPS.AssetAssignedComponent' }
+                elseif ($targetRoute -match '(?i)/locations/[^/]+/assigned/accessories') { $targetTypeName = 'SnipeitPS.LocationAssignedAccessory' }
+                elseif ($targetRoute -match '(?i)/hardware/[^/]+/assigned/assets|/locations/[^/]+/assigned/assets|/locations/[^/]+/assets') { $targetTypeName = 'SnipeitPS.Asset' }
+                elseif ($targetRoute -match '(?i)/hardware|/audit') { $targetTypeName = 'SnipeitPS.Asset' }
+                elseif ($targetRoute -match '(?i)/users/ldapsync') { $targetTypeName = 'SnipeitPS.LdapSyncResult' }
+                elseif ($targetRoute -match '(?i)/users/[^/]+/email') { $targetTypeName = 'SnipeitPS.UserInventoryEmailResult' }
                 elseif ($targetRoute -match '(?i)/users') { $targetTypeName = 'SnipeitPS.User' }
                 elseif ($targetRoute -match '(?i)/licenses') { $targetTypeName = 'SnipeitPS.License' }
                 elseif ($targetRoute -match '(?i)/models') { $targetTypeName = 'SnipeitPS.Model' }
@@ -431,6 +250,18 @@ function Invoke-SnipeitMethod {
                 elseif ($targetRoute -match '(?i)/fieldsets') { $targetTypeName = 'SnipeitPS.Fieldset' }
                 elseif ($targetRoute -match '(?i)/maintenances') { $targetTypeName = 'SnipeitPS.AssetMaintenance' }
                 elseif ($targetRoute -match '(?i)/activity') { $targetTypeName = 'SnipeitPS.Activity' }
+                elseif ($targetRoute -match '(?i)/kits(?:$|/|\?)') { $targetTypeName = 'SnipeitPS.Kit' }
+                elseif ($targetRoute -match '(?i)/reports/depreciation(?:$|/|\?)') { $targetTypeName = 'SnipeitPS.DepreciationReportEntry' }
+                elseif ($targetRoute -match '(?i)/reports/activity/chart') { $targetTypeName = 'SnipeitPS.ActivityChart' }
+                elseif ($targetRoute -match '(?i)/depreciations(?:$|/|\?)') { $targetTypeName = 'SnipeitPS.Depreciation' }
+                elseif ($targetRoute -match '(?i)/labels(?:$|/|\?)') { $targetTypeName = 'SnipeitPS.LabelDefinition' }
+                elseif ($targetRoute -match '(?i)/notes(?:$|/|\?)') { $targetTypeName = 'SnipeitPS.AssetNote' }
+                elseif ($targetRoute -match '(?i)/statuslabels/assets/') { $targetTypeName = 'SnipeitPS.StatusCount' }
+                elseif ($targetRoute -match '(?i)/settings/login-attempts') { $targetTypeName = 'SnipeitPS.LoginAttempt' }
+                elseif ($targetRoute -match '(?i)/settings/ldaptestlogin') { $targetTypeName = 'SnipeitPS.LdapLoginTestResult' }
+                elseif ($targetRoute -match '(?i)/settings/ldaptest') { $targetTypeName = 'SnipeitPS.LdapTestResult' }
+                elseif ($targetRoute -match '(?i)/settings/mailtest') { $targetTypeName = 'SnipeitPS.MailTestResult' }
+                elseif ($targetRoute -match '(?i)/settings/purge_barcodes') { $targetTypeName = 'SnipeitPS.PurgeBarcodesResult' }
 
                 if ($statusVal -eq "error") {
                     Write-Verbose "[$($MyInvocation.MyCommand.Name)] An error response was received ... resolving"
@@ -455,7 +286,14 @@ function Invoke-SnipeitMethod {
                         }
                         $errMsg = $formattedParts -join [System.Environment]::NewLine
                     } else {
-                        $errMsg = if ($messagesVal) { ($messagesVal | Out-String).Trim() } else { "Snipe-IT API returned error status." }
+                        $payloadString = if ($hasPayload -and $webResponse -is [System.Collections.IDictionary]) { $webResponse['payload'] } elseif ($hasPayload) { $webResponse.payload } else { $null }
+                        if ($messagesVal) {
+                            $errMsg = ($messagesVal | Out-String).Trim()
+                        } elseif ($payloadString -is [string] -and -not [string]::IsNullOrWhiteSpace($payloadString)) {
+                            $errMsg = $payloadString.Trim()
+                        } else {
+                            $errMsg = "Snipe-IT API returned error status."
+                        }
                     }
                     $targetPayload = if ($webResponse -is [System.Management.Automation.PSCustomObject]) {
                         $webResponse.PSObject.Copy()
@@ -531,11 +369,21 @@ function Invoke-SnipeitMethod {
                             if (-not $nextParams.ContainsKey('limit')) { $nextParams['limit'] = $pageLimit }
                             $nextUri = $baseUri + (ConvertTo-GetParameter $nextParams)
 
-                            $nextSplat = $splatParameters.Clone()
-                            $nextSplat['Uri'] = $nextUri
+                            $nextRequest = @{
+                                Api              = $Api
+                                Route            = $Route
+                                PathParameter    = $PathParameter
+                                Method           = $Method
+                                Body             = $Body
+                                ImageFieldName   = $ImageFieldName
+                                GetParameters    = $nextParams
+                                Session          = $activeSession
+                                PreserveResponse = $true
+                                ErrorAction      = 'Stop'
+                            }
 
                             try {
-                                $nextResponse = Invoke-RestMethod @nextSplat
+                                $nextResponse = Invoke-SnipeitMethod @nextRequest
                             } catch {
                                 # Picard amendment: mid-stream failure must be terminating
                                 $paginationError = [System.Management.Automation.ErrorRecord]::new(

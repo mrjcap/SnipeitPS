@@ -25,6 +25,21 @@ Offset to use
 
 .PARAMETER all
 Return all results, works with -offset and other parameters
+.PARAMETER parent_id
+Restrict results to children of this company ID.
+
+.PARAMETER created_by
+Restrict results to the creating user's ID.
+
+.PARAMETER email
+Match a company email address.
+
+.PARAMETER tag_color
+Match a hexadecimal tag color.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -72,6 +87,21 @@ function Get-SnipeitCompany() {
 
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$parent_id,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$created_by,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$email,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$tag_color,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

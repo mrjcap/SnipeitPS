@@ -1,41 +1,64 @@
-﻿<#
+<#
 .SYNOPSIS
-Downloads a Snipe-IT backup file
+Downloads a Snipe-IT backup file or the latest backup.
+
+.DESCRIPTION
+Downloads either a specific backup file by name via GET /api/v1/settings/backups/download/{file}
+or the most recent backup via GET /api/v1/settings/backups/download/latest. Requires superuser privileges.
+Downloads over HTTPS with redirects disabled. An existing destination is replaced atomically only after a successful
+transfer; failed transfers leave it unchanged.
 
 .PARAMETER filename
-The filename of the backup to download
+The filename of the backup to download.
 
 .PARAMETER path
-The directory path where the backup file will be saved
+The directory path where the backup file will be saved.
+
+.PARAMETER Latest
+When specified, downloads the most recent backup archive from the Snipe-IT server.
+
+.PARAMETER OutFileName
+Optional custom filename to use when saving the latest backup. Defaults to latest-backup.zip.
 
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
-
 System.Management.Automation.PSCustomObject
-
 
 .EXAMPLE
 Save-SnipeitBackup -filename "2024-01-15-backup.sql" -path "C:\Backups"
 
+.EXAMPLE
+Save-SnipeitBackup -Latest -path "C:\Backups"
 #>
-
-function Save-SnipeitBackup() {
-    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Medium")]
+function Save-SnipeitBackup {
+    [CmdletBinding(
+        DefaultParameterSetName = 'ByFilename',
+        SupportsShouldProcess = $true,
+        ConfirmImpact = 'Medium'
+    )]
     [OutputType([PSCustomObject])]
-    Param(
-        [parameter(mandatory = $true)]
-        [ValidateScript({$_ -notmatch '[\\/]' -and $_ -notmatch '\.\.'})]
+    param(
+        [Parameter(ParameterSetName = 'ByFilename', Mandatory = $true, Position = 0)]
+        [ValidateScript({ $_ -notmatch '[\\/]' -and $_ -notmatch '\.\.' })]
         [string]$filename,
 
-        [parameter(mandatory = $true)]
-        [ValidateScript({Test-Path $_ -PathType Container})]
+        [Parameter(Mandatory = $true, Position = 1)]
+        [ValidateScript({ Test-Path $_ -PathType Container })]
         [string]$path,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter(ParameterSetName = 'Latest', Mandatory = $true)]
+        [switch]$Latest,
+
+        [Parameter(ParameterSetName = 'Latest', Mandatory = $false)]
+        [ValidateScript({ $_ -notmatch '[\\/]' -and $_ -notmatch '\.\.' })]
+        [string]$OutFileName,
+
+        [Parameter(Mandatory = $false, Position = 2)]
         [SnipeitSession]$Session
     )
+
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         $activeSession = if ($null -ne $Session) { $Session } else { $SnipeitPSSession }
@@ -54,41 +77,39 @@ function Save-SnipeitBackup() {
 
         if ($null -ne $sessionUrl -and $null -ne $sessionApiKey) {
             [string]$Url = ([string]$sessionUrl).TrimEnd('/')
-            $Token = (New-Object PSCredential "user",$sessionApiKey).GetNetworkCredential().Password
+            $downloadSession = @{ url = $sessionUrl; apiKey = $sessionApiKey }
         } else {
             throw "Please use Connect-SnipeitPS to set up a connection before any other commands."
         }
     }
 
     process {
-        $escapedFilename = [Uri]::EscapeDataString($filename)
-        $apiUri = "$Url$script:SnipeitApiPrefix/settings/backups/download/$escapedFilename"
-        $outFile = Join-Path $path $filename
+        if ($PSCmdlet.ParameterSetName -eq 'Latest') {
+            $targetName = if ($PSBoundParameters.ContainsKey('OutFileName')) { $OutFileName } else { 'latest-backup.zip' }
+            $apiUri = "$Url$script:SnipeitApiPrefix/settings/backups/download/latest"
+            $outFile = Join-Path $path $targetName
+        } else {
+            $targetName = $filename
+            $escapedFilename = [Uri]::EscapeDataString($filename)
+            $apiUri = "$Url$script:SnipeitApiPrefix/settings/backups/download/$escapedFilename"
+            $outFile = Join-Path $path $filename
+        }
 
-        if ($PSCmdlet.ShouldProcess($filename, "Download backup")) {
+        if ($PSCmdlet.ShouldProcess($targetName, "Download backup")) {
             try {
-                $splatParameters = @{
-                    Uri             = $apiUri
-                    Method          = 'Get'
-                    Headers         = @{
-                        "Authorization" = "Bearer $Token"
-                        "Accept"        = "application/octet-stream"
-                    }
-                    OutFile         = $outFile
-                    UseBasicParsing = $true
-                    ErrorAction     = 'Stop'
-                }
-
-                Invoke-RestMethod @splatParameters
+                $download = Save-SnipeitApiFile -Uri $apiUri -OutFile $outFile -Force -Session $downloadSession
 
                 [PSCustomObject]@{
-                    status   = "success"
-                    filename = $filename
-                    path     = $outFile
+                    PSTypeName  = 'SnipeitPS.BackupDownload'
+                    status      = "success"
+                    filename    = $targetName
+                    path        = $outFile
+                    Length      = $download.Length
+                    ContentType = $download.ContentType
                 }
             }
             catch {
-                Write-Error "Failed to download backup '$filename': $_"
+                Write-Error "Failed to download backup '$targetName': $_"
             }
         }
     }

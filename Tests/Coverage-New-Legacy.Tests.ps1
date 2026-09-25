@@ -515,13 +515,13 @@ Describe "New-SnipeitCustomField" {
         }
     }
 
-    It "Passes custom_format when format is CUSTOM REGEX" {
+    It "Sends a complete regex rule in format without custom_format" {
         InModuleScope 'SnipeitPS' {
             New-SnipeitCustomField -name "SerialNum" -element "text" `
-                -format "CUSTOM REGEX" -custom_format "^[A-Z]{3}\d{4}$" -Confirm:$false
+                -format "CUSTOM REGEX" -custom_format 'regex:/^[A-Z]{3}\d{4}$/' -Confirm:$false
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Body.custom_format -eq "^[A-Z]{3}\d{4}$" -and
-                $Body.format -eq "CUSTOM REGEX"
+                -not $Body.ContainsKey('custom_format') -and
+                $Body.format -ceq 'regex:/^[A-Z]{3}\d{4}$/'
             }
         }
     }

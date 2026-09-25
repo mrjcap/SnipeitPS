@@ -32,6 +32,12 @@ Return all results, works with -offset and other parameters
 .PARAMETER sort
 Specify the column name you wish to sort by
 
+.PARAMETER tag_color
+Match a hexadecimal department tag color.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -90,6 +96,12 @@ function Get-SnipeitDepartment() {
         [parameter(ParameterSetName='Search')]
         [ValidateSet('id', 'name', 'image', 'users_count', 'created_at')]
         [string]$sort = "created_at",
+
+        [parameter(ParameterSetName='Search')]
+        [string]$tag_color,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

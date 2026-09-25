@@ -32,6 +32,15 @@ Remove current image
 .PARAMETER RequestType
 HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
+.PARAMETER alert_on_response
+Send an alert when a user accepts or declines an item.
+
+.PARAMETER tag_color
+Hexadecimal color used for the category tag.
+
+.PARAMETER notes
+Notes stored with the category. An empty string clears them.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -77,7 +86,13 @@ function Set-SnipeitCategory() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[bool]]$alert_on_response,
+
+        [string]$tag_color,
+
+        [string]$notes
     )
 
     begin {

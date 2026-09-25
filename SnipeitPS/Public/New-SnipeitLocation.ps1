@@ -41,7 +41,22 @@
     .PARAMETER image
     Location Image filename and path
 
-    .PARAMETER Session
+    .PARAMETER phone
+Location contact phone number.
+
+.PARAMETER fax
+Location contact fax number.
+
+.PARAMETER company_id
+ID of the company that owns the location.
+
+.PARAMETER tag_color
+Hexadecimal color used for the location tag.
+
+.PARAMETER notes
+Notes stored with the location.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -51,6 +66,8 @@ Optional custom SnipeitSession instance.
 
     .EXAMPLE
     New-SnipeitLocation -name "Room 1" -address "123 Asset Street" -parent_id 14
+.NOTES
+manager_id and parent_id accept explicit null. Unbound optional fields are omitted from the request.
 #>
 
 function New-SnipeitLocation() {
@@ -78,13 +95,11 @@ function New-SnipeitLocation() {
 
         [string]$currency,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitLocationCompleter])]
-        [int]$parent_id,
+        [Nullable[int]]$parent_id,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitUserCompleter])]
-        [int]$manager_id,
+        [Nullable[int]]$manager_id,
 
         [string]$ldap_ou,
 
@@ -92,10 +107,26 @@ function New-SnipeitLocation() {
         [string]$image,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$phone,
+
+        [string]$fax,
+
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
+        [Nullable[int]]$company_id,
+
+        [string]$tag_color,
+
+        [string]$notes
     )
 
     begin {
+        foreach ($field in @('manager_id', 'parent_id')) {
+            if ($null -ne $PSBoundParameters[$field] -and $PSBoundParameters[$field] -lt 1) {
+                throw [System.ArgumentOutOfRangeException]::new($field, 'Use a positive ID or null.')
+            }
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 

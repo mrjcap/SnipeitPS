@@ -23,6 +23,15 @@ If switch is present, send email to user on checkin/checkout
 .PARAMETER image
 Category image filename and path
 
+.PARAMETER alert_on_response
+Send an alert when a user accepts or declines an item.
+
+.PARAMETER tag_color
+Hexadecimal color used for the category tag.
+
+.PARAMETER notes
+Notes stored with the category.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -62,7 +71,13 @@ function New-SnipeitCategory() {
         [string]$image,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[bool]]$alert_on_response,
+
+        [string]$tag_color,
+
+        [string]$notes
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

@@ -41,6 +41,21 @@ Describe "Documentation & platyPS MAML Coverage" {
             $missingDocs.Count | Should -Be 0
         }
 
+        It 'Documents nullable create inputs for <Family>' -ForEach @(
+            @{ Family = 'Accessory' }
+            @{ Family = 'Asset' }
+            @{ Family = 'Component' }
+            @{ Family = 'Consumable' }
+            @{ Family = 'Department' }
+            @{ Family = 'License' }
+            @{ Family = 'Location' }
+            @{ Family = 'Model' }
+            @{ Family = 'User' }
+        ) {
+            $markdown = Get-Content (Join-Path $script:docsRoot "New-Snipeit$Family.md") -Raw
+            $markdown | Should -Match 'accept[s]? explicit null'
+        }
+
         It "Contains zero unpopulated platyPS template placeholders in markdown files" {
             $placeholders = Get-ChildItem $script:docsRoot -Filter *.md | Select-String -Pattern '\{\{\s*Fill'
             $placeholders.Count | Should -Be 0

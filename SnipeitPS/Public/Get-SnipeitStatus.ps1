@@ -26,6 +26,12 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER status_type
+Restrict results to pending, archived, deployable, or undeployable labels.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -71,6 +77,12 @@ function Get-SnipeitStatus() {
 
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$status_type,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

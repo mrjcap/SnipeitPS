@@ -41,6 +41,10 @@ Optionally restrict User results to this group_id field
 .PARAMETER department_id
 Optionally restrict User results to this department_id field
 
+.PARAMETER include_deleted
+Include both active and deleted users. Maps to the server all filter independently of -all pagination.
+The deleted filter takes precedence when both filters are true.
+
 .PARAMETER deleted
 Optionally restrict User results to deleted users only
 
@@ -76,6 +80,75 @@ Offset to use
 
 .PARAMETER all
 Return all results, works with -offset and other parameters
+
+.PARAMETER first_name
+Match the user's first name.
+
+.PARAMETER last_name
+Match the user's last name.
+
+.PARAMETER display_name
+Match the user's display name.
+
+.PARAMETER phone
+Match a phone number.
+
+.PARAMETER mobile
+Match a mobile phone number.
+
+.PARAMETER website
+Match a website URL.
+
+.PARAMETER locale
+Match the preferred interface locale.
+
+.PARAMETER manager_id
+Restrict results to users reporting to this manager ID.
+
+.PARAMETER created_by
+Restrict results to the creating user's ID.
+
+.PARAMETER start_date
+Match the employment start date using yyyy-MM-dd.
+
+.PARAMETER end_date
+Match the employment end date using yyyy-MM-dd.
+
+.PARAMETER activated
+Filter by account activation state.
+
+.PARAMETER vip
+Filter by VIP status.
+
+.PARAMETER autoassign_licenses
+Filter by automatic license assignment eligibility.
+
+.PARAMETER two_factor_enrolled
+Filter by two-factor enrollment state.
+
+.PARAMETER two_factor_optin
+Filter by two-factor opt-in state.
+
+.PARAMETER admins
+Restrict results to administrators.
+
+.PARAMETER superadmins
+Restrict results to superadministrators.
+
+.PARAMETER expand_company_hierarchy
+Include descendant companies when filtering by company_id.
+
+.PARAMETER manages_users_count
+Match the number of users managed, including zero.
+
+.PARAMETER manages_locations_count
+Match the number of locations managed, including zero.
+
+.PARAMETER assigned_maintenances_count
+Match the number of assigned maintenances, including zero.
+
+.PARAMETER filter
+Server search filter, taking precedence over search.
 
 .PARAMETER Session
 Optional custom SnipeitSession instance.
@@ -149,6 +222,9 @@ function Get-SnipeitUser() {
         [string]$country,
 
         [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$include_deleted,
+
+        [parameter(ParameterSetName='Search')]
         [Nullable[bool]]$deleted,
 
         [parameter(ParameterSetName='Search')]
@@ -187,6 +263,75 @@ function Get-SnipeitUser() {
         [parameter(ParameterSetName='Get users a specific accessory id has been checked out to')]
         [switch]$all = $false,
 
+        [parameter(ParameterSetName='Search')]
+        [string]$first_name,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$last_name,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$display_name,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$phone,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$mobile,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$website,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$locale,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$manager_id,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$created_by,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$start_date,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$end_date,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$activated,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$vip,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$autoassign_licenses,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$two_factor_enrolled,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$two_factor_optin,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$admins,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$superadmins,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$expand_company_hierarchy,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$manages_users_count,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$manages_locations_count,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$assigned_maintenances_count,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
+
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session
     )
@@ -194,6 +339,9 @@ function Get-SnipeitUser() {
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        foreach ($field in @('activated', 'vip', 'autoassign_licenses', 'two_factor_enrolled', 'two_factor_optin', 'ldap_import', 'remote')) {
+            if ($null -ne $SearchParameter[$field]) { $SearchParameter[$field] = [int][bool]$SearchParameter[$field] }
+        }
     }
     process {
         $pathParams = @{}
@@ -211,6 +359,11 @@ $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Para
 
         if ($SearchParameter.ContainsKey('all')) {
             $SearchParameter.Remove('all')
+        }
+
+        $SearchParameter.Remove('include_deleted')
+        if ($PSBoundParameters.ContainsKey('include_deleted')) {
+            $SearchParameter['all'] = $include_deleted
         }
 
         $Parameters = @{

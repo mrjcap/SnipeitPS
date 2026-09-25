@@ -63,6 +63,27 @@ Offset to use
 Return all results, works with -offset and other parameters
 
 
+.PARAMETER created_by
+Restrict results to the creating user's ID.
+
+.PARAMETER maintained
+Filter by the license maintenance flag.
+
+.PARAMETER expires
+Filter licenses with or without an expiration date.
+
+.PARAMETER deleted
+Return soft-deleted licenses.
+
+.PARAMETER status
+Server license classification, such as inactive or expiring.
+
+.PARAMETER expand_company_hierarchy
+Include descendant companies when filtering by company_id.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -148,6 +169,27 @@ function Get-SnipeitLicense() {
         [parameter(ParameterSetName='Get licenses checked out to asset ID')]
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$created_by,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$maintained,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$expires,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$deleted,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$status,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$expand_company_hierarchy,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

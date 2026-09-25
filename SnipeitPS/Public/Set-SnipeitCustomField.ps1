@@ -24,7 +24,8 @@
     How the field should be validated
 
     .PARAMETER custom_format
-    In the case of format 'CUSTOM REGEX', this should be the validation regex for this field
+    Retained for compatibility. Custom regex updates are rejected because the supported API does not accept them.
+    Omit format and custom_format when updating other properties of an existing regex field.
 
     .PARAMETER field_encrypted
     Whether the field should be encrypted. (This can cause issues if you change it after the field was created.)
@@ -35,7 +36,31 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Put. You could use Patch if needed.
 
-    .PARAMETER Session
+    .PARAMETER is_unique
+Require unique values across assets using this field.
+
+.PARAMETER display_in_user_view
+Show the field in the user's asset view.
+
+.PARAMETER auto_add_to_fieldsets
+Automatically add the field to newly created fieldsets.
+
+.PARAMETER show_in_listview
+Show the field in asset list views.
+
+.PARAMETER display_checkout
+Show the field during checkout.
+
+.PARAMETER display_checkin
+Show the field during checkin.
+
+.PARAMETER display_audit
+Show the field during an audit.
+
+.PARAMETER show_in_requestable_list
+Show the field in the requestable asset list.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -63,10 +88,10 @@ function Set-SnipeitCustomField() {
         [string]$help_text,
 
         [parameter(Mandatory=$false)]
-        [ValidateSet('text','textarea','listbox','checkbox','radio')]
+        [ValidateSet('text','textarea','markdown-textarea','listbox','checkbox','radio','date_picker','datetime_picker')]
         [string]$element ,
 
-        [ValidateSet('ANY','CUSTOM REGEX','ALPHA','ALPHA-DASH','NUMERIC','ALPHA-NUMERIC','EMAIL','DATE','URL','IP','IPV4','IPV6','MAC','BOOLEAN')]
+        [ValidateSet('ANY','CUSTOM REGEX','ALPHA','ALPHA-DASH','NUMERIC','ALPHA-NUMERIC','EMAIL','DATE','DATETIME','URL','IP','IPV4','IPV6','MAC','BOOLEAN','PHONE','FAX')]
         [string]$format,
 
         [string]$field_values,
@@ -81,15 +106,36 @@ function Set-SnipeitCustomField() {
         [string]$RequestType = "Put",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[bool]]$is_unique,
+
+        [Nullable[bool]]$display_in_user_view,
+
+        [Nullable[bool]]$auto_add_to_fieldsets,
+
+        [Nullable[bool]]$show_in_listview,
+
+        [Nullable[bool]]$display_checkout,
+
+        [Nullable[bool]]$display_checkin,
+
+        [Nullable[bool]]$display_audit,
+
+        [Nullable[bool]]$show_in_requestable_list
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
-if ($format -eq 'CUSTOM REGEX' -and (-not $custom_format)) {
+        if ($format -eq 'CUSTOM REGEX' -and (-not $custom_format)) {
             throw "Please specify regex validation with -custom_format when using -format 'CUSTOM REGEX'"
+        }
+        if ($PSBoundParameters.ContainsKey('custom_format')) {
+            throw [System.NotSupportedException]::new('The supported Snipe-IT API does not support custom regex updates. Omit format and custom_format to update other properties.')
         }
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if ($Values.ContainsKey('format')) { $Values['format'] = $format.ToUpperInvariant() }
+        if ($Values.ContainsKey('element')) { $Values['element'] = $element.ToLowerInvariant() }
     }
 
     process{

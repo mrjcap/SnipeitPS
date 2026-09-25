@@ -32,6 +32,27 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER supplier_id
+Restrict results to a supplier ID.
+
+.PARAMETER manufacturer_id
+Restrict results to a manufacturer ID.
+
+.PARAMETER model_number
+Match the manufacturer's model number.
+
+.PARAMETER order_number
+Match a purchase order number.
+
+.PARAMETER notes
+Match stored notes.
+
+.PARAMETER expand_company_hierarchy
+Include descendant companies when filtering by company_id.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -92,6 +113,27 @@ function Get-SnipeitComponent() {
 
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$supplier_id,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$manufacturer_id,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$model_number,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$order_number,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$notes,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$expand_company_hierarchy,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

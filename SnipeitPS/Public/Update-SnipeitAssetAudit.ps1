@@ -29,6 +29,16 @@
     .EXAMPLE
     Update-SnipeitAssetAudit -id 42, 43 -note "Q3 quarterly audit" -next_audit_date (Get-Date).AddMonths(3)
 
+    .PARAMETER update_location
+    Write location_id to the asset rather than only recording the audit location. Allows an explicit null location.
+
+    .PARAMETER clear_name
+    Clear the asset name when true.
+
+    .PARAMETER customfields
+    Custom audit values keyed by internal _snipeit_ database column names. Only fields enabled for audit are persisted.
+    Encrypted custom fields additionally require the server's encrypted-field permission.
+
     .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -58,8 +68,7 @@ function Update-SnipeitAssetAudit() {
         [parameter(mandatory = $false, ParameterSetName = 'BySerial', ValueFromPipelineByPropertyName = $true)]
         [string]$serial,
 
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$location_id,
+        [Nullable[int]]$location_id,
 
         [parameter(mandatory = $false)]
         [datetime]$next_audit_date,
@@ -71,6 +80,12 @@ function Update-SnipeitAssetAudit() {
         [parameter(mandatory = $false)]
         [ValidateScript({Test-Path $_})]
         [string]$image,
+
+        [Nullable[bool]]$update_location,
+
+        [Nullable[bool]]$clear_name,
+
+        [hashtable]$customfields,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session
@@ -89,17 +104,29 @@ function Update-SnipeitAssetAudit() {
             throw "Bulk audit with -image is not supported. Image upload forces multipart/form-data which corrupts bulk ID array serialization. Audit assets individually when attaching images."
         }
 
+        if ($null -ne $location_id -and $location_id -lt 1) {
+            throw [System.ArgumentOutOfRangeException]::new('location_id', 'Use a positive ID or null.')
+        }
         $Values = @{}
+        foreach ($field in @('update_location', 'clear_name')) {
+            if ($PSBoundParameters.ContainsKey($field)) { $Values[$field] = $PSBoundParameters[$field] }
+        }
+        foreach ($field in $customfields.Keys) {
+            if ($field -notmatch '^_snipeit_[A-Za-z0-9_]+$') {
+                throw [System.ArgumentException]::new('Audit custom fields must use internal _snipeit_ column names.')
+            }
+            $Values[$field] = $customfields[$field]
+        }
         if ($asset_tag) { $Values['asset_tag'] = $asset_tag }
         if ($serial) {
             $Values['audit_by_field'] = 'serial'
             $Values['audit_key'] = $serial
         }
-        if ($location_id -gt 0) { $Values['location_id'] = $location_id }
+        if ($PSBoundParameters.ContainsKey('location_id')) { $Values['location_id'] = $location_id }
         if ($PSBoundParameters.ContainsKey('next_audit_date')) {
             $Values['next_audit_date'] = $next_audit_date.ToString("yyyy-MM-dd")
         }
-        if ($note) { $Values['note'] = $note }
+        if ($PSBoundParameters.ContainsKey('note')) { $Values['note'] = $note }
         if ($image) { $Values['image'] = $image }
 
         if ($id -and $id.Count -gt 1) {

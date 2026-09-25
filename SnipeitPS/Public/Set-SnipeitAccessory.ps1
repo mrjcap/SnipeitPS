@@ -53,6 +53,9 @@ Remove current image
 .PARAMETER RequestType
 HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
+.PARAMETER notes
+Notes stored with the accessory. An empty string clears them.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -95,7 +98,7 @@ function Set-SnipeitAccessory() {
 
         [string]$purchase_cost,
 
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [Nullable[System.Int32]]$min_amt,
 
@@ -116,7 +119,9 @@ function Set-SnipeitAccessory() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$notes
     )
 
     begin {

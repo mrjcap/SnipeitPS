@@ -47,7 +47,10 @@
     .PARAMETER image
     Image file name and path for item
 
-    .PARAMETER Session
+    .PARAMETER tag_color
+Hexadecimal color used for the supplier tag.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -99,7 +102,9 @@ function New-SnipeitSupplier() {
         [string]$image,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$tag_color
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

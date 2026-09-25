@@ -56,6 +56,12 @@ Remove current image
 .PARAMETER RequestType
 HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
+.PARAMETER supplier_id
+ID of the supplier. Pass $null to clear it.
+
+.PARAMETER notes
+Notes stored with the consumable.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -87,7 +93,7 @@ function Set-SnipeitConsumable() {
         [string]$name,
 
         [parameter(mandatory = $false)]
-        [ValidateRange(1, [int]::MaxValue)]
+        [ValidateRange(0, [int]::MaxValue)]
         [int]$qty,
 
         [parameter(mandatory = $false)]
@@ -113,7 +119,7 @@ function Set-SnipeitConsumable() {
         [Nullable[bool]]$requestable,
 
         [parameter(mandatory = $false)]
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [parameter(mandatory = $false)]
         [string]$purchase_cost,
@@ -133,7 +139,12 @@ function Set-SnipeitConsumable() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [ArgumentCompleter([SnipeitSupplierCompleter])]
+        [Nullable[int]]$supplier_id,
+
+        [string]$notes
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

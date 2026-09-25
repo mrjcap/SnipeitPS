@@ -41,6 +41,21 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER company_id
+Restrict results to a company ID.
+
+.PARAMETER parent_id
+Restrict results to children of this location ID.
+
+.PARAMETER manager_id
+Restrict results to locations managed by this user ID.
+
+.PARAMETER status
+Use deleted to request soft-deleted locations.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -101,6 +116,21 @@ function Get-SnipeitLocation() {
 
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$company_id,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$parent_id,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$manager_id,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$status,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

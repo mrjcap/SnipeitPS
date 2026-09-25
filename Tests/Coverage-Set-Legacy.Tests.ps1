@@ -138,11 +138,11 @@ Describe "Set-SnipeitAsset" {
         }
     }
 
-    It "Formats last_checkout as yyyy-MM-dd string" {
+    It "Formats last_checkout as yyyy-MM-dd HH:mm:ss string" {
         InModuleScope 'SnipeitPS' {
-            Set-SnipeitAsset -id 4 -last_checkout ([datetime]"2025-01-01") -Confirm:$false
+            Set-SnipeitAsset -id 4 -last_checkout ([datetime]"2025-01-01T12:34:56") -Confirm:$false
             Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Body.last_checkout -eq "2025-01-01"
+                $Body.last_checkout -eq "2025-01-01 12:34:56"
             }
         }
     }
@@ -498,13 +498,11 @@ Describe "Set-SnipeitCustomField" {
         }
     }
 
-    It "Accepts CUSTOM REGEX when custom_format is provided" {
+    It "Rejects unsupported custom regex updates before dispatch" {
         InModuleScope 'SnipeitPS' {
-            Set-SnipeitCustomField -id 5 -element "text" -format "CUSTOM REGEX" -custom_format "^\d+$" -Confirm:$false
-            Should -Invoke Invoke-SnipeitMethod -Times 1 -ParameterFilter {
-                $Body.format -eq "CUSTOM REGEX" -and
-                $Body.custom_format -eq "^\d+$"
-            }
+            { Set-SnipeitCustomField -id 5 -element 'text' -format 'CUSTOM REGEX' -custom_format 'regex:/^\d+$/' -Confirm:$false } |
+                Should -Throw '*does not support custom regex updates*'
+            Should -Invoke Invoke-SnipeitMethod -Times 0 -Exactly
         }
     }
 

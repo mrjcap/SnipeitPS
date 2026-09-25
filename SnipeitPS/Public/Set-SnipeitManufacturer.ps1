@@ -23,7 +23,25 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER Session
+    .PARAMETER support_email
+Manufacturer support email address.
+
+.PARAMETER support_phone
+Manufacturer support phone number.
+
+.PARAMETER support_url
+URL of the manufacturer's support site.
+
+.PARAMETER warranty_lookup_url
+Warranty lookup URL, including any serial-number placeholder supported by Snipe-IT.
+
+.PARAMETER tag_color
+Hexadecimal color used for the manufacturer tag.
+
+.PARAMETER notes
+Notes stored with the manufacturer.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -59,7 +77,19 @@ function Set-SnipeitManufacturer() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$support_email,
+
+        [string]$support_phone,
+
+        [string]$support_url,
+
+        [string]$warranty_lookup_url,
+
+        [string]$tag_color,
+
+        [string]$notes
     )
 
     begin{

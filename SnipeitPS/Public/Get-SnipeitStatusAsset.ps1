@@ -14,6 +14,12 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER order
+Sort direction, asc or desc.
+
+.PARAMETER sort
+Sort by id or name. Other values use the server's created_at default.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -42,7 +48,12 @@ function Get-SnipeitStatusAsset() {
         [switch]$all = $false,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [ValidateSet('asc', 'desc')]
+        [string]$order,
+
+        [string]$sort
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

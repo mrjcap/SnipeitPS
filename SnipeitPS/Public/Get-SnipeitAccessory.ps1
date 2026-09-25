@@ -41,6 +41,21 @@ Result offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER location_id
+Restrict results to a location ID.
+
+.PARAMETER order_number
+Match an exact purchase order number.
+
+.PARAMETER notes
+Match stored notes.
+
+.PARAMETER expand_company_hierarchy
+Include descendant companies when filtering by company_id.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -103,6 +118,21 @@ function Get-SnipeitAccessory() {
         [parameter(ParameterSetName='Search')]
         [parameter(ParameterSetName='Accessories checked out to user id')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$location_id,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$order_number,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$notes,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$expand_company_hierarchy,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

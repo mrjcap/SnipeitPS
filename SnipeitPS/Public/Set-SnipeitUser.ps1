@@ -66,7 +66,58 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER Session
+    .PARAMETER display_name
+Display name shown instead of the first and last name.
+
+.PARAMETER address
+Street address for the user.
+
+.PARAMETER city
+City in the user's address.
+
+.PARAMETER state
+State or region in the user's address.
+
+.PARAMETER country
+Country code in the user's address.
+
+.PARAMETER zip
+Postal code in the user's address.
+
+.PARAMETER locale
+Preferred Snipe-IT interface locale.
+
+.PARAMETER mobile
+Mobile phone number.
+
+.PARAMETER remote
+Whether the user works remotely.
+
+.PARAMETER vip
+Whether the user is marked as a VIP.
+
+.PARAMETER autoassign_licenses
+Allow licenses to be assigned automatically to this user.
+
+.PARAMETER website
+User's website URL.
+
+.PARAMETER gravatar
+Email address used for the user's Gravatar image.
+
+.PARAMETER scim_externalid
+External identity provider identifier.
+
+.PARAMETER start_date
+Employment start date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+.PARAMETER end_date
+Employment end date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+.PARAMETER permissions
+Replacement direct permission map. An empty hashtable clears direct permissions subject to server privilege restrictions.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -139,11 +190,51 @@ function Set-SnipeitUser() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$display_name,
+
+        [string]$address,
+
+        [string]$city,
+
+        [string]$state,
+
+        [string]$country,
+
+        [string]$zip,
+
+        [string]$locale,
+
+        [string]$mobile,
+
+        [Nullable[bool]]$remote,
+
+        [Nullable[bool]]$vip,
+
+        [Nullable[bool]]$autoassign_licenses,
+
+        [string]$website,
+
+        [string]$gravatar,
+
+        [string]$scim_externalid,
+
+        [Nullable[datetime]]$start_date,
+
+        [Nullable[datetime]]$end_date,
+
+        [hashtable]$permissions
     )
     begin{
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        foreach ($field in @('start_date', 'end_date')) {
+            if ($Values[$field]) {
+                $Values[$field] = $Values[$field].ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
+            }
+        }
 
         if ($PSBoundParameters.ContainsKey('companies')) {
             $Values['company_ids'] = $companies
@@ -171,6 +262,7 @@ $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -B
                 Method = $RequestType
                 Session = $Session
                 Body   = $Values.Clone()
+                ImageFieldName = 'avatar'
             }
 
             if ($PSCmdlet.ShouldProcess("User ID $user_id", $MyInvocation.MyCommand.Name)) {

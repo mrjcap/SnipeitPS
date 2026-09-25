@@ -14,6 +14,12 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER category_id
+Restrict assigned assets to a category.
+
+.PARAMETER model_id
+Restrict assigned assets to one or more models.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -42,7 +48,11 @@ function Get-SnipeitUserAsset() {
         [switch]$all = $false,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [int]$category_id,
+
+        [int[]]$model_id
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
@@ -50,6 +60,9 @@ $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Para
     }
 
     process {
+        if ($SearchParameter.ContainsKey('model_id') -and $model_id.Count -eq 1) {
+            $SearchParameter['model_id'] = $model_id[0]
+        }
         if ($SearchParameter.ContainsKey('all')) {
             $SearchParameter.Remove('all')
         }

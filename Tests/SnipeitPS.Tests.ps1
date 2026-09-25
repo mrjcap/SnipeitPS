@@ -13,7 +13,7 @@ Describe "SnipeitPS" {
             Get-ChildItem -Path $testDir -Include *.ps1, *.psm1
             Get-ChildItem -Path (Join-Path $moduleRoot "Public") -Include *.ps1, *.psm1 -Recurse
         )
-        $analysis = @(Invoke-ScriptAnalyzer -Path $moduleRoot -Recurse -Settings $settingsPath)
+        $analysis = @(Get-ChildItem -Path $moduleRoot -Recurse -Include *.ps1, *.psm1, *.psd1 | Invoke-ScriptAnalyzer -Settings $settingsPath)
     }
 
     Context "Style checking" {

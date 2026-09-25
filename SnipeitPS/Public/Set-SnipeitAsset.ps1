@@ -24,7 +24,7 @@
     Date the asset was last checked out
 
     .PARAMETER assigned_to
-    The ID of the user the asset is currently checked out to
+    Unsupported by the update endpoint. Use Set-SnipeitAssetOwner or Reset-SnipeitAssetOwner instead.
 
     .PARAMETER company_id
     The ID of an associated company ID
@@ -51,7 +51,7 @@
     Whether or not the asset can be requested by users with the permission to request assets
 
     .PARAMETER archived
-    Whether or not the asset is archived. Archived assets cannot be checked out and do not show up in the deployable asset screens
+    Unsupported by the update endpoint. Use status_id to select an archived or non-archived status label.
 
     .PARAMETER rtd_location_id
     The ID that corresponds to the location where the asset is usually located when not checked out
@@ -73,6 +73,43 @@
 
     .PARAMETER apiKey
     Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+
+    .PARAMETER location_id
+    Current location ID of the asset. Pass $null to clear it when server policy permits.
+
+    .PARAMETER byod
+    Whether the asset is personally owned.
+
+    .PARAMETER eol_explicit
+    Whether asset_eol_date overrides the model's end-of-life calculation.
+
+    .PARAMETER asset_eol_date
+    Explicit end-of-life date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+    .PARAMETER expected_checkin
+    Expected return date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+    .PARAMETER next_audit_date
+    Next scheduled audit date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+    .PARAMETER last_audit_date
+    Last audit timestamp. The server normalizes it to midnight on that date. Pass $null to clear it.
+
+    .PARAMETER last_checkin
+    Last checkin timestamp, sent as yyyy-MM-dd HH:mm:ss. Pass $null to clear it.
+
+    .PARAMETER assigned_user
+    User ID to check out the asset to as part of the update. Specify only one assignment target.
+
+    .PARAMETER assigned_asset
+    Asset ID to check out the asset to as part of the update. Specify only one assignment target.
+
+    .PARAMETER assigned_location
+    Location ID to check out the asset to as part of the update. Specify only one assignment target.
+    Null targets do not check assets in; use Reset-SnipeitAssetOwner for checkin.
+
+    .PARAMETER Session
+    Optional custom SnipeitSession instance.
 
     .PARAMETER customfields
     Hashtable of custom fields and extra fields that need passing through to Snipe-IT
@@ -110,7 +147,7 @@ function Set-SnipeitAsset() {
         [ValidateRange(1, [int]::MaxValue)]
         [int]$model_id,
 
-        [DateTime]$last_checkout,
+        [Nullable[datetime]]$last_checkout,
 
         [Nullable[System.Int32]]$assigned_to,
 
@@ -124,11 +161,10 @@ function Set-SnipeitAsset() {
 
         [string]$purchase_cost,
 
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [parameter(mandatory = $false)]
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$supplier_id,
+        [Nullable[int]]$supplier_id,
 
         [Nullable[bool]]$requestable,
 
@@ -156,9 +192,50 @@ function Set-SnipeitAsset() {
         [hashtable] $customfields,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[int]]$location_id,
+
+        [Nullable[bool]]$byod,
+
+        [Nullable[bool]]$eol_explicit,
+
+        [Nullable[datetime]]$asset_eol_date,
+
+        [Nullable[datetime]]$expected_checkin,
+
+        [Nullable[datetime]]$next_audit_date,
+
+        [Nullable[datetime]]$last_audit_date,
+
+        [Nullable[datetime]]$last_checkin,
+
+        [Nullable[int]]$assigned_user,
+
+        [Nullable[int]]$assigned_asset,
+
+        [Nullable[int]]$assigned_location
     )
     begin{
+        $assignmentTargets = @('assigned_user', 'assigned_asset', 'assigned_location')
+        $suppliedTargets = @($assignmentTargets | Where-Object { $null -ne $PSBoundParameters[$_] })
+        if ($suppliedTargets.Count -gt 1) {
+            throw [System.ArgumentException]::new('Specify only one asset assignment target.')
+        }
+        foreach ($field in $suppliedTargets) {
+            if ($PSBoundParameters[$field] -lt 1) {
+                throw [System.ArgumentOutOfRangeException]::new($field, 'Use a positive ID or null.')
+            }
+        }
+        if ($PSBoundParameters.ContainsKey('assigned_to')) {
+            throw [System.NotSupportedException]::new('The update endpoint ignores assigned_to. Use Set-SnipeitAssetOwner or Reset-SnipeitAssetOwner to change assignment.')
+        }
+        if ($PSBoundParameters.ContainsKey('archived')) {
+            throw [System.NotSupportedException]::new('The update endpoint ignores archived. Use status_id to select an archived or non-archived status label.')
+        }
+        if ($null -ne $supplier_id -and $supplier_id -lt 1) {
+            throw [System.ArgumentOutOfRangeException]::new('supplier_id', 'Use a positive ID or null to clear the supplier.')
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
 
@@ -182,7 +259,18 @@ function Set-SnipeitAsset() {
         }
 
         if ($Values['last_checkout']) {
-            $Values['last_checkout'] = $Values['last_checkout'].ToString("yyyy-MM-dd")
+            $Values['last_checkout'] = $Values['last_checkout'].ToString('yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+        }
+
+        foreach ($field in @('asset_eol_date', 'expected_checkin', 'next_audit_date')) {
+            if ($Values[$field]) {
+                $Values[$field] = $Values[$field].ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
+            }
+        }
+        foreach ($field in @('last_audit_date', 'last_checkin')) {
+            if ($Values[$field]) {
+                $Values[$field] = $Values[$field].ToString('yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+            }
         }
 
         if ($customfields) {

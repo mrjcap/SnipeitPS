@@ -56,7 +56,10 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER Session
+    .PARAMETER tag_color
+Hexadecimal color used for the supplier tag.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -115,7 +118,9 @@ function Set-SnipeitSupplier() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$tag_color
     )
 
     begin {

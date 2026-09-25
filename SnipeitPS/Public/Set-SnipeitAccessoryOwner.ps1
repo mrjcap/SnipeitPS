@@ -13,6 +13,9 @@
     .PARAMETER checkout_to_type
     Checkout accessory to one of the following types: user, asset, or location
 
+    .PARAMETER checkout_qty
+    Number of accessories to check out. Must be positive. The server defaults to one when omitted.
+
     .PARAMETER note
     Notes about checkout
 
@@ -45,7 +48,10 @@ function Set-SnipeitAccessoryOwner() {
         [string] $note,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [ValidateRange(1, [int]::MaxValue)]
+        [int]$checkout_qty
     )
     begin{
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

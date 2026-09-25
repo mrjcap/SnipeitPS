@@ -41,6 +41,24 @@ Remove current image
 .PARAMETER RequestType
 HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
+.PARAMETER supplier_id
+ID of the supplier. Pass $null to clear it.
+
+.PARAMETER manufacturer_id
+ID of the manufacturer. Pass $null to clear it.
+
+.PARAMETER model_number
+Manufacturer's model number.
+
+.PARAMETER serial
+Serial number recorded for the component.
+
+.PARAMETER notes
+Notes stored with the component.
+
+.PARAMETER category_id
+ID of the category to assign to the component.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -79,7 +97,7 @@ function Set-SnipeitComponent() {
 
         [string]$order_number,
 
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [string]$purchase_cost,
 
@@ -92,7 +110,23 @@ function Set-SnipeitComponent() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [ArgumentCompleter([SnipeitSupplierCompleter])]
+        [Nullable[int]]$supplier_id,
+
+        [ArgumentCompleter([SnipeitManufacturerCompleter])]
+        [Nullable[int]]$manufacturer_id,
+
+        [string]$model_number,
+
+        [string]$serial,
+
+        [string]$notes,
+
+        [ValidateRange(1, [int]::MaxValue)]
+        [ArgumentCompleter([SnipeitCategoryCompleter])]
+        [int]$category_id
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

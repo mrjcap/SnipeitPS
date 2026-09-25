@@ -23,6 +23,30 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER name
+Match an exact model name.
+
+.PARAMETER model_number
+Match the manufacturer's model number.
+
+.PARAMETER notes
+Match stored notes.
+
+.PARAMETER category_id
+Restrict results to a category ID.
+
+.PARAMETER depreciation_id
+Restrict results to a depreciation schedule ID.
+
+.PARAMETER requestable
+Filter by whether the model is requestable.
+
+.PARAMETER status
+Use deleted to request soft-deleted models.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -65,6 +89,30 @@ function Get-SnipeitModel() {
 
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$name,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$model_number,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$notes,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$category_id,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$depreciation_id,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$requestable,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$status,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session

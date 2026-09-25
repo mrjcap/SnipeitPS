@@ -32,6 +32,27 @@ Result offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER filter
+Advanced search expression applied instead of search when supplied.
+
+.PARAMETER created_by
+Restrict activity to this actor user ID.
+
+.PARAMETER action_source
+Restrict activity to this source, such as api.
+
+.PARAMETER remote_ip
+Restrict activity to this remote IP address.
+
+.PARAMETER uploads
+Return only activity records with uploaded files. Omitted or false leaves this filter disabled.
+
+.PARAMETER sort
+Server activity column used for sorting.
+
+.PARAMETER order
+Sort direction, asc or desc.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -80,7 +101,22 @@ function Get-SnipeitActivity() {
         [switch]$all = $false,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$filter,
+
+        [int]$created_by,
+
+        [string]$action_source,
+
+        [string]$remote_ip,
+
+        [switch]$uploads,
+
+        [string]$sort,
+
+        [ValidateSet('asc', 'desc')]
+        [string]$order
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
@@ -95,6 +131,7 @@ if (($target_type -and -not $target_id) -or
         }
 
         $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if (-not $uploads) { $SearchParameter.Remove('uploads') }
     }
 
     process {

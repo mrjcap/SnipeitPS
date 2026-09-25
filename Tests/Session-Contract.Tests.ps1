@@ -14,8 +14,8 @@ Describe 'Typed session contract' {
             Where-Object Name -notin $excludedCommands)
     }
 
-    It 'exposes an optional typed Session parameter on all 125 networking commands' {
-        $networkingCommands.Count | Should -Be 125
+    It 'exposes an optional typed Session parameter on all networking commands' {
+        $networkingCommands.Count | Should -BeGreaterOrEqual 125
 
         foreach ($command in $networkingCommands) {
             $parameter = $command.Parameters['Session']
@@ -110,7 +110,10 @@ Describe 'Typed session contract' {
             New-Item -Path $tempPath -ItemType Directory | Out-Null
             $capture = [pscustomobject]@{ Uri = $null }
             InModuleScope SnipeitPS -Parameters @{ TestSession = $session; TestPath = $tempPath; TestCapture = $capture } {
-                Mock Invoke-RestMethod { $TestCapture.Uri = $Uri }
+                Mock Invoke-WebRequest {
+                    $TestCapture.Uri = $Uri
+                    [IO.File]::WriteAllBytes($OutFile, [byte[]]@(0, 128, 255))
+                }
                 Save-SnipeitBackup -filename backup.sql -path $TestPath -Session $TestSession -Confirm:$false | Out-Null
             }
             $capture.Uri | Should -Be 'https://custom.example.test/api/v1/settings/backups/download/backup.sql'

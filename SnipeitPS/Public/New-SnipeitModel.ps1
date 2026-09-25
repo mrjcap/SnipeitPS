@@ -26,7 +26,22 @@
     .PARAMETER image
     Asset model Image filename and path
 
-    .PARAMETER Session
+    .PARAMETER depreciation_id
+ID of the depreciation schedule used by this model.
+
+.PARAMETER min_amt
+Minimum model quantity used for inventory alerts.
+
+.PARAMETER notes
+Notes stored with the model.
+
+.PARAMETER requestable
+Whether assets of this model can be requested.
+
+.PARAMETER require_serial
+Require a serial number for assets of this model.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -36,6 +51,8 @@ Optional custom SnipeitSession instance.
 
     .EXAMPLE
     New-SnipeitModel -name "DL380" -manufacturer_id 2 -fieldset_id 2 -category_id 1
+.NOTES
+eol accepts explicit null. Unbound optional fields are omitted from the request.
 #>
 
 function New-SnipeitModel() {
@@ -56,12 +73,10 @@ function New-SnipeitModel() {
         [ArgumentCompleter([SnipeitCategoryCompleter])]
         [int]$category_id,
 
-        [parameter(mandatory = $true)]
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitManufacturerCompleter])]
-        [int]$manufacturer_id,
+        [Nullable[int]]$manufacturer_id,
 
-        [int]$eol,
+        [Nullable[int]]$eol,
 
         [parameter(mandatory = $false)]
         [ValidateRange(1, [int]::MaxValue)]
@@ -71,17 +86,34 @@ function New-SnipeitModel() {
         [string]$image,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[int]]$depreciation_id,
+
+        [Nullable[int]]$min_amt,
+
+        [string]$notes,
+
+        [Nullable[bool]]$requestable,
+
+        [Nullable[bool]]$require_serial
     )
 
     begin {
+        if ($null -ne $manufacturer_id -and $manufacturer_id -lt 1) {
+            throw [System.ArgumentOutOfRangeException]::new('manufacturer_id', 'Use a positive ID or null to omit the manufacturer.')
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = @{
             name            = $name
             category_id     = $category_id
-            manufacturer_id = $manufacturer_id
         }
 
+        foreach ($field in @('depreciation_id', 'min_amt', 'notes', 'requestable', 'require_serial')) {
+            if ($PSBoundParameters.ContainsKey($field)) { $Values[$field] = $PSBoundParameters[$field] }
+        }
+
+        if ($PSBoundParameters.ContainsKey('manufacturer_id')) { $Values.Add('manufacturer_id', $manufacturer_id) }
         if ($PSBoundParameters.ContainsKey('fieldset_id')) { $Values.Add("fieldset_id", $fieldset_id) }
         if ($PSBoundParameters.ContainsKey('model_number')) { $Values.Add("model_number", $model_number) }
         if ($PSBoundParameters.ContainsKey('eol')) { $Values.Add("eol", $eol) }

@@ -24,7 +24,7 @@
     Number of months until end of life
 
     .PARAMETER custom_fieldset_id
-    Fieldset ID that the asset uses (Custom fields)
+    Fieldset ID that the asset uses (Custom fields). Pass $null to remove the fieldset.
 
     .PARAMETER image
     Image file name and path for item
@@ -35,7 +35,22 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER Session
+    .PARAMETER depreciation_id
+ID of the depreciation schedule. Pass $null to clear it.
+
+.PARAMETER min_amt
+Minimum model quantity used for inventory alerts.
+
+.PARAMETER notes
+Notes stored with the model.
+
+.PARAMETER requestable
+Whether assets of this model can be requested.
+
+.PARAMETER require_serial
+Require a serial number for assets of this model.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -67,9 +82,8 @@ function Set-SnipeitModel() {
         [ArgumentCompleter([SnipeitCategoryCompleter])]
         [int]$category_id,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitManufacturerCompleter])]
-        [int]$manufacturer_id,
+        [Nullable[int]]$manufacturer_id,
 
         [Nullable[System.Int32]]$eol,
 
@@ -85,12 +99,29 @@ function Set-SnipeitModel() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[int]]$depreciation_id,
+
+        [Nullable[int]]$min_amt,
+
+        [string]$notes,
+
+        [Nullable[bool]]$requestable,
+
+        [Nullable[bool]]$require_serial
     )
 
     begin {
+        if ($null -ne $manufacturer_id -and $manufacturer_id -lt 1) {
+            throw [System.ArgumentOutOfRangeException]::new('manufacturer_id', 'Use a positive ID or null to clear the manufacturer.')
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if ($Values.ContainsKey('custom_fieldset_id')) {
+            $Values['fieldset_id'] = $Values['custom_fieldset_id']
+            $Values.Remove('custom_fieldset_id')
+        }
     }
     process {
         foreach ($model_id in $id) {

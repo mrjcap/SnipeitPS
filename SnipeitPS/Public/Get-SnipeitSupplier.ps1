@@ -50,6 +50,12 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER supplier_url
+Match the supplier's website URL.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -119,6 +125,12 @@ function Get-SnipeitSupplier() {
         [parameter(ParameterSetName='Search')]
         [switch]$all = $false,
 
+        [parameter(ParameterSetName='Search')]
+        [string]$supplier_url,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
+
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session
     )
@@ -126,6 +138,10 @@ function Get-SnipeitSupplier() {
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if ($SearchParameter.ContainsKey('supplier_url')) {
+            $SearchParameter['url'] = $SearchParameter['supplier_url']
+            $SearchParameter.Remove('supplier_url')
+        }
     }
 
     process {

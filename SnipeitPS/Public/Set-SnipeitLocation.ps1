@@ -50,7 +50,22 @@
     .PARAMETER RequestType
     HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
-    .PARAMETER Session
+    .PARAMETER phone
+Location contact phone number.
+
+.PARAMETER fax
+Location contact fax number.
+
+.PARAMETER company_id
+ID of the company that owns the location. Pass $null to clear it when server policy permits.
+
+.PARAMETER tag_color
+Hexadecimal color used for the location tag.
+
+.PARAMETER notes
+Notes stored with the location.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -108,7 +123,18 @@ function Set-SnipeitLocation() {
         [string]$RequestType = "Patch",
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$phone,
+
+        [string]$fax,
+
+        [ArgumentCompleter([SnipeitCompanyCompleter])]
+        [Nullable[int]]$company_id,
+
+        [string]$tag_color,
+
+        [string]$notes
     )
 
     begin{

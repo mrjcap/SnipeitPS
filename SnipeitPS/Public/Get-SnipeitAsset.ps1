@@ -40,7 +40,7 @@ Optionally restrict asset results to this asset name
 Optionally restrict asset results to this order number
 
 .PARAMETER model_id
-Optionally restrict asset results to this asset model ID
+Optionally restrict asset results to one or more asset model IDs.
 
 .PARAMETER category_id
 Optionally restrict asset results to this category ID
@@ -66,12 +66,49 @@ Optionally restrict asset results to one of these status types: RTD, Deployed, U
 .PARAMETER status_id
 Optionally restrict asset results to this status label ID
 
+.PARAMETER supplier_id
+Restrict results to a supplier ID.
+
+.PARAMETER rtd_location_id
+Restrict results to the default return location ID.
+
+.PARAMETER asset_eol_date
+Match the explicit end-of-life date using yyyy-MM-dd.
+
+.PARAMETER assigned_to
+Assignment target ID, used together with assigned_type.
+
+.PARAMETER assigned_type
+Assignment model class, such as App\Models\User, used together with assigned_to.
+
+.PARAMETER byod
+Restrict results to personally owned or organization-owned assets.
+
+.PARAMETER components
+Include component relationships in collection or ID responses.
+
+.PARAMETER deleted
+Include deleted matches when looking up an asset by tag or serial.
+
+.PARAMETER Session
+Optional custom SnipeitSession instance.
+
+.PARAMETER status_type
+Server status classification, such as Deployed, RTD, Archived, or Deleted.
+
+.PARAMETER expand_company_hierarchy
+Include descendant companies when filtering by company_id.
+
+.PARAMETER filter
+Server text-search filter, taking precedence over search.
+
 .PARAMETER customfields
 Hashtable of custom fields and extra fields for searching assets in Snipe-IT.
 Use internal field names from Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
 
 .PARAMETER sort
-Specify the column name you wish to sort by
+Specify a server-supported sort column, such as custom_fields._snipeit_room_12 for a custom field.
+The server falls back to created_at for unknown columns.
 
 .PARAMETER order
 Specify the order (asc or desc) you wish to order by on your sort column
@@ -162,7 +199,7 @@ function Get-SnipeitAsset() {
 
         [parameter(ParameterSetName='Search')]
         [ArgumentCompleter([SnipeitModelCompleter])]
-        [int]$model_id,
+        [int[]]$model_id,
 
         [parameter(ParameterSetName='Search')]
         [ArgumentCompleter([SnipeitCategoryCompleter])]
@@ -202,7 +239,6 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Assets overdue for auditing')]
         [parameter(ParameterSetName='Assets checked out to user id')]
         [parameter(ParameterSetName='Assets with component id')]
-        [ValidateSet('id','created_at','asset_tag','serial','order_number','model_id','category_id','manufacturer_id','company_id','location_id','status','status_id','name','purchase_date','purchase_cost','notes','expected_checkin','last_checkout','assigned_to','supplier')]
         [string]$sort,
 
         [parameter(ParameterSetName='Search')]
@@ -218,6 +254,7 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Assets overdue for auditing')]
         [parameter(ParameterSetName='Assets checked out to user id')]
         [parameter(ParameterSetName='Assets with component id')]
+        [parameter(ParameterSetName='Get with serial')]
         [ValidateRange(1,500)]
         [int]$limit = 50,
 
@@ -226,6 +263,7 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Assets overdue for auditing')]
         [parameter(ParameterSetName='Assets checked out to user id')]
         [parameter(ParameterSetName='Assets with component id')]
+        [parameter(ParameterSetName='Get with serial')]
         [int]$offset,
 
         [parameter(ParameterSetName='Search')]
@@ -233,7 +271,43 @@ function Get-SnipeitAsset() {
         [parameter(ParameterSetName='Assets overdue for auditing')]
         [parameter(ParameterSetName='Assets checked out to user id')]
         [parameter(ParameterSetName='Assets with component id')]
+        [parameter(ParameterSetName='Get with serial')]
         [switch]$all = $false,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$supplier_id,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$rtd_location_id,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$asset_eol_date,
+
+        [parameter(ParameterSetName='Search')]
+        [int]$assigned_to,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$assigned_type,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$byod,
+
+        [parameter(ParameterSetName='Search')]
+        [parameter(ParameterSetName='Get with id')]
+        [Nullable[bool]]$components,
+
+        [parameter(ParameterSetName='Get with asset tag')]
+        [parameter(ParameterSetName='Get with serial')]
+        [Nullable[bool]]$deleted,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$status_type,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$expand_company_hierarchy,
+
+        [parameter(ParameterSetName='Search')]
+        [string]$filter,
 
         [parameter(mandatory = $false)]
         [SnipeitSession]$Session
@@ -242,6 +316,11 @@ function Get-SnipeitAsset() {
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        if ($model_id.Count -eq 1) { $SearchParameter['model_id'] = $model_id[0] }
+        foreach ($field in @('byod', 'components')) {
+            if ($null -ne $SearchParameter[$field]) { $SearchParameter[$field] = [int][bool]$SearchParameter[$field] }
+        }
 
         # Add in custom fields.
         if ($customfields.Count -gt 0) {

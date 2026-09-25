@@ -200,5 +200,41 @@ Describe "Bulk Operations & Declarative State Sync" {
                 $script:capturedSetSession | Should -Be $mockSession
             }
         }
+
+        It "Performs zero mutations under -WhatIf for create, update and delete" {
+            InModuleScope 'SnipeitPS' {
+                $script:SnipeitPSSession.url = "https://mock.snipeit.local"
+                $script:SnipeitPSSession.apiKey = "mock-key"
+
+                Mock New-SnipeitAsset { throw "New-SnipeitAsset should not be called under -WhatIf" }
+                Mock Set-SnipeitAsset { throw "Set-SnipeitAsset should not be called under -WhatIf" }
+                Mock Remove-SnipeitAsset { throw "Remove-SnipeitAsset should not be called under -WhatIf" }
+
+                # Test WhatIf on create
+                Mock Get-SnipeitAsset { return $null }
+                { Sync-SnipeitAsset -asset_tag "WHATIF-CREATE" -name "WhatIf" -model_id 1 -status_id 1 -WhatIf } | Should -Not -Throw
+
+                # Test WhatIf on update (drift)
+                Mock Get-SnipeitAsset {
+                    return [PSCustomObject]@{
+                        id = 55
+                        asset_tag = "WHATIF-UPDATE"
+                        name = "Old Name"
+                        model = [PSCustomObject]@{ id = 1 }
+                        status_label = [PSCustomObject]@{ id = 1 }
+                    }
+                }
+                { Sync-SnipeitAsset -asset_tag "WHATIF-UPDATE" -name "New Name" -model_id 1 -status_id 1 -WhatIf } | Should -Not -Throw
+
+                # Test WhatIf on delete
+                Mock Get-SnipeitAsset {
+                    return [PSCustomObject]@{
+                        id = 77
+                        asset_tag = "WHATIF-DELETE"
+                    }
+                }
+                { Sync-SnipeitAsset -asset_tag "WHATIF-DELETE" -Ensure Absent -WhatIf } | Should -Not -Throw
+            }
+        }
     }
 }

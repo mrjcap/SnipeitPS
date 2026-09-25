@@ -57,7 +57,61 @@
     .PARAMETER image
     User Image file name and path
 
-    .PARAMETER Session
+    .PARAMETER display_name
+Display name shown instead of the first and last name.
+
+.PARAMETER address
+Street address for the user.
+
+.PARAMETER city
+City in the user's address.
+
+.PARAMETER state
+State or region in the user's address.
+
+.PARAMETER country
+Country code in the user's address.
+
+.PARAMETER zip
+Postal code in the user's address.
+
+.PARAMETER locale
+Preferred Snipe-IT interface locale.
+
+.PARAMETER mobile
+Mobile phone number.
+
+.PARAMETER remote
+Whether the user works remotely.
+
+.PARAMETER vip
+Whether the user is marked as a VIP.
+
+.PARAMETER autoassign_licenses
+Allow licenses to be assigned automatically to this user.
+
+.PARAMETER website
+User's website URL.
+
+.PARAMETER gravatar
+Email address used for the user's Gravatar image.
+
+.PARAMETER scim_externalid
+External identity provider identifier.
+
+.PARAMETER start_date
+Employment start date, sent as yyyy-MM-dd.
+
+.PARAMETER end_date
+Employment end date, sent as yyyy-MM-dd.
+
+.PARAMETER permissions
+Direct permission-name to integer-value map. The server enforces privilege restrictions.
+
+.PARAMETER send_welcome
+Send a welcome email when the account is activated and has an email address.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -69,6 +123,8 @@ Optional custom SnipeitSession instance.
     New-SnipeitUser -first_name It -last_name Snipe -username snipeit -activated $false -company_id 1 -location_id 1 -department_id 1
     Creates a new user who can't login to system
 
+.NOTES
+manager_id and location_id accept explicit null. Unbound optional fields are omitted from the request.
 #>
 function New-SnipeitUser() {
 
@@ -82,7 +138,6 @@ function New-SnipeitUser() {
         [parameter(mandatory = $true)]
         [string]$first_name,
 
-        [parameter(mandatory = $true)]
         [string]$last_name,
 
         [parameter(mandatory = $true)]
@@ -104,17 +159,15 @@ function New-SnipeitUser() {
         [ArgumentCompleter([SnipeitCompanyCompleter])]
         [int[]]$companies,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitLocationCompleter])]
-        [int]$location_id,
+        [Nullable[int]]$location_id,
 
         [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitDepartmentCompleter])]
         [int]$department_id,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitUserCompleter])]
-        [int]$manager_id,
+        [Nullable[int]]$manager_id,
 
         [int[]]$groups,
 
@@ -126,11 +179,58 @@ function New-SnipeitUser() {
         [string]$image,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$display_name,
+
+        [string]$address,
+
+        [string]$city,
+
+        [string]$state,
+
+        [string]$country,
+
+        [string]$zip,
+
+        [string]$locale,
+
+        [string]$mobile,
+
+        [Nullable[bool]]$remote,
+
+        [Nullable[bool]]$vip,
+
+        [Nullable[bool]]$autoassign_licenses,
+
+        [string]$website,
+
+        [string]$gravatar,
+
+        [string]$scim_externalid,
+
+        [Nullable[datetime]]$start_date,
+
+        [Nullable[datetime]]$end_date,
+
+        [hashtable]$permissions,
+
+        [Nullable[bool]]$send_welcome
     )
     begin {
+        foreach ($field in @('manager_id', 'location_id')) {
+            if ($null -ne $PSBoundParameters[$field] -and $PSBoundParameters[$field] -lt 1) {
+                throw [System.ArgumentOutOfRangeException]::new($field, 'Use a positive ID or null.')
+            }
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+
+        foreach ($field in @('start_date', 'end_date')) {
+            if ($Values[$field]) {
+                $Values[$field] = $Values[$field].ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
+            }
+        }
 
         if ($PSBoundParameters.ContainsKey('companies')) {
             $Values['company_ids'] = $companies
@@ -154,6 +254,7 @@ $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -B
             Method = 'post'
             Session = $Session
             Body   = $Values
+            ImageFieldName = 'avatar'
         }
     }
 

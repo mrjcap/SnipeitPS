@@ -61,6 +61,36 @@ Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT syst
 .PARAMETER apiKey
 Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
+.PARAMETER location_id
+Current location ID of the asset.
+
+.PARAMETER byod
+Whether the asset is personally owned.
+
+.PARAMETER eol_explicit
+Whether asset_eol_date overrides the model's end-of-life calculation.
+
+.PARAMETER asset_eol_date
+Explicit end-of-life date, sent as yyyy-MM-dd.
+
+.PARAMETER expected_checkin
+Expected return date, sent as yyyy-MM-dd.
+
+.PARAMETER next_audit_date
+Next scheduled audit date, sent as yyyy-MM-dd.
+
+.PARAMETER last_audit_date
+Last audit timestamp. The server normalizes it to midnight on that date.
+
+.PARAMETER last_checkin
+Last checkin timestamp, sent as yyyy-MM-dd HH:mm:ss.
+
+.PARAMETER last_checkout
+Last checkout timestamp, sent as yyyy-MM-dd HH:mm:ss.
+
+.PARAMETER requestable
+Whether the asset can be requested by users.
+
 .PARAMETER customfields
 Hashtable of custom fields and extra fields that need passing through to Snipe-IT.
 Use internal field names from Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
@@ -76,6 +106,9 @@ Specifying asset tag when creating asset
 .EXAMPLE
 New-SnipeitAsset -status_id 1 -model_id 1 -name "Machine1" -customfields @{ "_snipeit_os_5" = "Windows 10 Pro" }
 Using customfields when creating asset.
+.NOTES
+company_id, supplier_id, rtd_location_id, warranty_months, and purchase_date accept explicit null.
+Unbound optional fields are omitted from the request.
 #>
 
 function New-SnipeitAsset() {
@@ -107,8 +140,7 @@ function New-SnipeitAsset() {
         [string]$serial,
 
         [parameter(mandatory = $false)]
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$company_id,
+        [Nullable[int]]$company_id,
 
         [parameter(mandatory = $false)]
         [string]$order_number,
@@ -117,21 +149,19 @@ function New-SnipeitAsset() {
         [string]$notes,
 
         [parameter(mandatory = $false)]
-        [int]$warranty_months,
+        [Nullable[int]]$warranty_months,
 
         [parameter(mandatory = $false)]
         [string]$purchase_cost,
 
         [parameter(mandatory = $false)]
-        [datetime]$purchase_date,
+        [Nullable[datetime]]$purchase_date,
 
         [parameter(mandatory = $false)]
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$supplier_id,
+        [Nullable[int]]$supplier_id,
 
         [parameter(mandatory = $false)]
-        [ValidateRange(1, [int]::MaxValue)]
-        [int]$rtd_location_id,
+        [Nullable[int]]$rtd_location_id,
 
         [ValidateScript({Test-Path $_})]
         [string]$image,
@@ -153,11 +183,36 @@ function New-SnipeitAsset() {
         [Alias('CustomValues')]
         [hashtable] $customfields,
 
+        [Nullable[int]]$location_id,
+
+        [Nullable[bool]]$byod,
+
+        [Nullable[bool]]$eol_explicit,
+
+        [Nullable[datetime]]$asset_eol_date,
+
+        [Nullable[datetime]]$expected_checkin,
+
+        [Nullable[datetime]]$next_audit_date,
+
+        [Nullable[datetime]]$last_audit_date,
+
+        [Nullable[datetime]]$last_checkin,
+
+        [Nullable[datetime]]$last_checkout,
+
+        [Nullable[bool]]$requestable,
+
         [Parameter(Mandatory = $false)]
         [SnipeitSession]$Session
     )
 
     begin {
+        foreach ($field in @('company_id', 'supplier_id', 'rtd_location_id')) {
+            if ($null -ne $PSBoundParameters[$field] -and $PSBoundParameters[$field] -lt 1) {
+                throw [System.ArgumentOutOfRangeException]::new($field, 'Use a positive ID or null.')
+            }
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
         Test-SnipeitAlias -invocationName $MyInvocation.InvocationName -commandName $MyInvocation.MyCommand.Name
         if (-not $PSBoundParameters.ContainsKey('checkout_to_type')) {
@@ -168,6 +223,17 @@ function New-SnipeitAsset() {
 
         if ($values['purchase_date']) {
             $values['purchase_date'] = $values['purchase_date'].ToString("yyyy-MM-dd")
+        }
+
+        foreach ($field in @('asset_eol_date', 'expected_checkin', 'next_audit_date')) {
+            if ($Values[$field]) {
+                $Values[$field] = $Values[$field].ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
+            }
+        }
+        foreach ($field in @('last_audit_date', 'last_checkin', 'last_checkout')) {
+            if ($Values[$field]) {
+                $Values[$field] = $Values[$field].ToString('yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+            }
         }
 
         if ($customfields) {

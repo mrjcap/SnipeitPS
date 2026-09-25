@@ -60,9 +60,9 @@ Describe "Set-SnipeitCategory image param" {
 # ============================================================
 
 Describe "Save-SnipeitBackup error handling" {
-    It "Writes error when Invoke-RestMethod fails" {
+    It "Writes error when the backup download fails" {
         InModuleScope 'SnipeitPS' {
-            Mock Invoke-RestMethod { throw "Download failed" }
+            Mock Invoke-WebRequest { throw "Download failed" }
             $SnipeitPSSession.url = "https://snipeit.example.com"
             $SnipeitPSSession.apiKey = ConvertTo-SecureString "testkey" -AsPlainText -Force
             $tempDir = [System.IO.Path]::GetTempPath()

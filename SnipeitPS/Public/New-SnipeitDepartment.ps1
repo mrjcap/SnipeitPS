@@ -23,7 +23,13 @@
     .PARAMETER image
     Department Image filename and path
 
-    .PARAMETER Session
+    .PARAMETER phone
+Department contact phone number.
+
+.PARAMETER fax
+Department contact fax number.
+
+.PARAMETER Session
 Optional custom SnipeitSession instance.
 
 .OUTPUTS
@@ -34,6 +40,9 @@ Optional custom SnipeitSession instance.
     .EXAMPLE
     New-SnipeitDepartment -name "Department1" -company_id 1 -location_id 1 -manager_id 3
 
+.NOTES
+company_id, location_id, and manager_id accept explicit null.
+Unbound optional fields are omitted from the request.
 #>
 
 function New-SnipeitDepartment() {
@@ -47,17 +56,14 @@ function New-SnipeitDepartment() {
         [parameter(mandatory = $true)]
         [string]$name,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitCompanyCompleter])]
-        [int]$company_id,
+        [Nullable[int]]$company_id,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitLocationCompleter])]
-        [int]$location_id,
+        [Nullable[int]]$location_id,
 
-        [ValidateRange(1, [int]::MaxValue)]
         [ArgumentCompleter([SnipeitUserCompleter])]
-        [int]$manager_id,
+        [Nullable[int]]$manager_id,
 
         [string]$notes,
 
@@ -65,9 +71,18 @@ function New-SnipeitDepartment() {
         [string]$image,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$phone,
+
+        [string]$fax
     )
     begin {
+        foreach ($field in @('company_id', 'location_id', 'manager_id')) {
+            if ($null -ne $PSBoundParameters[$field] -and $PSBoundParameters[$field] -lt 1) {
+                throw [System.ArgumentOutOfRangeException]::new($field, 'Use a positive ID or null.')
+            }
+        }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
 

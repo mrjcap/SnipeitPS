@@ -14,6 +14,9 @@ Offset to use
 .PARAMETER all
 Return all results, works with -offset and other parameters
 
+.PARAMETER search
+Search assigned assets.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -42,7 +45,9 @@ function Get-SnipeitComponentAsset() {
         [switch]$all = $false,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$search
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

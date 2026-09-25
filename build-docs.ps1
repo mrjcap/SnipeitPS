@@ -60,6 +60,41 @@ if ($UpdateMarkdown) {
     Update-MarkdownHelp -Path $docsRoot -UpdateInputOutput -Force | Out-Null
 }
 
+foreach ($docFile in Get-ChildItem $docsRoot -Filter '*.md' -File) {
+    $content = [System.IO.File]::ReadAllText($docFile.FullName)
+    $updated = $content.Replace('{{ Fill ProgressAction Description }}',
+        'Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.')
+    $sourcePath = Join-Path $moduleRoot "Public/$($docFile.BaseName).ps1"
+    if ($UpdateMarkdown -and (Test-Path $sourcePath)) {
+        $sourceAst = [System.Management.Automation.Language.Parser]::ParseFile($sourcePath, [ref]$null, [ref]$null)
+        $functionAst = $sourceAst.Find({ param($node)
+            $node -is [System.Management.Automation.Language.FunctionDefinitionAst]
+        }, $false)
+        $commentHelp = $functionAst.GetHelpContent()
+        if ($commentHelp) {
+            foreach ($parameter in $commentHelp.Parameters.GetEnumerator()) {
+                if ([string]::IsNullOrWhiteSpace($parameter.Value)) { continue }
+                $pattern = '(?ims)(^### -' + [regex]::Escape($parameter.Key) + '\r?\n).*?(?=^```yaml)'
+                $description = $parameter.Value.Trim()
+                $updated = [regex]::Replace($updated, $pattern, {
+                    param($match)
+                    $match.Groups[1].Value + "`n$description`n`n"
+                })
+            }
+            if (-not [string]::IsNullOrWhiteSpace($commentHelp.Notes)) {
+                $notes = $commentHelp.Notes.Trim()
+                $updated = [regex]::Replace($updated, '(?ms)(^## NOTES\r?\n).*?(?=^## |\z)', {
+                    param($match)
+                    $match.Groups[1].Value + "`n$notes`n`n"
+                })
+            }
+        }
+    }
+    if ($updated -cne $content) {
+        [System.IO.File]::WriteAllText($docFile.FullName, $updated, [System.Text.UTF8Encoding]::new($false))
+    }
+}
+
 Write-Host "Compiling external MAML XML help to $enUsRoot/SnipeitPS-help.xml..." -ForegroundColor Cyan
 New-ExternalHelp -Path $docsRoot -OutputPath $enUsRoot -Force | Out-Null
 
