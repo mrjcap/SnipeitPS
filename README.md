@@ -4,18 +4,29 @@
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/snipeitps.svg)](https://www.powershellgallery.com/packages/snipeitps)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-PowerShell module for the Snipe-IT REST API. Works in Windows PowerShell 5.1 and PowerShell 7 on Windows, Linux, and macOS.
+PowerShell module for the Snipe-IT REST API. Works in Windows PowerShell 5.1 and PowerShell 7 on Windows, Linux,
+and macOS.
 
 ---
 
 ## Features
 
-- **Tab completion.** Press Tab on ID parameters (`-model_id`, `-status_id`, `-location_id`, `-category_id`) to search by name and insert IDs automatically. Lookups are cached in memory for 5 minutes. Use `Clear-SnipeitCache` to refresh immediately.
-- **Default table formatting.** Objects are tagged with `PSTypeName` so PowerShell prints clean summary tables instead of dumping raw JSON.
+- **REST v1 API coverage.** Commands for assets, models, licenses, accessories, consumables,
+  components, categories, companies, departments, locations, manufacturers, status labels, suppliers, users, groups,
+  pre-defined kits, depreciations, CSV imports, file attachments, selectlists, activity history, account requests,
+  personal access tokens, and administrative diagnostics. Full field-level parity remains under audit;
+  the contract ledger is not proof that every writable server field is supported.
+- **Tab completion.** Press Tab on ID parameters (`-model_id`, `-status_id`, `-location_id`, `-category_id`) to search
+  by name and insert IDs automatically. Lookups are cached in memory for 5 minutes. Use `Clear-SnipeitCache` to refresh
+  immediately.
+- **Default table formatting.** Objects are tagged with `PSTypeName` so PowerShell prints clean summary tables instead
+  of dumping raw JSON.
 - **Pipeline binding.** Pipe objects between commands by property name (e.g. `Get-SnipeitUser | Get-SnipeitAsset`).
-- **Bulk operations.** `Update-SnipeitAssetBulk` and `Remove-SnipeitAssetBulk` call Snipe-IT's batch endpoints directly.
+- **Bulk operations.** `Update-SnipeitAssetBulk` sends batch updates. `Remove-SnipeitAssetBulk` uses per-asset DELETE
+  requests and reports each result.
 - **Desired state sync.** `Sync-SnipeitAsset` checks for drift and updates or creates assets only when needed.
-- **Multi-tenant sessions.** Pass a `[SnipeitSession]` object to `-Session` to query multiple Snipe-IT servers in the same script.
+- **Multi-tenant sessions.** Pass a `[SnipeitSession]` object to `-Session` to query multiple Snipe-IT servers in the
+  same script.
 - **MCP server.** `mcp/SnipeitMcpServer.ps1` runs a Model Context Protocol server over stdio for AI tools.
 - **Offline help.** Shipped with compiled MAML XML help in `en-US/` for `Get-Help`.
 
@@ -102,6 +113,17 @@ Run the Pester test suite:
 ```powershell
 ./run-tests.ps1
 ```
+
+For fail-closed offline verification with unmocked HTTP blocked:
+
+```powershell
+pwsh -NoProfile -File ./Tests/Support/Invoke-SnipeitOfflineTest.ps1
+powershell.exe -NoProfile -File ./Tests/Support/Invoke-SnipeitOfflineTest.ps1
+```
+
+The pinned-source verification passes 1756 tests on each host. The ledger in
+`Tests/Fixtures/ApiParity.Contracts.psd1` records seven server-blocked declarations, four protocol exclusions and
+field-level limitations. Offline tests do not prove deployed-server authorization or storage behavior.
 
 ---
 
