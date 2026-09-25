@@ -14,14 +14,14 @@ Get maintenance journal notes.
 ## SYNTAX
 
 ```
-Get-SnipeitAssetMaintenanceNote [-id] <Int32[]> [[-Session] <SnipeitSession>] [<CommonParameters>]
+Get-SnipeitAssetMaintenanceNote [-id] <Int32[]> [[-Session] <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-GET /api/v1/maintenances/{id}/notes returns a payload containing notes and maintenance_id for each record. The
-server lists journal entries with action_type "note added", newest first. Completion action notes are not
-included.
+GET /api/v1/maintenances/{id}/notes returns a payload containing notes and maintenance_id for each record. The server
+lists journal entries with action_type "note added", newest first. Completion action notes are not included.
 
 ## EXAMPLES
 
@@ -42,7 +42,7 @@ One or more maintenance record IDs, each from 1 to 2147483647.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -58,7 +58,7 @@ Optional SnipeitSession instance. If omitted or null, uses the current module co
 ```yaml
 Type: SnipeitSession
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -67,9 +67,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProgressAction
+
+Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-Supports the PowerShell common parameters. See [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

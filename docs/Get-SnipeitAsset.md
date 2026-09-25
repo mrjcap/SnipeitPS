@@ -14,51 +14,61 @@ Gets a list of Snipe-IT Assets or specific asset
 ## SYNTAX
 
 ### Search (Default)
+
 ```
-Get-SnipeitAsset [-search <String>] [-name <String>] [-order_number <String>] [-model_id <Int32>]
+Get-SnipeitAsset [-search <String>] [-name <String>] [-order_number <String>] [-model_id <Int32[]>]
  [-category_id <Int32>] [-manufacturer_id <Int32>] [-company_id <Int32>] [-location_id <Int32>]
  [-depreciation_id <Int32>] [-requestable] [-status <String>] [-status_id <Int32>] [-customfields <Hashtable>]
- [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-Session <SnipeitSession>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-supplier_id <Int32>]
+ [-rtd_location_id <Int32>] [-asset_eol_date <String>] [-assigned_to <Int32>] [-assigned_type <String>]
+ [-byod <Boolean>] [-components <Boolean>] [-status_type <String>] [-expand_company_hierarchy <Boolean>]
+ [-filter <String>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with id
+
 ```
-Get-SnipeitAsset [-id <Int32>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-SnipeitAsset [-id <Int32>] [-components <Boolean>] [-Session <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with asset tag
+
 ```
-Get-SnipeitAsset [-asset_tag <String>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-SnipeitAsset [-asset_tag <String>] [-deleted <Boolean>] [-Session <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with serial
+
 ```
-Get-SnipeitAsset [-serial <String>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-SnipeitAsset [-serial <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-deleted <Boolean>]
+ [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Assets due auditing soon
+
 ```
 Get-SnipeitAsset [-audit_due] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
  [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Assets overdue for auditing
+
 ```
 Get-SnipeitAsset [-audit_overdue] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
  [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Assets checked out to user id
+
 ```
 Get-SnipeitAsset [-user_id <Int32>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>]
  [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Assets with component id
+
 ```
 Get-SnipeitAsset [-component_id <Int32>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>]
  [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
@@ -297,10 +307,10 @@ Accept wildcard characters: False
 
 ### -model_id
 
-Optionally restrict asset results to this asset model ID
+Optionally restrict asset results to one or more asset model IDs.
 
 ```yaml
-Type: Int32
+Type: Int32[]
 Parameter Sets: Search
 Aliases:
 
@@ -442,8 +452,7 @@ Accept wildcard characters: False
 
 ### -customfields
 
-Hashtable of custom fields and extra fields for searching assets in Snipe-IT.
-Use internal field names from Snipe-IT.
+Hashtable of custom fields and extra fields for searching assets in Snipe-IT. Use internal field names from Snipe-IT.
 You can use Get-SnipeitCustomField to get internal field names.
 
 ```yaml
@@ -460,7 +469,8 @@ Accept wildcard characters: False
 
 ### -sort
 
-Specify the column name you wish to sort by
+Specify a server-supported sort column, such as custom_fields._snipeit_room_12 for a custom field. The server falls back
+to created_at for unknown columns.
 
 ```yaml
 Type: String
@@ -492,13 +502,11 @@ Accept wildcard characters: False
 
 ### -limit
 
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
+Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
 ```yaml
 Type: Int32
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Parameter Sets: Search, Get with serial, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
 Aliases:
 
 Required: False
@@ -514,7 +522,7 @@ Offset to use
 
 ```yaml
 Type: Int32
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Parameter Sets: Search, Get with serial, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
 Aliases:
 
 Required: False
@@ -530,7 +538,7 @@ Return all results, works with -offset and other parameters
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Search, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
+Parameter Sets: Search, Get with serial, Assets due auditing soon, Assets overdue for auditing, Assets checked out to user id, Assets with component id
 Aliases:
 
 Required: False
@@ -540,8 +548,185 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -supplier_id
+
+Restrict results to a supplier ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -rtd_location_id
+
+Restrict results to the default return location ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -asset_eol_date
+
+Match the explicit end-of-life date using yyyy-MM-dd.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_to
+
+Assignment target ID, used together with assigned_type.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_type
+
+Assignment model class, such as App\Models\User, used together with assigned_to.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -byod
+
+Restrict results to personally owned or organization-owned assets.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -components
+
+Include component relationships in collection or ID responses.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search, Get with id
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -deleted
+
+Include deleted matches when looking up an asset by tag or serial.
+
+```yaml
+Type: Boolean
+Parameter Sets: Get with asset tag, Get with serial
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -status_type
+
+Server status classification, such as Deployed, RTD, Archived, or Deleted.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -expand_company_hierarchy
+
+Include descendant companies when filtering by company_id.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -filter
+
+Server text-search filter, taking precedence over search.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Session
-Optional custom SnipeitSession instance specifying target URL and credentials. When omitted, uses the session established by Connect-SnipeitPS.
+
+Optional custom SnipeitSession instance.
 
 ```yaml
 Type: SnipeitSession
@@ -556,6 +741,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProgressAction
+
 Action preference for progress events generated by this cmdlet.
 
 ```yaml
@@ -571,14 +757,19 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ### [PSCustomObject]
-### Emits Snipe-IT hardware asset objects returned by the API.
+
+### Emits Snipe-IT hardware asset objects returned by the API
+
 ## NOTES
 
 ## RELATED LINKS

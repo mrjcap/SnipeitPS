@@ -18,8 +18,12 @@ Set-SnipeitUser [-id] <Int32[]> [[-first_name] <String>] [[-last_name] <String>]
  [[-jobtitle] <String>] [[-email] <String>] [[-phone] <String>] [[-password] <Object>] [[-companies] <Int32[]>]
  [[-location_id] <Int32>] [[-department_id] <Int32>] [[-manager_id] <Int32>] [[-groups] <Int32[]>]
  [[-employee_num] <String>] [[-activated] <Boolean>] [[-notes] <String>] [[-ldap_import] <Boolean>]
- [[-image] <String>] [-image_delete] [[-RequestType] <String>] [-ProgressAction <ActionPreference>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [[-image] <String>] [-image_delete] [[-RequestType] <String>] [[-Session] <SnipeitSession>]
+ [[-display_name] <String>] [[-address] <String>] [[-city] <String>] [[-state] <String>] [[-country] <String>]
+ [[-zip] <String>] [[-locale] <String>] [[-mobile] <String>] [[-remote] <Boolean>] [[-vip] <Boolean>]
+ [[-autoassign_licenses] <Boolean>] [[-website] <String>] [[-gravatar] <String>] [[-scim_externalid] <String>]
+ [[-start_date] <DateTime>] [[-end_date] <DateTime>] [[-permissions] <Hashtable>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -167,7 +171,9 @@ Accept wildcard characters: False
 ```
 
 ### -companies
-Array of company IDs associated with the user.
+
+Replaces the user's complete company membership list (company_ids on the API). The legacy company_id alias also replaces
+memberships. Omit to preserve existing memberships.
 
 ```yaml
 Type: Int32[]
@@ -343,8 +349,7 @@ Accept wildcard characters: False
 
 ### -RequestType
 
-HTTP request type to send to Snipe-IT system.
-Defaults to Patch. You could use Put if needed.
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -358,10 +363,298 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Session
+
+Optional custom SnipeitSession instance.
+
+```yaml
+Type: SnipeitSession
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 20
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -display_name
+
+Display name shown instead of the first and last name.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 21
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -address
+
+Street address for the user.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 22
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -city
+
+City in the user's address.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 23
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -state
+
+State or region in the user's address.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 24
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -country
+
+Country code in the user's address.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 25
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -zip
+
+Postal code in the user's address.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 26
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -locale
+
+Preferred Snipe-IT interface locale.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 27
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -mobile
+
+Mobile phone number.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 28
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -remote
+
+Whether the user works remotely.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 29
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -vip
+
+Whether the user is marked as a VIP.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 30
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -autoassign_licenses
+
+Allow licenses to be assigned automatically to this user.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 31
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -website
+
+User's website URL.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 32
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -gravatar
+
+Email address used for the user's Gravatar image.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 33
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -scim_externalid
+
+External identity provider identifier.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 34
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -start_date
+
+Employment start date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 35
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -end_date
+
+Employment end date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 36
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -permissions
+
+Replacement direct permission map. An empty hashtable clears direct permissions subject to server privilege
+restrictions.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 37
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -392,6 +685,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProgressAction
+
 Action preference for progress events generated by this cmdlet.
 
 ```yaml
@@ -407,13 +701,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ### System.Management.Automation.PSCustomObject
+
 ## NOTES
 
 ## RELATED LINKS

@@ -14,8 +14,8 @@ Delete maintenance types.
 ## SYNTAX
 
 ```
-Remove-SnipeitMaintenanceType [-id] <Int32[]> [[-Session] <SnipeitSession>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Remove-SnipeitMaintenanceType [-id] <Int32[]> [[-Session] <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +41,7 @@ One or more maintenance type IDs, each from 1 to 2147483647.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -57,7 +57,7 @@ Optional SnipeitSession instance. If omitted or null, uses the current module co
 ```yaml
 Type: SnipeitSession
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -98,9 +98,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProgressAction
+
+Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-Supports the PowerShell common parameters. See [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -116,8 +134,8 @@ Returns the API response processed by the module dispatcher.
 
 ## NOTES
 
-Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm.
-Confirmation impact is High; prompts by default with the standard confirmation preference.
+Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm. Confirmation
+impact is High; prompts by default with the standard confirmation preference.
 
 ## RELATED LINKS
 

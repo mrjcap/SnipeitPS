@@ -19,14 +19,17 @@ Set-SnipeitAsset [-id] <Int32[]> [[-asset_tag] <String>] [[-name] <String>] [[-s
  [[-serial] <String>] [[-order_number] <String>] [[-warranty_months] <Int32>] [[-purchase_cost] <String>]
  [[-purchase_date] <DateTime>] [[-supplier_id] <Int32>] [[-requestable] <Boolean>] [[-archived] <Boolean>]
  [[-rtd_location_id] <Int32>] [[-notes] <String>] [[-RequestType] <String>] [[-image] <String>] [-image_delete]
- [[-customfields] <Hashtable>] [[-Session] <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [[-url] <String>] [[-apiKey] <String>] [[-customfields] <Hashtable>] [[-Session] <SnipeitSession>]
+ [[-location_id] <Int32>] [[-byod] <Boolean>] [[-eol_explicit] <Boolean>] [[-asset_eol_date] <DateTime>]
+ [[-expected_checkin] <DateTime>] [[-next_audit_date] <DateTime>] [[-last_audit_date] <DateTime>]
+ [[-last_checkin] <DateTime>] [[-assigned_user] <Int32>] [[-assigned_asset] <Int32>]
+ [[-assigned_location] <Int32>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Update a specific Asset or bulk update multiple Assets in the Snipe-IT asset system.
-When multiple IDs are passed, the function routes to `PATCH /api/v1/hardware/bulk` for a single API call.
+Update a specific Asset or bulk update multiple Assets in the Snipe-IT asset system. When multiple IDs are passed, the
+function routes to `PATCH /api/v1/hardware/bulk` for a single API call.
 
 ## EXAMPLES
 
@@ -155,7 +158,7 @@ Accept wildcard characters: False
 
 ### -assigned_to
 
-The ID of the user the asset is currently checked out to
+Unsupported by the update endpoint. Use Set-SnipeitAssetOwner or Reset-SnipeitAssetOwner instead.
 
 ```yaml
 Type: Int32
@@ -299,8 +302,7 @@ Accept wildcard characters: False
 
 ### -archived
 
-Whether or not the asset is archived.
-Archived assets cannot be checked out and do not show up in the deployable asset screens
+Unsupported by the update endpoint. Use status_id to select an archived or non-archived status label.
 
 ```yaml
 Type: Boolean
@@ -348,8 +350,7 @@ Accept wildcard characters: False
 
 ### -RequestType
 
-HTTP request type to send to Snipe-IT system.
-Defaults to Patch. You could use Put if needed.
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
 
 ```yaml
 Type: String
@@ -395,14 +396,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -customfields
+### -url
 
-Hashtable of custom fields and extra fields that need passing through to Snipe-IT
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
 
 ```yaml
-Type: Hashtable
+Type: String
 Parameter Sets: (All)
-Aliases: CustomValues
+Aliases:
 
 Required: False
 Position: 21
@@ -411,11 +412,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Session
-Optional custom SnipeitSession instance specifying target URL and credentials. When omitted, uses the session established by Connect-SnipeitPS.
+### -apiKey
+
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
 
 ```yaml
-Type: SnipeitSession
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -426,10 +428,218 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -customfields
+
+Hashtable of custom fields and extra fields that need passing through to Snipe-IT
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases: CustomValues
+
+Required: False
+Position: 23
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+
+Optional custom SnipeitSession instance.
+
+```yaml
+Type: SnipeitSession
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 24
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -location_id
+
+Current location ID of the asset. Pass $null to clear it when server policy permits.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 25
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -byod
+
+Whether the asset is personally owned.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 26
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -eol_explicit
+
+Whether asset_eol_date overrides the model's end-of-life calculation.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 27
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -asset_eol_date
+
+Explicit end-of-life date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 28
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -expected_checkin
+
+Expected return date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 29
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -next_audit_date
+
+Next scheduled audit date, sent as yyyy-MM-dd. Pass $null to clear it.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 30
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_audit_date
+
+Last audit timestamp. The server normalizes it to midnight on that date. Pass $null to clear it.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 31
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_checkin
+
+Last checkin timestamp, sent as yyyy-MM-dd HH:mm:ss. Pass $null to clear it.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 32
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_user
+
+User ID to check out the asset to as part of the update. Specify only one assignment target.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 33
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_asset
+
+Asset ID to check out the asset to as part of the update. Specify only one assignment target.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 34
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_location
+
+Location ID to check out the asset to as part of the update. Specify only one assignment target. Null targets do not
+check assets in; use Reset-SnipeitAssetOwner for checkin.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 35
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -460,6 +670,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProgressAction
+
 Action preference for progress events generated by this cmdlet.
 
 ```yaml
@@ -475,13 +686,15 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

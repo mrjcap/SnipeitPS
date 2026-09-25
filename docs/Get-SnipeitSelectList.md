@@ -1,0 +1,306 @@
+---
+external help file: SnipeitPS-help.xml
+Module Name: SnipeitPS
+online version:
+schema: 2.0.0
+---
+
+# Get-SnipeitSelectList
+
+## SYNOPSIS
+
+Gets Select2-formatted dropdown select lists from Snipe-IT.
+
+## SYNTAX
+
+```
+Get-SnipeitSelectList [-EntityType] <String> [-search <String>] [-page <Int32>] [-all] [-preserveResponse]
+ [-ItemType <String>] [-companyId <String>] [-excludeId <Int32>] [-statusType <String>] [-onlyTopLevel]
+ [-deployable] [-pending] [-archived] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+Retrieves Select2 formatted item collections across 13 entity types from Snipe-IT. Supports searching, pagination,
+company scoping, and type-specific filter parameters.
+
+## EXAMPLES
+
+### EXAMPLE 1
+
+```
+Get-SnipeitSelectList -EntityType Asset -search "MacBook"
+```
+
+### EXAMPLE 2
+
+```
+Get-SnipeitSelectList -EntityType Category -ItemType asset
+```
+
+### EXAMPLE 3
+
+```
+Get-SnipeitSelectList -EntityType Status -deployable
+```
+
+## PARAMETERS
+
+### -EntityType
+
+The entity category to query. Allowed values: Accessory, Category, Company, Department, Consumable, Asset, License,
+Location, Manufacturer, Model, Status, Supplier, User.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -search
+
+Search query string.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -page
+
+Specific page number to retrieve.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -all
+
+When specified, retrieves and streams all pages sequentially.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -preserveResponse
+
+When specified, returns the complete response envelope with pagination metadata.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ItemType
+
+Sub-type selector required when EntityType is 'Category'. Allowed values: asset, accessory, consumable, component,
+license.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Asset
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -companyId
+
+Company ID or comma-separated company IDs to scope results (supported for Asset, Location, User).
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -excludeId
+
+ID of an entity to exclude from results (supported for Asset, Company, Location, User).
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -statusType
+
+Status type filter (supported for Asset, e.g. RTD).
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -onlyTopLevel
+
+When specified, marks child companies as disabled (supported for Company).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -deployable
+
+Filter for deployable statuses (supported for Status).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -pending
+
+Filter for pending statuses (supported for Status).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -archived
+
+Filter for archived statuses (supported for Status).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+
+Optional custom SnipeitSession instance.
+
+```yaml
+Type: SnipeitSession
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+### SnipeitPS.SelectListItem
+
+## NOTES
+
+## RELATED LINKS

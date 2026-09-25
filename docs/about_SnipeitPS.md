@@ -3,13 +3,18 @@
 ## about_SnipeitPS
 
 ## SHORT DESCRIPTION
+
 PowerShell module for managing Snipe-IT assets, users, licenses, and inventory through the REST API.
 
 ## LONG DESCRIPTION
-SnipeitPS wraps the Snipe-IT API with PowerShell cmdlets for assets, users, licenses, accessories, components, consumables, and fieldsets.
+
+SnipeitPS wraps the Snipe-IT API with PowerShell cmdlets for assets, users, licenses, accessories, components,
+consumables, and fieldsets.
 
 ### FEATURES
-- Tab completion for models, categories, statuses, locations, companies, suppliers, and departments with 5-minute memory caching.
+
+- Tab completion for models, categories, statuses, locations, companies, suppliers, and departments with 5-minute memory
+caching.
 - Table formatting using PSTypeName tags on output objects.
 - Pipeline parameter binding by property name across commands.
 - Bulk updates and deletes through Snipe-IT batch endpoints.
@@ -56,13 +61,16 @@ Sync-SnipeitAsset -asset_tag "SRV-01" -name "Core Switch" -model_id 12 -status_i
 ```
 
 ## NOTE
+
 State-changing commands support -WhatIf and -Confirm.
 
 ## SEE ALSO
+
 - [GitHub Repository](https://github.com/mrjcap/SnipeitPS)
 - [Snipe-IT Documentation](https://snipe-it.readme.io/reference)
 
 ## KEYWORDS
+
 - Snipe-IT
 - ITAM
 - Asset Management

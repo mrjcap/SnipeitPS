@@ -14,20 +14,28 @@ Add a new Asset to Snipe-IT asset system
 ## SYNTAX
 
 ### Create asset (Default)
+
 ```
 New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_tag <String>] [-serial <String>]
  [-company_id <Int32>] [-order_number <String>] [-notes <String>] [-warranty_months <Int32>]
  [-purchase_cost <String>] [-purchase_date <DateTime>] [-supplier_id <Int32>] [-rtd_location_id <Int32>]
- [-image <String>] [-customfields <Hashtable>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-image <String>] [-url <String>] [-apiKey <String>] [-customfields <Hashtable>] [-location_id <Int32>]
+ [-byod <Boolean>] [-eol_explicit <Boolean>] [-asset_eol_date <DateTime>] [-expected_checkin <DateTime>]
+ [-next_audit_date <DateTime>] [-last_audit_date <DateTime>] [-last_checkin <DateTime>]
+ [-last_checkout <DateTime>] [-requestable <Boolean>] [-Session <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Checkout asset when creating
+
 ```
 New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_tag <String>] [-serial <String>]
  [-company_id <Int32>] [-order_number <String>] [-notes <String>] [-warranty_months <Int32>]
  [-purchase_cost <String>] [-purchase_date <DateTime>] [-supplier_id <Int32>] [-rtd_location_id <Int32>]
- [-image <String>] -assigned_id <Int32> -checkout_to_type <String> [-customfields <Hashtable>]
+ [-image <String>] -assigned_id <Int32> -checkout_to_type <String> [-url <String>] [-apiKey <String>]
+ [-customfields <Hashtable>] [-location_id <Int32>] [-byod <Boolean>] [-eol_explicit <Boolean>]
+ [-asset_eol_date <DateTime>] [-expected_checkin <DateTime>] [-next_audit_date <DateTime>]
+ [-last_audit_date <DateTime>] [-last_checkin <DateTime>] [-last_checkout <DateTime>] [-requestable <Boolean>]
  [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -316,10 +324,42 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -url
+
+Deprecated parameter, please use Connect-SnipeitPS instead. URL of Snipe-IT system.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -apiKey
+
+Deprecated parameter, please use Connect-SnipeitPS instead. User's API Key for Snipe-IT.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -customfields
 
-Hashtable of custom fields and extra fields that need passing through to Snipe-IT.
-Use internal field names from Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
+Hashtable of custom fields and extra fields that need passing through to Snipe-IT. Use internal field names from
+Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
 
 ```yaml
 Type: Hashtable
@@ -333,8 +373,170 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -location_id
+
+Current location ID of the asset.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -byod
+
+Whether the asset is personally owned.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -eol_explicit
+
+Whether asset_eol_date overrides the model's end-of-life calculation.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -asset_eol_date
+
+Explicit end-of-life date, sent as yyyy-MM-dd.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -expected_checkin
+
+Expected return date, sent as yyyy-MM-dd.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -next_audit_date
+
+Next scheduled audit date, sent as yyyy-MM-dd.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_audit_date
+
+Last audit timestamp. The server normalizes it to midnight on that date.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_checkin
+
+Last checkin timestamp, sent as yyyy-MM-dd HH:mm:ss.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_checkout
+
+Last checkout timestamp, sent as yyyy-MM-dd HH:mm:ss.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -requestable
+
+Whether the asset can be requested by users.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Session
-Optional custom SnipeitSession instance specifying target URL and credentials. When omitted, uses the session established by Connect-SnipeitPS.
+
+Optional custom SnipeitSession instance specifying target URL and credentials. When omitted, uses the session
+established by Connect-SnipeitPS.
 
 ```yaml
 Type: SnipeitSession
@@ -350,8 +552,7 @@ Accept wildcard characters: False
 
 ### -WhatIf
 
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -382,6 +583,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProgressAction
+
 Action preference for progress events generated by this cmdlet.
 
 ```yaml
@@ -397,13 +599,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject
 ## NOTES
+
+company_id, supplier_id, rtd_location_id, warranty_months, and purchase_date accept explicit null. Unbound optional
+fields are omitted from the request.
 
 ## RELATED LINKS

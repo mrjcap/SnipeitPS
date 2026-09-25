@@ -17,7 +17,9 @@ Set properties of a Snipe-IT Asset Maintenance
 Set-SnipeitAssetMaintenance [-id] <Int32[]> [[-asset_id] <Int32>] [[-supplier_id] <Int32>]
  [[-asset_maintenance_type] <String>] [[-title] <String>] [[-start_date] <DateTime>]
  [[-expected_completion_date] <DateTime>] [[-is_warranty] <Boolean>] [[-cost] <Decimal>] [[-notes] <String>]
- [[-assigned_to] <Int32>] [[-responsible_party_id] <Int32>] [[-RequestType] <String>]
+ [[-assigned_to] <Int32>] [[-checked_out_to_id] <Int32>] [[-checked_out_to_type] <String>]
+ [[-responsible_party_id] <Int32>] [[-RequestType] <String>] [[-Session] <SnipeitSession>] [[-url] <String>]
+ [[-completed_at] <DateTime>] [[-completed_by] <Int32>] [[-asset_maintenance_time] <Int32>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -69,7 +71,7 @@ Accept wildcard characters: False
 
 ### -supplier_id
 
-ID of the supplier
+Optional positive supplier ID. Pass null to clear the supplier.
 
 ```yaml
 Type: Int32
@@ -85,7 +87,8 @@ Accept wildcard characters: False
 
 ### -asset_maintenance_type
 
-Type of maintenance
+Existing numeric maintenance type ID or exact unique catalog name. Omit to preserve the current type. Names are resolved
+through the server's maintenance-types catalog.
 
 ```yaml
 Type: String
@@ -133,7 +136,7 @@ Accept wildcard characters: False
 
 ### -expected_completion_date
 
-Completion date of maintenance (expected completion date).
+Nullable expected completion date. completion_date is a legacy alias.
 
 ```yaml
 Type: DateTime
@@ -165,7 +168,7 @@ Accept wildcard characters: False
 
 ### -cost
 
-Cost of maintenance
+Nullable cost of maintenance. The server normalizes zero to null.
 
 ```yaml
 Type: Decimal
@@ -196,7 +199,8 @@ Accept wildcard characters: False
 ```
 
 ### -assigned_to
-ID of the user or supplier assigned to this maintenance.
+
+Unsupported legacy input, rejected before HTTP. No automatic relationship mapping is possible.
 
 ```yaml
 Type: Int32
@@ -210,13 +214,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -responsible_party_id
-ID of the user responsible for managing this maintenance.
+### -checked_out_to_id
+
+Checkout snapshot ID, not the responsible user. Supply with checked_out_to_type, or both null to clear.
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: responsible_party
+Aliases:
 
 Required: False
 Position: 12
@@ -225,10 +230,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RequestType
+### -checked_out_to_type
 
-HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if
-needed.
+Checkout snapshot entity type: User, Asset or Location. This does not check out the underlying asset.
 
 ```yaml
 Type: String
@@ -237,7 +241,119 @@ Aliases:
 
 Required: False
 Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -responsible_party_id
+
+Nullable ID of the User responsible for maintenance, not the asset checkout snapshot.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: responsible_party
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestType
+
+HTTP request type to send to Snipe-IT system. Defaults to Patch. You could use Put if needed.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
 Default value: Patch
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+
+Optional custom SnipeitSession instance.
+
+```yaml
+Type: SnipeitSession
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -url
+
+Related URL, up to 255 characters. An empty value clears the URL.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -completed_at
+
+Nullable actual completion timestamp. Must fall between start_date and the server's current time.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 18
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -completed_by
+
+Nullable positive ID of the user who completed the maintenance.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 19
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -asset_maintenance_time
+
+Nullable recorded maintenance duration in days. Zero is preserved in the request.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 20
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -275,6 +391,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProgressAction
+
 Action preference for progress events generated by this cmdlet.
 
 ```yaml
@@ -290,13 +407,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ### System.Management.Automation.PSCustomObject
+
 ## NOTES
 
 ## RELATED LINKS

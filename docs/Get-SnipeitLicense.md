@@ -14,27 +14,36 @@ Gets a list of Snipe-IT Licenses
 ## SYNTAX
 
 ### Search (Default)
+
 ```
 Get-SnipeitLicense [-search <String>] [-name <String>] [-company_id <Int32>] [-product_key <String>]
  [-order_number <String>] [-purchase_order <String>] [-license_name <String>] [-license_email <MailAddress>]
  [-manufacturer_id <Int32>] [-supplier_id <Int32>] [-depreciation_id <Int32>] [-category_id <Int32>]
- [-order <String>] [-sort <String>] [-limit <Int32>] [-offset <Int32>] [-all]
+ [-order <String>] [-sort <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-created_by <Int32>]
+ [-maintained <Boolean>] [-expires <Boolean>] [-deleted <Boolean>] [-status <String>]
+ [-expand_company_hierarchy <Boolean>] [-filter <String>] [-Session <SnipeitSession>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with ID
+
 ```
-Get-SnipeitLicense [-id <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-SnipeitLicense [-id <Int32>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Get licenses checked out to user ID
+
 ```
-Get-SnipeitLicense [-user_id <Int32>] [-all] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-SnipeitLicense [-user_id <Int32>] [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Get licenses checked out to asset ID
+
 ```
-Get-SnipeitLicense [-asset_id <Int32>] [-all] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-SnipeitLicense [-asset_id <Int32>] [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -91,7 +100,7 @@ Accept wildcard characters: False
 
 ### -user_id
 
-ID of the user to filter by.
+ID of a user to filter licenses checked out to
 
 ```yaml
 Type: Int32
@@ -107,7 +116,7 @@ Accept wildcard characters: False
 
 ### -asset_id
 
-ID of the asset to filter by.
+ID of an asset to filter licenses checked out to
 
 ```yaml
 Type: Int32
@@ -123,7 +132,7 @@ Accept wildcard characters: False
 
 ### -name
 
-Name of the license to filter by.
+Name of a specific license to search for
 
 ```yaml
 Type: String
@@ -139,7 +148,7 @@ Accept wildcard characters: False
 
 ### -company_id
 
-ID of the company to filter by.
+ID of a company to filter by
 
 ```yaml
 Type: Int32
@@ -155,7 +164,7 @@ Accept wildcard characters: False
 
 ### -product_key
 
-Product key to filter by.
+Product key to search for
 
 ```yaml
 Type: String
@@ -171,7 +180,7 @@ Accept wildcard characters: False
 
 ### -order_number
 
-Order number to filter by.
+Order number to search for
 
 ```yaml
 Type: String
@@ -187,7 +196,7 @@ Accept wildcard characters: False
 
 ### -purchase_order
 
-Purchase order number to filter by.
+Purchase order to search for
 
 ```yaml
 Type: String
@@ -203,7 +212,7 @@ Accept wildcard characters: False
 
 ### -license_name
 
-Display name of the license.
+Name of the license to search for
 
 ```yaml
 Type: String
@@ -219,7 +228,7 @@ Accept wildcard characters: False
 
 ### -license_email
 
-Contact email address for the license.
+Email address associated with the license
 
 ```yaml
 Type: MailAddress
@@ -235,7 +244,7 @@ Accept wildcard characters: False
 
 ### -manufacturer_id
 
-ID of the manufacturer to filter by.
+ID of a manufacturer to filter by
 
 ```yaml
 Type: Int32
@@ -251,7 +260,7 @@ Accept wildcard characters: False
 
 ### -supplier_id
 
-ID of the supplier to filter by.
+ID of a supplier to filter by
 
 ```yaml
 Type: Int32
@@ -267,7 +276,7 @@ Accept wildcard characters: False
 
 ### -depreciation_id
 
-ID of the depreciation to filter by.
+ID of a depreciation schedule to filter by
 
 ```yaml
 Type: Int32
@@ -283,7 +292,7 @@ Accept wildcard characters: False
 
 ### -category_id
 
-ID of the category to filter by.
+ID of a category to filter by
 
 ```yaml
 Type: Int32
@@ -299,7 +308,7 @@ Accept wildcard characters: False
 
 ### -order
 
-Sort order. Can be 'asc' or 'desc'.
+Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
 ```yaml
 Type: String
@@ -315,7 +324,7 @@ Accept wildcard characters: False
 
 ### -sort
 
-Column to sort on.
+Specify the column name you wish to sort by
 
 ```yaml
 Type: String
@@ -331,9 +340,7 @@ Accept wildcard characters: False
 
 ### -limit
 
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
+Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
 ```yaml
 Type: Int32
@@ -379,7 +386,136 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -created_by
+
+Restrict results to the creating user's ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -maintained
+
+Filter by the license maintenance flag.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -expires
+
+Filter licenses with or without an expiration date.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -deleted
+
+Return soft-deleted licenses.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -status
+
+Server license classification, such as inactive or expiring.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -expand_company_hierarchy
+
+Include descendant companies when filtering by company_id.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -filter
+
+Server text-search filter, taking precedence over search.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+
+Optional custom SnipeitSession instance.
+
+```yaml
+Type: SnipeitSession
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ProgressAction
+
 Action preference for progress events generated by this cmdlet.
 
 ```yaml
@@ -395,13 +531,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ### System.Management.Automation.PSCustomObject
+
 ## NOTES
 
 ## RELATED LINKS

@@ -14,23 +14,34 @@ Gets a list of Snipe-IT Users
 ## SYNTAX
 
 ### Search (Default)
+
 ```
 Get-SnipeitUser [-search <String>] [-company_id <Int32>] [-location_id <Int32>] [-group_id <Int32>]
  [-department_id <Int32>] [-username <String>] [-email <String>] [-employee_num <String>] [-state <String>]
- [-zip <String>] [-country <String>] [-deleted <Boolean>] [-ldap_import <Boolean>] [-remote <Boolean>]
- [-assets_count <Int32>] [-licenses_count <Int32>] [-accessories_count <Int32>] [-consumables_count <Int32>]
- [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
+ [-zip <String>] [-country <String>] [-include_deleted <Boolean>] [-deleted <Boolean>] [-ldap_import <Boolean>]
+ [-remote <Boolean>] [-assets_count <Int32>] [-licenses_count <Int32>] [-accessories_count <Int32>]
+ [-consumables_count <Int32>] [-sort <String>] [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all]
+ [-first_name <String>] [-last_name <String>] [-display_name <String>] [-phone <String>] [-mobile <String>]
+ [-website <String>] [-locale <String>] [-manager_id <Int32>] [-created_by <Int32>] [-start_date <String>]
+ [-end_date <String>] [-activated <Boolean>] [-vip <Boolean>] [-autoassign_licenses <Boolean>]
+ [-two_factor_enrolled <Boolean>] [-two_factor_optin <Boolean>] [-admins <Boolean>] [-superadmins <Boolean>]
+ [-expand_company_hierarchy <Boolean>] [-manages_users_count <Int32>] [-manages_locations_count <Int32>]
+ [-assigned_maintenances_count <Int32>] [-filter <String>] [-Session <SnipeitSession>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Get with ID
+
 ```
-Get-SnipeitUser [-id <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-SnipeitUser [-id <Int32>] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Get users a specific accessory id has been checked out to
+
 ```
-Get-SnipeitUser [-accessory_id <Int32>] [-all] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-SnipeitUser [-accessory_id <Int32>] [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -280,6 +291,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -include_deleted
+
+Include both active and deleted users. Maps to the server all filter independently of -all pagination. The deleted
+filter takes precedence when both filters are true.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -deleted
 
 Optionally restrict User results to deleted users only
@@ -394,7 +422,7 @@ Accept wildcard characters: False
 
 ### -sort
 
-Column to sort on.
+Column to sort on
 
 ```yaml
 Type: String
@@ -410,7 +438,7 @@ Accept wildcard characters: False
 
 ### -order
 
-Sort order. Can be 'asc' or 'desc'.
+Sort order for results, one of 'asc' or 'desc'. Defaults to 'desc'
 
 ```yaml
 Type: String
@@ -426,9 +454,7 @@ Accept wildcard characters: False
 
 ### -limit
 
-Specify the number of results you wish to return.
-Defaults to 50.
-Defines batch size for -all
+Specify the number of results you wish to return. Defaults to 50. Defines batch size for -all
 
 ```yaml
 Type: Int32
@@ -474,7 +500,392 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -first_name
+
+Match the user's first name.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_name
+
+Match the user's last name.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -display_name
+
+Match the user's display name.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -phone
+
+Match a phone number.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -mobile
+
+Match a mobile phone number.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -website
+
+Match a website URL.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -locale
+
+Match the preferred interface locale.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manager_id
+
+Restrict results to users reporting to this manager ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -created_by
+
+Restrict results to the creating user's ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -start_date
+
+Match the employment start date using yyyy-MM-dd.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -end_date
+
+Match the employment end date using yyyy-MM-dd.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -activated
+
+Filter by account activation state.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -vip
+
+Filter by VIP status.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -autoassign_licenses
+
+Filter by automatic license assignment eligibility.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -two_factor_enrolled
+
+Filter by two-factor enrollment state.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -two_factor_optin
+
+Filter by two-factor opt-in state.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -admins
+
+Restrict results to administrators.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -superadmins
+
+Restrict results to superadministrators.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -expand_company_hierarchy
+
+Include descendant companies when filtering by company_id.
+
+```yaml
+Type: Boolean
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manages_users_count
+
+Match the number of users managed, including zero.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manages_locations_count
+
+Match the number of locations managed, including zero.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -assigned_maintenances_count
+
+Match the number of assigned maintenances, including zero.
+
+```yaml
+Type: Int32
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -filter
+
+Server search filter, taking precedence over search.
+
+```yaml
+Type: String
+Parameter Sets: Search
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+
+Optional custom SnipeitSession instance.
+
+```yaml
+Type: SnipeitSession
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ProgressAction
+
 Action preference for progress events generated by this cmdlet.
 
 ```yaml
@@ -490,13 +901,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ### System.Management.Automation.PSCustomObject
+
 ## NOTES
 
 ## RELATED LINKS

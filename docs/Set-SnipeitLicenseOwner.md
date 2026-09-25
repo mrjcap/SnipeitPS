@@ -16,23 +16,23 @@ Check out a license seat.
 ### User (Default)
 
 ```
-Set-SnipeitLicenseOwner -id <Int32[]> -assigned_to <Int32> [-seat_id <Nullable[Int32]>] [-notes <String>]
- [-Session <SnipeitSession>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-SnipeitLicenseOwner -id <Int32[]> -assigned_to <Int32> [-seat_id <Int32>] [-notes <String>]
+ [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Asset
 
 ```
-Set-SnipeitLicenseOwner -id <Int32[]> -asset_id <Int32> [-seat_id <Nullable[Int32]>] [-notes <String>]
- [-Session <SnipeitSession>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-SnipeitLicenseOwner -id <Int32[]> -asset_id <Int32> [-seat_id <Int32>] [-notes <String>]
+ [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-POST /api/v1/licenses/{id}/checkout checks out a seat for each license ID. The default User parameter set
-requires assigned_to and sends target_type=user. Asset requires asset_id and sends target_type=asset. User and
-hardware asset targets are mutually exclusive. Omit seat_id or pass $null to let the server choose a free
-license seat. Supply a positive seat ID to select one explicitly.
+POST /api/v1/licenses/{id}/checkout checks out a seat for each license ID. The default User parameter set requires
+assigned_to and sends target_type=user. Asset requires asset_id and sends target_type=asset. User and hardware asset
+targets are mutually exclusive. Omit seat_id or pass $null to let the server choose a free license seat. Supply a
+positive seat ID to select one explicitly.
 
 ## EXAMPLES
 
@@ -61,7 +61,7 @@ One or more license IDs, each from 1 to 2147483647.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -72,12 +72,28 @@ Accept wildcard characters: False
 
 ### -assigned_to
 
-User ID from 1 to 2147483647. Required in User; mutually exclusive with asset_id.
+User ID, mutually exclusive with asset_id. The server receives target_type=user.
 
 ```yaml
 Type: Int32
 Parameter Sets: User
-Aliases: 
+Aliases:
+
+Required: True
+Position: Named
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -asset_id
+
+Hardware asset ID. The server receives target_type=asset.
+
+```yaml
+Type: Int32
+Parameter Sets: Asset
+Aliases:
 
 Required: True
 Position: Named
@@ -88,12 +104,12 @@ Accept wildcard characters: False
 
 ### -seat_id
 
-Optional positive license seat ID. Omit or pass $null for server selection of a free seat.
+Optional seat ID. Omit or pass null to let the server choose a free seat.
 
 ```yaml
-Type: Nullable[Int32]
+Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +125,7 @@ Optional checkout or checkin notes. Allows null; sent only when explicitly bound
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +141,7 @@ Optional SnipeitSession instance. If omitted or null, uses the current module co
 ```yaml
 Type: SnipeitSession
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -166,42 +182,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -asset_id
+### -ProgressAction
 
-Hardware asset ID from 1 to 2147483647. Required in Asset; mutually exclusive with assigned_to.
+Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.
 
 ```yaml
-Type: Int32
-Parameter Sets: Asset
-Aliases: 
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
-Required: True
+Required: False
 Position: Named
-Default value: 0
-Accept pipeline input: True (ByPropertyName)
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### CommonParameters
 
-Supports the PowerShell common parameters. See [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### System.Management.Automation.PSObject
-
-Accepts objects with matching properties: id, assigned_to, asset_id.
-
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject
-
-Returns the API response processed by the module dispatcher.
+### System.Management.Automation.PSObject
 
 ## NOTES
 
-Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm.
-Confirmation impact is Medium.
+Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm. Confirmation
+impact is Medium.
 
 ## RELATED LINKS
 

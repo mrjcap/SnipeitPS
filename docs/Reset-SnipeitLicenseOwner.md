@@ -15,13 +15,13 @@ Check in a license seat.
 
 ```
 Reset-SnipeitLicenseOwner [-id] <Int32[]> [-seat_id] <Int32> [[-notes] <String>] [[-Session] <SnipeitSession>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-POST /api/v1/licenses/{id}/checkin checks in the specified seat for each license ID. A positive seat_id is
-required. This command does not automatically select a seat or check in all seats.
+POST /api/v1/licenses/{id}/checkin checks in the specified seat for each license ID. A positive seat_id is required.
+This command does not automatically select a seat or check in all seats.
 
 ## EXAMPLES
 
@@ -42,7 +42,7 @@ One or more license IDs, each from 1 to 2147483647.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -58,7 +58,7 @@ Required license seat ID from 1 to 2147483647. Selects the specific seat to chec
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -74,7 +74,7 @@ Optional checkout or checkin notes. Allows null; sent only when explicitly bound
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -90,7 +90,7 @@ Optional SnipeitSession instance. If omitted or null, uses the current module co
 ```yaml
 Type: SnipeitSession
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -131,26 +131,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProgressAction
+
+Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-Supports the PowerShell common parameters. See [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### System.Management.Automation.PSObject
-
-Accepts objects with matching properties: id, seat_id.
-
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject
-
-Returns the API response processed by the module dispatcher.
+### System.Management.Automation.PSObject
 
 ## NOTES
 
-Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm.
-Confirmation impact is Medium.
+Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm. Confirmation
+impact is Medium.
 
 ## RELATED LINKS
 

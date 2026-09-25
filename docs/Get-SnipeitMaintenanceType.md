@@ -16,20 +16,22 @@ Get maintenance types.
 ### List (Default)
 
 ```
-Get-SnipeitMaintenanceType [-name <String>] [-search <String>] [-deleted <Boolean>] [-sort <String>] [-order
- <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-Session <SnipeitSession>] [<CommonParameters>]
+Get-SnipeitMaintenanceType [-name <String>] [-search <String>] [-deleted <Boolean>] [-sort <String>]
+ [-order <String>] [-limit <Int32>] [-offset <Int32>] [-all] [-Session <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### ById
 
 ```
-Get-SnipeitMaintenanceType -id <Int32[]> [-Session <SnipeitSession>] [<CommonParameters>]
+Get-SnipeitMaintenanceType -id <Int32[]> [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-GET /api/v1/maintenance-types lists types. GET /api/v1/maintenance-types/{id} retrieves each requested type.
-The default List parameter set supports filters and pagination; ById cannot use list filters.
+GET /api/v1/maintenance-types lists types. GET /api/v1/maintenance-types/{id} retrieves each requested type. The default
+List parameter set supports filters and pagination; ById cannot use list filters.
 
 ## EXAMPLES
 
@@ -58,7 +60,7 @@ Exact maintenance type name filter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +76,7 @@ Search text matched within maintenance type names.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +92,7 @@ Pass $true to request only deleted types. The default lists active types.
 ```yaml
 Type: Boolean
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +108,7 @@ Sort field: id, name, created_at, or updated_at.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +124,7 @@ Sort direction: asc or desc.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +140,7 @@ Page size from 1 to 500. With -all, controls each page size.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -154,7 +156,7 @@ Starting result offset from 0 to 2147483647.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -170,7 +172,7 @@ Fetch all matching pages rather than one page.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -186,7 +188,7 @@ Optional SnipeitSession instance. If omitted or null, uses the current module co
 ```yaml
 Type: SnipeitSession
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -202,7 +204,7 @@ One or more maintenance type IDs, each from 1 to 2147483647.
 ```yaml
 Type: Int32[]
 Parameter Sets: ById
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -211,9 +213,27 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -ProgressAction
+
+Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-Supports the PowerShell common parameters. See [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
