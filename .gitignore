@@ -11,3 +11,14 @@ coverage.xml
 # OS
 Thumbs.db
 .DS_Store
+
+# AI Artifacts
+graphify-out/
+.agents/agents/*/*.md
+.agents/rules/*.md
+.agents/skills/*/*/*.md
+.agents/skills/*/*.md
+.agents/skills/*/*/*.*
+.agents/skills/*/*.*
+.pi/*.*
+docs/*/*/*.md
