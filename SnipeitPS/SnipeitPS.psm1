@@ -31,6 +31,8 @@ $manifestPath = Join-Path -Path $PSScriptRoot -ChildPath 'SnipeitPS.psd1'
 $loadedManifest = Test-ModuleManifest -Path $manifestPath -ErrorAction Stop
 $script:SnipeitModuleVersion = $loadedManifest.Version.ToString()
 
+Set-SnipeitAlias
+
 # Session variable for storing current session information (supports both dictionary and object properties)
 $SnipeitPSSession = [ordered]@{
     'url'               = $null

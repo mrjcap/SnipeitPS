@@ -79,7 +79,7 @@ Describe "Snipe-IT v8.7.0 Features and Compatibility" {
                 }
                 Invoke-SnipeitMethod -Api "/test" -Method "GET"
                 Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter {
-                    $Headers['User-Agent'] -eq "SnipeitPS/1.16.0"
+                    $Headers['User-Agent'] -eq "SnipeitPS/2.0.0"
                 }
             }
         }

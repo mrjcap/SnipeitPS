@@ -47,11 +47,7 @@ Describe "runner fixture" -Tag "Integration" {
 '@ | Set-Content -LiteralPath $fixture
 
         try {
-            $engine = if (Test-Path (Join-Path $PSHOME "pwsh.exe")) {
-                Join-Path $PSHOME "pwsh.exe"
-            } else {
-                Join-Path $PSHOME "powershell.exe"
-            }
+            $engine = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
             $output = & $engine -NoProfile -File $runner `
                 -URL "https://user:password@example.test:8443/private/path?token=secret#fragment" `
                 -ApiKey "test-key" -Path $fixture 2>&1 | Out-String
@@ -77,11 +73,7 @@ Describe "runner fixture" -Tag "Integration" {
 '@ | Set-Content -LiteralPath $fixture
 
         try {
-            $engine = if (Test-Path (Join-Path $PSHOME "pwsh.exe")) {
-                Join-Path $PSHOME "pwsh.exe"
-            } else {
-                Join-Path $PSHOME "powershell.exe"
-            }
+            $engine = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
             $output = & $engine -NoProfile -File $runner -URL "not a URL" -ApiKey "test-key" -Path $fixture 2>&1 | Out-String
         } finally {
             Remove-Item -LiteralPath $tempDirectory -Recurse -Force -ErrorAction SilentlyContinue

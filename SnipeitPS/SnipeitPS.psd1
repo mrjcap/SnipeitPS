@@ -12,7 +12,7 @@
 RootModule = 'SnipeitPS'
 
 # Version number of this module.
-ModuleVersion = '1.16.0'
+ModuleVersion = '2.0.0'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop', 'Core')
@@ -332,7 +332,16 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = @'
-Version 1.16.0:
+Version 2.0.0 (unreleased):
+- Breaking changes relative to v1.15.2 require migration; see README.md and CHANGELOG.md.
+- Use Connect-SnipeitPS or -Session instead of removed per-command url/apiKey parameters.
+- Restored legacy alias exports and SNIPEITPS_DISABLE_LEGACY_ALIASES opt-out; prefer full Snipeit command names.
+- Connections require HTTPS; HTTP credential transport is not supported.
+- Maintenance assigned_to is rejected; use responsible_party_id or paired checkout snapshot fields on updates.
+- New custom regex fields require a complete Laravel regex rule; custom regex updates are unsupported.
+- API field coverage remains incomplete. Blocked routes and protocol exclusions are recorded in the contract ledger.
+
+Features carried forward from 1.16.0:
 - Tab completion for models, statuses, categories, locations, companies, suppliers, departments, and users.
 - Cache management with Clear-SnipeitCache.
 - Default table views in SnipeitPS.format.ps1xml for PSTypeName entities.

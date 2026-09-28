@@ -5,6 +5,91 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.0.0] - Unreleased
+
+### Release scope
+
+- Mark the current candidate as a major release because it breaks v1.15.2 calling conventions.
+  The comparison baseline is commit `28f996c5cce0646b689dcf2ec6da7fc9a0a1d79b`.
+- Retain all 115 baseline function exports; the candidate exports 179 functions.
+- Restore the 37 declared legacy aliases at import, including the `SNIPEITPS_DISABLE_LEGACY_ALIASES` opt-out.
+  Full `Snipeit` command names remain preferred.
+- Keep the earlier 1.16.0 entry as development history, not evidence of publication or current runtime validation.
+
+### Migration from v1.15.2
+
+- Removed per-command connection `url` and `apiKey` parameters require `Connect-SnipeitPS` or `-Session` instead.
+  Maintenance `url` parameters describe a maintenance record, not a connection.
+- Connections now require HTTPS. HTTP credential transport will not be restored for compatibility.
+- Maintenance `assigned_to` is rejected. Use `responsible_party_id` for the responsible user; use paired
+  `checked_out_to_id` and `checked_out_to_type` on updates for checkout snapshots.
+- Custom regex creation requires a complete Laravel `regex:/.../` rule. Custom regex updates are unsupported;
+  omit `format` and `custom_format` when changing other field properties.
+- Nullable fields, omitted defaults, pipeline binding, and response handling changed during the API corrections.
+  Asset creation with checkout requires an explicit `checkout_to_type`. Prefer named arguments and review scripts
+  that depend on ignored fields or implicit defaults. See the README migration section before upgrading.
+
+### Known limitations
+
+- The 249 normalized ledger rows include seven server-blocked declarations and four protocol exclusions.
+  They are not 249 supported endpoints. Field-level source and runtime reconciliation remains incomplete for all
+  238 active candidates; historical `Verified` labels are not exhaustive verification.
+- Company listing lacks explicit `page` support and literal `parent_id=null` filtering. Bulk maintenance images and
+  custom regex updates remain unsupported. Deployment-specific permissions, advanced filters, encrypted fields,
+  images, and persistence need further checks.
+
+### Fixed
+
+- `Get-SnipeitFile` now rejects `inline` or `AsByteArray` without `file_id` before making an HTTP request,
+  including explicitly false switches. It throws `file_id is required for single-file retrieval.` instead of
+  prompting for a missing parameter. Four regression tests cover these calls.
+
+### Verification
+
+- After the fix on 2026-09-26, all 1860 offline tests passed on PowerShell 7 and the Windows PowerShell 5.1
+  Desktop engine in a temporary SDK host, with exit 0 and zero adverse NUnit counts.
+- The user's Windows PowerShell 5.1.26100.9549 Desktop ConsoleHost coverage run passed all 1860 tests,
+  including the analyzer checks and missing-file-ID regressions, with zero failures, skips, inconclusive,
+  or not-run tests. Pester 5.8.0 measured 92.66% command coverage: 4862 of 5247 commands across 200 files,
+  with 385 commands unexecuted. This is command coverage, not complete API compatibility.
+- The rebuilt local package contains the fix. All 204 module files matched the tested source snapshot;
+  `Public/Get-SnipeitFile.ps1` was the only module file changed from the previous package. New package SHA256:
+  `edc27724b8ac3b968b6b550b8ca6328a6ce4943339460054931f5e8602b3601e`.
+- The extracted new package passed 29 focused offline tests on each engine, PowerShell 7 and Windows
+  PowerShell 5.1, with zero adverse NUnit counts and exit 0.
+- The new package passed 12 affected live tests on the Windows PowerShell 5.1 SDK host against the isolated
+  server, with 21 API requests and exit 0. Tests covered listing, exact text and byte retrieval with `inline`
+  omitted, true, or false, and rejection of missing file IDs without HTTP requests. This was a focused rerun,
+  not a repeat of the full integration suite. Fixture cleanup, token revocation, removal of the plaintext token,
+  and tunnel shutdown were verified.
+- Package verification evidence is stored under
+  `Release/release-validation-20260926/fixed-package-20260926-2110/`, including `validation.json`.
+- An earlier ConsoleHost run failed during analyzer setup with `Collection was modified; enumeration operation
+  may not execute.` The latest full run passed without an analyzer change; the earlier failure remains unexplained.
+
+### Earlier validation
+
+- Before the file-ID fix, PowerShell 7.6.6 on Windows and Windows PowerShell 5.1.26100.9444 Desktop in a temporary
+  SDK host each passed 1856 offline tests on 2026-09-26, with exit 0 and zero adverse NUnit counts.
+- Subprocess tests now reuse the current host executable. The multipart debug fixture uses `DebugPreference=Continue`
+  instead of the interactive 5.1 `-Debug` behavior and also asserts that the binary redaction marker appears.
+  The SDK host's stderr contained `No more data is available.` despite the passing result; that diagnostic is retained
+  in the evidence. Earlier SDK attempts timed out and are not counted as passes.
+- The earlier package, which lacks the file-ID fix, imported and authenticated over validated HTTPS on
+  PowerShell 7.4.6, Ubuntu 22.04.5.
+  Its 204 module files matched the Windows offline-tested snapshot. Package SHA256:
+  `64bd051fd3e77bc44fb34aa952b0f8f8c72bc36ee07585e7e489b46edbaabba1`.
+- Isolated integration retry on 2026-09-26: 125 passed, 0 failed, 0 skipped, 342 requests, exit 0. It tested the same
+  package on PowerShell 7.4.6 and Ubuntu 22.04.5 with TLS validation enabled. Token revocation, removal of token files
+  and the temporary runner, and no remaining active entity fixtures were verified.
+- The earlier integration attempt was interrupted when both test containers stopped at 00:02 +03:00. Its cause
+  remains unconfirmed; it is not counted as a pass. The later successful retry does not establish that cause.
+- The earlier package also passed 117 live tests on the local Windows PowerShell 5.1.26100.9549 SDK host,
+  with 323 API requests and exit 0. Eight existing PowerShell 7-only upload tests were excluded explicitly.
+  These results and the Linux integration results apply to the earlier package, not the rebuilt artifact.
+- macOS remains untested. The earlier package is unchanged. No publication or tag was created; 2.0.0 remains
+  an unreleased local candidate.
+
 ## [v1.16.0] - 2026-09-24
 
 ### Added
@@ -40,7 +125,8 @@ adheres to [Semantic Versioning](http://semver.org/).
 - **License Management:** `Set-SnipeitLicenseOwner` and `Reset-SnipeitLicenseOwner`.
 - **Fail-Closed Offline Test Runner:** Added `Tests/Support/Invoke-SnipeitOfflineTest.ps1` with proxy guards preventing
   unmocked network calls to `Invoke-RestMethod` and `Invoke-WebRequest`.
-- **API Parity Contract Ledger:** Added `Tests/Fixtures/ApiParity.Contracts.psd1` covering all 249 REST v1 operations.
+- **API Parity Contract Ledger:** Added `Tests/Fixtures/ApiParity.Contracts.psd1` with 249 normalized inventory rows,
+  including blocked declarations and protocol exclusions. This does not establish complete API support.
 - **Table Formatting Views:** Tagged output types in `SnipeitPS.format.ps1xml` for kits, depreciations, files, imports,
   login attempts, and backup downloads.
 

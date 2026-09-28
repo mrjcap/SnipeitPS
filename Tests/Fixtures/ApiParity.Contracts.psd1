@@ -1,6 +1,8 @@
 @{
     ApiRef = '0c381a6482824a9f5d1889a98843393a0b6ad6b3'
     FieldLimitations = @(
+        @{ Operation = 'companies.index'; Field = 'parent_id'; Source = 'app/Http/Controllers/Api/CompaniesController.php:90-97; SnipeitPS/Public/Get-SnipeitCompany.ps1:92-93'; Reason = 'Top-level filtering requires the literal string null. Zero is compared as parent_id = 0, not IS NULL. The client integer parameter cannot send the null string; omitting the parameter does not filter for top-level companies.' }
+        @{ Operation = 'companies.index'; Field = 'page'; Source = 'app/Http/Middleware/SetPaginationDefaults.php:21-26; SnipeitPS/Public/Get-SnipeitCompany.ps1:82-90'; Reason = 'The server accepts page only when offset is not filled. The client exposes limit, offset and all, but no page parameter.' }
         @{ Operation = 'accessories.store,accessories.update'; Field = 'qty'; Source = 'app/Models/Accessory.php; database/migrations/2015_02_25_204513_add_accessories_table.php:20'; Reason = 'Model validation declares qty nullable but the table column is not nullable. The client retains a non-nullable integer quantity.' }
         @{ Operation = 'hardware.audit,hardware.asset.audit,hardware.audit.bulk'; Field = '_snipeit_*'; Source = 'app/Http/Controllers/Api/AssetsController.php:1681-1708'; Reason = 'Only custom fields enabled for display_audit are persisted. Encrypted writes require assets.view.encrypted_custom_fields; the response can echo values without persisting them when permission is absent.' }
         @{ Operation = 'hardware.audit.bulk'; Field = 'image'; Source = 'SnipeitPS/Public/New-SnipeitAudit.ps1; SnipeitPS/Public/Update-SnipeitAssetAudit.ps1'; Reason = 'Client bulk audits reject images because the legacy multipart conversion does not preserve the ids array. Audit individual assets when attaching images.' }
@@ -204,7 +206,7 @@
             Route = '/api/v1/companies'
             Controller = 'CompaniesController::index'
             Source = 'app/Http/Controllers/Api/CompaniesController.php'
-            QueryFields = @('search', 'filter', 'order', 'sort', 'limit', 'offset', 'name', 'email', 'created_by', 'tag_color', 'parent_id')
+            QueryFields = @('search', 'filter', 'order', 'sort', 'limit', 'offset', 'page', 'name', 'email', 'created_by', 'tag_color', 'parent_id')
             BodyFields = @()
             RequiredFields = @()
             NullableFields = @()
@@ -224,7 +226,7 @@
             QueryFields = @()
             BodyFields = @('name', 'parent_id', 'phone', 'fax', 'email', 'tag_color', 'notes', 'image')
             RequiredFields = @('name')
-            NullableFields = @('parent_id', 'phone', 'fax', 'email')
+            NullableFields = @('parent_id', 'phone', 'fax', 'email', 'tag_color', 'notes')
             ResponseKind = 'StandardEnvelope'
             Pagination = 'None'
             Authorization = 'create Company'
@@ -258,7 +260,7 @@
             QueryFields = @()
             BodyFields = @('name', 'parent_id', 'phone', 'fax', 'email', 'tag_color', 'notes', 'image', 'image_delete')
             RequiredFields = @()
-            NullableFields = @('parent_id', 'phone', 'fax', 'email')
+            NullableFields = @('parent_id', 'phone', 'fax', 'email', 'tag_color', 'notes')
             ResponseKind = 'StandardEnvelope'
             Pagination = 'None'
             Authorization = 'update Company class and instance'
@@ -2294,7 +2296,7 @@
             Methods = @('GET')
             Route = '/api/v1/{object_type}/{id}/files'
             Controller = 'UploadedFilesController::index'
-            Source = 'app/Http/Controllers/Api/UploadedFilesController.php:29-145'
+            Source = 'app/Http/Controllers/Api/UploadedFilesController.php::index'
             QueryFields = @('search', 'sort', 'order', 'offset', 'limit')
             BodyFields = @()
             RequiredFields = @()
@@ -2328,7 +2330,7 @@
             Methods = @('POST')
             Route = '/api/v1/{object_type}/{id}/files'
             Controller = 'UploadedFilesController::store'
-            Source = 'app/Http/Controllers/Api/UploadedFilesController.php:185-215'
+            Source = 'app/Http/Controllers/Api/UploadedFilesController.php::store'
             QueryFields = @()
             BodyFields = @('file[]', 'notes')
             RequiredFields = @('file[]')
@@ -2345,7 +2347,7 @@
             Methods = @('DELETE')
             Route = '/api/v1/{object_type}/{id}/files/{file_id}/delete'
             Controller = 'UploadedFilesController::destroy'
-            Source = 'app/Http/Controllers/Api/UploadedFilesController.php:217-235'
+            Source = 'app/Http/Controllers/Api/UploadedFilesController.php::destroy'
             QueryFields = @()
             BodyFields = @()
             RequiredFields = @()
@@ -3093,7 +3095,7 @@
             Methods = @('GET')
             Route = '/api/v1/account/personal-access-tokens'
             Controller = 'ProfileController::showApiTokens'
-            Source = 'app/Http/Controllers/Api/ProfileController.php:99-138'
+            Source = 'app/Http/Controllers/Api/ProfileController.php::showApiTokens'
             QueryFields = @()
             BodyFields = @()
             RequiredFields = @()
@@ -3110,7 +3112,7 @@
             Methods = @('POST')
             Route = '/api/v1/account/personal-access-tokens'
             Controller = 'ProfileController::createApiToken'
-            Source = 'app/Http/Controllers/Api/ProfileController.php:140-170'
+            Source = 'app/Http/Controllers/Api/ProfileController.php::createApiToken'
             QueryFields = @()
             BodyFields = @('name')
             RequiredFields = @()
@@ -3127,7 +3129,7 @@
             Methods = @('DELETE')
             Route = '/api/v1/account/personal-access-tokens/{tokenId}'
             Controller = 'ProfileController::deleteApiToken'
-            Source = 'app/Http/Controllers/Api/ProfileController.php:172-187'
+            Source = 'app/Http/Controllers/Api/ProfileController.php::deleteApiToken'
             QueryFields = @()
             BodyFields = @()
             RequiredFields = @()

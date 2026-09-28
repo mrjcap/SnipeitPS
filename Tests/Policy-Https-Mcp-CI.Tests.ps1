@@ -31,17 +31,13 @@ BeforeAll {
             $process.Dispose()
         }
     }
-    $engine = if (Test-Path (Join-Path $PSHOME 'pwsh.exe')) {
-        Join-Path $PSHOME 'pwsh.exe'
-    } else {
-        Join-Path $PSHOME 'powershell.exe'
-    }
+    $engine = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
 }
 
 Describe 'HTTPS, module metadata, MCP, and CI policy' {
     It 'uses manifest version for the module and HTTP User-Agent' {
         $manifest = Test-ModuleManifest -Path (Join-Path $repositoryRoot 'SnipeitPS/SnipeitPS.psd1')
-        $manifest.Version.ToString() | Should -Be '1.16.0'
+        $manifest.Version.ToString() | Should -Be '2.0.0'
 
         InModuleScope 'SnipeitPS' {
             $script:SnipeitPSSession.url = 'https://test.example'
@@ -49,8 +45,35 @@ Describe 'HTTPS, module metadata, MCP, and CI policy' {
             Mock Invoke-RestMethod { [PSCustomObject]@{ status = 'success' } }
             Invoke-SnipeitMethod -Api '/api/v1/status' -Method Get | Out-Null
             Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter {
-                $Headers['User-Agent'] -eq 'SnipeitPS/1.16.0'
+                $Headers['User-Agent'] -eq 'SnipeitPS/2.0.0'
             }
+        }
+    }
+
+    It 'exports working legacy aliases unless explicitly disabled' {
+        $oldSetting = $env:SNIPEITPS_DISABLE_LEGACY_ALIASES
+        try {
+            Remove-Item Env:SNIPEITPS_DISABLE_LEGACY_ALIASES -ErrorAction SilentlyContinue
+            Import-Module (Join-Path $repositoryRoot 'SnipeitPS/SnipeitPS.psd1') -Force
+            $data = Import-PowerShellDataFile (Join-Path $repositoryRoot 'SnipeitPS/SnipeitPS.psd1')
+            @($data.AliasesToExport).Count | Should -Be 37
+            $aliases = (Get-Module SnipeitPS).ExportedAliases
+            @($aliases.Keys).Count | Should -Be 37
+            foreach ($name in $data.AliasesToExport) {
+                $aliases[$name].ResolvedCommand.ModuleName | Should -Be 'SnipeitPS'
+            }
+            foreach ($disabled in @('1', 'true')) {
+                $env:SNIPEITPS_DISABLE_LEGACY_ALIASES = $disabled
+                Import-Module (Join-Path $repositoryRoot 'SnipeitPS/SnipeitPS.psd1') -Force
+                @((Get-Module SnipeitPS).ExportedAliases.Keys).Count | Should -Be 0
+            }
+        } finally {
+            if ($null -eq $oldSetting) {
+                Remove-Item Env:SNIPEITPS_DISABLE_LEGACY_ALIASES -ErrorAction SilentlyContinue
+            } else {
+                $env:SNIPEITPS_DISABLE_LEGACY_ALIASES = $oldSetting
+            }
+            Import-Module (Join-Path $repositoryRoot 'SnipeitPS/SnipeitPS.psd1') -Force
         }
     }
 
@@ -130,7 +153,7 @@ Describe 'HTTPS, module metadata, MCP, and CI policy' {
             $responses.Count | Should -Be 3
             @($responses.id) | Should -Be @(1, 2, 3)
             $initialize = $responses | Where-Object id -EQ 1
-            $initialize.result.serverInfo.version | Should -Be '1.16.0'
+            $initialize.result.serverInfo.version | Should -Be '2.0.0'
             $list = $responses | Where-Object id -EQ 2
             @($list.result.tools.name) | Should -Not -Contain 'snipeit_create_asset'
             @($list.result.tools.name) | Should -Not -Contain 'snipeit_sync_asset'

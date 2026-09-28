@@ -65,7 +65,7 @@ function Get-SnipeitFile {
         [Parameter(Mandatory = $true, Position = 1, ValueFromPipelineByPropertyName = $true)]
         [int]$id,
 
-        [Parameter(Mandatory = $true, Position = 2, ParameterSetName = 'SingleFile')]
+        [Parameter(Position = 2, ParameterSetName = 'SingleFile')]
         [int]$file_id,
 
         [Parameter(ParameterSetName = 'List')]
@@ -104,6 +104,9 @@ function Get-SnipeitFile {
 
     process {
         if ($PSCmdlet.ParameterSetName -eq 'SingleFile') {
+            if (-not $PSBoundParameters.ContainsKey('file_id')) {
+                throw 'file_id is required for single-file retrieval.'
+            }
             $query = @{}
             if ($PSBoundParameters.ContainsKey('inline')) { $query['inline'] = [bool]$inline }
             if ($AsByteArray) {

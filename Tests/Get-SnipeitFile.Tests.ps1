@@ -49,6 +49,23 @@ Describe 'Get-SnipeitFile' {
         }
 
         Context 'Single file retrieval' {
+            It 'Rejects <Label> without file_id before transport' -ForEach @(
+                @{ Label = 'inline'; Options = @{ inline = $true } }
+                @{ Label = 'inline false'; Options = @{ inline = $false } }
+                @{ Label = 'AsByteArray'; Options = @{ AsByteArray = $true } }
+                @{ Label = 'AsByteArray false'; Options = @{ AsByteArray = $false } }
+            ) {
+                Mock Invoke-SnipeitMethod {}
+                Mock Save-SnipeitApiFile {}
+
+                {
+                    Get-SnipeitFile -EntityType hardware -id 42 @Options -Session $script:testSession
+                } | Should -Throw -ExpectedMessage 'file_id is required for single-file retrieval.'
+
+                Should -Invoke Invoke-SnipeitMethod -Times 0 -Exactly
+                Should -Invoke Save-SnipeitApiFile -Times 0 -Exactly
+            }
+
             It 'Retrieves single file using file_id' {
                 $script:captured = $null
                 Mock Invoke-SnipeitMethod -ModuleName SnipeitPS {

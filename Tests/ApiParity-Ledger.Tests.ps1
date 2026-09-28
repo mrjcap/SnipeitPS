@@ -122,6 +122,18 @@ Describe 'API Parity Contract Ledger' {
             }
         }
 
+        It '<Key> cites its exact pinned controller action' -ForEach @(
+            @{ Key = 'files.index'; Action = 'UploadedFilesController.php::index' }
+            @{ Key = 'files.store'; Action = 'UploadedFilesController.php::store' }
+            @{ Key = 'files.destroy'; Action = 'UploadedFilesController.php::destroy' }
+            @{ Key = 'account.tokens.index'; Action = 'ProfileController.php::showApiTokens' }
+            @{ Key = 'account.tokens.store'; Action = 'ProfileController.php::createApiToken' }
+            @{ Key = 'account.tokens.destroy'; Action = 'ProfileController.php::deleteApiToken' }
+        ) {
+            $operation = $script:operations | Where-Object Key -eq $Key
+            $operation.Source | Should -Be "app/Http/Controllers/Api/$Action"
+        }
+
         It 'Records field-level server limitations separately from implemented operations' {
             $script:ledger.Contains('FieldLimitations') | Should -BeTrue
             @($script:ledger.FieldLimitations).Count | Should -BeGreaterThan 0
@@ -169,9 +181,26 @@ Describe 'API Parity Contract Ledger' {
                 $operation.BodyFields | Should -Contain $field
                 (Get-Command $operation.Command).Parameters.Keys | Should -Contain $field
             }
-            foreach ($field in @('parent_id', 'phone', 'fax', 'email')) {
+            foreach ($field in @('parent_id', 'phone', 'fax', 'email', 'tag_color', 'notes')) {
                 $operation.NullableFields | Should -Contain $field
             }
+        }
+
+        It 'Records company page pagination supplied by the API middleware' {
+            $operation = $script:operations | Where-Object Key -eq 'companies.index'
+            $operation.QueryFields | Should -Contain 'page'
+        }
+
+        It 'Records the company query limitation for <Field>' -ForEach @(
+            @{ Field = 'parent_id'; Source = 'CompaniesController.php:90-97' }
+            @{ Field = 'page'; Source = 'SetPaginationDefaults.php:21-26' }
+        ) {
+            $limitation = @($script:ledger.FieldLimitations | Where-Object {
+                $_.Operation -eq 'companies.index' -and $_.Field -eq $Field
+            })
+            $limitation.Count | Should -Be 1
+            $limitation[0].Source | Should -Match ([regex]::Escape($Source))
+            $limitation[0].Reason | Should -Match 'client'
         }
 
         It 'Records the newly audited query fields for <Resource>' -ForEach @(

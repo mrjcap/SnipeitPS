@@ -44,6 +44,8 @@ Describe 'Protocol and Response Adapters' {
                 }
 
                 $stream = [System.IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes('private upload bytes'))
+                $previousDebugPreference = $DebugPreference
+                $DebugPreference = 'Continue'
                 try {
                     $request = @{
                         Uri     = 'https://contract.invalid/api/v1/imports'
@@ -51,11 +53,13 @@ Describe 'Protocol and Response Adapters' {
                         Headers = @{ 'Content-Type' = 'multipart/form-data; boundary=test' }
                         Body    = $stream
                     }
-                    $debugOutput = Invoke-SnipeitHttpRequest -Request $request -Debug 5>&1 | Out-String
+                    $debugOutput = Invoke-SnipeitHttpRequest -Request $request 5>&1 | Out-String
                     $script:httpCalls.Count | Should -Be 1
                     $script:httpCalls[0] | Should -Be $stream
+                    $debugOutput | Should -Match '\[BINARY_BODY\]'
                     $debugOutput | Should -Not -Match 'private upload bytes'
                 } finally {
+                    $DebugPreference = $previousDebugPreference
                     $stream.Dispose()
                 }
             }

@@ -96,6 +96,36 @@ Sync-SnipeitAsset -asset_tag "SRV-01" -name "Core Router" -model_id 12 -status_i
 
 ---
 
+## Migrating to 2.0.0
+
+The local release candidate is **2.0.0 (unreleased)**. It is not a drop-in replacement for v1.15.2.
+All 115 function exports from that baseline remain, but parameter and request behavior changed.
+
+- Move removed per-command `-url` and `-apiKey` arguments to `Connect-SnipeitPS`, or pass a `-Session`.
+  Maintenance commands still use `-url` for a maintenance record's URL, not the server address.
+- Use an HTTPS server URL. HTTP connections are rejected to protect credentials.
+- Legacy aliases are restored, but full names such as `Get-SnipeitAsset` are preferred.
+  Set `SNIPEITPS_DISABLE_LEGACY_ALIASES` to `1` or `true` before import to disable them.
+- Replace maintenance `-assigned_to` with `-responsible_party_id`. To update a checkout snapshot, pass both
+  `-checked_out_to_id` and `-checked_out_to_type`; creation leaves the snapshot to the server.
+- For new custom regex fields, use `-format 'CUSTOM REGEX'` and a complete Laravel rule such as
+  `-custom_format 'regex:/^\d+$/'`. `Set-SnipeitCustomField` rejects custom regex updates. Omit `format` and
+  `custom_format` when updating other properties.
+- Review scripts that depend on implicit defaults, positional arguments, response shapes, or ignored fields.
+  Nullable fields distinguish omission from explicit null. Checkout during asset creation requires an explicit
+  `-checkout_to_type`. Use named arguments and test requests against your server version before upgrading.
+
+## Known limitations
+
+The API contract ledger is an inventory, not a claim of complete API parity. Its 249 normalized rows include
+seven server-blocked declarations and four protocol exclusions. Field-level source and runtime reconciliation remains
+incomplete for all 238 active candidates. Historical `Verified` labels do not mean every writable field was verified.
+
+Company listing has no explicit `page` parameter and cannot express the server's literal `parent_id=null` filter with
+its integer parameter; `0` is not equivalent. Bulk maintenance images and custom regex updates are unsupported.
+Authorization, encrypted fields, advanced filters, image handling, and persistence still need deployment-specific checks.
+Offline results do not establish live-server behavior. See `Tests/Fixtures/ApiParity.Contracts.psd1` for per-route limits.
+
 ## Building documentation
 
 To rebuild markdown docs and recompile MAML XML help with platyPS:
@@ -121,9 +151,13 @@ pwsh -NoProfile -File ./Tests/Support/Invoke-SnipeitOfflineTest.ps1
 powershell.exe -NoProfile -File ./Tests/Support/Invoke-SnipeitOfflineTest.ps1
 ```
 
-The pinned-source verification passes 1756 tests on each host. The ledger in
-`Tests/Fixtures/ApiParity.Contracts.psd1` records seven server-blocked declarations, four protocol exclusions and
-field-level limitations. Offline tests do not prove deployed-server authorization or storage behavior.
+Release validation on 2026-09-26 is recorded in [CHANGELOG.md](CHANGELOG.md). After the file-ID fix, all 1860 offline
+tests passed on PowerShell 7 and the Windows PowerShell 5.1 SDK host. The user's Windows PowerShell 5.1.26100.9549
+Desktop ConsoleHost run also passed all 1860 tests, with 92.66% command coverage across 200 files.
+The rebuilt 2.0.0 package passed 29 focused offline tests on each engine and 12 affected live file-retrieval tests
+on the Windows PowerShell 5.1 SDK host, with validated HTTPS and verified fixture and token cleanup. The earlier
+125-test Linux integration result applies to the older package, not the rebuilt artifact. macOS remains untested.
+These results do not establish complete API parity or validate other deployed server versions.
 
 ---
 
