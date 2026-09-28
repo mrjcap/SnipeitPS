@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
-## [v2.0.0] - Unreleased
+## [v2.0.0] - 2026-09-28
 
 ### Release scope
 
-- Mark the current candidate as a major release because it breaks v1.15.2 calling conventions.
+- Version 2.0.0 is a major release because it breaks v1.15.2 calling conventions.
   The comparison baseline is commit `28f996c5cce0646b689dcf2ec6da7fc9a0a1d79b`.
-- Retain all 115 baseline function exports; the candidate exports 179 functions.
+- Retain all 115 baseline function exports; this release exports 179 functions.
 - Restore the 37 declared legacy aliases at import, including the `SNIPEITPS_DISABLE_LEGACY_ALIASES` opt-out.
   Full `Snipeit` command names remain preferred.
 - Keep the earlier 1.16.0 entry as development history, not evidence of publication or current runtime validation.
@@ -87,8 +87,14 @@ adheres to [Semantic Versioning](http://semver.org/).
 - The earlier package also passed 117 live tests on the local Windows PowerShell 5.1.26100.9549 SDK host,
   with 323 API requests and exit 0. Eight existing PowerShell 7-only upload tests were excluded explicitly.
   These results and the Linux integration results apply to the earlier package, not the rebuilt artifact.
-- macOS remains untested. The earlier package is unchanged. No publication or tag was created; 2.0.0 remains
-  an unreleased local candidate.
+- macOS remains untested. The earlier package is unchanged.
+
+### Publication
+
+- Published [v2.0.0 on GitHub](https://github.com/mrjcap/SnipeitPS/releases/tag/v2.0.0) on 2026-09-28,
+  tagged at commit `566a08f8ba958595843fcf12d017696d6566ef76`.
+- Uploaded the validated package and its SHA256 file. The downloaded GitHub asset matched the verified package hash.
+- This release operation did not publish to PowerShell Gallery.
 
 ## [v1.16.0] - 2026-09-24
 
