@@ -347,7 +347,7 @@ PrivateData = @{
 Version 2.0.1 (unreleased):
 - Add 12 commands for current resource endpoints, order items, and quantity adjustments.
 - Complete acquisition fields, requestable flags, default purchase costs, and collection filters.
-- Separate request, checkout, seat, and inventory identities; review the 2.0.1 migration note.
+- Preserve existing IDs and meanings by default; add explicit ID fields and opt-in NormalizeIdentity.
 - Preserve maintenance colors, import blank-field options, and actual HTTP error status codes.
 - Fix PowerShell 5.1 fixture loading, URI mock capture, compact JSON, and noninteractive test runners.
 - Keep stock-server defects and OAuth, SCIM, and diagnostic exclusions explicit in parity scope.

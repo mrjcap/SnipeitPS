@@ -4,7 +4,8 @@ function ConvertTo-SnipeitResourceIdentity {
     param(
         [AllowNull()]
         [object]$InputObject,
-        [string]$Route
+        [string]$Route,
+        [bool]$NormalizeIdentity = $true
     )
 
     $resourceKey = $null
@@ -31,6 +32,7 @@ function ConvertTo-SnipeitResourceIdentity {
 
     $resourceId = 0
     if ($resourceKey -and (-not [int]::TryParse([string]$record.$resourceKey.id, [ref]$resourceId) -or $resourceId -le 0)) {
+        if (-not $NormalizeIdentity) { return $InputObject }
         $errorRecord = [System.Management.Automation.ErrorRecord]::new(
             [System.ArgumentException]::new("API assignment row has no valid $resourceKey ID."),
             'SnipeitResourceIdentityError',
@@ -39,10 +41,16 @@ function ConvertTo-SnipeitResourceIdentity {
         )
         $PSCmdlet.ThrowTerminatingError($errorRecord)
     }
-    $record | Add-Member -NotePropertyName $relatedIdProperty -NotePropertyValue $record.id -Force
+    if (-not $record.PSObject.Properties[$relatedIdProperty]) {
+        $record | Add-Member -NotePropertyName $relatedIdProperty -NotePropertyValue $record.id
+    }
     if ($resourceKey) {
-        $record.id = $resourceId
-    } else {
+        $resourceIdProperty = "${resourceKey}_id"
+        if (-not $record.PSObject.Properties[$resourceIdProperty]) {
+            $record | Add-Member -NotePropertyName $resourceIdProperty -NotePropertyValue $resourceId
+        }
+        if ($NormalizeIdentity) { $record.id = $resourceId }
+    } elseif ($NormalizeIdentity) {
         $record.PSObject.Properties.Remove('id')
     }
     $record

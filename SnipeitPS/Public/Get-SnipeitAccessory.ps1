@@ -59,6 +59,11 @@ Server text-search filter, taking precedence over search.
 .PARAMETER requestable
 True restricts the accessory collection to requestable items. False leaves this restriction off.
 
+.PARAMETER NormalizeIdentity
+For user assignments, replace id with the accessory inventory ID. Off by default.
+Otherwise id keeps its original assignment meaning; accessory_id and checkout_id
+are added without replacing existing ID properties. Collection IDs are unchanged.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -141,7 +146,10 @@ function Get-SnipeitAccessory() {
         [SnipeitSession]$Session,
 
         [parameter(ParameterSetName='Search')]
-        [Nullable[bool]]$requestable
+        [Nullable[bool]]$requestable,
+
+        [parameter(ParameterSetName='Accessories checked out to user id')]
+        [switch]$NormalizeIdentity
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
@@ -173,6 +181,7 @@ $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Para
             Session = $Session
             GetParameters = $SearchParameter
             Paginate      = [bool]$all
+            NormalizeIdentity = [bool]$NormalizeIdentity
         }
 
         $result = Invoke-SnipeitMethod @Parameters

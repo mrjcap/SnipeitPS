@@ -3,10 +3,11 @@
 Gets licenses assigned to a specific user
 
 .DESCRIPTION
-Lists license assignments for a user. For rows with a nested license,
-id is the license inventory ID and seat_id is the assignment ID.
-Legacy rows without a nested license remain unchanged. An invalid nested
-inventory ID raises SnipeitResourceIdentityError.
+Lists license assignments for a user. By default, id retains its original
+assignment ID. For valid nested licenses, license_id is the inventory ID
+and seat_id is the assignment ID. Existing ID properties remain unchanged.
+Use NormalizeIdentity to replace id with the inventory ID and reject invalid
+nested IDs. Rows without a nested license remain unchanged.
 
 .PARAMETER id
 An ID of a specific user
@@ -28,6 +29,10 @@ Sort by license name or created_at. Defaults to name.
 
 .PARAMETER order
 Sort direction: asc or desc. Defaults to asc.
+
+.PARAMETER NormalizeIdentity
+Replace assignment id with the license inventory ID. Off by default.
+Invalid nested inventory IDs raise SnipeitResourceIdentityError only when enabled.
 
 .PARAMETER Session
 Optional custom SnipeitSession instance.
@@ -65,7 +70,9 @@ function Get-SnipeitUserLicense() {
         [string]$sort = 'name',
 
         [ValidateSet('asc', 'desc')]
-        [string]$order = 'asc'
+        [string]$order = 'asc',
+
+        [switch]$NormalizeIdentity
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
@@ -84,6 +91,7 @@ $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Para
             Session = $Session
             GetParameters = $SearchParameter
             Paginate      = [bool]$all
+            NormalizeIdentity = [bool]$NormalizeIdentity
         }
 
         $result = Invoke-SnipeitMethod @Parameters

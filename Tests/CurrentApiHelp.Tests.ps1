@@ -1,5 +1,5 @@
 BeforeDiscovery {
-    $helpCommands = @('Get-SnipeitCheckoutRequest','Get-SnipeitRequestableItem','Get-SnipeitDashboardActivity','Get-SnipeitDashboardSummary','Get-SnipeitModelAsset','Get-SnipeitUserConsumable','Get-SnipeitLowStockItem','Get-SnipeitCalendarEvent','Restore-SnipeitModel','Revoke-SnipeitCurrentToken','New-SnipeitAsset','New-SnipeitMaintenanceType','Set-SnipeitMaintenanceType','Invoke-SnipeitImport','Set-SnipeitLicenseOwner','New-SnipeitAccountRequest','Remove-SnipeitAccountRequest','Get-SnipeitAccountRequest','Get-SnipeitUserAccessory','Get-SnipeitUserLicense','Get-SnipeitOrderItem','Invoke-SnipeitQuantityAdjustment','New-SnipeitAccessory','Set-SnipeitAccessory','New-SnipeitComponent','Set-SnipeitComponent','New-SnipeitConsumable','Set-SnipeitConsumable','New-SnipeitLicense','Set-SnipeitLicense')
+    $helpCommands = @('Get-SnipeitCheckoutRequest','Get-SnipeitRequestableItem','Get-SnipeitDashboardActivity','Get-SnipeitDashboardSummary','Get-SnipeitModelAsset','Get-SnipeitUserConsumable','Get-SnipeitLowStockItem','Get-SnipeitCalendarEvent','Restore-SnipeitModel','Revoke-SnipeitCurrentToken','New-SnipeitAsset','New-SnipeitMaintenanceType','Set-SnipeitMaintenanceType','Invoke-SnipeitImport','Set-SnipeitLicenseOwner','New-SnipeitAccountRequest','Remove-SnipeitAccountRequest','Get-SnipeitAccountRequest','Get-SnipeitUserAccessory','Get-SnipeitUserLicense','Get-SnipeitAccessory','Get-SnipeitLicense','Get-SnipeitOrderItem','Invoke-SnipeitQuantityAdjustment','New-SnipeitAccessory','Set-SnipeitAccessory','New-SnipeitComponent','Set-SnipeitComponent','New-SnipeitConsumable','Set-SnipeitConsumable','New-SnipeitLicense','Set-SnipeitLicense')
 }
 BeforeAll {
     $repo = Split-Path $PSScriptRoot -Parent
@@ -30,7 +30,8 @@ Describe 'Current API Markdown and compiled help' {
     }
     It 'explains pending-only listings and inventory identity boundaries' {
         $commands['Get-SnipeitAccountRequest'].OuterXml | Should -Match 'not request history'
-        $commands['Get-SnipeitAccountRequest'].OuterXml | Should -Match 'request_id instead of id'
+        $commands['Get-SnipeitAccountRequest'].OuterXml | Should -Match 'id retains its original request ID'
+        $commands['Get-SnipeitAccountRequest'].OuterXml | Should -Match 'NormalizeIdentity'
         $commands['Get-SnipeitRequestableItem'].OuterXml | Should -Match 'no model or accessory account request mutation route'
         $commands['Get-SnipeitUserConsumable'].OuterXml | Should -Match 'checkout_id'
     }

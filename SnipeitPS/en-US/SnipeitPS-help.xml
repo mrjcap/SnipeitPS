@@ -1384,6 +1384,17 @@ Connect-SnipeitPS -siteCred $siteCred</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NormalizeIdentity</maml:name>
+          <maml:description>
+            <maml:para>For user assignments, replace id with the accessory inventory ID. Off by default. Otherwise id keeps its original assignment meaning; accessory_id and checkout_id are added without replacing existing ID properties. Collection IDs are unchanged.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
           <maml:name>ProgressAction</maml:name>
           <maml:description>
@@ -1626,6 +1637,18 @@ Connect-SnipeitPS -siteCred $siteCred</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>NormalizeIdentity</maml:name>
+        <maml:description>
+          <maml:para>For user assignments, replace id with the accessory inventory ID. Off by default. Otherwise id keeps its original assignment meaning; accessory_id and checkout_id are added without replacing existing ID properties. Collection IDs are unchanged.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
         <maml:name>ProgressAction</maml:name>
@@ -2030,7 +2053,7 @@ Get accessories checked out to user ID 1</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Retrieves pending checkout requests under /api/v1/account/requests, not request history. Unpaginated. If no requests exist, returns no rows or a raw envelope with total = 0. Normalized rows expose request_id instead of id. The nested requestable ID is the inventory ID. Do not pipe request rows to inventory mutation commands or use request_id or cancel_url as an inventory ID.</maml:para>
+      <maml:para>Retrieves pending checkout requests under /api/v1/account/requests, not request history. Unpaginated. If no requests exist, returns no rows or a raw envelope with total = 0. By default, id retains its original request ID and request_id is added alongside it. Use NormalizeIdentity to remove the ambiguous id property. The nested requestable ID is the inventory ID. Do not use a request ID or cancel_url as an inventory ID.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2051,6 +2074,17 @@ Get accessories checked out to user ID 1</dev:code>
           <maml:name>preserveResponse</maml:name>
           <maml:description>
             <maml:para>When specified, returns the raw API response object containing total and rows instead of unwrapping rows.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NormalizeIdentity</maml:name>
+          <maml:description>
+            <maml:para>Remove id from request rows and expose request_id instead. Off by default. PreserveResponse takes precedence and returns unchanged rows.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -2096,6 +2130,18 @@ Get accessories checked out to user ID 1</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>NormalizeIdentity</maml:name>
+        <maml:description>
+          <maml:para>Remove id from request rows and expose request_id instead. Off by default. PreserveResponse takes precedence and returns unchanged rows.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
         <maml:name>ProgressAction</maml:name>
@@ -14449,6 +14495,17 @@ Gets fieldset by name</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NormalizeIdentity</maml:name>
+          <maml:description>
+            <maml:para>For user assignments, replace id with the license inventory ID. Off by default. Otherwise id keeps its original assignment meaning; license_id and seat_id are added without replacing existing ID properties. Collection IDs are unchanged.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
           <maml:name>ProgressAction</maml:name>
           <maml:description>
@@ -14849,6 +14906,18 @@ Gets fieldset by name</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>NormalizeIdentity</maml:name>
+        <maml:description>
+          <maml:para>For user assignments, replace id with the license inventory ID. Off by default. Otherwise id keeps its original assignment meaning; license_id and seat_id are added without replacing existing ID properties. Collection IDs are unchanged.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
         <maml:name>ProgressAction</maml:name>
@@ -21676,7 +21745,7 @@ Get users that accessory ID 3 has been checked out to</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Lists accessory assignments for a user. For rows with a nested accessory, id is the accessory inventory ID and checkout_id is the assignment ID. Legacy rows without a nested accessory remain unchanged. An invalid nested inventory ID raises SnipeitResourceIdentityError.</maml:para>
+      <maml:para>Lists accessory assignments for a user. By default, id retains its original assignment ID. For valid nested accessories, accessory_id is the inventory ID and checkout_id is the assignment ID. Existing ID properties remain unchanged. Use NormalizeIdentity to replace id with the inventory ID and reject invalid nested IDs. Rows without a nested accessory remain unchanged.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -21769,6 +21838,17 @@ Get users that accessory ID 3 has been checked out to</dev:code>
           <maml:name>all</maml:name>
           <maml:description>
             <maml:para>Return all results, works with -offset and other parameters</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NormalizeIdentity</maml:name>
+          <maml:description>
+            <maml:para>Replace assignment id with the accessory inventory ID. Off by default. Invalid nested inventory IDs raise SnipeitResourceIdentityError only when enabled.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -21886,6 +21966,18 @@ Get users that accessory ID 3 has been checked out to</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>Desc</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>NormalizeIdentity</maml:name>
+        <maml:description>
+          <maml:para>Replace assignment id with the accessory inventory ID. Off by default. Invalid nested inventory IDs raise SnipeitResourceIdentityError only when enabled.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
         <maml:name>ProgressAction</maml:name>
@@ -22363,7 +22455,7 @@ Get users that accessory ID 3 has been checked out to</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Lists license assignments for a user. For rows with a nested license, id is the license inventory ID and seat_id is the assignment ID. Legacy rows without a nested license remain unchanged. An invalid nested inventory ID raises SnipeitResourceIdentityError.</maml:para>
+      <maml:para>Lists license assignments for a user. By default, id retains its original assignment ID. For valid nested licenses, license_id is the inventory ID and seat_id is the assignment ID. Existing ID properties remain unchanged. Use NormalizeIdentity to replace id with the inventory ID and reject invalid nested IDs. Rows without a nested license remain unchanged.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -22456,6 +22548,17 @@ Get users that accessory ID 3 has been checked out to</dev:code>
           <maml:name>all</maml:name>
           <maml:description>
             <maml:para>Return all results, works with -offset and other parameters</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NormalizeIdentity</maml:name>
+          <maml:description>
+            <maml:para>Replace assignment id with the license inventory ID. Off by default. Invalid nested inventory IDs raise SnipeitResourceIdentityError only when enabled.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -22573,6 +22676,18 @@ Get users that accessory ID 3 has been checked out to</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>Asc</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>NormalizeIdentity</maml:name>
+        <maml:description>
+          <maml:para>Replace assignment id with the license inventory ID. Off by default. Invalid nested inventory IDs raise SnipeitResourceIdentityError only when enabled.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
         <maml:name>ProgressAction</maml:name>

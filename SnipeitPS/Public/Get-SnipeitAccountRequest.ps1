@@ -5,12 +5,16 @@ Gets pending checkout requests submitted by the current authenticated user.
 .DESCRIPTION
 Retrieves pending checkout requests under /api/v1/account/requests, not request history.
 Unpaginated. If no requests exist, returns no rows or a raw envelope with total = 0.
-Normalized rows expose request_id instead of id. The nested requestable ID is the
-inventory ID. Do not pipe request rows to inventory mutation commands or use
-request_id or cancel_url as an inventory ID.
+By default, id retains its original request ID and request_id is added alongside it.
+Use NormalizeIdentity to remove the ambiguous id property. The nested requestable ID
+is the inventory ID. Do not use a request ID or cancel_url as an inventory ID.
 
 .PARAMETER preserveResponse
 When specified, returns the raw API response object containing total and rows instead of unwrapping rows.
+
+.PARAMETER NormalizeIdentity
+Remove id from request rows and expose request_id instead. Off by default.
+PreserveResponse takes precedence and returns unchanged rows.
 
 .PARAMETER Session
 Optional custom SnipeitSession instance.
@@ -32,7 +36,9 @@ function Get-SnipeitAccountRequest {
         [switch]$preserveResponse,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [switch]$NormalizeIdentity
     )
 
     begin {
@@ -58,7 +64,7 @@ function Get-SnipeitAccountRequest {
             $rows = if ($res -is [System.Collections.IDictionary]) { $res['rows'] } else { $res.rows }
             if ($null -ne $rows) {
                 foreach ($row in $rows) {
-                    $row = ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $Parameters.Route
+                    $row = ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $Parameters.Route -NormalizeIdentity:$NormalizeIdentity
                     if ($row -is [System.Management.Automation.PSObject] -and -not $row.PSObject.TypeNames.Contains('SnipeitPS.AccountRequest')) {
                         $row.PSObject.TypeNames.Insert(0, 'SnipeitPS.AccountRequest')
                     }

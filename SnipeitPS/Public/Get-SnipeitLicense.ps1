@@ -84,6 +84,11 @@ Include descendant companies when filtering by company_id.
 .PARAMETER filter
 Server text-search filter, taking precedence over search.
 
+.PARAMETER NormalizeIdentity
+For user assignments, replace id with the license inventory ID. Off by default.
+Otherwise id keeps its original assignment meaning; license_id and seat_id
+are added without replacing existing ID properties. Collection IDs are unchanged.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -192,7 +197,10 @@ function Get-SnipeitLicense() {
         [string]$filter,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [parameter(ParameterSetName='Get licenses checked out to user ID')]
+        [switch]$NormalizeIdentity
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
@@ -228,6 +236,7 @@ $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Para
             Session = $Session
             GetParameters = $SearchParameter
             Paginate      = [bool]$all
+            NormalizeIdentity = [bool]$NormalizeIdentity
         }
 
         $result = Invoke-SnipeitMethod @Parameters

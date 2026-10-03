@@ -23,12 +23,14 @@ adheres to [Semantic Versioning](http://semver.org/).
 - Run test subprocesses noninteractively and reject skipped tests, failed containers, and nonzero integration exits.
 - Correct live deletion assertions to match the stock server's category and manufacturer behavior.
 
-### Migration from v2.0.0
+### ID handling and backward compatibility
 
-- Request rows expose `request_id` instead of `id`. Non-hardware requestable rows expose the corresponding
-  `model_id`, `accessory_id`, `consumable_id`, `component_id`, or `license_id` instead of an ambiguous `id`.
-- User assignment rows expose the inventory ID as `id` and retain the assignment ID as `checkout_id` or `seat_id`.
-  Review scripts that previously treated assignment IDs as inventory IDs.
+- Existing request and user-assignment commands preserve all existing ID properties and their meanings by default.
+  Added properties expose `request_id`, `checkout_id`, `seat_id`, `accessory_id`, or `license_id` where applicable.
+- `-NormalizeIdentity` opts into strict normalization on the existing commands. Request rows then omit `id`;
+  user assignment rows use the inventory ID as `id`. Explicit false retains legacy behavior.
+- New checkout-request, requestable-item, and user-consumable commands keep their explicit-ID defaults.
+  Raw response envelopes remain unchanged. Use inventory IDs, not request or assignment IDs, for inventory mutations.
 
 ### Validation and scope
 

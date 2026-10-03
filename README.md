@@ -19,9 +19,10 @@ It adds current resource endpoints, order items, quantity adjustments, acquisiti
 PowerShell 5.1 compatibility fixes cover fixture loading, URI mock capture, JSON serialization, and test subprocesses.
 The [changelog](CHANGELOG.md) records validation evidence, stock-server limitations, and protocol exclusions.
 
-Request rows now expose `request_id`. Non-hardware requestable rows expose type-specific IDs instead of `id`.
-User assignment rows expose inventory IDs as `id` and retain assignment IDs as `checkout_id` or `seat_id`.
-Review scripts that consume these outputs before upgrading from 2.0.0.
+Existing request and user-assignment commands preserve their `id` values and meanings by default.
+Explicit request, assignment, and inventory ID properties are additive and never replace existing ID properties.
+Use `-NormalizeIdentity` to opt into strict ID normalization on these commands. New commands use explicit IDs by default.
+Do not pass a request or assignment `id` to an inventory mutation command; use the matching inventory ID.
 
 ## What's new in 2.0.0
 

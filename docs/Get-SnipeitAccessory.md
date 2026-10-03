@@ -33,8 +33,8 @@ Get-SnipeitAccessory [-id <Int32>] [-Session <SnipeitSession>] [-ProgressAction 
 ### Accessories checked out to user id
 
 ```
-Get-SnipeitAccessory [-user_id <Int32>] [-all] [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-SnipeitAccessory [-user_id <Int32>] [-all] [-Session <SnipeitSession>] [-NormalizeIdentity]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -364,6 +364,24 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NormalizeIdentity
+
+For user assignments, replace id with the accessory inventory ID. Off by default.
+Otherwise id keeps its original assignment meaning; accessory_id and checkout_id
+are added without replacing existing ID properties. Collection IDs are unchanged.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Accessories checked out to user id
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

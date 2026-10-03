@@ -45,6 +45,7 @@ function Get-ParameterValue {
 
     $excludeLookup = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     [void]$excludeLookup.Add('Session')
+    [void]$excludeLookup.Add('NormalizeIdentity')
     foreach ($item in $DefaultExcludeParameter) { [void]$excludeLookup.Add($item) }
     foreach ($item in $commonParams) { [void]$excludeLookup.Add($item) }
 

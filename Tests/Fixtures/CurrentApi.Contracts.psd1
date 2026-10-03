@@ -63,9 +63,11 @@
     )
     IdentityRules = @(
         @{ Route = '/api/v1/requests'; Rule = 'Top-level id becomes request_id; nested requestable is unchanged and may be null.' }
-        @{ Route = '/api/v1/account/requests'; Rule = 'Pending requests only; top-level id becomes request_id.' }
+        @{ Route = '/api/v1/account/requests'; Rule = 'Pending requests only; legacy id retains its request meaning, request_id is additive. NormalizeIdentity removes id only when explicitly enabled.' }
         @{ Route = '/api/v1/account/requestable/{type}'; Rule = 'Non-hardware id becomes model_id, accessory_id, consumable_id, component_id or license_id. No ambiguous asset id.' }
-        @{ Route = '/api/v1/users/{user}/consumables'; Rule = 'id becomes nested inventory consumable.id; original assignment id becomes checkout_id.' }
+        @{ Route = '/api/v1/users/{user}/consumables'; Rule = 'New consumable command: id becomes nested inventory consumable.id; original assignment id becomes checkout_id.' }
+        @{ Route = '/api/v1/users/{user}/accessories'; Rule = 'Legacy id retains its assignment meaning; accessory_id and checkout_id are additive. NormalizeIdentity replaces id with the inventory ID only when explicitly enabled.' }
+        @{ Route = '/api/v1/users/{user}/licenses'; Rule = 'Legacy id retains its assignment meaning; license_id and seat_id are additive. NormalizeIdentity replaces id with the inventory ID only when explicitly enabled.' }
         @{ Route = '/api/v1/low-stock'; Rule = 'Composite row id and nested item.id are preserved; never promote item.id.' }
         @{ Route = '/api/v1/calendar/events'; Rule = 'Event id and extendedProps.source_id are distinct and preserved.' }
     )

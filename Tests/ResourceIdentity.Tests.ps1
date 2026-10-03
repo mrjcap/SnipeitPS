@@ -16,12 +16,12 @@ Describe 'Request and assignment resource identities' {
             }
         }
 
-        It 'Separates the request ID for <Type> requests without inventing an asset ID' -ForEach @(
+        It 'Separates the request ID for <Type> requests when normalization is enabled' -ForEach @(
             @{ Type = 'asset' }
             @{ Type = 'consumable' }
         ) {
             $script:identityRow = [pscustomobject]@{ id = 9001; type = $Type; name = 'Requested item'; qty = 1 }
-            $row = Get-SnipeitAccountRequest -Session $script:identitySession
+            $row = Get-SnipeitAccountRequest -NormalizeIdentity -Session $script:identitySession
             $row.request_id | Should -Be 9001
             $row.PSObject.Properties.Name | Should -Not -Contain 'id'
             $row.PSObject.Properties.Name | Should -Not -Contain 'asset_id'
@@ -37,7 +37,7 @@ Describe 'Request and assignment resource identities' {
         ) {
             $script:identityRow = [pscustomobject]@{ id = 801; name = 'Assigned item' }
             $script:identityRow | Add-Member -NotePropertyName $Resource -NotePropertyValue ([pscustomobject]@{ id = 101 })
-            $row = & $Command @Arguments -Session $script:identitySession
+            $row = & $Command @Arguments -NormalizeIdentity -Session $script:identitySession
             $row.id | Should -Be 101
             $row.$Related | Should -Be 801
             $script:identityRow.id | Should -Be 801
@@ -65,7 +65,7 @@ Describe 'Request and assignment resource identities' {
 
         It 'Normalizes dictionary request rows without changing the response dictionary' {
             $script:identityRow = @{ id = 9001; type = 'asset'; name = 'Dictionary request' }
-            $row = Get-SnipeitAccountRequest -Session $script:identitySession
+            $row = Get-SnipeitAccountRequest -NormalizeIdentity -Session $script:identitySession
             $row.request_id | Should -Be 9001
             $row.PSObject.Properties.Name | Should -Not -Contain 'id'
             $script:identityRow.id | Should -Be 9001
@@ -76,7 +76,7 @@ Describe 'Request and assignment resource identities' {
             @{ Command = 'Get-SnipeitUserLicense'; Resource = 'license'; Related = 'seat_id' }
         ) {
             $script:identityRow = @{ id = 801; $Resource = @{ id = 101 } }
-            $row = & $Command -id 7 -Session $script:identitySession
+            $row = & $Command -id 7 -NormalizeIdentity -Session $script:identitySession
             $row.id | Should -Be 101
             $row.$Related | Should -Be 801
             $script:identityRow.id | Should -Be 801
@@ -84,7 +84,7 @@ Describe 'Request and assignment resource identities' {
 
         It 'Does not invoke cancellation when a request row has no asset identity' {
             $script:identityRow = [pscustomobject]@{ id = 9001; type = 'asset'; name = 'Request for asset 101' }
-            $errors = @(Get-SnipeitAccountRequest -Session $script:identitySession |
+            $errors = @(Get-SnipeitAccountRequest -NormalizeIdentity -Session $script:identitySession |
                 Remove-SnipeitAccountRequest -Session $script:identitySession -Confirm:$false -ErrorAction Continue 2>&1)
             $errors.Count | Should -Be 1
             $errors[0].FullyQualifiedErrorId | Should -Be 'InputObjectNotBound,Remove-SnipeitAccountRequest'
@@ -93,7 +93,7 @@ Describe 'Request and assignment resource identities' {
 
         It 'Updates the accessory resource rather than its checkout when rows are piped' {
             $script:identityRow = [pscustomobject]@{ id = 801; accessory = [pscustomobject]@{ id = 101 } }
-            Get-SnipeitUserAccessory -id 7 -Session $script:identitySession |
+            Get-SnipeitUserAccessory -id 7 -NormalizeIdentity -Session $script:identitySession |
                 Set-SnipeitAccessory -name 'Changed name' -Session $script:identitySession -Confirm:$false
             $script:identityCalls[1] | Should -Be 'https://identity.invalid/api/v1/accessories/101'
         }
@@ -107,14 +107,14 @@ Describe 'Request and assignment resource identities' {
                     license = [pscustomobject]@{ id = 101 + $offset }
                 }) }
             }
-            $rows = @(Get-SnipeitUserLicense -id 7 -limit 1 -all -Session $script:identitySession)
+            $rows = @(Get-SnipeitUserLicense -id 7 -limit 1 -all -NormalizeIdentity -Session $script:identitySession)
             $rows.id | Should -Be @(101, 102)
             $rows.seat_id | Should -Be @(801, 802)
         }
 
         It 'Rejects an assignment row with an invalid resource ID rather than retaining its checkout ID' {
             $script:identityRow = [pscustomobject]@{ id = 801; accessory = [pscustomobject]@{ id = 0 } }
-            { Get-SnipeitUserAccessory -id 7 -Session $script:identitySession -ErrorAction Stop } |
+            { Get-SnipeitUserAccessory -id 7 -NormalizeIdentity -Session $script:identitySession -ErrorAction Stop } |
                 Should -Throw -ExpectedMessage '*valid accessory ID*'
         }
     }

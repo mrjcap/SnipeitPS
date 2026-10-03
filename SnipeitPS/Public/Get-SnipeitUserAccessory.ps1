@@ -3,10 +3,11 @@
 Gets accessories assigned to a specific user
 
 .DESCRIPTION
-Lists accessory assignments for a user. For rows with a nested accessory,
-id is the accessory inventory ID and checkout_id is the assignment ID.
-Legacy rows without a nested accessory remain unchanged. An invalid nested
-inventory ID raises SnipeitResourceIdentityError.
+Lists accessory assignments for a user. By default, id retains its original
+assignment ID. For valid nested accessories, accessory_id is the inventory ID
+and checkout_id is the assignment ID. Existing ID properties remain unchanged.
+Use NormalizeIdentity to replace id with the inventory ID and reject invalid
+nested IDs. Rows without a nested accessory remain unchanged.
 
 .PARAMETER id
 An ID of a specific user
@@ -28,6 +29,10 @@ Sort by accessory name or checkout created_at. Defaults to created_at.
 
 .PARAMETER order
 Sort direction: asc or desc. Defaults to desc.
+
+.PARAMETER NormalizeIdentity
+Replace assignment id with the accessory inventory ID. Off by default.
+Invalid nested inventory IDs raise SnipeitResourceIdentityError only when enabled.
 
 .PARAMETER Session
 Optional custom SnipeitSession instance.
@@ -65,7 +70,9 @@ function Get-SnipeitUserAccessory() {
         [string]$sort = 'created_at',
 
         [ValidateSet('asc', 'desc')]
-        [string]$order = 'desc'
+        [string]$order = 'desc',
+
+        [switch]$NormalizeIdentity
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
@@ -84,6 +91,7 @@ $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Para
             Session = $Session
             GetParameters = $SearchParameter
             Paginate      = [bool]$all
+            NormalizeIdentity = [bool]$NormalizeIdentity
         }
 
         $result = Invoke-SnipeitMethod @Parameters

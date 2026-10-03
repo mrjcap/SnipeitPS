@@ -70,6 +70,8 @@ function Invoke-SnipeitMethod {
 
         [switch]$PreserveResponse,
 
+        [bool]$NormalizeIdentity = $true,
+
         [Parameter(Mandatory = $false)]
         [object]$Session
     )
@@ -356,7 +358,7 @@ function Invoke-SnipeitMethod {
                                 if ($targetTypeName -and $row -is [System.Management.Automation.PSObject] -and -not $row.PSObject.TypeNames.Contains($targetTypeName)) {
                                     $row.PSObject.TypeNames.Insert(0, $targetTypeName)
                                 }
-                                ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $targetRoute
+                                ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $targetRoute -NormalizeIdentity:$NormalizeIdentity
                             }
                         }
 
@@ -408,7 +410,7 @@ function Invoke-SnipeitMethod {
                                     if ($targetTypeName -and $row -is [System.Management.Automation.PSObject] -and -not $row.PSObject.TypeNames.Contains($targetTypeName)) {
                                         $row.PSObject.TypeNames.Insert(0, $targetTypeName)
                                     }
-                                    ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $targetRoute
+                                    ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $targetRoute -NormalizeIdentity:$NormalizeIdentity
                                 }
                                 $offset += $pageRows.Count
                             } else {
@@ -439,13 +441,13 @@ function Invoke-SnipeitMethod {
                                 if ($targetTypeName -and $item -is [System.Management.Automation.PSObject] -and -not $item.PSObject.TypeNames.Contains($targetTypeName)) {
                                     $item.PSObject.TypeNames.Insert(0, $targetTypeName)
                                 }
-                                ConvertTo-SnipeitResourceIdentity -InputObject $item -Route $targetRoute
+                                ConvertTo-SnipeitResourceIdentity -InputObject $item -Route $targetRoute -NormalizeIdentity:$NormalizeIdentity
                             }
                         } else {
                             if ($targetTypeName -and $result -is [System.Management.Automation.PSObject] -and -not $result.PSObject.TypeNames.Contains($targetTypeName)) {
                                 $result.PSObject.TypeNames.Insert(0, $targetTypeName)
                             }
-                            ConvertTo-SnipeitResourceIdentity -InputObject $result -Route $targetRoute
+                            ConvertTo-SnipeitResourceIdentity -InputObject $result -Route $targetRoute -NormalizeIdentity:$NormalizeIdentity
                         }
                     }
                 }

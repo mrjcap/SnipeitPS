@@ -15,15 +15,17 @@ Gets licenses assigned to a specific user
 
 ```
 Get-SnipeitUserLicense [-id] <Int32> [[-limit] <Int32>] [[-offset] <Int32>] [-all]
- [[-Session] <SnipeitSession>] [[-search] <String>] [[-sort] <String>] [[-order] <String>]
+ [[-Session] <SnipeitSession>] [[-search] <String>] [[-sort] <String>] [[-order] <String>] [-NormalizeIdentity]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Lists license assignments for a user. For rows with a nested license, id is the license inventory ID and seat_id is the
-assignment ID. Legacy rows without a nested license remain unchanged. An invalid nested inventory ID raises
-SnipeitResourceIdentityError.
+Lists license assignments for a user. By default, id retains its original
+assignment ID. For valid nested licenses, license_id is the inventory ID
+and seat_id is the assignment ID. Existing ID properties remain unchanged.
+Use NormalizeIdentity to replace id with the inventory ID and reject invalid
+nested IDs. Rows without a nested license remain unchanged.
 
 ## EXAMPLES
 
@@ -159,6 +161,23 @@ Aliases:
 Required: False
 Position: 7
 Default value: Asc
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NormalizeIdentity
+
+Replace assignment id with the license inventory ID. Off by default.
+Invalid nested inventory IDs raise SnipeitResourceIdentityError only when enabled.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
