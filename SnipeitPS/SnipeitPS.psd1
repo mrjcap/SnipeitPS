@@ -344,14 +344,14 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = @'
-Version 2.0.1 (unreleased):
+Version 2.0.1 (2026-10-03):
 - Add 12 commands for current resource endpoints, order items, and quantity adjustments.
 - Complete acquisition fields, requestable flags, default purchase costs, and collection filters.
 - Preserve existing IDs and meanings by default; add explicit ID fields and opt-in NormalizeIdentity.
 - Preserve maintenance colors, import blank-field options, and actual HTTP error status codes.
 - Fix PowerShell 5.1 fixture loading, URI mock capture, compact JSON, and noninteractive test runners.
 - Keep stock-server defects and OAuth, SCIM, and diagnostic exclusions explicit in parity scope.
-- Release package validation and publication are pending.
+- GitHub release includes the module package and SHA256; this release does not publish to PowerShell Gallery.
 
 Compatibility notes from 2.0.0:
 - Breaking changes relative to v1.15.2 require migration; see README.md and CHANGELOG.md.

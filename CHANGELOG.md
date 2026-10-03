@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
-## [v2.0.1] - Unreleased
+## [v2.0.1] - 2026-10-03
 
 ### Added
 
@@ -34,13 +34,17 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 ### Validation and scope
 
-- Before the version update, the committed source passed 2,116 offline tests on PowerShell 7.
-  The user verified 2,114 full-suite tests and seven focused contract tests on Windows PowerShell 5.1.
+- The release runtime code passed all 2,136 offline tests on PowerShell 7. The user's Windows PowerShell 5.1 run
+  passed the same 2,136 tests in 357.73 seconds. Both runs had zero failures, skips, or failed containers.
+- The packaged module matches the release source byte for byte. The extracted package passed all 2,136 offline
+  tests on PowerShell 7. Windows PowerShell 5.1 validation used the matching runtime source before release-only
+  metadata edits, not the extracted package.
 - The isolated current-server integration suite passed 141 tests without skips or teardown errors.
   Native HTTP used a localhost TLS relay and container-local curl, not direct Windows-to-Unraid transport.
 - All 288 normalized API method-route pairs are accounted for. Six stock-server limitations and four
   OAuth, SCIM, or diagnostic exclusions remain explicit; this is not a claim of literal full API support.
-- Release package validation, tagging, and publication are pending. Snipe-IT source remains unchanged.
+- The GitHub release includes the module package and its SHA256 file. This release does not publish to
+  PowerShell Gallery. Snipe-IT source remains unchanged.
 
 ## [v2.0.0] - 2026-09-28
 

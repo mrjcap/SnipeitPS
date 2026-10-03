@@ -14,7 +14,7 @@ Release validation covers Windows and selected Linux scenarios; macOS remains un
 
 ## What's new in 2.0.1
 
-Version 2.0.1 is an unreleased update with 191 exported functions, including 12 new commands.
+Version 2.0.1 has 191 exported functions, including 12 new commands.
 It adds current resource endpoints, order items, quantity adjustments, acquisition fields, and collection filters.
 PowerShell 5.1 compatibility fixes cover fixture loading, URI mock capture, JSON serialization, and test subprocesses.
 The [changelog](CHANGELOG.md) records validation evidence, stock-server limitations, and protocol exclusions.
@@ -68,8 +68,8 @@ See the [changelog](CHANGELOG.md) for individual fixes, behavior changes, verifi
 
 ## Installation
 
-Version 2.0.1 has not been packaged or published. The latest published GitHub release remains
-[v2.0.0](https://github.com/mrjcap/SnipeitPS/releases/tag/v2.0.0).
+Version 2.0.1 is available in the
+[GitHub release](https://github.com/mrjcap/SnipeitPS/releases/tag/v2.0.1).
 Download and extract the source archive, open PowerShell in the extracted repository directory, and import the module:
 
 ```powershell
