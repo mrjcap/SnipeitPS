@@ -56,6 +56,9 @@ Include descendant companies when filtering by company_id.
 .PARAMETER filter
 Server text-search filter, taking precedence over search.
 
+.PARAMETER requestable
+True restricts the accessory collection to requestable items. False leaves this restriction off.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -135,7 +138,10 @@ function Get-SnipeitAccessory() {
         [string]$filter,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$requestable
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

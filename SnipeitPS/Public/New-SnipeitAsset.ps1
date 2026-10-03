@@ -91,6 +91,11 @@ Last checkout timestamp, sent as yyyy-MM-dd HH:mm:ss.
 .PARAMETER requestable
 Whether the asset can be requested by users.
 
+.PARAMETER PreserveResponse
+Returns the complete server envelope, including the asset-create message. This exposes
+messages such as creation succeeding without the requested checkout. The default still
+returns the typed asset. Business errors remain on the error stream.
+
 .PARAMETER customfields
 Hashtable of custom fields and extra fields that need passing through to Snipe-IT.
 Use internal field names from Snipe-IT. You can use Get-SnipeitCustomField to get internal field names.
@@ -204,7 +209,9 @@ function New-SnipeitAsset() {
         [Nullable[bool]]$requestable,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [switch]$PreserveResponse
     )
 
     begin {
@@ -220,6 +227,7 @@ function New-SnipeitAsset() {
         }
 
         $Values = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        [void]$Values.Remove('PreserveResponse')
 
         if ($values['purchase_date']) {
             $values['purchase_date'] = $values['purchase_date'].ToString("yyyy-MM-dd")
@@ -261,6 +269,7 @@ function New-SnipeitAsset() {
             Method  = 'Post'
             Body    = $Values
             Session = $Session
+            PreserveResponse = [bool]$PreserveResponse
         }
 
         if ($PSBoundParameters.ContainsKey('apiKey') -and '' -ne [string]$apiKey) {

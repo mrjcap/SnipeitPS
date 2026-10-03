@@ -90,6 +90,9 @@ Include component relationships in collection or ID responses.
 .PARAMETER deleted
 Include deleted matches when looking up an asset by tag or serial.
 
+.PARAMETER past_eol
+True restricts the asset collection to assets past their end-of-life date. False leaves this restriction off.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -310,7 +313,10 @@ function Get-SnipeitAsset() {
         [string]$filter,
 
         [parameter(mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$past_eol
     )
 
     begin {

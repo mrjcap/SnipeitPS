@@ -50,6 +50,11 @@ History-matching switch: match asset history user by flastname. Valid only when 
 .PARAMETER MatchFirstname
 History-matching switch: match asset history user by firstname. Valid only when ImportType is assetHistory.
 
+.PARAMETER PreserveBlanks
+On updates, keeps stored values when the importer treats the CSV value as empty.
+The server's empty-value rule includes zero, false and the string '0'. Explicit false
+is sent as false; omission leaves the server default. Resend this flag for every slice.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -105,7 +110,9 @@ function Invoke-SnipeitImport {
         [switch]$MatchFirstname,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [switch]$PreserveBlanks
     )
 
     begin {
@@ -133,6 +140,7 @@ function Invoke-SnipeitImport {
             'column-mappings' = if ($PSBoundParameters.ContainsKey('ColumnMappings')) { $ColumnMappings } else { $null }
         }
 
+        if ($PSBoundParameters.ContainsKey('PreserveBlanks')) { $body['import-preserve-blanks'] = [bool]$PreserveBlanks }
         if ($PSBoundParameters.ContainsKey('Update')) { $body['import-update'] = [bool]$Update }
         if ($PSBoundParameters.ContainsKey('SendWelcome')) { $body['send-welcome'] = [bool]$SendWelcome }
         if ($PSBoundParameters.ContainsKey('RunBackup')) { $body['run-backup'] = [bool]$RunBackup }

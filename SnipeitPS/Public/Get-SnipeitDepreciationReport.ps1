@@ -95,6 +95,9 @@ Maximum number of records to return per page.
 .PARAMETER all
 When specified, streams all records across pages using dispatcher-managed pagination.
 
+.PARAMETER past_eol
+True restricts results to assets past their end-of-life date. False leaves this restriction off.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -178,7 +181,9 @@ function Get-SnipeitDepreciationReport {
         [switch]$all,
 
         [Parameter(Mandatory = $false, Position = 5)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[bool]]$past_eol
     )
 
     begin {

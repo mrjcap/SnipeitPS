@@ -47,6 +47,12 @@ Filter for pending statuses (supported for Status).
 .PARAMETER archived
 Filter for archived statuses (supported for Status).
 
+.PARAMETER assignedTo
+User ID whose assigned assets should appear. Only supported for Asset select lists.
+
+.PARAMETER excludeIds
+Location IDs to exclude from Location select lists. Supply an integer array.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -109,7 +115,13 @@ function Get-SnipeitSelectList {
         [switch]$archived,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [ValidateRange(1, [int]::MaxValue)]
+        [int]$assignedTo,
+
+        [ValidateRange(1, [int]::MaxValue)]
+        [int[]]$excludeIds
     )
 
     begin {
@@ -117,6 +129,12 @@ function Get-SnipeitSelectList {
     }
 
     process {
+        if ($PSBoundParameters.ContainsKey('assignedTo') -and $EntityType -ne 'Asset') {
+            throw "Parameter 'assignedTo' is only supported for EntityType 'Asset'."
+        }
+        if ($PSBoundParameters.ContainsKey('excludeIds') -and $EntityType -ne 'Location') {
+            throw "Parameter 'excludeIds' is only supported for EntityType 'Location'."
+        }
         # Validate entity-specific parameters
         if ($PSBoundParameters.ContainsKey('ItemType') -and $EntityType -ne 'Category') {
             throw "Parameter 'ItemType' is only supported for EntityType 'Category'."
@@ -158,6 +176,8 @@ function Get-SnipeitSelectList {
         if ($PSBoundParameters.ContainsKey('page')) { $getParams['page'] = $page }
         if ($PSBoundParameters.ContainsKey('companyId')) { $getParams['companyId'] = $companyId }
         if ($PSBoundParameters.ContainsKey('excludeId')) { $getParams['excludeId'] = $excludeId }
+        if ($PSBoundParameters.ContainsKey('assignedTo')) { $getParams['assignedTo'] = $assignedTo }
+        if ($PSBoundParameters.ContainsKey('excludeIds')) { $getParams['excludeIds'] = $excludeIds -join ',' }
         if ($PSBoundParameters.ContainsKey('statusType')) { $getParams['statusType'] = $statusType }
         if ($onlyTopLevel) { $getParams['onlyTopLevel'] = 'true' }
         if ($deployable) { $getParams['deployable'] = '1' }

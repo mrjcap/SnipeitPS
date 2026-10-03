@@ -1,10 +1,13 @@
 <#
 .SYNOPSIS
-Gets asset requests submitted by the current authenticated user.
+Gets pending checkout requests submitted by the current authenticated user.
 
 .DESCRIPTION
-Retrieves pending or past checkout requests submitted by the current user under /api/v1/account/requests.
-Unpaginated. If no requests exist, returns an empty list or total = 0.
+Retrieves pending checkout requests under /api/v1/account/requests, not request history.
+Unpaginated. If no requests exist, returns no rows or a raw envelope with total = 0.
+Normalized rows expose request_id instead of id. The nested requestable ID is the
+inventory ID. Do not pipe request rows to inventory mutation commands or use
+request_id or cancel_url as an inventory ID.
 
 .PARAMETER preserveResponse
 When specified, returns the raw API response object containing total and rows instead of unwrapping rows.
@@ -55,6 +58,7 @@ function Get-SnipeitAccountRequest {
             $rows = if ($res -is [System.Collections.IDictionary]) { $res['rows'] } else { $res.rows }
             if ($null -ne $rows) {
                 foreach ($row in $rows) {
+                    $row = ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $Parameters.Route
                     if ($row -is [System.Management.Automation.PSObject] -and -not $row.PSObject.TypeNames.Contains('SnipeitPS.AccountRequest')) {
                         $row.PSObject.TypeNames.Insert(0, 'SnipeitPS.AccountRequest')
                     }

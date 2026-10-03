@@ -2,6 +2,12 @@
 .SYNOPSIS
 Gets accessories assigned to a specific user
 
+.DESCRIPTION
+Lists accessory assignments for a user. For rows with a nested accessory,
+id is the accessory inventory ID and checkout_id is the assignment ID.
+Legacy rows without a nested accessory remain unchanged. An invalid nested
+inventory ID raises SnipeitResourceIdentityError.
+
 .PARAMETER id
 An ID of a specific user
 
@@ -13,6 +19,15 @@ Offset to use
 
 .PARAMETER all
 Return all results, works with -offset and other parameters
+
+.PARAMETER search
+Search accessory names and checkout notes.
+
+.PARAMETER sort
+Sort by accessory name or checkout created_at. Defaults to created_at.
+
+.PARAMETER order
+Sort direction: asc or desc. Defaults to desc.
 
 .PARAMETER Session
 Optional custom SnipeitSession instance.
@@ -42,7 +57,15 @@ function Get-SnipeitUserAccessory() {
         [switch]$all = $false,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$search,
+
+        [ValidateSet('name', 'created_at')]
+        [string]$sort = 'created_at',
+
+        [ValidateSet('asc', 'desc')]
+        [string]$order = 'desc'
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

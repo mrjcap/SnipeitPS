@@ -2,6 +2,12 @@
 .SYNOPSIS
 Gets licenses assigned to a specific user
 
+.DESCRIPTION
+Lists license assignments for a user. For rows with a nested license,
+id is the license inventory ID and seat_id is the assignment ID.
+Legacy rows without a nested license remain unchanged. An invalid nested
+inventory ID raises SnipeitResourceIdentityError.
+
 .PARAMETER id
 An ID of a specific user
 
@@ -13,6 +19,15 @@ Offset to use
 
 .PARAMETER all
 Return all results, works with -offset and other parameters
+
+.PARAMETER search
+Search license names, purchase orders, and order numbers. Serial search requires permission to view license keys.
+
+.PARAMETER sort
+Sort by license name or created_at. Defaults to name.
+
+.PARAMETER order
+Sort direction: asc or desc. Defaults to asc.
 
 .PARAMETER Session
 Optional custom SnipeitSession instance.
@@ -42,7 +57,15 @@ function Get-SnipeitUserLicense() {
         [switch]$all = $false,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [string]$search,
+
+        [ValidateSet('name', 'created_at')]
+        [string]$sort = 'name',
+
+        [ValidateSet('asc', 'desc')]
+        [string]$order = 'asc'
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"

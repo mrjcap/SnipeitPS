@@ -71,6 +71,10 @@ Purchase order reference for the license.
 .PARAMETER min_amt
 Minimum seat quantity used for inventory alerts.
 
+.PARAMETER requestable
+Whether users can request this license. Accepts true, false, or null.
+Omit to leave the stored value unchanged.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -147,7 +151,9 @@ function Set-SnipeitLicense() {
 
         [string]$purchase_order,
 
-        [Nullable[int]]$min_amt
+        [Nullable[int]]$min_amt,
+
+        [Nullable[bool]]$requestable
     )
 
     begin{

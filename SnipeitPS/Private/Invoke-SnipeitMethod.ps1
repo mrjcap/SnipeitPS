@@ -190,7 +190,7 @@ function Invoke-SnipeitMethod {
         }
 
         if ($effectiveBody -and -not $splatParameters.ContainsKey('Form')) {
-            $splatParameters["Body"] = [System.Text.Encoding]::UTF8.GetBytes(($effectiveBody | ConvertTo-Json -Depth 10))
+            $splatParameters["Body"] = [System.Text.Encoding]::UTF8.GetBytes(($effectiveBody | ConvertTo-Json -Depth 10 -Compress))
         }
 
         if ($DebugPreference -ne 'SilentlyContinue' -and $null -ne $effectiveBody) {
@@ -220,7 +220,14 @@ function Invoke-SnipeitMethod {
                 # Helper to tag PSTypeName based on route target
                 $targetRoute = if ($Route) { $Route } else { $Api }
                 $targetTypeName = $null
-                if ($targetRoute -match '(?i)/selectlist') { $targetTypeName = 'SnipeitPS.SelectListItem' }
+                if ($targetRoute -match '(?i)/dashboard/categories(?:\?|$)') { $targetTypeName = 'SnipeitPS.DashboardCategorySummary' }
+                elseif ($targetRoute -match '(?i)/dashboard/companies(?:\?|$)') { $targetTypeName = 'SnipeitPS.DashboardCompanySummary' }
+                elseif ($targetRoute -match '(?i)/dashboard/locations(?:\?|$)') { $targetTypeName = 'SnipeitPS.DashboardLocationSummary' }
+                elseif ($targetRoute -match '(?i)/models/[^/]+/assets(?:\?|$)') { $targetTypeName = 'SnipeitPS.Asset' }
+                elseif ($targetRoute -match '(?i)/users/[^/]+/consumables(?:\?|$)') { $targetTypeName = 'SnipeitPS.Consumable' }
+                elseif ($targetRoute -match '(?i)/low-stock(?:\?|$)') { $targetTypeName = 'SnipeitPS.LowStockItem' }
+                elseif ($targetRoute -match '(?i)/api/v1/requests(?:\?|$)') { $targetTypeName = 'SnipeitPS.CheckoutRequest' }
+                elseif ($targetRoute -match '(?i)/selectlist') { $targetTypeName = 'SnipeitPS.SelectListItem' }
                 elseif ($targetRoute -match '(?i)/history') { $targetTypeName = 'SnipeitPS.HistoryEntry' }
                 elseif ($targetRoute -match '(?i)/account/personal-access-tokens') { $targetTypeName = 'SnipeitPS.PersonalAccessToken' }
                 elseif ($targetRoute -match '(?i)/account/requests') { $targetTypeName = 'SnipeitPS.AccountRequest' }
@@ -349,7 +356,7 @@ function Invoke-SnipeitMethod {
                                 if ($targetTypeName -and $row -is [System.Management.Automation.PSObject] -and -not $row.PSObject.TypeNames.Contains($targetTypeName)) {
                                     $row.PSObject.TypeNames.Insert(0, $targetTypeName)
                                 }
-                                $row
+                                ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $targetRoute
                             }
                         }
 
@@ -401,7 +408,7 @@ function Invoke-SnipeitMethod {
                                     if ($targetTypeName -and $row -is [System.Management.Automation.PSObject] -and -not $row.PSObject.TypeNames.Contains($targetTypeName)) {
                                         $row.PSObject.TypeNames.Insert(0, $targetTypeName)
                                     }
-                                    $row
+                                    ConvertTo-SnipeitResourceIdentity -InputObject $row -Route $targetRoute
                                 }
                                 $offset += $pageRows.Count
                             } else {
@@ -432,13 +439,13 @@ function Invoke-SnipeitMethod {
                                 if ($targetTypeName -and $item -is [System.Management.Automation.PSObject] -and -not $item.PSObject.TypeNames.Contains($targetTypeName)) {
                                     $item.PSObject.TypeNames.Insert(0, $targetTypeName)
                                 }
-                                $item
+                                ConvertTo-SnipeitResourceIdentity -InputObject $item -Route $targetRoute
                             }
                         } else {
                             if ($targetTypeName -and $result -is [System.Management.Automation.PSObject] -and -not $result.PSObject.TypeNames.Contains($targetTypeName)) {
                                 $result.PSObject.TypeNames.Insert(0, $targetTypeName)
                             }
-                            $result
+                            ConvertTo-SnipeitResourceIdentity -InputObject $result -Route $targetRoute
                         }
                     }
                 }
@@ -446,6 +453,7 @@ function Invoke-SnipeitMethod {
             catch {
                 if ($_.FullyQualifiedErrorId -like '*SnipeitPaginationError*' -or
                     $_.FullyQualifiedErrorId -like '*SnipeitApiError*' -or
+                    $_.FullyQualifiedErrorId -like '*SnipeitResourceIdentityError*' -or
                     $_.Exception -is [System.Management.Automation.ActionPreferenceStopException]) {
                     throw
                 }

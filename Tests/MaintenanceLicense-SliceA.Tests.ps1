@@ -26,6 +26,9 @@ Describe 'Slice A exported HTTP contracts' {
         Mock Invoke-RestMethod {
             $parsed = if ($Body) { [Text.Encoding]::UTF8.GetString($Body) | ConvertFrom-Json } else { $null }
             $script:sliceRequests.Add([pscustomobject]@{Uri=$Uri.OriginalString;Method=$Method;Body=$parsed})
+            if ($Method -eq 'GET' -and $Uri.AbsolutePath -match '^/api/v1/maintenance-types/(\d+)$') {
+                return [pscustomobject]@{ id = [int]$Matches[1] }
+            }
             [pscustomobject]@{status='success';payload=[pscustomobject]@{id=2};messages='Saved'}
         }
         }
@@ -38,12 +41,18 @@ Describe 'Slice A exported HTTP contracts' {
         $result = & $Command @Inputs @options
         $result.id | Should -Be 2
         $requests = @(InModuleScope SnipeitPS { $script:sliceRequests.ToArray() })
-        $requests.Count | Should -Be 1
-        $requests[0].Uri.Split('?')[0] | Should -Be "https://contract.invalid/api/v1/$Route"
-        $requests[0].Method | Should -Be $Method
+        $expectedCount = if ($Command -eq 'Set-SnipeitMaintenanceType') { 2 } else { 1 }
+        $requests.Count | Should -Be $expectedCount
+        $request = $requests[$expectedCount - 1]
+        $request.Uri.Split('?')[0] | Should -Be "https://contract.invalid/api/v1/$Route"
+        $request.Method | Should -Be $Method
+        if ($Command -eq 'Set-SnipeitMaintenanceType') {
+            $requests[0].Method | Should -Be 'GET'
+            $requests[0].Uri | Should -Be "https://contract.invalid/api/v1/$Route"
+        }
         if ($Fields.Count) {
-            @($requests[0].Body.PSObject.Properties.Name).Count | Should -Be $Fields.Count
-            foreach ($key in $Fields.Keys) { $requests[0].Body.$key | Should -Be $Fields[$key] }
+            @($request.Body.PSObject.Properties.Name).Count | Should -Be $Fields.Count
+            foreach ($key in $Fields.Keys) { $request.Body.$key | Should -Be $Fields[$key] }
         }
     }
 
@@ -90,9 +99,10 @@ Describe 'Slice A exported HTTP contracts' {
         Set-SnipeitMaintenanceType -id 2,3 -name 'Updated' -Confirm:$false
         @([pscustomobject]@{id=4},[pscustomobject]@{id=5}) | Complete-SnipeitAssetMaintenance -Confirm:$false
         $requests = @(InModuleScope SnipeitPS { $script:sliceRequests.ToArray() })
-        $requests.Count | Should -Be 4
-        $requests[1].Uri | Should -BeLike '*/maintenance-types/3'
-        $requests[3].Uri | Should -BeLike '*/maintenances/5/complete'
+        $requests.Count | Should -Be 6
+        $requests[3].Uri | Should -BeLike '*/maintenance-types/3'
+        $requests[3].Method | Should -Be 'PATCH'
+        $requests[5].Uri | Should -BeLike '*/maintenances/5/complete'
     }
 
     It 'License checkout rejects conflicting targets before HTTP' {

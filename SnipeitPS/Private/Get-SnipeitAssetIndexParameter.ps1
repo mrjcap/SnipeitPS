@@ -12,7 +12,7 @@ function Get-SnipeitAssetIndexParameter {
         'status_id', 'asset_tag', 'serial', 'requestable', 'model_id', 'category_id',
         'location_id', 'rtd_location_id', 'supplier_id', 'asset_eol_date',
         'assigned_to', 'assigned_type', 'company_id', 'expand_company_hierarchy',
-        'manufacturer_id', 'depreciation_id', 'byod', 'order_number', 'components'
+        'manufacturer_id', 'depreciation_id', 'byod', 'order_number', 'components', 'past_eol'
     )) {
         if ($BoundParameters.Contains($field)) { $query[$field] = $BoundParameters[$field] }
     }

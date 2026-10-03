@@ -104,6 +104,9 @@ When set, automatically streams all pages of results.
 .PARAMETER preserveResponse
 When set, returns the original response envelope instead of unwrapping asset records.
 
+.PARAMETER past_eol
+True restricts results to assets past their end-of-life date. False leaves this restriction off.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -191,7 +194,9 @@ function Get-SnipeitAssetDue {
         [switch]$preserveResponse,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [Nullable[bool]]$past_eol
     )
 
     begin {

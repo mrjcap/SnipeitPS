@@ -53,6 +53,16 @@ ID of the supplier associated with the consumable.
 .PARAMETER notes
 Notes stored with the consumable.
 
+.PARAMETER currency
+Currency of the initial acquisition, up to 10 characters.
+
+.PARAMETER default_supplier_id
+Default supplier for future purchases, separate from the acquisition supplier. Accepts null.
+
+.PARAMETER default_purchase_cost
+Default cost for future purchases, separate from purchase_cost for the initial acquisition.
+Accepts null or a value from 0 to 99999999999999999.99. Omit to leave the server default unchanged.
+
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
@@ -130,10 +140,21 @@ function New-SnipeitConsumable() {
         [ArgumentCompleter([SnipeitSupplierCompleter])]
         [Nullable[int]]$supplier_id,
 
-        [string]$notes
+        [string]$notes,
+
+        [ValidateLength(0, 10)]
+        [string]$currency,
+
+        [ArgumentCompleter([SnipeitSupplierCompleter])]
+        [Nullable[int]]$default_supplier_id,
+
+        [Nullable[decimal]]$default_purchase_cost
     )
     begin {
-        foreach ($field in @('company_id', 'location_id')) {
+        if ($null -ne $default_purchase_cost -and ($default_purchase_cost -lt 0 -or $default_purchase_cost -gt 99999999999999999.99d)) {
+            throw [ArgumentOutOfRangeException]::new('default_purchase_cost', 'Use a default cost from 0 to 99999999999999999.99, or null.')
+        }
+        foreach ($field in @('company_id', 'location_id', 'default_supplier_id')) {
             if ($null -ne $PSBoundParameters[$field] -and $PSBoundParameters[$field] -lt 1) {
                 throw [System.ArgumentOutOfRangeException]::new($field, 'Use a positive ID or null.')
             }
