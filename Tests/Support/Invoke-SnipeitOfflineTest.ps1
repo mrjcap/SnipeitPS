@@ -6,6 +6,26 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 
+if ([Environment]::GetCommandLineArgs() -notcontains '-NonInteractive') {
+    $runtime = (Get-Process -Id $PID).Path
+    $optionsJson = @{ Path = @($Path); ResultFile = $ResultFile; PassThru = [bool]$PassThru } | ConvertTo-Json -Compress
+    $optionsBase64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($optionsJson))
+    $runnerPath = $PSCommandPath.Replace("'", "''")
+    $childScript = @"
+`$options = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('$optionsBase64')) | ConvertFrom-Json
+`$parameters = @{}
+if (`$options.Path) { `$parameters['Path'] = [string[]]@(`$options.Path) }
+if (`$options.ResultFile) { `$parameters['ResultFile'] = [string]`$options.ResultFile }
+if (`$options.PassThru) { `$parameters['PassThru'] = `$true }
+& '$runnerPath' @parameters
+exit `$LASTEXITCODE
+"@
+    $encodedScript = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($childScript))
+    & $runtime -NoProfile -NonInteractive -EncodedCommand $encodedScript
+    exit $LASTEXITCODE
+}
+$ConfirmPreference = 'None'
+
 # Clean PSModulePath for PS5 child process
 if ($PSVersionTable.PSVersion.Major -le 5) {
     if ($env:PSModulePath) {

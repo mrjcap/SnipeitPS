@@ -39,8 +39,26 @@ if ([string]::IsNullOrWhiteSpace($URL) -or [string]::IsNullOrWhiteSpace($ApiKey)
 $env:SNIPEIT_TEST_URL = $URL
 $env:SNIPEIT_TEST_KEY = $ApiKey
 
+if ([Environment]::GetCommandLineArgs() -notcontains '-NonInteractive') {
+    $runtime = (Get-Process -Id $PID).Path
+    $optionsJson = @{ Path = $Path; Verbosity = $Verbosity } | ConvertTo-Json -Compress
+    $optionsBase64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($optionsJson))
+    $runnerPath = $PSCommandPath.Replace("'", "''")
+    $childScript = @"
+`$options = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('$optionsBase64')) | ConvertFrom-Json
+& '$runnerPath' -Path `$options.Path -Verbosity `$options.Verbosity
+exit `$LASTEXITCODE
+"@
+    $encodedScript = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($childScript))
+    & $runtime -NoProfile -NonInteractive -EncodedCommand $encodedScript
+    exit $LASTEXITCODE
+}
+$ErrorActionPreference = 'Stop'
+$ConfirmPreference = 'None'
+Import-Module Pester -RequiredVersion 5.8.0 -Force
+
 $safeURL = ConvertTo-SafeIntegrationUrl -InputUrl $URL
-Write-Host "Targeting live Snipe-IT instance at $safeURL..." -ForegroundColor Cyan
+Write-Output "Targeting live Snipe-IT instance at $safeURL..."
 
 $config = New-PesterConfiguration
 $config.Run.Path = $Path
@@ -49,5 +67,8 @@ $config.Output.Verbosity = $Verbosity
 $config.Run.PassThru = $true
 
 $result = Invoke-Pester -Configuration $config
-Write-Host "`nIntegration Tests Result -> Total: $($result.TotalCount) Passed: $($result.PassedCount) Failed: $($result.FailedCount)" -ForegroundColor $(if ($result.FailedCount -eq 0) { "Green" } else { "Red" })
+Write-Output "`nIntegration Tests Result -> Total: $($result.TotalCount) Passed: $($result.PassedCount) Failed: $($result.FailedCount)"
+if ($result.TotalCount -eq 0 -or $result.FailedContainersCount -gt 0 -or $result.SkippedCount -gt 0) {
+    throw 'Integration test runner requires nonzero tests, no failed containers, and no skipped tests.'
+}
 exit $result.FailedCount

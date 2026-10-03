@@ -1,9 +1,9 @@
-$ConfirmPreference = 'None'
-$config = New-PesterConfiguration
-$config.Run.Path = "./Tests/"
-$config.Filter.ExcludeTag = "Integration"
-$config.Output.Verbosity = "Detailed"
-$config.Run.PassThru = $true
-$result = Invoke-Pester -Configuration $config
-Write-Host "`nTotal: $($result.TotalCount) Passed: $($result.PassedCount) Failed: $($result.FailedCount)"
-exit $result.FailedCount
+[CmdletBinding()]
+param(
+    [string[]]$Path,
+    [string]$ResultFile,
+    [switch]$PassThru
+)
+
+& "$PSScriptRoot/Tests/Support/Invoke-SnipeitOfflineTest.ps1" @PSBoundParameters
+exit $LASTEXITCODE

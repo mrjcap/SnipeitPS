@@ -76,7 +76,7 @@ function Invoke-SnipeitHttpRequest {
         } elseif ($bodyVal -is [string]) {
             $splatParameters['Body'] = [System.Text.Encoding]::UTF8.GetBytes($bodyVal)
         } else {
-            $splatParameters['Body'] = [System.Text.Encoding]::UTF8.GetBytes(($bodyVal | ConvertTo-Json -Depth 10))
+            $splatParameters['Body'] = [System.Text.Encoding]::UTF8.GetBytes(($bodyVal | ConvertTo-Json -Depth 10 -Compress))
         }
     }
 
@@ -253,6 +253,11 @@ function Invoke-SnipeitHttpRequest {
                 $jsonObj = $responseBody | ConvertFrom-Json -ErrorAction Stop
                 $responseParsed = $true
             } catch { Write-Debug "Response body is not valid JSON: $_" }
+        }
+
+        if ($null -ne $jsonObj -and $jsonObj.status -in @('error', 'import-errors')) {
+            $jsonObj = $jsonObj.PSObject.Copy()
+            $jsonObj | Add-Member -NotePropertyName StatusCode -NotePropertyValue $statusCode -Force
         }
 
         # The dispatcher formats API envelopes and retains nonterminating HTTP errors.
