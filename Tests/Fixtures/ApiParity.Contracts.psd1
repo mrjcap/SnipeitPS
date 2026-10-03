@@ -1,5 +1,7 @@
 @{
     ApiRef = '0c381a6482824a9f5d1889a98843393a0b6ad6b3'
+    AcquisitionContract = 'Tests/Fixtures/Acquisition.Contracts.psd1'
+    CurrentApiContract = 'Tests/Fixtures/CurrentApi.Contracts.psd1'
     FieldLimitations = @(
         @{ Operation = 'companies.index'; Field = 'parent_id'; Source = 'app/Http/Controllers/Api/CompaniesController.php:90-97; SnipeitPS/Public/Get-SnipeitCompany.ps1:92-93'; Reason = 'Top-level filtering requires the literal string null. Zero is compared as parent_id = 0, not IS NULL. The client integer parameter cannot send the null string; omitting the parameter does not filter for top-level companies.' }
         @{ Operation = 'companies.index'; Field = 'page'; Source = 'app/Http/Middleware/SetPaginationDefaults.php:21-26; SnipeitPS/Public/Get-SnipeitCompany.ps1:82-90'; Reason = 'The server accepts page only when offset is not filled. The client exposes limit, offset and all, but no page parameter.' }

@@ -51,6 +51,7 @@ Describe "Live Snipe-IT Integration: Negative Testing & Error Boundaries" -Tag "
 
     Context "Relational Integrity and Deletion Block Constraints" {
         BeforeAll {
+            $script:lockedMfgDeleted = $false
             $script:lockedCat = New-SnipeitCategory -name "INT-LockedCat-$($script:testTimestamp)" -category_type "asset"
             $script:lockedMfg = New-SnipeitManufacturer -name "INT-LockedMfg-$($script:testTimestamp)"
             $script:lockedModel = New-SnipeitModel -name "INT-LockedMod-$($script:testTimestamp)" `
@@ -65,23 +66,33 @@ Describe "Live Snipe-IT Integration: Negative Testing & Error Boundaries" -Tag "
             if ($script:lockedCat -and $script:lockedCat.id) {
                 Remove-SnipeitCategory -id $script:lockedCat.id -Confirm:$false
             }
-            if ($script:lockedMfg -and $script:lockedMfg.id) {
+            if ($script:lockedMfg -and $script:lockedMfg.id -and -not $script:lockedMfgDeleted) {
                 Remove-SnipeitManufacturer -id $script:lockedMfg.id -Confirm:$false
             }
         }
 
         It "Prevents deletion of category when active models still reference it" {
-            $res = Remove-SnipeitCategory -id $script:lockedCat.id -Confirm:$false
+            $categoryErrors = $null
+            $res = Remove-SnipeitCategory -id $script:lockedCat.id -Confirm:$false `
+                -ErrorVariable categoryErrors -ErrorAction SilentlyContinue
             $res | Should -BeNullOrEmpty
-            $model = Get-SnipeitModel -id $script:lockedModel.id
-            $model | Should -Not -BeNullOrEmpty
+            $categoryErrors | Should -Not -BeNullOrEmpty
+            ($categoryErrors.Exception.Message -join "`n") | Should -Match 'associated items'
+            (Get-SnipeitCategory -id $script:lockedCat.id).id | Should -Be $script:lockedCat.id
+            (Get-SnipeitModel -id $script:lockedModel.id).id | Should -Be $script:lockedModel.id
         }
 
-        It "Prevents deletion of manufacturer when active models still reference it" {
-            $res = Remove-SnipeitManufacturer -id $script:lockedMfg.id -Confirm:$false
+        It "Allows manufacturer deletion when only models reference it" {
+            $manufacturerId = $script:lockedMfg.id
+            $null = Remove-SnipeitManufacturer -id $manufacturerId -Confirm:$false -ErrorAction Stop
+            $script:lockedMfgDeleted = $true
+            $manufacturerErrors = $null
+            $res = Get-SnipeitManufacturer -id $manufacturerId `
+                -ErrorVariable manufacturerErrors -ErrorAction SilentlyContinue
             $res | Should -BeNullOrEmpty
-            $model = Get-SnipeitModel -id $script:lockedModel.id
-            $model | Should -Not -BeNullOrEmpty
+            $manufacturerErrors | Should -Not -BeNullOrEmpty
+            ($manufacturerErrors.Exception.Message -join "`n") | Should -Match '404|not found|does not exist'
+            (Get-SnipeitModel -id $script:lockedModel.id).id | Should -Be $script:lockedModel.id
         }
     }
 }
