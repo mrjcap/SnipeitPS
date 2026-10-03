@@ -22,4 +22,5 @@ graphify-out/
 .agents/skills/*/*.*
 .pi/*.*
 docs/*/*/*.md
+/docs/adr/
 CLAUDE.md
