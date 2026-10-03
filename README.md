@@ -12,6 +12,17 @@ Release validation covers Windows and selected Linux scenarios; macOS remains un
 
 ---
 
+## What's new in 2.0.1
+
+Version 2.0.1 is an unreleased update with 191 exported functions, including 12 new commands.
+It adds current resource endpoints, order items, quantity adjustments, acquisition fields, and collection filters.
+PowerShell 5.1 compatibility fixes cover fixture loading, URI mock capture, JSON serialization, and test subprocesses.
+The [changelog](CHANGELOG.md) records validation evidence, stock-server limitations, and protocol exclusions.
+
+Request rows now expose `request_id`. Non-hardware requestable rows expose type-specific IDs instead of `id`.
+User assignment rows expose inventory IDs as `id` and retain assignment IDs as `checkout_id` or `seat_id`.
+Review scripts that consume these outputs before upgrading from 2.0.0.
+
 ## What's new in 2.0.0
 
 Version 2.0.0 retains all 115 functions from v1.15.2 and adds 64, for 179 exported functions.
@@ -56,7 +67,8 @@ See the [changelog](CHANGELOG.md) for individual fixes, behavior changes, verifi
 
 ## Installation
 
-Version 2.0.0 is available from the [GitHub release](https://github.com/mrjcap/SnipeitPS/releases/tag/v2.0.0).
+Version 2.0.1 has not been packaged or published. The latest published GitHub release remains
+[v2.0.0](https://github.com/mrjcap/SnipeitPS/releases/tag/v2.0.0).
 Download and extract the source archive, open PowerShell in the extracted repository directory, and import the module:
 
 ```powershell

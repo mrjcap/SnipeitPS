@@ -37,7 +37,7 @@ BeforeAll {
 Describe 'HTTPS, module metadata, MCP, and CI policy' {
     It 'uses manifest version for the module and HTTP User-Agent' {
         $manifest = Test-ModuleManifest -Path (Join-Path $repositoryRoot 'SnipeitPS/SnipeitPS.psd1')
-        $manifest.Version.ToString() | Should -Be '2.0.0'
+        $manifest.Version.ToString() | Should -Be '2.0.1'
 
         InModuleScope 'SnipeitPS' {
             $script:SnipeitPSSession.url = 'https://test.example'
@@ -45,7 +45,7 @@ Describe 'HTTPS, module metadata, MCP, and CI policy' {
             Mock Invoke-RestMethod { [PSCustomObject]@{ status = 'success' } }
             Invoke-SnipeitMethod -Api '/api/v1/status' -Method Get | Out-Null
             Should -Invoke Invoke-RestMethod -Times 1 -ParameterFilter {
-                $Headers['User-Agent'] -eq 'SnipeitPS/2.0.0'
+                $Headers['User-Agent'] -eq 'SnipeitPS/2.0.1'
             }
         }
     }
@@ -153,7 +153,7 @@ Describe 'HTTPS, module metadata, MCP, and CI policy' {
             $responses.Count | Should -Be 3
             @($responses.id) | Should -Be @(1, 2, 3)
             $initialize = $responses | Where-Object id -EQ 1
-            $initialize.result.serverInfo.version | Should -Be '2.0.0'
+            $initialize.result.serverInfo.version | Should -Be '2.0.1'
             $list = $responses | Where-Object id -EQ 2
             @($list.result.tools.name) | Should -Not -Contain 'snipeit_create_asset'
             @($list.result.tools.name) | Should -Not -Contain 'snipeit_sync_asset'

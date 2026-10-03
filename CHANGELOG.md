@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.0.1] - Unreleased
+
+### Added
+
+- Add 12 commands covering current resource endpoints, order items, and quantity adjustments.
+- Add acquisition fields, `requestable` flags, and nullable `default_purchase_cost` parameters.
+- Add collection filters and assignment search/sort options identified in the current-server audit.
+- Add supplemental contracts for Snipe-IT revision `5d7fe00370813649d6b535a43d3a47ec51adbab2`.
+  The historical API ledger keeps its original reference.
+
+### Fixed
+
+- Correct model-assets routing and keep request, checkout, seat, and inventory identities separate.
+- Preserve maintenance colors, import blank-field options, and actual HTTP status codes on error responses.
+- Fix Windows PowerShell 5.1 fixture loading, URI mock capture, and compact empty-object JSON serialization.
+- Run test subprocesses noninteractively and reject skipped tests, failed containers, and nonzero integration exits.
+- Correct live deletion assertions to match the stock server's category and manufacturer behavior.
+
+### Migration from v2.0.0
+
+- Request rows expose `request_id` instead of `id`. Non-hardware requestable rows expose the corresponding
+  `model_id`, `accessory_id`, `consumable_id`, `component_id`, or `license_id` instead of an ambiguous `id`.
+- User assignment rows expose the inventory ID as `id` and retain the assignment ID as `checkout_id` or `seat_id`.
+  Review scripts that previously treated assignment IDs as inventory IDs.
+
+### Validation and scope
+
+- Before the version update, the committed source passed 2,116 offline tests on PowerShell 7.
+  The user verified 2,114 full-suite tests and seven focused contract tests on Windows PowerShell 5.1.
+- The isolated current-server integration suite passed 141 tests without skips or teardown errors.
+  Native HTTP used a localhost TLS relay and container-local curl, not direct Windows-to-Unraid transport.
+- All 288 normalized API method-route pairs are accounted for. Six stock-server limitations and four
+  OAuth, SCIM, or diagnostic exclusions remain explicit; this is not a claim of literal full API support.
+- Release package validation, tagging, and publication are pending. Snipe-IT source remains unchanged.
+
 ## [v2.0.0] - 2026-09-28
 
 ### Release scope
