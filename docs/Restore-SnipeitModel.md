@@ -5,43 +5,42 @@ online version:
 schema: 2.0.0
 ---
 
-# New-SnipeitMaintenanceType
+# Restore-SnipeitModel
 
 ## SYNOPSIS
 
-Creates a maintenance type with an optional color.
+Restores soft-deleted asset models.
 
 ## SYNTAX
 
 ```
-New-SnipeitMaintenanceType [-name] <String> [[-Session] <SnipeitSession>] [[-tag_color] <Object>]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Restore-SnipeitModel [-id] <Int32[]> [[-Session] <SnipeitSession>] [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Posts to /api/v1/maintenance-types. Sends tag_color only when explicitly bound.
+Posts an empty body to /api/v1/models/{id}/restore for each ID. Requires model delete permission. Not-deleted,
+missing-model, and restore failures can arrive as HTTP 200 domain errors and remain on the error stream.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 
-```powershell
-New-SnipeitMaintenanceType -name 'Safety inspection' -WhatIf
 ```
-
-Previews the operation without changing server data.
+Restore-SnipeitModel -id 7 -WhatIf
+```
 
 ## PARAMETERS
 
-### -name
+### -id
 
-Nonblank maintenance-type name.
+Positive model IDs. Accepts pipeline properties named id or model_id.
 
 ```yaml
-Type: String
+Type: Int32[]
 Parameter Sets: (All)
-Aliases:
+Aliases: model_id
 
 Required: True
 Position: 1
@@ -66,25 +65,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -tag_color
-
-Color string, empty string, or null. Omission leaves the server default.
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -WhatIf
 
-Shows the intended operation without sending the modifying request.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -93,14 +76,14 @@ Aliases: wi
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Confirm
 
-Prompts for confirmation before sending the modifying request.
+Prompts you for confirmation before running the cmdlet.
 
 ```yaml
 Type: SwitchParameter
@@ -109,14 +92,14 @@ Aliases: cf
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ProgressAction
 
-Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.
+Controls progress display in PowerShell 7.4 and later.
 
 ```yaml
 Type: ActionPreference
@@ -138,21 +121,10 @@ more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?L
 
 ## INPUTS
 
-### System.Management.Automation.PSObject
-
-Accepts objects with matching properties: name.
-
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject
-
-Returns the API response processed by the module dispatcher.
+### System.Management.Automation.PSObject
 
 ## NOTES
 
-Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm. Confirmation
-impact is Medium.
-
 ## RELATED LINKS
-
-[Connect-SnipeitPS](Connect-SnipeitPS.md)

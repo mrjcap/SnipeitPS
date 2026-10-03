@@ -9,19 +9,43 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Cancels a pending self-service checkout request for an asset.
+Cancels a pending self-service checkout request for inventory.
 
 ## SYNTAX
+
+### Asset (Default)
 
 ```
 Remove-SnipeitAccountRequest [-asset_id] <Int32> [-Session <SnipeitSession>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
+### Consumable
+
+```
+Remove-SnipeitAccountRequest [-Session <SnipeitSession>] [-consumable_id] <Int32>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### Component
+
+```
+Remove-SnipeitAccountRequest [-Session <SnipeitSession>] [-component_id] <Int32>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### License
+
+```
+Remove-SnipeitAccountRequest [-Session <SnipeitSession>] [-license_id] <Int32>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
-Cancels an active asset checkout request submitted by the current user via POST /api/v1/account/request/{asset}/cancel.
-Takes no body fields.
+Cancels the current user's active request for an asset, consumable, component or license. Takes no body fields. IDs
+refer to inventory, not checkout-request rows. Do not use request_id or the web cancel_url as an inventory ID. Accessory
+and model request mutations are not exposed by this API.
 
 ## EXAMPLES
 
@@ -39,7 +63,7 @@ Unique ID of the asset whose pending request should be canceled.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: Asset
 Aliases: id, asset
 
 Required: True
@@ -62,6 +86,54 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -consumable_id
+
+Positive consumable inventory ID whose pending request should be canceled.
+
+```yaml
+Type: Int32
+Parameter Sets: Consumable
+Aliases:
+
+Required: True
+Position: 1
+Default value: 0
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -component_id
+
+Positive component inventory ID whose pending request should be canceled.
+
+```yaml
+Type: Int32
+Parameter Sets: Component
+Aliases:
+
+Required: True
+Position: 1
+Default value: 0
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -license_id
+
+Positive license inventory ID whose pending request should be canceled.
+
+```yaml
+Type: Int32
+Parameter Sets: License
+Aliases:
+
+Required: True
+Position: 1
+Default value: 0
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 

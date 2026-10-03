@@ -18,13 +18,19 @@ Set-SnipeitComponent [-id] <Int32[]> [[-qty] <Int32>] [[-min_amt] <Int32>] [[-na
  [[-company_id] <Int32>] [[-location_id] <Int32>] [[-order_number] <String>] [[-purchase_date] <DateTime>]
  [[-purchase_cost] <String>] [[-image] <String>] [-image_delete] [[-RequestType] <String>]
  [[-Session] <SnipeitSession>] [[-supplier_id] <Int32>] [[-manufacturer_id] <Int32>] [[-model_number] <String>]
- [[-serial] <String>] [[-notes] <String>] [[-category_id] <Int32>] [-ProgressAction <ActionPreference>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-serial] <String>] [[-notes] <String>] [[-category_id] <Int32>] [[-unit_cost] <Decimal>]
+ [[-currency] <String>] [[-note] <String>] [[-default_supplier_id] <Int32>]
+ [[-default_purchase_cost] <Decimal>] [[-requestable] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Updates component on Snipe-IT system
+Updates a component. qty is an absolute stock count, not a signed delta. Legacy purchase parameters remain on the wire
+for older servers. On the current API, metadata-only updates do not edit purchase history. A positive qty difference can
+create an acquisition using unit_cost and order metadata; purchase_cost is not consumed by that adjustment. Negative and
+zero changes do not create acquisition lines. Use Invoke-SnipeitQuantityAdjustment for an explicit signed adjustment or
+receipt.
 
 ## EXAMPLES
 
@@ -341,6 +347,107 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -unit_cost
+
+Nonnegative per-unit cost for a positive qty difference on the current API. Accepts explicit null. This does not edit an
+existing acquisition line.
+
+```yaml
+Type: Decimal
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 19
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -currency
+
+Currency for an acquisition caused by a positive qty difference.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 20
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -note
+
+Reason for a qty change. The server generates one when omitted. When the change creates an order, the Order model limits
+its notes to 1000 characters.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 21
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -default_supplier_id
+
+Default supplier for future purchases, separate from historical acquisition suppliers. Accepts explicit null; an unbound
+value is omitted.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 22
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -default_purchase_cost
+
+Default cost for future purchases, separate from unit_cost and historical purchase_cost.
+Accepts null or a value from 0 to 99999999999999999.99. Omit to leave the stored default unchanged.
+
+```yaml
+Type: Decimal
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 23
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -requestable
+
+Whether users can request this component. Accepts true, false, or null.
+Omit to leave the stored value unchanged.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 24
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -391,9 +498,10 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose,
+-WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

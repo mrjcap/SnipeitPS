@@ -20,7 +20,7 @@ Set-SnipeitLicense [-id] <Int32[]> [[-name] <String>] [[-seats] <Int32>] [[-cate
  [[-purchase_cost] <String>] [[-purchase_date] <DateTime>] [[-reassignable] <Boolean>] [[-serial] <String>]
  [[-supplier_id] <Int32>] [[-termination_date] <DateTime>] [[-RequestType] <String>]
  [[-Session] <SnipeitSession>] [[-depreciation_id] <Int32>] [[-purchase_order] <String>] [[-min_amt] <Int32>]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-requestable] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -405,6 +405,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -requestable
+
+Whether users can request this license. Accepts true, false, or null.
+Omit to leave the stored value unchanged.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 24
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -455,9 +472,10 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose,
+-WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

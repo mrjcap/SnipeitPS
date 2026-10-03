@@ -9,19 +9,43 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Submits a self-service checkout request for an asset.
+Submits a self-service checkout request for inventory.
 
 ## SYNTAX
+
+### Asset (Default)
 
 ```
 New-SnipeitAccountRequest [-asset_id] <Int32> [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
+### Consumable
+
+```
+New-SnipeitAccountRequest [-Session <SnipeitSession>] [-consumable_id] <Int32>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### Component
+
+```
+New-SnipeitAccountRequest [-Session <SnipeitSession>] [-component_id] <Int32>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### License
+
+```
+New-SnipeitAccountRequest [-Session <SnipeitSession>] [-license_id] <Int32>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
-Requests an asset on behalf of the current user via POST /api/v1/account/request/{asset}. The server fixes the requested
-quantity to 1 and takes no request body or custom notes.
+Requests an asset, consumable, component or license on behalf of the current user. The server fixes the requested
+quantity to 1 and takes no request body, custom notes or reservation dates. IDs refer to inventory, not checkout-request
+rows. Accessory and model request mutations are not exposed by this API.
 
 ## EXAMPLES
 
@@ -45,7 +69,7 @@ Unique ID of the requestable asset to request.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: Asset
 Aliases: id, asset
 
 Required: True
@@ -68,6 +92,54 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -consumable_id
+
+Positive consumable inventory ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Consumable
+Aliases:
+
+Required: True
+Position: 1
+Default value: 0
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -component_id
+
+Positive component inventory ID.
+
+```yaml
+Type: Int32
+Parameter Sets: Component
+Aliases:
+
+Required: True
+Position: 1
+Default value: 0
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -license_id
+
+Positive license inventory ID.
+
+```yaml
+Type: Int32
+Parameter Sets: License
+Aliases:
+
+Required: True
+Position: 1
+Default value: 0
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 

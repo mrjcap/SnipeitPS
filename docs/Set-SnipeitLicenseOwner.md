@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Check out a license seat.
+Check out a license seat to a user or hardware asset.
 
 ## SYNTAX
 
@@ -17,14 +17,16 @@ Check out a license seat.
 
 ```
 Set-SnipeitLicenseOwner -id <Int32[]> -assigned_to <Int32> [-seat_id <Int32>] [-notes <String>]
- [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Session <SnipeitSession>] [-reassign] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### Asset
 
 ```
 Set-SnipeitLicenseOwner -id <Int32[]> -asset_id <Int32> [-seat_id <Int32>] [-notes <String>]
- [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Session <SnipeitSession>] [-reassign] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -146,6 +148,23 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -reassign
+
+Permits displacing an occupied seat when the license is reassignable. Sent only when explicitly bound. Explicit false is
+sent as false. This is a checkout control, separate from the license's reassignable setting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

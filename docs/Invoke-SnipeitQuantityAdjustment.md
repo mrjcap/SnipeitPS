@@ -1,0 +1,287 @@
+---
+external help file: SnipeitPS-help.xml
+Module Name: SnipeitPS
+online version:
+schema: 2.0.0
+---
+
+# Invoke-SnipeitQuantityAdjustment
+
+## SYNOPSIS
+
+Adjusts stock by a signed amount using the current Snipe-IT API.
+
+## SYNTAX
+
+```
+Invoke-SnipeitQuantityAdjustment [-EntityType] <String> [-resource_id] <Int32[]> [-amount] <Int32>
+ [-note] <String> [[-unit_cost] <Decimal>] [[-order_number] <String>] [[-supplier_id] <Int32>]
+ [[-purchase_date] <DateTime>] [[-currency] <String>] [[-File] <Object>] [[-Session] <SnipeitSession>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+Posts to the inventory item's adjust-quantity endpoint. Positive amounts increase stock; negative amounts reduce it
+subject to the server's assigned-stock floor. Zero records an audit without changing stock. A positive adjustment
+creates an acquisition line only when acquisition metadata is supplied. Receipts belong to the adjustment log. Server
+order/file writes are not atomic with stock changes. No legacy fallback is attempted. Resource IDs are explicit:
+order-item id fields are not accepted as parent resource IDs.
+
+## EXAMPLES
+
+### EXAMPLE 1
+
+```
+Invoke-SnipeitQuantityAdjustment -EntityType Accessory -resource_id 7 -amount 3 -note 'Received' -unit_cost 12.50 -currency EUR
+```
+
+### EXAMPLE 2
+
+```
+Invoke-SnipeitQuantityAdjustment -EntityType Component -resource_id 7 -amount -1 -note 'Stock count' -WhatIf
+```
+
+## PARAMETERS
+
+### -EntityType
+
+Accessory, Component or Consumable.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -resource_id
+
+Positive inventory ID or array of IDs. Pipeline property binding accepts resource_id, not the ambiguous id field on
+acquisition rows.
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -amount
+
+Signed stock delta, including zero. This is not an absolute quantity.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 3
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -note
+
+Required adjustment reason, up to 65535 characters. When acquisition metadata creates an order, the server's Order model
+limits order notes to 1000 characters.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -unit_cost
+
+Optional nonnegative per-unit acquisition cost. The wire field is unit_cost, not purchase_cost.
+
+```yaml
+Type: Decimal
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -order_number
+
+Optional order number, up to 191 characters.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -supplier_id
+
+Optional positive acquisition supplier ID, or null.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -purchase_date
+
+Optional acquisition date, serialized as yyyy-MM-dd, or null.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -currency
+
+Optional currency code, up to 10 characters.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -File
+
+Path or FileInfo for one receipt. Uses the multipart field file, not file\[\].
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+
+Optional custom SnipeitSession instance.
+
+```yaml
+Type: SnipeitSession
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+
+Action preference for progress events generated by this cmdlet.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
+more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+### System.Management.Automation.PSCustomObject
+
+## NOTES
+
+## RELATED LINKS

@@ -5,48 +5,112 @@ online version:
 schema: 2.0.0
 ---
 
-# New-SnipeitMaintenanceType
+# Get-SnipeitDashboardActivity
 
 ## SYNOPSIS
 
-Creates a maintenance type with an optional color.
+Lists dashboard activity in descending creation order.
 
 ## SYNTAX
 
 ```
-New-SnipeitMaintenanceType [-name] <String> [[-Session] <SnipeitSession>] [[-tag_color] <Object>]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-SnipeitDashboardActivity [[-search] <String>] [[-limit] <Int32>] [[-offset] <Int32>] [-all]
+ [-PreserveResponse] [[-Session] <SnipeitSession>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Posts to /api/v1/maintenance-types. Sends tag_color only when explicitly bound.
+Queries GET /api/v1/dashboard/activity. Results respect server permissions and company scoping. The server fixes
+ordering to created_at descending. This endpoint does not accept report activity filters, date ranges, or sort controls.
+Use PreserveResponse for the unmodified response envelope. It takes precedence over all.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 
-```powershell
-New-SnipeitMaintenanceType -name 'Safety inspection' -WhatIf
 ```
-
-Previews the operation without changing server data.
+Get-SnipeitDashboardActivity -Session $session
+```
 
 ## PARAMETERS
 
-### -name
+### -search
 
-Nonblank maintenance-type name.
+Server-side activity search text.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -limit
+
+Records per page, from 1 to 500. Defaults to 25.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: 25
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -offset
+
+Nonnegative row offset.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -all
+
+Streams rows across pages until the total is reached or an empty page is returned.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreserveResponse
+
+Returns the first complete response without row normalization.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -60,63 +124,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 4
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -tag_color
-
-Color string, empty string, or null. Omission leaves the server default.
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-
-Shows the intended operation without sending the modifying request.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts for confirmation before sending the modifying request.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ProgressAction
 
-Controls how PowerShell displays progress records. Available in PowerShell 7.4 and later.
+Controls progress display in PowerShell 7.4 and later.
 
 ```yaml
 Type: ActionPreference
@@ -138,21 +154,10 @@ more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?L
 
 ## INPUTS
 
-### System.Management.Automation.PSObject
-
-Accepts objects with matching properties: name.
-
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject
-
-Returns the API response processed by the module dispatcher.
+### System.Management.Automation.PSObject
 
 ## NOTES
 
-Requires a connection to a Snipe-IT server that supports this endpoint. Supports -WhatIf and -Confirm. Confirmation
-impact is Medium.
-
 ## RELATED LINKS
-
-[Connect-SnipeitPS](Connect-SnipeitPS.md)

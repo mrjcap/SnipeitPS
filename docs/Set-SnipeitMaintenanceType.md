@@ -9,18 +9,21 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Rename maintenance types.
+Renames a maintenance type without clearing its existing color.
 
 ## SYNTAX
 
 ```
 Set-SnipeitMaintenanceType [-id] <Int32[]> [-name] <String> [[-Session] <SnipeitSession>]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-tag_color] <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-PATCH /api/v1/maintenance-types/{id} applies the same name to each supplied maintenance type ID.
+Patches /api/v1/maintenance-types/{id}. Omission of tag_color triggers a GET inside ShouldProcess to preserve each
+type's color. The lookup must return exactly one matching ID or the command stops before PATCH. Explicit tag_color
+avoids the GET. WhatIf performs neither request. The read and write are not atomic; preserving color also requires view
+permission.
 
 ## EXAMPLES
 
@@ -36,7 +39,7 @@ Previews the operation without changing server data.
 
 ### -id
 
-One or more maintenance type IDs, each from 1 to 2147483647.
+Positive maintenance-type ID or array of IDs.
 
 ```yaml
 Type: Int32[]
@@ -52,7 +55,7 @@ Accept wildcard characters: False
 
 ### -name
 
-Maintenance type name. Cannot be null, empty, or whitespace.
+New maintenance-type name.
 
 ```yaml
 Type: String
@@ -68,7 +71,7 @@ Accept wildcard characters: False
 
 ### -Session
 
-Optional SnipeitSession instance. If omitted or null, uses the current module connection.
+Optional custom SnipeitSession instance.
 
 ```yaml
 Type: SnipeitSession
@@ -77,6 +80,24 @@ Aliases:
 
 Required: False
 Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -tag_color
+
+Explicit color, empty string or null. When omitted, reads the current color before PATCH. The lookup requires view
+permission. Missing color on a historical response keeps the historical name-only request. GET/PATCH is not an atomic
+operation.
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

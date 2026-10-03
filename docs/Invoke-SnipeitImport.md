@@ -16,7 +16,7 @@ Processes an uploaded import file in Snipe-IT.
 ```
 Invoke-SnipeitImport [-import_id] <Int32> [-ImportType] <String> [-ColumnMappings <Hashtable>] [-Update]
  [-SendWelcome] [-RunBackup] [-Offset <Int32>] [-Limit <Int32>] [-MatchUsername] [-MatchEmail]
- [-MatchFirstnameLastname] [-MatchFlastname] [-MatchFirstname] [-Session <SnipeitSession>]
+ [-MatchFirstnameLastname] [-MatchFlastname] [-MatchFirstname] [-Session <SnipeitSession>] [-PreserveBlanks]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -257,6 +257,24 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreserveBlanks
+
+On updates, keeps stored values when the importer treats the CSV value as empty. The server's empty-value rule includes
+zero, false and the string '0'. Explicit false is sent as false; omission leaves the server default. Resend this flag
+for every slice.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

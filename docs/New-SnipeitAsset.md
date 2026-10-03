@@ -22,7 +22,7 @@ New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_t
  [-image <String>] [-url <String>] [-apiKey <String>] [-customfields <Hashtable>] [-location_id <Int32>]
  [-byod <Boolean>] [-eol_explicit <Boolean>] [-asset_eol_date <DateTime>] [-expected_checkin <DateTime>]
  [-next_audit_date <DateTime>] [-last_audit_date <DateTime>] [-last_checkin <DateTime>]
- [-last_checkout <DateTime>] [-requestable <Boolean>] [-Session <SnipeitSession>]
+ [-last_checkout <DateTime>] [-requestable <Boolean>] [-Session <SnipeitSession>] [-PreserveResponse]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -36,7 +36,8 @@ New-SnipeitAsset -status_id <Int32> -model_id <Int32> [-name <String>] [-asset_t
  [-customfields <Hashtable>] [-location_id <Int32>] [-byod <Boolean>] [-eol_explicit <Boolean>]
  [-asset_eol_date <DateTime>] [-expected_checkin <DateTime>] [-next_audit_date <DateTime>]
  [-last_audit_date <DateTime>] [-last_checkin <DateTime>] [-last_checkout <DateTime>] [-requestable <Boolean>]
- [-Session <SnipeitSession>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Session <SnipeitSession>] [-PreserveResponse] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -546,6 +547,24 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreserveResponse
+
+Returns the complete server envelope, including the asset-create message. This exposes messages such as creation
+succeeding without the requested checkout. The default still returns the typed asset. Business errors remain on the
+error stream.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

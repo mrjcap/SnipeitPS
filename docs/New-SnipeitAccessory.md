@@ -18,6 +18,7 @@ New-SnipeitAccessory [-name] <String> [-qty] <Int32> [-category_id] <Int32> [[-c
  [[-manufacturer_id] <Int32>] [[-order_number] <String>] [[-model_number] <String>] [[-purchase_cost] <String>]
  [[-purchase_date] <DateTime>] [[-min_amt] <Int32>] [[-supplier_id] <Int32>] [[-location_id] <Int32>]
  [[-image] <String>] [[-requestable] <Boolean>] [[-Session] <SnipeitSession>] [[-notes] <String>]
+ [[-currency] <String>] [[-default_supplier_id] <Int32>] [[-default_purchase_cost] <Decimal>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -291,6 +292,56 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -currency
+
+Currency of the initial acquisition, up to 10 characters.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -default_supplier_id
+
+Default supplier for future purchases, separate from the acquisition supplier. Accepts explicit null; an unbound value
+is omitted.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 18
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -default_purchase_cost
+
+Default cost for future purchases, separate from purchase_cost for the initial acquisition.
+Accepts null or a value from 0 to 99999999999999999.99. Omit to leave the server default unchanged.
+
+```yaml
+Type: Decimal
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 19
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -341,9 +392,10 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
--InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For
-more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose,
+-WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

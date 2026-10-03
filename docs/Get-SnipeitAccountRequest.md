@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Gets asset requests submitted by the current authenticated user.
+Gets pending checkout requests submitted by the current authenticated user.
 
 ## SYNTAX
 
@@ -20,8 +20,10 @@ Get-SnipeitAccountRequest [-preserveResponse] [[-Session] <SnipeitSession>]
 
 ## DESCRIPTION
 
-Retrieves pending or past checkout requests submitted by the current user under /api/v1/account/requests. Unpaginated.
-If no requests exist, returns an empty list or total = 0.
+Retrieves pending checkout requests under /api/v1/account/requests, not request history. Unpaginated. If no requests
+exist, returns no rows or a raw envelope with total = 0. Normalized rows expose request_id instead of id. The nested
+requestable ID is the inventory ID. Do not pipe request rows to inventory mutation commands or use request_id or
+cancel_url as an inventory ID.
 
 ## EXAMPLES
 
