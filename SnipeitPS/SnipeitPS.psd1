@@ -74,6 +74,16 @@ FormatsToProcess = @('SnipeitPS.format.ps1xml')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
+        'Get-SnipeitCheckoutRequest',
+        'Get-SnipeitRequestableItem',
+        'Get-SnipeitDashboardActivity',
+        'Get-SnipeitDashboardSummary',
+        'Get-SnipeitCalendarEvent',
+        'Get-SnipeitLowStockItem',
+        'Get-SnipeitModelAsset',
+        'Get-SnipeitUserConsumable',
+        'Restore-SnipeitModel',
+        'Revoke-SnipeitCurrentToken',
         'New-SnipeitMaintenanceType',
         'Set-SnipeitMaintenanceType',
         'Remove-SnipeitMaintenanceType',
@@ -133,6 +143,7 @@ FunctionsToExport = @(
         'Get-SnipeitManufacturer',
         'Get-SnipeitModel',
         'Get-SnipeitModelFile',
+        'Get-SnipeitOrderItem',
         'Get-SnipeitPersonalAccessToken',
         'Get-SnipeitRequestableAsset',
         'Get-SnipeitSetting',
@@ -148,6 +159,7 @@ FunctionsToExport = @(
         'Get-SnipeitUserLicense',
         'Get-SnipeitVersion',
         'Invoke-SnipeitImport',
+        'Invoke-SnipeitQuantityAdjustment',
         'New-SnipeitAccessory',
         'New-SnipeitAccountRequest',
         'New-SnipeitAsset',
