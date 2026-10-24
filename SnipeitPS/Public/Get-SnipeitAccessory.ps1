@@ -67,6 +67,9 @@ are added without replacing existing ID properties. Collection IDs are unchanged
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
+.PARAMETER status
+Select Archived or Deleted inventory. Omit to use the server's default visibility.
+
 .OUTPUTS
 
 System.Management.Automation.PSCustomObject
@@ -149,11 +152,18 @@ function Get-SnipeitAccessory() {
         [Nullable[bool]]$requestable,
 
         [parameter(ParameterSetName='Accessories checked out to user id')]
-        [switch]$NormalizeIdentity
+        [switch]$NormalizeIdentity,
+
+        [parameter(ParameterSetName='Search')]
+        [ValidateSet('Archived', 'Deleted')]
+        [string]$status
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if ($PSBoundParameters.ContainsKey('status')) {
+            $SearchParameter['status'] = if ($status -eq 'Archived') { 'Archived' } else { 'Deleted' }
+        }
     }
 
     process {

@@ -20,8 +20,8 @@ Set-SnipeitComponent [-id] <Int32[]> [[-qty] <Int32>] [[-min_amt] <Int32>] [[-na
  [[-Session] <SnipeitSession>] [[-supplier_id] <Int32>] [[-manufacturer_id] <Int32>] [[-model_number] <String>]
  [[-serial] <String>] [[-notes] <String>] [[-category_id] <Int32>] [[-unit_cost] <Decimal>]
  [[-currency] <String>] [[-note] <String>] [[-default_supplier_id] <Int32>]
- [[-default_purchase_cost] <Decimal>] [[-requestable] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [[-default_purchase_cost] <Decimal>] [[-requestable] <Boolean>] [[-archived] <Boolean>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -448,6 +448,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -archived
+
+Set the archive flag. Unbound values are omitted; explicit null is forwarded.
+The server validates requestability conflicts and outstanding assignments.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 25
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -498,10 +515,9 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose,
--WarningAction, and -WarningVariable. For more information, see
-[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

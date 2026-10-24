@@ -60,6 +60,10 @@ Accepts null or a value from 0 to 99999999999999999.99. Omit to leave the server
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
+.PARAMETER archived
+Set the archive flag. Unbound values are omitted; explicit null is forwarded.
+The server validates requestability conflicts and outstanding assignments.
+
 .OUTPUTS
 
 System.Management.Automation.PSCustomObject
@@ -132,7 +136,9 @@ function New-SnipeitAccessory() {
         [ArgumentCompleter([SnipeitSupplierCompleter])]
         [Nullable[int]]$default_supplier_id,
 
-        [Nullable[decimal]]$default_purchase_cost
+        [Nullable[decimal]]$default_purchase_cost,
+
+        [Nullable[bool]]$archived
     )
     begin {
         if ($null -ne $default_purchase_cost -and ($default_purchase_cost -lt 0 -or $default_purchase_cost -gt 99999999999999999.99d)) {

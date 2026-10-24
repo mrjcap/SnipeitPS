@@ -62,6 +62,16 @@ Server text-search filter, taking precedence over search.
 .PARAMETER Session
 Optional custom SnipeitSession instance.
 
+.PARAMETER status
+Select Archived or Deleted inventory. Omit to use the server's default visibility.
+
+.PARAMETER requestable
+True restricts the collection to requestable items. False leaves this restriction off.
+
+.PARAMETER archived
+True adds an archive restriction within the status or default visibility scope.
+False leaves this restriction off. Use status Archived to select archived inventory explicitly.
+
 .OUTPUTS
 
 System.Management.Automation.PSCustomObject
@@ -146,11 +156,24 @@ function Get-SnipeitConsumable() {
         [string]$filter,
 
         [Parameter(Mandatory = $false)]
-        [SnipeitSession]$Session
+        [SnipeitSession]$Session,
+
+        [parameter(ParameterSetName='Search')]
+        [ValidateSet('Archived', 'Deleted')]
+        [string]$status,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$requestable,
+
+        [parameter(ParameterSetName='Search')]
+        [Nullable[bool]]$archived
     )
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Starting"
 $SearchParameter = . Get-ParameterValue -Parameters $MyInvocation.MyCommand.Parameters -BoundParameters $PSBoundParameters
+        if ($PSBoundParameters.ContainsKey('status')) {
+            $SearchParameter['status'] = if ($status -eq 'Archived') { 'Archived' } else { 'Deleted' }
+        }
     }
 
     process {

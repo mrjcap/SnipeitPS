@@ -20,8 +20,8 @@ Set-SnipeitAccessory [-id] <Int32[]> [[-name] <String>] [[-qty] <Int32>] [[-cate
  [[-location_id] <Int32>] [[-image] <String>] [[-requestable] <Boolean>] [-image_delete]
  [[-RequestType] <String>] [[-Session] <SnipeitSession>] [[-notes] <String>] [[-unit_cost] <Decimal>]
  [[-currency] <String>] [[-note] <String>] [[-default_supplier_id] <Int32>]
- [[-default_purchase_cost] <Decimal>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [[-default_purchase_cost] <Decimal>] [[-archived] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -430,6 +430,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -archived
+
+Set the archive flag. Unbound values are omitted; explicit null is forwarded.
+The server validates requestability conflicts and outstanding assignments.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 24
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -480,10 +497,9 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose,
--WarningAction, and -WarningVariable. For more information, see
-[about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction,
+-InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
