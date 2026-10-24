@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/), and this project
 adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.0.2] - 2026-10-24
+
+### Added
+
+- Add `Restore-SnipeitAccessory`, `Restore-SnipeitComponent`, and `Restore-SnipeitConsumable`, bringing exports to 194.
+  Use `-Unarchive` to clear archive state instead of restoring a deleted item.
+- Add nullable `archived` fields to accessory, component, and consumable creates and updates.
+- Add `Archived` and `Deleted` collection filters, plus consumable `requestable` and `archived` filters.
+
+### Fixed
+
+- Accessory restore pipelines now use the inventory `accessory_id`, not the checkout `id`.
+  Reject missing or invalid assignment inventory IDs before HTTP without changing getter results or explicit IDs.
+- Link all 194 commands from the README and distinguish current package validation from historical results.
+
+### Validation and scope
+
+- The extracted release package passed all 2,311 offline tests on PowerShell 7.6.8 for Windows, without failures or skips.
+- Windows PowerShell 5.1, Linux, macOS, and live-server behavior were not retested for this release.
+- Changes target Snipe-IT source revision `95b7e49eb2c17267fcf3bcf02a7ae1f3a41d40eb`; full API parity remains incomplete.
+- The GitHub release includes the module package and SHA256 file. PowerShell Gallery was not updated.
+
 ## [v2.0.1] - 2026-10-03
 
 ### Added

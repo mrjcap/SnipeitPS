@@ -8,9 +8,18 @@
 [gallery-package]: https://www.powershellgallery.com/packages/snipeitps
 
 PowerShell module for the Snipe-IT REST API, targeting Windows PowerShell 5.1 and PowerShell 7.
-Release validation covers Windows and selected Linux scenarios; macOS remains untested.
+Version 2.0.2 was validated offline on PowerShell 7.6.8 for Windows. Other engines and platforms were not retested.
 
 ---
+
+## What's new in 2.0.2
+
+Version 2.0.2 has 194 exported functions.
+
+- Restore deleted accessories, components, and consumables, or clear archive state with `-Unarchive`.
+- Set `archived` on inventory creates and updates. Filter collections by `Archived` or `Deleted` status.
+- Filter consumables by `requestable` and `archived` while preserving explicit false values.
+- Accessory restore pipelines use `accessory_id`, not checkout IDs, and reject invalid assignment identities before HTTP.
 
 ## What's new in 2.0.1
 
@@ -68,8 +77,8 @@ See the [changelog](CHANGELOG.md) for individual fixes, behavior changes, verifi
 
 ## Installation
 
-Version 2.0.1 is available in the
-[GitHub release](https://github.com/mrjcap/SnipeitPS/releases/tag/v2.0.1).
+Version 2.0.2 is available in the
+[GitHub release](https://github.com/mrjcap/SnipeitPS/releases/tag/v2.0.2).
 Download and extract the source archive, open PowerShell in the extracted repository directory, and import the module:
 
 ```powershell
@@ -163,14 +172,13 @@ All 115 function exports from that baseline remain, but parameter and request be
 
 | Engine and platform | Recorded validation |
 | --- | --- |
-| Windows PowerShell 5.1 on Windows | 1,860 offline tests passed in ConsoleHost and the SDK host. |
-| PowerShell 7 on Windows | 1,860 offline tests passed, including the pre-commit rerun on 2026-09-28. |
-| PowerShell 7.4.6 on Ubuntu 22.04.5 | 125 live tests passed on the earlier package, before the file-ID fix. |
-| PowerShell 7 on macOS | Not tested for this release. |
+| Windows PowerShell 5.1 on Windows | Not retested for 2.0.2. Version 2.0.1 passed 2,136 offline tests. |
+| PowerShell 7.6.8 on Windows | The extracted 2.0.2 package passed 2,311 offline tests without failures or skips. |
+| PowerShell 7 on Linux | Not retested for 2.0.2. Historical live results apply to older packages only. |
+| PowerShell 7 on macOS | Not tested. |
 
-The released package passed 29 focused offline tests on each Windows engine and 12 affected live tests on the
-Windows PowerShell 5.1 SDK host. Those live tests do not establish full API parity or replace deployment testing.
-See [running tests](#running-tests) and the [changelog](CHANGELOG.md) for the complete evidence and qualifications.
+Version 2.0.2 had no live-server validation. Offline tests do not establish full API parity or replace deployment testing.
+See [running tests](#running-tests) and the [changelog](CHANGELOG.md) for historical evidence and its limits.
 
 Legacy attachment uploads through `New-SnipeitAssetFile` and `New-SnipeitModelFile` require PowerShell 7.
 The generic `New-SnipeitFile` upload path was exercised successfully by the Windows PowerShell 5.1 live tests.
@@ -191,7 +199,7 @@ See `Tests/Fixtures/ApiParity.Contracts.psd1` for per-route limits.
 
 ## Command reference
 
-All 179 exported functions are linked below, grouped by verb. Each reference page covers syntax, parameters,
+All 194 exported functions are linked below, grouped by verb. Each reference page covers syntax, parameters,
 examples, and command-specific notes. Legacy aliases are not separate functions in this index.
 For conceptual help, see [about SnipeitPS](docs/about_SnipeitPS.md).
 
@@ -227,7 +235,9 @@ Read and query records.
 - [Get-SnipeitAuditDue](docs/Get-SnipeitAuditDue.md)
 - [Get-SnipeitAuditOverdue](docs/Get-SnipeitAuditOverdue.md)
 - [Get-SnipeitBackup](docs/Get-SnipeitBackup.md)
+- [Get-SnipeitCalendarEvent](docs/Get-SnipeitCalendarEvent.md)
 - [Get-SnipeitCategory](docs/Get-SnipeitCategory.md)
+- [Get-SnipeitCheckoutRequest](docs/Get-SnipeitCheckoutRequest.md)
 - [Get-SnipeitCompany](docs/Get-SnipeitCompany.md)
 - [Get-SnipeitComponent](docs/Get-SnipeitComponent.md)
 - [Get-SnipeitComponentAsset](docs/Get-SnipeitComponentAsset.md)
@@ -235,6 +245,8 @@ Read and query records.
 - [Get-SnipeitConsumableUser](docs/Get-SnipeitConsumableUser.md)
 - [Get-SnipeitCurrentUser](docs/Get-SnipeitCurrentUser.md)
 - [Get-SnipeitCustomField](docs/Get-SnipeitCustomField.md)
+- [Get-SnipeitDashboardActivity](docs/Get-SnipeitDashboardActivity.md)
+- [Get-SnipeitDashboardSummary](docs/Get-SnipeitDashboardSummary.md)
 - [Get-SnipeitDepartment](docs/Get-SnipeitDepartment.md)
 - [Get-SnipeitDepreciation](docs/Get-SnipeitDepreciation.md)
 - [Get-SnipeitDepreciationReport](docs/Get-SnipeitDepreciationReport.md)
@@ -253,12 +265,16 @@ Read and query records.
 - [Get-SnipeitLocationAsset](docs/Get-SnipeitLocationAsset.md)
 - [Get-SnipeitLocationAssignment](docs/Get-SnipeitLocationAssignment.md)
 - [Get-SnipeitLoginAttempt](docs/Get-SnipeitLoginAttempt.md)
+- [Get-SnipeitLowStockItem](docs/Get-SnipeitLowStockItem.md)
 - [Get-SnipeitMaintenanceType](docs/Get-SnipeitMaintenanceType.md)
 - [Get-SnipeitManufacturer](docs/Get-SnipeitManufacturer.md)
 - [Get-SnipeitModel](docs/Get-SnipeitModel.md)
+- [Get-SnipeitModelAsset](docs/Get-SnipeitModelAsset.md)
 - [Get-SnipeitModelFile](docs/Get-SnipeitModelFile.md)
+- [Get-SnipeitOrderItem](docs/Get-SnipeitOrderItem.md)
 - [Get-SnipeitPersonalAccessToken](docs/Get-SnipeitPersonalAccessToken.md)
 - [Get-SnipeitRequestableAsset](docs/Get-SnipeitRequestableAsset.md)
+- [Get-SnipeitRequestableItem](docs/Get-SnipeitRequestableItem.md)
 - [Get-SnipeitSelectList](docs/Get-SnipeitSelectList.md)
 - [Get-SnipeitSetting](docs/Get-SnipeitSetting.md)
 - [Get-SnipeitStatus](docs/Get-SnipeitStatus.md)
@@ -268,6 +284,7 @@ Read and query records.
 - [Get-SnipeitUser](docs/Get-SnipeitUser.md)
 - [Get-SnipeitUserAccessory](docs/Get-SnipeitUserAccessory.md)
 - [Get-SnipeitUserAsset](docs/Get-SnipeitUserAsset.md)
+- [Get-SnipeitUserConsumable](docs/Get-SnipeitUserConsumable.md)
 - [Get-SnipeitUserEula](docs/Get-SnipeitUserEula.md)
 - [Get-SnipeitUserLicense](docs/Get-SnipeitUserLicense.md)
 - [Get-SnipeitVersion](docs/Get-SnipeitVersion.md)
@@ -388,14 +405,20 @@ Connect, run actions, download files, sync records, and diagnose server settings
 - [Complete-SnipeitAssetMaintenance](docs/Complete-SnipeitAssetMaintenance.md)
 - [Connect-SnipeitPS](docs/Connect-SnipeitPS.md)
 - [Invoke-SnipeitImport](docs/Invoke-SnipeitImport.md)
+- [Invoke-SnipeitQuantityAdjustment](docs/Invoke-SnipeitQuantityAdjustment.md)
 - [Register-SnipeitCustomField](docs/Register-SnipeitCustomField.md)
 - [Reset-SnipeitAccessoryOwner](docs/Reset-SnipeitAccessoryOwner.md)
 - [Reset-SnipeitAssetOwner](docs/Reset-SnipeitAssetOwner.md)
 - [Reset-SnipeitComponentOwner](docs/Reset-SnipeitComponentOwner.md)
 - [Reset-SnipeitLicenseOwner](docs/Reset-SnipeitLicenseOwner.md)
+- [Restore-SnipeitAccessory](docs/Restore-SnipeitAccessory.md)
 - [Restore-SnipeitAsset](docs/Restore-SnipeitAsset.md)
+- [Restore-SnipeitComponent](docs/Restore-SnipeitComponent.md)
+- [Restore-SnipeitConsumable](docs/Restore-SnipeitConsumable.md)
 - [Restore-SnipeitManufacturer](docs/Restore-SnipeitManufacturer.md)
+- [Restore-SnipeitModel](docs/Restore-SnipeitModel.md)
 - [Restore-SnipeitUser](docs/Restore-SnipeitUser.md)
+- [Revoke-SnipeitCurrentToken](docs/Revoke-SnipeitCurrentToken.md)
 - [Save-SnipeitBackup](docs/Save-SnipeitBackup.md)
 - [Save-SnipeitFile](docs/Save-SnipeitFile.md)
 - [Send-SnipeitTestMail](docs/Send-SnipeitTestMail.md)

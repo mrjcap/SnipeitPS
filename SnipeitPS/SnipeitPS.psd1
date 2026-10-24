@@ -12,7 +12,7 @@
 RootModule = 'SnipeitPS'
 
 # Version number of this module.
-ModuleVersion = '2.0.1'
+ModuleVersion = '2.0.2'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop', 'Core')
@@ -347,6 +347,14 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = @'
+Version 2.0.2 (2026-10-24):
+- Add three inventory restore commands with explicit Unarchive support, for 194 exported functions.
+- Add archived create/update fields and archive/deletion collection filters; extend consumable filters.
+- Use accessory inventory IDs for restore pipelines and reject invalid assignment identities before HTTP.
+- Validate the extracted package with 2311 offline tests on PowerShell 7.6.8 for Windows.
+- Other engines, platforms, and live-server behavior were not retested. Full API parity remains incomplete.
+- GitHub assets include the module package and SHA256. PowerShell Gallery is unchanged.
+
 Version 2.0.1 (2026-10-03):
 - Add 12 commands for current resource endpoints, order items, and quantity adjustments.
 - Complete acquisition fields, requestable flags, default purchase costs, and collection filters.
