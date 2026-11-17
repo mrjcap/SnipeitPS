@@ -1,0 +1,67 @@
+{
+  "method": "Sum of 1 per script block (PS), function plus module (JS), plus if clauses, loop, catch, nondefault case, ternary and short-circuit decisions. No TLA or regex decisions.",
+  "powershell": [
+    {
+      "file": "SnipeitPS\\Classes\\SnipeitCache.ps1",
+      "units": 7,
+      "decisions": 14,
+      "complexity": 21
+    },
+    {
+      "file": "SnipeitPS\\Classes\\SnipeitCompleters.ps1",
+      "units": 25,
+      "decisions": 20,
+      "complexity": 45
+    },
+    {
+      "file": "SnipeitPS\\Public\\Connect-SnipeitPS.ps1",
+      "units": 3,
+      "decisions": 11,
+      "complexity": 14
+    },
+    {
+      "file": "SnipeitPS\\Private\\Invoke-SnipeitMethod.ps1",
+      "units": 4,
+      "decisions": 182,
+      "complexity": 186
+    },
+    {
+      "file": "proofs\\completion-scope\\MeasureComplexity.ps1",
+      "units": 6,
+      "decisions": 10,
+      "complexity": 16
+    },
+    {
+      "file": "proofs\\completion-scope\\Replay.Tests.ps1",
+      "units": 29,
+      "decisions": 25,
+      "complexity": 54
+    },
+    {
+      "file": "proofs\\completion-scope\\VerifyReplay.ps1",
+      "units": 1,
+      "decisions": 0,
+      "complexity": 1
+    }
+  ],
+  "javascript": [
+    {
+      "file": "proofs/completion-scope/check.mjs",
+      "units": 10,
+      "decisions": 18,
+      "complexity": 28
+    },
+    {
+      "file": "proofs/completion-scope/measure-js.mjs",
+      "units": 3,
+      "decisions": 7,
+      "complexity": 10
+    },
+    {
+      "file": "proofs/completion-scope/view.mjs",
+      "units": 3,
+      "decisions": 1,
+      "complexity": 4
+    }
+  ]
+}

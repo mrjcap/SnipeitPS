@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="9" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-11-17" time="18:50:01">
+  <environment user-domain="taygete" platform="Microsoft Windows 11 Pro|C:\WINDOWS|\Device\Harddisk0\Partition3" cwd="C:\code\SnipeitPS\.worktrees\statechart-completion-proof" clr-version="11.0.0" nunit-version="2.5.8.0" os-version="10.0.26300" machine-name="TAYGETE" user="jcap" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="5.3802" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\code\SnipeitPS\.worktrees\statechart-completion-proof\proofs\completion-scope\Replay.Tests.ps1" executed="True" result="Success" success="True" time="5.3802" asserts="0" description="C:\code\SnipeitPS\.worktrees\statechart-completion-proof\proofs\completion-scope\Replay.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Generated completion-scope witnesses" executed="True" result="Success" success="True" time="1.094" asserts="0" description="Generated completion-scope witnesses">
+            <results>
+              <test-suite type="ParameterizedTest" name="Generated completion-scope witnesses.Replays every action of &lt;Rule&gt; through the real module" executed="True" result="Success" success="True" time="1.0465" asserts="0" description="Replays every action of &lt;Rule&gt; through the real module">
+                <results>
+                  <test-case description="Replays every action of DefaultServerIsolation through the real module" name="Generated completion-scope witnesses.Replays every action of DefaultServerIsolation through the real module" time="0.828" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Replays every action of DefaultCredentialIsolation through the real module" name="Generated completion-scope witnesses.Replays every action of DefaultCredentialIsolation through the real module" time="0.1504" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Replays every action of ExplicitSessionIsolation through the real module" name="Generated completion-scope witnesses.Replays every action of ExplicitSessionIsolation through the real module" time="0.0681" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="HTTP-only replay positive controls" executed="True" result="Success" success="True" time="3.0285" asserts="0" description="HTTP-only replay positive controls">
+            <results>
+              <test-case description="Routes explicit Session on the public getter without changing the default" name="HTTP-only replay positive controls.Routes explicit Session on the public getter without changing the default" time="0.0746" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="Clear and TTL expiry both force a fetch from the current connection" name="HTTP-only replay positive controls.Clear and TTL expiry both force a fetch from the current connection" time="0.1096" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="A failed probe publishes the candidate default and leaves the old cache" name="HTTP-only replay positive controls.A failed probe publishes the candidate default and leaves the old cache" time="0.0973" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="Real module removal clears the cache before reload" name="HTTP-only replay positive controls.Real module removal clears the cache before reload" time="1.4753" asserts="0" success="True" result="Success" executed="True" />
+              <test-suite type="ParameterizedTest" name="HTTP-only replay positive controls.Does not freshen expired rows after &lt;Mode&gt; and retries successfully" executed="True" result="Success" success="True" time="0.1682" asserts="0" description="Does not freshen expired rows after &lt;Mode&gt; and retries successfully">
+                <results>
+                  <test-case description="Does not freshen expired rows after failure and retries successfully" name="HTTP-only replay positive controls.Does not freshen expired rows after failure and retries successfully" time="0.1015" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Does not freshen expired rows after empty and retries successfully" name="HTTP-only replay positive controls.Does not freshen expired rows after empty and retries successfully" time="0.0666" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

@@ -1,0 +1,1326 @@
+---
+title: "Connection-bound model completion (bounded, sequential)"
+---
+stateDiagram-v2
+  state "Legend" as legend {
+    lg0: Breaks DefaultCredentialIsolation or DefaultServerIsolation or ExplicitSessionIsolation
+    lg1: Path to the DefaultCredentialIsolation or DefaultServerIsolation or ExplicitSessionIsolation bug
+  }
+  class lg0 breaks
+  class lg1 bugPath
+  s0: Init: default=A1 cache=none/expired request=none shown=none n=0
+  s1: CompleteDefault: default=A1 cache=A1/fresh request=A1 shown=A1 n=1
+  s2: CompleteExplicitB: default=A1 cache=A1/fresh request=B1 shown=A1 n=1
+  s3: Clear: default=A1 cache=none/expired request=none shown=none n=1
+  s4: ConnectA: default=A1 cache=none/expired request=none shown=none n=1
+  s5: ConnectB: default=B1 cache=none/expired request=none shown=none n=1
+  s6: Expire: default=A1 cache=none/expired request=none shown=none n=1
+  s7: ExpireFetchEmpty: default=A1 cache=none/expired request=none shown=none n=1
+  s8: ExpireFetchFailure: default=A1 cache=none/expired request=none shown=none n=1
+  s9: FailedConnectB: default=B1 cache=none/expired request=none shown=none n=1
+  s10: RotateA: default=A2 cache=none/expired request=none shown=none n=1
+  s11: UnloadReload: default=A1 cache=none/expired request=none shown=none n=1
+  s12: CompleteDefault: default=A1 cache=A1/fresh request=A1 shown=A1 n=2
+  s13: CompleteExplicitB: default=A1 cache=A1/fresh request=B1 shown=A1 n=2
+  s14: ConnectA: default=A1 cache=A1/fresh request=none shown=none n=2
+  s15: ConnectB: default=B1 cache=A1/fresh request=none shown=none n=2
+  s16: Expire: default=A1 cache=A1/expired request=none shown=none n=2
+  s17: ExpireFetchEmpty: default=A1 cache=A1/expired request=none shown=none n=2
+  s18: ExpireFetchFailure: default=A1 cache=A1/expired request=none shown=none n=2
+  s19: FailedConnectB: default=B1 cache=A1/fresh request=none shown=none n=2
+  s20: RotateA: default=A2 cache=A1/fresh request=none shown=none n=2
+  s21: CompleteDefault: default=A2 cache=A2/fresh request=A2 shown=A2 n=2
+  s22: CompleteExplicitB: default=A2 cache=A2/fresh request=B1 shown=A2 n=2
+  s23: CompleteDefault: default=B1 cache=B1/fresh request=B1 shown=B1 n=2
+  s24: CompleteExplicitB: default=B1 cache=B1/fresh request=B1 shown=B1 n=2
+  s25: Clear: default=A1 cache=none/expired request=none shown=none n=2
+  s26: Clear: default=A2 cache=none/expired request=none shown=none n=2
+  s27: Clear: default=B1 cache=none/expired request=none shown=none n=2
+  s28: ConnectA: default=A1 cache=none/expired request=none shown=none n=2
+  s29: ConnectB: default=B1 cache=none/expired request=none shown=none n=2
+  s30: Expire: default=A1 cache=none/expired request=none shown=none n=2
+  s31: Expire: default=A2 cache=none/expired request=none shown=none n=2
+  s32: Expire: default=B1 cache=none/expired request=none shown=none n=2
+  s33: ExpireFetchEmpty: default=A1 cache=none/expired request=none shown=none n=2
+  s34: ExpireFetchEmpty: default=A2 cache=none/expired request=none shown=none n=2
+  s35: ExpireFetchEmpty: default=B1 cache=none/expired request=none shown=none n=2
+  s36: ExpireFetchFailure: default=A1 cache=none/expired request=none shown=none n=2
+  s37: ExpireFetchFailure: default=A2 cache=none/expired request=none shown=none n=2
+  s38: ExpireFetchFailure: default=B1 cache=none/expired request=none shown=none n=2
+  s39: FailedConnectB: default=B1 cache=none/expired request=none shown=none n=2
+  s40: RotateA: default=A2 cache=none/expired request=none shown=none n=2
+  s41: UnloadReload: default=A1 cache=none/expired request=none shown=none n=2
+  s42: CompleteDefault: default=A1 cache=A1/fresh request=A1 shown=A1 n=3
+  s43: CompleteDefault: default=A2 cache=A1/fresh request=A2 shown=A1 n=3
+  s44: CompleteDefault: default=B1 cache=A1/fresh request=B1 shown=A1 n=3
+  s45: CompleteExplicitB: default=A1 cache=A1/fresh request=B1 shown=A1 n=3
+  s46: CompleteExplicitB: default=A2 cache=A1/fresh request=B1 shown=A1 n=3
+  s47: CompleteExplicitB: default=B1 cache=A1/fresh request=B1 shown=A1 n=3
+  s48: ConnectA: default=A1 cache=A1/expired request=none shown=none n=3
+  s49: ConnectA: default=A1 cache=A1/fresh request=none shown=none n=3
+  s50: ConnectB: default=B1 cache=A1/expired request=none shown=none n=3
+  s51: ConnectB: default=B1 cache=A1/fresh request=none shown=none n=3
+  s52: Expire: default=A1 cache=A1/expired request=none shown=none n=3
+  s53: Expire: default=A2 cache=A1/expired request=none shown=none n=3
+  s54: Expire: default=B1 cache=A1/expired request=none shown=none n=3
+  s55: ExpireFetchEmpty: default=A1 cache=A1/expired request=none shown=none n=3
+  s56: ExpireFetchEmpty: default=A2 cache=A1/expired request=none shown=none n=3
+  s57: ExpireFetchEmpty: default=B1 cache=A1/expired request=none shown=none n=3
+  s58: ExpireFetchFailure: default=A1 cache=A1/expired request=none shown=none n=3
+  s59: ExpireFetchFailure: default=A2 cache=A1/expired request=none shown=none n=3
+  s60: ExpireFetchFailure: default=B1 cache=A1/expired request=none shown=none n=3
+  s61: FailedConnectB: default=B1 cache=A1/expired request=none shown=none n=3
+  s62: FailedConnectB: default=B1 cache=A1/fresh request=none shown=none n=3
+  s63: RotateA: default=A2 cache=A1/expired request=none shown=none n=3
+  s64: RotateA: default=A2 cache=A1/fresh request=none shown=none n=3
+  s65: CompleteDefault: default=A2 cache=A2/fresh request=A2 shown=A2 n=3
+  s66: CompleteExplicitB: default=A2 cache=A2/fresh request=B1 shown=A2 n=3
+  s67: ConnectA: default=A1 cache=A2/fresh request=none shown=none n=3
+  s68: ConnectB: default=B1 cache=A2/fresh request=none shown=none n=3
+  s69: Expire: default=A2 cache=A2/expired request=none shown=none n=3
+  s70: ExpireFetchEmpty: default=A2 cache=A2/expired request=none shown=none n=3
+  s71: ExpireFetchFailure: default=A2 cache=A2/expired request=none shown=none n=3
+  s72: FailedConnectB: default=B1 cache=A2/fresh request=none shown=none n=3
+  s73: RotateA: default=A2 cache=A2/fresh request=none shown=none n=3
+  s74: CompleteDefault: default=B1 cache=B1/fresh request=B1 shown=B1 n=3
+  s75: CompleteExplicitB: default=B1 cache=B1/fresh request=B1 shown=B1 n=3
+  s76: ConnectA: default=A1 cache=B1/fresh request=none shown=none n=3
+  s77: ConnectB: default=B1 cache=B1/fresh request=none shown=none n=3
+  s78: Expire: default=B1 cache=B1/expired request=none shown=none n=3
+  s79: ExpireFetchEmpty: default=B1 cache=B1/expired request=none shown=none n=3
+  s80: ExpireFetchFailure: default=B1 cache=B1/expired request=none shown=none n=3
+  s81: FailedConnectB: default=B1 cache=B1/fresh request=none shown=none n=3
+  s82: RotateA: default=A2 cache=B1/fresh request=none shown=none n=3
+  s83: Clear: default=A1 cache=none/expired request=none shown=none n=3
+  s84: Clear: default=A2 cache=none/expired request=none shown=none n=3
+  s85: Clear: default=B1 cache=none/expired request=none shown=none n=3
+  s86: ConnectA: default=A1 cache=none/expired request=none shown=none n=3
+  s87: ConnectB: default=B1 cache=none/expired request=none shown=none n=3
+  s88: Expire: default=A1 cache=none/expired request=none shown=none n=3
+  s89: Expire: default=A2 cache=none/expired request=none shown=none n=3
+  s90: Expire: default=B1 cache=none/expired request=none shown=none n=3
+  s91: ExpireFetchEmpty: default=A1 cache=none/expired request=none shown=none n=3
+  s92: ExpireFetchEmpty: default=A2 cache=none/expired request=none shown=none n=3
+  s93: ExpireFetchEmpty: default=B1 cache=none/expired request=none shown=none n=3
+  s94: ExpireFetchFailure: default=A1 cache=none/expired request=none shown=none n=3
+  s95: ExpireFetchFailure: default=A2 cache=none/expired request=none shown=none n=3
+  s96: ExpireFetchFailure: default=B1 cache=none/expired request=none shown=none n=3
+  s97: FailedConnectB: default=B1 cache=none/expired request=none shown=none n=3
+  s98: RotateA: default=A2 cache=none/expired request=none shown=none n=3
+  s99: UnloadReload: default=A1 cache=none/expired request=none shown=none n=3
+  s100: CompleteDefault: default=A1 cache=A1/fresh request=A1 shown=A1 n=4
+  s101: CompleteDefault: default=A2 cache=A1/fresh request=A2 shown=A1 n=4
+  s102: CompleteDefault: default=B1 cache=A1/fresh request=B1 shown=A1 n=4
+  s103: CompleteExplicitB: default=A1 cache=A1/fresh request=B1 shown=A1 n=4
+  s104: CompleteExplicitB: default=A2 cache=A1/fresh request=B1 shown=A1 n=4
+  s105: CompleteExplicitB: default=B1 cache=A1/fresh request=B1 shown=A1 n=4
+  s106: ConnectA: default=A1 cache=A1/expired request=none shown=none n=4
+  s107: ConnectA: default=A1 cache=A1/fresh request=none shown=none n=4
+  s108: ConnectB: default=B1 cache=A1/expired request=none shown=none n=4
+  s109: ConnectB: default=B1 cache=A1/fresh request=none shown=none n=4
+  s110: Expire: default=A1 cache=A1/expired request=none shown=none n=4
+  s111: Expire: default=A2 cache=A1/expired request=none shown=none n=4
+  s112: Expire: default=B1 cache=A1/expired request=none shown=none n=4
+  s113: ExpireFetchEmpty: default=A1 cache=A1/expired request=none shown=none n=4
+  s114: ExpireFetchEmpty: default=A2 cache=A1/expired request=none shown=none n=4
+  s115: ExpireFetchEmpty: default=B1 cache=A1/expired request=none shown=none n=4
+  s116: ExpireFetchFailure: default=A1 cache=A1/expired request=none shown=none n=4
+  s117: ExpireFetchFailure: default=A2 cache=A1/expired request=none shown=none n=4
+  s118: ExpireFetchFailure: default=B1 cache=A1/expired request=none shown=none n=4
+  s119: FailedConnectB: default=B1 cache=A1/expired request=none shown=none n=4
+  s120: FailedConnectB: default=B1 cache=A1/fresh request=none shown=none n=4
+  s121: RotateA: default=A2 cache=A1/expired request=none shown=none n=4
+  s122: RotateA: default=A2 cache=A1/fresh request=none shown=none n=4
+  s123: CompleteDefault: default=A1 cache=A2/fresh request=A1 shown=A2 n=4
+  s124: CompleteDefault: default=A2 cache=A2/fresh request=A2 shown=A2 n=4
+  s125: CompleteDefault: default=B1 cache=A2/fresh request=B1 shown=A2 n=4
+  s126: CompleteExplicitB: default=A1 cache=A2/fresh request=B1 shown=A2 n=4
+  s127: CompleteExplicitB: default=A2 cache=A2/fresh request=B1 shown=A2 n=4
+  s128: CompleteExplicitB: default=B1 cache=A2/fresh request=B1 shown=A2 n=4
+  s129: ConnectA: default=A1 cache=A2/expired request=none shown=none n=4
+  s130: ConnectA: default=A1 cache=A2/fresh request=none shown=none n=4
+  s131: ConnectB: default=B1 cache=A2/expired request=none shown=none n=4
+  s132: ConnectB: default=B1 cache=A2/fresh request=none shown=none n=4
+  s133: Expire: default=A1 cache=A2/expired request=none shown=none n=4
+  s134: Expire: default=A2 cache=A2/expired request=none shown=none n=4
+  s135: Expire: default=B1 cache=A2/expired request=none shown=none n=4
+  s136: ExpireFetchEmpty: default=A1 cache=A2/expired request=none shown=none n=4
+  s137: ExpireFetchEmpty: default=A2 cache=A2/expired request=none shown=none n=4
+  s138: ExpireFetchEmpty: default=B1 cache=A2/expired request=none shown=none n=4
+  s139: ExpireFetchFailure: default=A1 cache=A2/expired request=none shown=none n=4
+  s140: ExpireFetchFailure: default=A2 cache=A2/expired request=none shown=none n=4
+  s141: ExpireFetchFailure: default=B1 cache=A2/expired request=none shown=none n=4
+  s142: FailedConnectB: default=B1 cache=A2/expired request=none shown=none n=4
+  s143: FailedConnectB: default=B1 cache=A2/fresh request=none shown=none n=4
+  s144: RotateA: default=A2 cache=A2/expired request=none shown=none n=4
+  s145: RotateA: default=A2 cache=A2/fresh request=none shown=none n=4
+  s146: CompleteDefault: default=A1 cache=B1/fresh request=A1 shown=B1 n=4
+  s147: CompleteDefault: default=A2 cache=B1/fresh request=A2 shown=B1 n=4
+  s148: CompleteDefault: default=B1 cache=B1/fresh request=B1 shown=B1 n=4
+  s149: CompleteExplicitB: default=A1 cache=B1/fresh request=B1 shown=B1 n=4
+  s150: CompleteExplicitB: default=A2 cache=B1/fresh request=B1 shown=B1 n=4
+  s151: CompleteExplicitB: default=B1 cache=B1/fresh request=B1 shown=B1 n=4
+  s152: ConnectA: default=A1 cache=B1/expired request=none shown=none n=4
+  s153: ConnectA: default=A1 cache=B1/fresh request=none shown=none n=4
+  s154: ConnectB: default=B1 cache=B1/expired request=none shown=none n=4
+  s155: ConnectB: default=B1 cache=B1/fresh request=none shown=none n=4
+  s156: Expire: default=A1 cache=B1/expired request=none shown=none n=4
+  s157: Expire: default=A2 cache=B1/expired request=none shown=none n=4
+  s158: Expire: default=B1 cache=B1/expired request=none shown=none n=4
+  s159: ExpireFetchEmpty: default=A1 cache=B1/expired request=none shown=none n=4
+  s160: ExpireFetchEmpty: default=A2 cache=B1/expired request=none shown=none n=4
+  s161: ExpireFetchEmpty: default=B1 cache=B1/expired request=none shown=none n=4
+  s162: ExpireFetchFailure: default=A1 cache=B1/expired request=none shown=none n=4
+  s163: ExpireFetchFailure: default=A2 cache=B1/expired request=none shown=none n=4
+  s164: ExpireFetchFailure: default=B1 cache=B1/expired request=none shown=none n=4
+  s165: FailedConnectB: default=B1 cache=B1/expired request=none shown=none n=4
+  s166: FailedConnectB: default=B1 cache=B1/fresh request=none shown=none n=4
+  s167: RotateA: default=A2 cache=B1/expired request=none shown=none n=4
+  s168: RotateA: default=A2 cache=B1/fresh request=none shown=none n=4
+  s169: Clear: default=A1 cache=none/expired request=none shown=none n=4
+  s170: Clear: default=A2 cache=none/expired request=none shown=none n=4
+  s171: Clear: default=B1 cache=none/expired request=none shown=none n=4
+  s172: ConnectA: default=A1 cache=none/expired request=none shown=none n=4
+  s173: ConnectB: default=B1 cache=none/expired request=none shown=none n=4
+  s174: Expire: default=A1 cache=none/expired request=none shown=none n=4
+  s175: Expire: default=A2 cache=none/expired request=none shown=none n=4
+  s176: Expire: default=B1 cache=none/expired request=none shown=none n=4
+  s177: ExpireFetchEmpty: default=A1 cache=none/expired request=none shown=none n=4
+  s178: ExpireFetchEmpty: default=A2 cache=none/expired request=none shown=none n=4
+  s179: ExpireFetchEmpty: default=B1 cache=none/expired request=none shown=none n=4
+  s180: ExpireFetchFailure: default=A1 cache=none/expired request=none shown=none n=4
+  s181: ExpireFetchFailure: default=A2 cache=none/expired request=none shown=none n=4
+  s182: ExpireFetchFailure: default=B1 cache=none/expired request=none shown=none n=4
+  s183: FailedConnectB: default=B1 cache=none/expired request=none shown=none n=4
+  s184: RotateA: default=A2 cache=none/expired request=none shown=none n=4
+  s185: UnloadReload: default=A1 cache=none/expired request=none shown=none n=4
+  [*] --> s0
+  s0 --> s1: CompleteDefault
+  s0 --> s2: CompleteExplicitB
+  s0 --> s3: Clear
+  s0 --> s4: ConnectA
+  s0 --> s5: ConnectB
+  s0 --> s6: Expire
+  s0 --> s7: ExpireFetchEmpty
+  s0 --> s8: ExpireFetchFailure
+  s0 --> s9: FailedConnectB
+  s0 --> s10: RotateA
+  s0 --> s11: UnloadReload
+  s1 --> s12: CompleteDefault
+  s1 --> s13: CompleteExplicitB
+  s1 --> s14: ConnectA
+  s1 --> s15: ConnectB
+  s1 --> s16: Expire
+  s1 --> s17: ExpireFetchEmpty
+  s1 --> s18: ExpireFetchFailure
+  s1 --> s19: FailedConnectB
+  s1 --> s20: RotateA
+  s1 --> s25: Clear
+  s1 --> s41: UnloadReload
+  s2 --> s12: CompleteDefault
+  s2 --> s13: CompleteExplicitB
+  s2 --> s14: ConnectA
+  s2 --> s15: ConnectB
+  s2 --> s16: Expire
+  s2 --> s17: ExpireFetchEmpty
+  s2 --> s18: ExpireFetchFailure
+  s2 --> s19: FailedConnectB
+  s2 --> s20: RotateA
+  s2 --> s25: Clear
+  s2 --> s41: UnloadReload
+  s3 --> s12: CompleteDefault
+  s3 --> s13: CompleteExplicitB
+  s3 --> s25: Clear
+  s3 --> s28: ConnectA
+  s3 --> s29: ConnectB
+  s3 --> s30: Expire
+  s3 --> s33: ExpireFetchEmpty
+  s3 --> s36: ExpireFetchFailure
+  s3 --> s39: FailedConnectB
+  s3 --> s40: RotateA
+  s3 --> s41: UnloadReload
+  s4 --> s12: CompleteDefault
+  s4 --> s13: CompleteExplicitB
+  s4 --> s25: Clear
+  s4 --> s28: ConnectA
+  s4 --> s29: ConnectB
+  s4 --> s30: Expire
+  s4 --> s33: ExpireFetchEmpty
+  s4 --> s36: ExpireFetchFailure
+  s4 --> s39: FailedConnectB
+  s4 --> s40: RotateA
+  s4 --> s41: UnloadReload
+  s5 --> s23: CompleteDefault
+  s5 --> s24: CompleteExplicitB
+  s5 --> s27: Clear
+  s5 --> s28: ConnectA
+  s5 --> s29: ConnectB
+  s5 --> s32: Expire
+  s5 --> s35: ExpireFetchEmpty
+  s5 --> s38: ExpireFetchFailure
+  s5 --> s39: FailedConnectB
+  s5 --> s40: RotateA
+  s5 --> s41: UnloadReload
+  s6 --> s12: CompleteDefault
+  s6 --> s13: CompleteExplicitB
+  s6 --> s25: Clear
+  s6 --> s28: ConnectA
+  s6 --> s29: ConnectB
+  s6 --> s30: Expire
+  s6 --> s33: ExpireFetchEmpty
+  s6 --> s36: ExpireFetchFailure
+  s6 --> s39: FailedConnectB
+  s6 --> s40: RotateA
+  s6 --> s41: UnloadReload
+  s7 --> s12: CompleteDefault
+  s7 --> s13: CompleteExplicitB
+  s7 --> s25: Clear
+  s7 --> s28: ConnectA
+  s7 --> s29: ConnectB
+  s7 --> s30: Expire
+  s7 --> s33: ExpireFetchEmpty
+  s7 --> s36: ExpireFetchFailure
+  s7 --> s39: FailedConnectB
+  s7 --> s40: RotateA
+  s7 --> s41: UnloadReload
+  s8 --> s12: CompleteDefault
+  s8 --> s13: CompleteExplicitB
+  s8 --> s25: Clear
+  s8 --> s28: ConnectA
+  s8 --> s29: ConnectB
+  s8 --> s30: Expire
+  s8 --> s33: ExpireFetchEmpty
+  s8 --> s36: ExpireFetchFailure
+  s8 --> s39: FailedConnectB
+  s8 --> s40: RotateA
+  s8 --> s41: UnloadReload
+  s9 --> s23: CompleteDefault
+  s9 --> s24: CompleteExplicitB
+  s9 --> s27: Clear
+  s9 --> s28: ConnectA
+  s9 --> s29: ConnectB
+  s9 --> s32: Expire
+  s9 --> s35: ExpireFetchEmpty
+  s9 --> s38: ExpireFetchFailure
+  s9 --> s39: FailedConnectB
+  s9 --> s40: RotateA
+  s9 --> s41: UnloadReload
+  s10 --> s21: CompleteDefault
+  s10 --> s22: CompleteExplicitB
+  s10 --> s26: Clear
+  s10 --> s28: ConnectA
+  s10 --> s29: ConnectB
+  s10 --> s31: Expire
+  s10 --> s34: ExpireFetchEmpty
+  s10 --> s37: ExpireFetchFailure
+  s10 --> s39: FailedConnectB
+  s10 --> s40: RotateA
+  s10 --> s41: UnloadReload
+  s11 --> s12: CompleteDefault
+  s11 --> s13: CompleteExplicitB
+  s11 --> s25: Clear
+  s11 --> s28: ConnectA
+  s11 --> s29: ConnectB
+  s11 --> s30: Expire
+  s11 --> s33: ExpireFetchEmpty
+  s11 --> s36: ExpireFetchFailure
+  s11 --> s39: FailedConnectB
+  s11 --> s40: RotateA
+  s11 --> s41: UnloadReload
+  s12 --> s42: CompleteDefault
+  s12 --> s45: CompleteExplicitB
+  s12 --> s49: ConnectA
+  s12 --> s51: ConnectB
+  s12 --> s52: Expire
+  s12 --> s55: ExpireFetchEmpty
+  s12 --> s58: ExpireFetchFailure
+  s12 --> s62: FailedConnectB
+  s12 --> s64: RotateA
+  s12 --> s83: Clear
+  s12 --> s99: UnloadReload
+  s13 --> s42: CompleteDefault
+  s13 --> s45: CompleteExplicitB
+  s13 --> s49: ConnectA
+  s13 --> s51: ConnectB
+  s13 --> s52: Expire
+  s13 --> s55: ExpireFetchEmpty
+  s13 --> s58: ExpireFetchFailure
+  s13 --> s62: FailedConnectB
+  s13 --> s64: RotateA
+  s13 --> s83: Clear
+  s13 --> s99: UnloadReload
+  s14 --> s42: CompleteDefault
+  s14 --> s45: CompleteExplicitB
+  s14 --> s49: ConnectA
+  s14 --> s51: ConnectB
+  s14 --> s52: Expire
+  s14 --> s55: ExpireFetchEmpty
+  s14 --> s58: ExpireFetchFailure
+  s14 --> s62: FailedConnectB
+  s14 --> s64: RotateA
+  s14 --> s83: Clear
+  s14 --> s99: UnloadReload
+  s15 --> s44: CompleteDefault
+  s15 --> s47: CompleteExplicitB
+  s15 --> s49: ConnectA
+  s15 --> s51: ConnectB
+  s15 --> s54: Expire
+  s15 --> s57: ExpireFetchEmpty
+  s15 --> s60: ExpireFetchFailure
+  s15 --> s62: FailedConnectB
+  s15 --> s64: RotateA
+  s15 --> s85: Clear
+  s15 --> s99: UnloadReload
+  s16 --> s42: CompleteDefault
+  s16 --> s45: CompleteExplicitB
+  s16 --> s48: ConnectA
+  s16 --> s50: ConnectB
+  s16 --> s52: Expire
+  s16 --> s55: ExpireFetchEmpty
+  s16 --> s58: ExpireFetchFailure
+  s16 --> s61: FailedConnectB
+  s16 --> s63: RotateA
+  s16 --> s83: Clear
+  s16 --> s99: UnloadReload
+  s17 --> s42: CompleteDefault
+  s17 --> s45: CompleteExplicitB
+  s17 --> s48: ConnectA
+  s17 --> s50: ConnectB
+  s17 --> s52: Expire
+  s17 --> s55: ExpireFetchEmpty
+  s17 --> s58: ExpireFetchFailure
+  s17 --> s61: FailedConnectB
+  s17 --> s63: RotateA
+  s17 --> s83: Clear
+  s17 --> s99: UnloadReload
+  s18 --> s42: CompleteDefault
+  s18 --> s45: CompleteExplicitB
+  s18 --> s48: ConnectA
+  s18 --> s50: ConnectB
+  s18 --> s52: Expire
+  s18 --> s55: ExpireFetchEmpty
+  s18 --> s58: ExpireFetchFailure
+  s18 --> s61: FailedConnectB
+  s18 --> s63: RotateA
+  s18 --> s83: Clear
+  s18 --> s99: UnloadReload
+  s19 --> s44: CompleteDefault
+  s19 --> s47: CompleteExplicitB
+  s19 --> s49: ConnectA
+  s19 --> s51: ConnectB
+  s19 --> s54: Expire
+  s19 --> s57: ExpireFetchEmpty
+  s19 --> s60: ExpireFetchFailure
+  s19 --> s62: FailedConnectB
+  s19 --> s64: RotateA
+  s19 --> s85: Clear
+  s19 --> s99: UnloadReload
+  s20 --> s43: CompleteDefault
+  s20 --> s46: CompleteExplicitB
+  s20 --> s49: ConnectA
+  s20 --> s51: ConnectB
+  s20 --> s53: Expire
+  s20 --> s56: ExpireFetchEmpty
+  s20 --> s59: ExpireFetchFailure
+  s20 --> s62: FailedConnectB
+  s20 --> s64: RotateA
+  s20 --> s84: Clear
+  s20 --> s99: UnloadReload
+  s21 --> s65: CompleteDefault
+  s21 --> s66: CompleteExplicitB
+  s21 --> s67: ConnectA
+  s21 --> s68: ConnectB
+  s21 --> s69: Expire
+  s21 --> s70: ExpireFetchEmpty
+  s21 --> s71: ExpireFetchFailure
+  s21 --> s72: FailedConnectB
+  s21 --> s73: RotateA
+  s21 --> s84: Clear
+  s21 --> s99: UnloadReload
+  s22 --> s65: CompleteDefault
+  s22 --> s66: CompleteExplicitB
+  s22 --> s67: ConnectA
+  s22 --> s68: ConnectB
+  s22 --> s69: Expire
+  s22 --> s70: ExpireFetchEmpty
+  s22 --> s71: ExpireFetchFailure
+  s22 --> s72: FailedConnectB
+  s22 --> s73: RotateA
+  s22 --> s84: Clear
+  s22 --> s99: UnloadReload
+  s23 --> s74: CompleteDefault
+  s23 --> s75: CompleteExplicitB
+  s23 --> s76: ConnectA
+  s23 --> s77: ConnectB
+  s23 --> s78: Expire
+  s23 --> s79: ExpireFetchEmpty
+  s23 --> s80: ExpireFetchFailure
+  s23 --> s81: FailedConnectB
+  s23 --> s82: RotateA
+  s23 --> s85: Clear
+  s23 --> s99: UnloadReload
+  s24 --> s74: CompleteDefault
+  s24 --> s75: CompleteExplicitB
+  s24 --> s76: ConnectA
+  s24 --> s77: ConnectB
+  s24 --> s78: Expire
+  s24 --> s79: ExpireFetchEmpty
+  s24 --> s80: ExpireFetchFailure
+  s24 --> s81: FailedConnectB
+  s24 --> s82: RotateA
+  s24 --> s85: Clear
+  s24 --> s99: UnloadReload
+  s25 --> s42: CompleteDefault
+  s25 --> s45: CompleteExplicitB
+  s25 --> s83: Clear
+  s25 --> s86: ConnectA
+  s25 --> s87: ConnectB
+  s25 --> s88: Expire
+  s25 --> s91: ExpireFetchEmpty
+  s25 --> s94: ExpireFetchFailure
+  s25 --> s97: FailedConnectB
+  s25 --> s98: RotateA
+  s25 --> s99: UnloadReload
+  s26 --> s65: CompleteDefault
+  s26 --> s66: CompleteExplicitB
+  s26 --> s84: Clear
+  s26 --> s86: ConnectA
+  s26 --> s87: ConnectB
+  s26 --> s89: Expire
+  s26 --> s92: ExpireFetchEmpty
+  s26 --> s95: ExpireFetchFailure
+  s26 --> s97: FailedConnectB
+  s26 --> s98: RotateA
+  s26 --> s99: UnloadReload
+  s27 --> s74: CompleteDefault
+  s27 --> s75: CompleteExplicitB
+  s27 --> s85: Clear
+  s27 --> s86: ConnectA
+  s27 --> s87: ConnectB
+  s27 --> s90: Expire
+  s27 --> s93: ExpireFetchEmpty
+  s27 --> s96: ExpireFetchFailure
+  s27 --> s97: FailedConnectB
+  s27 --> s98: RotateA
+  s27 --> s99: UnloadReload
+  s28 --> s42: CompleteDefault
+  s28 --> s45: CompleteExplicitB
+  s28 --> s83: Clear
+  s28 --> s86: ConnectA
+  s28 --> s87: ConnectB
+  s28 --> s88: Expire
+  s28 --> s91: ExpireFetchEmpty
+  s28 --> s94: ExpireFetchFailure
+  s28 --> s97: FailedConnectB
+  s28 --> s98: RotateA
+  s28 --> s99: UnloadReload
+  s29 --> s74: CompleteDefault
+  s29 --> s75: CompleteExplicitB
+  s29 --> s85: Clear
+  s29 --> s86: ConnectA
+  s29 --> s87: ConnectB
+  s29 --> s90: Expire
+  s29 --> s93: ExpireFetchEmpty
+  s29 --> s96: ExpireFetchFailure
+  s29 --> s97: FailedConnectB
+  s29 --> s98: RotateA
+  s29 --> s99: UnloadReload
+  s30 --> s42: CompleteDefault
+  s30 --> s45: CompleteExplicitB
+  s30 --> s83: Clear
+  s30 --> s86: ConnectA
+  s30 --> s87: ConnectB
+  s30 --> s88: Expire
+  s30 --> s91: ExpireFetchEmpty
+  s30 --> s94: ExpireFetchFailure
+  s30 --> s97: FailedConnectB
+  s30 --> s98: RotateA
+  s30 --> s99: UnloadReload
+  s31 --> s65: CompleteDefault
+  s31 --> s66: CompleteExplicitB
+  s31 --> s84: Clear
+  s31 --> s86: ConnectA
+  s31 --> s87: ConnectB
+  s31 --> s89: Expire
+  s31 --> s92: ExpireFetchEmpty
+  s31 --> s95: ExpireFetchFailure
+  s31 --> s97: FailedConnectB
+  s31 --> s98: RotateA
+  s31 --> s99: UnloadReload
+  s32 --> s74: CompleteDefault
+  s32 --> s75: CompleteExplicitB
+  s32 --> s85: Clear
+  s32 --> s86: ConnectA
+  s32 --> s87: ConnectB
+  s32 --> s90: Expire
+  s32 --> s93: ExpireFetchEmpty
+  s32 --> s96: ExpireFetchFailure
+  s32 --> s97: FailedConnectB
+  s32 --> s98: RotateA
+  s32 --> s99: UnloadReload
+  s33 --> s42: CompleteDefault
+  s33 --> s45: CompleteExplicitB
+  s33 --> s83: Clear
+  s33 --> s86: ConnectA
+  s33 --> s87: ConnectB
+  s33 --> s88: Expire
+  s33 --> s91: ExpireFetchEmpty
+  s33 --> s94: ExpireFetchFailure
+  s33 --> s97: FailedConnectB
+  s33 --> s98: RotateA
+  s33 --> s99: UnloadReload
+  s34 --> s65: CompleteDefault
+  s34 --> s66: CompleteExplicitB
+  s34 --> s84: Clear
+  s34 --> s86: ConnectA
+  s34 --> s87: ConnectB
+  s34 --> s89: Expire
+  s34 --> s92: ExpireFetchEmpty
+  s34 --> s95: ExpireFetchFailure
+  s34 --> s97: FailedConnectB
+  s34 --> s98: RotateA
+  s34 --> s99: UnloadReload
+  s35 --> s74: CompleteDefault
+  s35 --> s75: CompleteExplicitB
+  s35 --> s85: Clear
+  s35 --> s86: ConnectA
+  s35 --> s87: ConnectB
+  s35 --> s90: Expire
+  s35 --> s93: ExpireFetchEmpty
+  s35 --> s96: ExpireFetchFailure
+  s35 --> s97: FailedConnectB
+  s35 --> s98: RotateA
+  s35 --> s99: UnloadReload
+  s36 --> s42: CompleteDefault
+  s36 --> s45: CompleteExplicitB
+  s36 --> s83: Clear
+  s36 --> s86: ConnectA
+  s36 --> s87: ConnectB
+  s36 --> s88: Expire
+  s36 --> s91: ExpireFetchEmpty
+  s36 --> s94: ExpireFetchFailure
+  s36 --> s97: FailedConnectB
+  s36 --> s98: RotateA
+  s36 --> s99: UnloadReload
+  s37 --> s65: CompleteDefault
+  s37 --> s66: CompleteExplicitB
+  s37 --> s84: Clear
+  s37 --> s86: ConnectA
+  s37 --> s87: ConnectB
+  s37 --> s89: Expire
+  s37 --> s92: ExpireFetchEmpty
+  s37 --> s95: ExpireFetchFailure
+  s37 --> s97: FailedConnectB
+  s37 --> s98: RotateA
+  s37 --> s99: UnloadReload
+  s38 --> s74: CompleteDefault
+  s38 --> s75: CompleteExplicitB
+  s38 --> s85: Clear
+  s38 --> s86: ConnectA
+  s38 --> s87: ConnectB
+  s38 --> s90: Expire
+  s38 --> s93: ExpireFetchEmpty
+  s38 --> s96: ExpireFetchFailure
+  s38 --> s97: FailedConnectB
+  s38 --> s98: RotateA
+  s38 --> s99: UnloadReload
+  s39 --> s74: CompleteDefault
+  s39 --> s75: CompleteExplicitB
+  s39 --> s85: Clear
+  s39 --> s86: ConnectA
+  s39 --> s87: ConnectB
+  s39 --> s90: Expire
+  s39 --> s93: ExpireFetchEmpty
+  s39 --> s96: ExpireFetchFailure
+  s39 --> s97: FailedConnectB
+  s39 --> s98: RotateA
+  s39 --> s99: UnloadReload
+  s40 --> s65: CompleteDefault
+  s40 --> s66: CompleteExplicitB
+  s40 --> s84: Clear
+  s40 --> s86: ConnectA
+  s40 --> s87: ConnectB
+  s40 --> s89: Expire
+  s40 --> s92: ExpireFetchEmpty
+  s40 --> s95: ExpireFetchFailure
+  s40 --> s97: FailedConnectB
+  s40 --> s98: RotateA
+  s40 --> s99: UnloadReload
+  s41 --> s42: CompleteDefault
+  s41 --> s45: CompleteExplicitB
+  s41 --> s83: Clear
+  s41 --> s86: ConnectA
+  s41 --> s87: ConnectB
+  s41 --> s88: Expire
+  s41 --> s91: ExpireFetchEmpty
+  s41 --> s94: ExpireFetchFailure
+  s41 --> s97: FailedConnectB
+  s41 --> s98: RotateA
+  s41 --> s99: UnloadReload
+  s42 --> s100: CompleteDefault
+  s42 --> s103: CompleteExplicitB
+  s42 --> s107: ConnectA
+  s42 --> s109: ConnectB
+  s42 --> s110: Expire
+  s42 --> s113: ExpireFetchEmpty
+  s42 --> s116: ExpireFetchFailure
+  s42 --> s120: FailedConnectB
+  s42 --> s122: RotateA
+  s42 --> s169: Clear
+  s42 --> s185: UnloadReload
+  s43 --> s101: CompleteDefault
+  s43 --> s104: CompleteExplicitB
+  s43 --> s107: ConnectA
+  s43 --> s109: ConnectB
+  s43 --> s111: Expire
+  s43 --> s114: ExpireFetchEmpty
+  s43 --> s117: ExpireFetchFailure
+  s43 --> s120: FailedConnectB
+  s43 --> s122: RotateA
+  s43 --> s170: Clear
+  s43 --> s185: UnloadReload
+  s44 --> s102: CompleteDefault
+  s44 --> s105: CompleteExplicitB
+  s44 --> s107: ConnectA
+  s44 --> s109: ConnectB
+  s44 --> s112: Expire
+  s44 --> s115: ExpireFetchEmpty
+  s44 --> s118: ExpireFetchFailure
+  s44 --> s120: FailedConnectB
+  s44 --> s122: RotateA
+  s44 --> s171: Clear
+  s44 --> s185: UnloadReload
+  s45 --> s100: CompleteDefault
+  s45 --> s103: CompleteExplicitB
+  s45 --> s107: ConnectA
+  s45 --> s109: ConnectB
+  s45 --> s110: Expire
+  s45 --> s113: ExpireFetchEmpty
+  s45 --> s116: ExpireFetchFailure
+  s45 --> s120: FailedConnectB
+  s45 --> s122: RotateA
+  s45 --> s169: Clear
+  s45 --> s185: UnloadReload
+  s46 --> s101: CompleteDefault
+  s46 --> s104: CompleteExplicitB
+  s46 --> s107: ConnectA
+  s46 --> s109: ConnectB
+  s46 --> s111: Expire
+  s46 --> s114: ExpireFetchEmpty
+  s46 --> s117: ExpireFetchFailure
+  s46 --> s120: FailedConnectB
+  s46 --> s122: RotateA
+  s46 --> s170: Clear
+  s46 --> s185: UnloadReload
+  s47 --> s102: CompleteDefault
+  s47 --> s105: CompleteExplicitB
+  s47 --> s107: ConnectA
+  s47 --> s109: ConnectB
+  s47 --> s112: Expire
+  s47 --> s115: ExpireFetchEmpty
+  s47 --> s118: ExpireFetchFailure
+  s47 --> s120: FailedConnectB
+  s47 --> s122: RotateA
+  s47 --> s171: Clear
+  s47 --> s185: UnloadReload
+  s48 --> s100: CompleteDefault
+  s48 --> s103: CompleteExplicitB
+  s48 --> s106: ConnectA
+  s48 --> s108: ConnectB
+  s48 --> s110: Expire
+  s48 --> s113: ExpireFetchEmpty
+  s48 --> s116: ExpireFetchFailure
+  s48 --> s119: FailedConnectB
+  s48 --> s121: RotateA
+  s48 --> s169: Clear
+  s48 --> s185: UnloadReload
+  s49 --> s100: CompleteDefault
+  s49 --> s103: CompleteExplicitB
+  s49 --> s107: ConnectA
+  s49 --> s109: ConnectB
+  s49 --> s110: Expire
+  s49 --> s113: ExpireFetchEmpty
+  s49 --> s116: ExpireFetchFailure
+  s49 --> s120: FailedConnectB
+  s49 --> s122: RotateA
+  s49 --> s169: Clear
+  s49 --> s185: UnloadReload
+  s50 --> s106: ConnectA
+  s50 --> s108: ConnectB
+  s50 --> s112: Expire
+  s50 --> s115: ExpireFetchEmpty
+  s50 --> s118: ExpireFetchFailure
+  s50 --> s119: FailedConnectB
+  s50 --> s121: RotateA
+  s50 --> s148: CompleteDefault
+  s50 --> s151: CompleteExplicitB
+  s50 --> s171: Clear
+  s50 --> s185: UnloadReload
+  s51 --> s102: CompleteDefault
+  s51 --> s105: CompleteExplicitB
+  s51 --> s107: ConnectA
+  s51 --> s109: ConnectB
+  s51 --> s112: Expire
+  s51 --> s115: ExpireFetchEmpty
+  s51 --> s118: ExpireFetchFailure
+  s51 --> s120: FailedConnectB
+  s51 --> s122: RotateA
+  s51 --> s171: Clear
+  s51 --> s185: UnloadReload
+  s52 --> s100: CompleteDefault
+  s52 --> s103: CompleteExplicitB
+  s52 --> s106: ConnectA
+  s52 --> s108: ConnectB
+  s52 --> s110: Expire
+  s52 --> s113: ExpireFetchEmpty
+  s52 --> s116: ExpireFetchFailure
+  s52 --> s119: FailedConnectB
+  s52 --> s121: RotateA
+  s52 --> s169: Clear
+  s52 --> s185: UnloadReload
+  s53 --> s106: ConnectA
+  s53 --> s108: ConnectB
+  s53 --> s111: Expire
+  s53 --> s114: ExpireFetchEmpty
+  s53 --> s117: ExpireFetchFailure
+  s53 --> s119: FailedConnectB
+  s53 --> s121: RotateA
+  s53 --> s124: CompleteDefault
+  s53 --> s127: CompleteExplicitB
+  s53 --> s170: Clear
+  s53 --> s185: UnloadReload
+  s54 --> s106: ConnectA
+  s54 --> s108: ConnectB
+  s54 --> s112: Expire
+  s54 --> s115: ExpireFetchEmpty
+  s54 --> s118: ExpireFetchFailure
+  s54 --> s119: FailedConnectB
+  s54 --> s121: RotateA
+  s54 --> s148: CompleteDefault
+  s54 --> s151: CompleteExplicitB
+  s54 --> s171: Clear
+  s54 --> s185: UnloadReload
+  s55 --> s100: CompleteDefault
+  s55 --> s103: CompleteExplicitB
+  s55 --> s106: ConnectA
+  s55 --> s108: ConnectB
+  s55 --> s110: Expire
+  s55 --> s113: ExpireFetchEmpty
+  s55 --> s116: ExpireFetchFailure
+  s55 --> s119: FailedConnectB
+  s55 --> s121: RotateA
+  s55 --> s169: Clear
+  s55 --> s185: UnloadReload
+  s56 --> s106: ConnectA
+  s56 --> s108: ConnectB
+  s56 --> s111: Expire
+  s56 --> s114: ExpireFetchEmpty
+  s56 --> s117: ExpireFetchFailure
+  s56 --> s119: FailedConnectB
+  s56 --> s121: RotateA
+  s56 --> s124: CompleteDefault
+  s56 --> s127: CompleteExplicitB
+  s56 --> s170: Clear
+  s56 --> s185: UnloadReload
+  s57 --> s106: ConnectA
+  s57 --> s108: ConnectB
+  s57 --> s112: Expire
+  s57 --> s115: ExpireFetchEmpty
+  s57 --> s118: ExpireFetchFailure
+  s57 --> s119: FailedConnectB
+  s57 --> s121: RotateA
+  s57 --> s148: CompleteDefault
+  s57 --> s151: CompleteExplicitB
+  s57 --> s171: Clear
+  s57 --> s185: UnloadReload
+  s58 --> s100: CompleteDefault
+  s58 --> s103: CompleteExplicitB
+  s58 --> s106: ConnectA
+  s58 --> s108: ConnectB
+  s58 --> s110: Expire
+  s58 --> s113: ExpireFetchEmpty
+  s58 --> s116: ExpireFetchFailure
+  s58 --> s119: FailedConnectB
+  s58 --> s121: RotateA
+  s58 --> s169: Clear
+  s58 --> s185: UnloadReload
+  s59 --> s106: ConnectA
+  s59 --> s108: ConnectB
+  s59 --> s111: Expire
+  s59 --> s114: ExpireFetchEmpty
+  s59 --> s117: ExpireFetchFailure
+  s59 --> s119: FailedConnectB
+  s59 --> s121: RotateA
+  s59 --> s124: CompleteDefault
+  s59 --> s127: CompleteExplicitB
+  s59 --> s170: Clear
+  s59 --> s185: UnloadReload
+  s60 --> s106: ConnectA
+  s60 --> s108: ConnectB
+  s60 --> s112: Expire
+  s60 --> s115: ExpireFetchEmpty
+  s60 --> s118: ExpireFetchFailure
+  s60 --> s119: FailedConnectB
+  s60 --> s121: RotateA
+  s60 --> s148: CompleteDefault
+  s60 --> s151: CompleteExplicitB
+  s60 --> s171: Clear
+  s60 --> s185: UnloadReload
+  s61 --> s106: ConnectA
+  s61 --> s108: ConnectB
+  s61 --> s112: Expire
+  s61 --> s115: ExpireFetchEmpty
+  s61 --> s118: ExpireFetchFailure
+  s61 --> s119: FailedConnectB
+  s61 --> s121: RotateA
+  s61 --> s148: CompleteDefault
+  s61 --> s151: CompleteExplicitB
+  s61 --> s171: Clear
+  s61 --> s185: UnloadReload
+  s62 --> s102: CompleteDefault
+  s62 --> s105: CompleteExplicitB
+  s62 --> s107: ConnectA
+  s62 --> s109: ConnectB
+  s62 --> s112: Expire
+  s62 --> s115: ExpireFetchEmpty
+  s62 --> s118: ExpireFetchFailure
+  s62 --> s120: FailedConnectB
+  s62 --> s122: RotateA
+  s62 --> s171: Clear
+  s62 --> s185: UnloadReload
+  s63 --> s106: ConnectA
+  s63 --> s108: ConnectB
+  s63 --> s111: Expire
+  s63 --> s114: ExpireFetchEmpty
+  s63 --> s117: ExpireFetchFailure
+  s63 --> s119: FailedConnectB
+  s63 --> s121: RotateA
+  s63 --> s124: CompleteDefault
+  s63 --> s127: CompleteExplicitB
+  s63 --> s170: Clear
+  s63 --> s185: UnloadReload
+  s64 --> s101: CompleteDefault
+  s64 --> s104: CompleteExplicitB
+  s64 --> s107: ConnectA
+  s64 --> s109: ConnectB
+  s64 --> s111: Expire
+  s64 --> s114: ExpireFetchEmpty
+  s64 --> s117: ExpireFetchFailure
+  s64 --> s120: FailedConnectB
+  s64 --> s122: RotateA
+  s64 --> s170: Clear
+  s64 --> s185: UnloadReload
+  s65 --> s124: CompleteDefault
+  s65 --> s127: CompleteExplicitB
+  s65 --> s130: ConnectA
+  s65 --> s132: ConnectB
+  s65 --> s134: Expire
+  s65 --> s137: ExpireFetchEmpty
+  s65 --> s140: ExpireFetchFailure
+  s65 --> s143: FailedConnectB
+  s65 --> s145: RotateA
+  s65 --> s170: Clear
+  s65 --> s185: UnloadReload
+  s66 --> s124: CompleteDefault
+  s66 --> s127: CompleteExplicitB
+  s66 --> s130: ConnectA
+  s66 --> s132: ConnectB
+  s66 --> s134: Expire
+  s66 --> s137: ExpireFetchEmpty
+  s66 --> s140: ExpireFetchFailure
+  s66 --> s143: FailedConnectB
+  s66 --> s145: RotateA
+  s66 --> s170: Clear
+  s66 --> s185: UnloadReload
+  s67 --> s123: CompleteDefault
+  s67 --> s126: CompleteExplicitB
+  s67 --> s130: ConnectA
+  s67 --> s132: ConnectB
+  s67 --> s133: Expire
+  s67 --> s136: ExpireFetchEmpty
+  s67 --> s139: ExpireFetchFailure
+  s67 --> s143: FailedConnectB
+  s67 --> s145: RotateA
+  s67 --> s169: Clear
+  s67 --> s185: UnloadReload
+  s68 --> s125: CompleteDefault
+  s68 --> s128: CompleteExplicitB
+  s68 --> s130: ConnectA
+  s68 --> s132: ConnectB
+  s68 --> s135: Expire
+  s68 --> s138: ExpireFetchEmpty
+  s68 --> s141: ExpireFetchFailure
+  s68 --> s143: FailedConnectB
+  s68 --> s145: RotateA
+  s68 --> s171: Clear
+  s68 --> s185: UnloadReload
+  s69 --> s124: CompleteDefault
+  s69 --> s127: CompleteExplicitB
+  s69 --> s129: ConnectA
+  s69 --> s131: ConnectB
+  s69 --> s134: Expire
+  s69 --> s137: ExpireFetchEmpty
+  s69 --> s140: ExpireFetchFailure
+  s69 --> s142: FailedConnectB
+  s69 --> s144: RotateA
+  s69 --> s170: Clear
+  s69 --> s185: UnloadReload
+  s70 --> s124: CompleteDefault
+  s70 --> s127: CompleteExplicitB
+  s70 --> s129: ConnectA
+  s70 --> s131: ConnectB
+  s70 --> s134: Expire
+  s70 --> s137: ExpireFetchEmpty
+  s70 --> s140: ExpireFetchFailure
+  s70 --> s142: FailedConnectB
+  s70 --> s144: RotateA
+  s70 --> s170: Clear
+  s70 --> s185: UnloadReload
+  s71 --> s124: CompleteDefault
+  s71 --> s127: CompleteExplicitB
+  s71 --> s129: ConnectA
+  s71 --> s131: ConnectB
+  s71 --> s134: Expire
+  s71 --> s137: ExpireFetchEmpty
+  s71 --> s140: ExpireFetchFailure
+  s71 --> s142: FailedConnectB
+  s71 --> s144: RotateA
+  s71 --> s170: Clear
+  s71 --> s185: UnloadReload
+  s72 --> s125: CompleteDefault
+  s72 --> s128: CompleteExplicitB
+  s72 --> s130: ConnectA
+  s72 --> s132: ConnectB
+  s72 --> s135: Expire
+  s72 --> s138: ExpireFetchEmpty
+  s72 --> s141: ExpireFetchFailure
+  s72 --> s143: FailedConnectB
+  s72 --> s145: RotateA
+  s72 --> s171: Clear
+  s72 --> s185: UnloadReload
+  s73 --> s124: CompleteDefault
+  s73 --> s127: CompleteExplicitB
+  s73 --> s130: ConnectA
+  s73 --> s132: ConnectB
+  s73 --> s134: Expire
+  s73 --> s137: ExpireFetchEmpty
+  s73 --> s140: ExpireFetchFailure
+  s73 --> s143: FailedConnectB
+  s73 --> s145: RotateA
+  s73 --> s170: Clear
+  s73 --> s185: UnloadReload
+  s74 --> s148: CompleteDefault
+  s74 --> s151: CompleteExplicitB
+  s74 --> s153: ConnectA
+  s74 --> s155: ConnectB
+  s74 --> s158: Expire
+  s74 --> s161: ExpireFetchEmpty
+  s74 --> s164: ExpireFetchFailure
+  s74 --> s166: FailedConnectB
+  s74 --> s168: RotateA
+  s74 --> s171: Clear
+  s74 --> s185: UnloadReload
+  s75 --> s148: CompleteDefault
+  s75 --> s151: CompleteExplicitB
+  s75 --> s153: ConnectA
+  s75 --> s155: ConnectB
+  s75 --> s158: Expire
+  s75 --> s161: ExpireFetchEmpty
+  s75 --> s164: ExpireFetchFailure
+  s75 --> s166: FailedConnectB
+  s75 --> s168: RotateA
+  s75 --> s171: Clear
+  s75 --> s185: UnloadReload
+  s76 --> s146: CompleteDefault
+  s76 --> s149: CompleteExplicitB
+  s76 --> s153: ConnectA
+  s76 --> s155: ConnectB
+  s76 --> s156: Expire
+  s76 --> s159: ExpireFetchEmpty
+  s76 --> s162: ExpireFetchFailure
+  s76 --> s166: FailedConnectB
+  s76 --> s168: RotateA
+  s76 --> s169: Clear
+  s76 --> s185: UnloadReload
+  s77 --> s148: CompleteDefault
+  s77 --> s151: CompleteExplicitB
+  s77 --> s153: ConnectA
+  s77 --> s155: ConnectB
+  s77 --> s158: Expire
+  s77 --> s161: ExpireFetchEmpty
+  s77 --> s164: ExpireFetchFailure
+  s77 --> s166: FailedConnectB
+  s77 --> s168: RotateA
+  s77 --> s171: Clear
+  s77 --> s185: UnloadReload
+  s78 --> s148: CompleteDefault
+  s78 --> s151: CompleteExplicitB
+  s78 --> s152: ConnectA
+  s78 --> s154: ConnectB
+  s78 --> s158: Expire
+  s78 --> s161: ExpireFetchEmpty
+  s78 --> s164: ExpireFetchFailure
+  s78 --> s165: FailedConnectB
+  s78 --> s167: RotateA
+  s78 --> s171: Clear
+  s78 --> s185: UnloadReload
+  s79 --> s148: CompleteDefault
+  s79 --> s151: CompleteExplicitB
+  s79 --> s152: ConnectA
+  s79 --> s154: ConnectB
+  s79 --> s158: Expire
+  s79 --> s161: ExpireFetchEmpty
+  s79 --> s164: ExpireFetchFailure
+  s79 --> s165: FailedConnectB
+  s79 --> s167: RotateA
+  s79 --> s171: Clear
+  s79 --> s185: UnloadReload
+  s80 --> s148: CompleteDefault
+  s80 --> s151: CompleteExplicitB
+  s80 --> s152: ConnectA
+  s80 --> s154: ConnectB
+  s80 --> s158: Expire
+  s80 --> s161: ExpireFetchEmpty
+  s80 --> s164: ExpireFetchFailure
+  s80 --> s165: FailedConnectB
+  s80 --> s167: RotateA
+  s80 --> s171: Clear
+  s80 --> s185: UnloadReload
+  s81 --> s148: CompleteDefault
+  s81 --> s151: CompleteExplicitB
+  s81 --> s153: ConnectA
+  s81 --> s155: ConnectB
+  s81 --> s158: Expire
+  s81 --> s161: ExpireFetchEmpty
+  s81 --> s164: ExpireFetchFailure
+  s81 --> s166: FailedConnectB
+  s81 --> s168: RotateA
+  s81 --> s171: Clear
+  s81 --> s185: UnloadReload
+  s82 --> s147: CompleteDefault
+  s82 --> s150: CompleteExplicitB
+  s82 --> s153: ConnectA
+  s82 --> s155: ConnectB
+  s82 --> s157: Expire
+  s82 --> s160: ExpireFetchEmpty
+  s82 --> s163: ExpireFetchFailure
+  s82 --> s166: FailedConnectB
+  s82 --> s168: RotateA
+  s82 --> s170: Clear
+  s82 --> s185: UnloadReload
+  s83 --> s100: CompleteDefault
+  s83 --> s103: CompleteExplicitB
+  s83 --> s169: Clear
+  s83 --> s172: ConnectA
+  s83 --> s173: ConnectB
+  s83 --> s174: Expire
+  s83 --> s177: ExpireFetchEmpty
+  s83 --> s180: ExpireFetchFailure
+  s83 --> s183: FailedConnectB
+  s83 --> s184: RotateA
+  s83 --> s185: UnloadReload
+  s84 --> s124: CompleteDefault
+  s84 --> s127: CompleteExplicitB
+  s84 --> s170: Clear
+  s84 --> s172: ConnectA
+  s84 --> s173: ConnectB
+  s84 --> s175: Expire
+  s84 --> s178: ExpireFetchEmpty
+  s84 --> s181: ExpireFetchFailure
+  s84 --> s183: FailedConnectB
+  s84 --> s184: RotateA
+  s84 --> s185: UnloadReload
+  s85 --> s148: CompleteDefault
+  s85 --> s151: CompleteExplicitB
+  s85 --> s171: Clear
+  s85 --> s172: ConnectA
+  s85 --> s173: ConnectB
+  s85 --> s176: Expire
+  s85 --> s179: ExpireFetchEmpty
+  s85 --> s182: ExpireFetchFailure
+  s85 --> s183: FailedConnectB
+  s85 --> s184: RotateA
+  s85 --> s185: UnloadReload
+  s86 --> s100: CompleteDefault
+  s86 --> s103: CompleteExplicitB
+  s86 --> s169: Clear
+  s86 --> s172: ConnectA
+  s86 --> s173: ConnectB
+  s86 --> s174: Expire
+  s86 --> s177: ExpireFetchEmpty
+  s86 --> s180: ExpireFetchFailure
+  s86 --> s183: FailedConnectB
+  s86 --> s184: RotateA
+  s86 --> s185: UnloadReload
+  s87 --> s148: CompleteDefault
+  s87 --> s151: CompleteExplicitB
+  s87 --> s171: Clear
+  s87 --> s172: ConnectA
+  s87 --> s173: ConnectB
+  s87 --> s176: Expire
+  s87 --> s179: ExpireFetchEmpty
+  s87 --> s182: ExpireFetchFailure
+  s87 --> s183: FailedConnectB
+  s87 --> s184: RotateA
+  s87 --> s185: UnloadReload
+  s88 --> s100: CompleteDefault
+  s88 --> s103: CompleteExplicitB
+  s88 --> s169: Clear
+  s88 --> s172: ConnectA
+  s88 --> s173: ConnectB
+  s88 --> s174: Expire
+  s88 --> s177: ExpireFetchEmpty
+  s88 --> s180: ExpireFetchFailure
+  s88 --> s183: FailedConnectB
+  s88 --> s184: RotateA
+  s88 --> s185: UnloadReload
+  s89 --> s124: CompleteDefault
+  s89 --> s127: CompleteExplicitB
+  s89 --> s170: Clear
+  s89 --> s172: ConnectA
+  s89 --> s173: ConnectB
+  s89 --> s175: Expire
+  s89 --> s178: ExpireFetchEmpty
+  s89 --> s181: ExpireFetchFailure
+  s89 --> s183: FailedConnectB
+  s89 --> s184: RotateA
+  s89 --> s185: UnloadReload
+  s90 --> s148: CompleteDefault
+  s90 --> s151: CompleteExplicitB
+  s90 --> s171: Clear
+  s90 --> s172: ConnectA
+  s90 --> s173: ConnectB
+  s90 --> s176: Expire
+  s90 --> s179: ExpireFetchEmpty
+  s90 --> s182: ExpireFetchFailure
+  s90 --> s183: FailedConnectB
+  s90 --> s184: RotateA
+  s90 --> s185: UnloadReload
+  s91 --> s100: CompleteDefault
+  s91 --> s103: CompleteExplicitB
+  s91 --> s169: Clear
+  s91 --> s172: ConnectA
+  s91 --> s173: ConnectB
+  s91 --> s174: Expire
+  s91 --> s177: ExpireFetchEmpty
+  s91 --> s180: ExpireFetchFailure
+  s91 --> s183: FailedConnectB
+  s91 --> s184: RotateA
+  s91 --> s185: UnloadReload
+  s92 --> s124: CompleteDefault
+  s92 --> s127: CompleteExplicitB
+  s92 --> s170: Clear
+  s92 --> s172: ConnectA
+  s92 --> s173: ConnectB
+  s92 --> s175: Expire
+  s92 --> s178: ExpireFetchEmpty
+  s92 --> s181: ExpireFetchFailure
+  s92 --> s183: FailedConnectB
+  s92 --> s184: RotateA
+  s92 --> s185: UnloadReload
+  s93 --> s148: CompleteDefault
+  s93 --> s151: CompleteExplicitB
+  s93 --> s171: Clear
+  s93 --> s172: ConnectA
+  s93 --> s173: ConnectB
+  s93 --> s176: Expire
+  s93 --> s179: ExpireFetchEmpty
+  s93 --> s182: ExpireFetchFailure
+  s93 --> s183: FailedConnectB
+  s93 --> s184: RotateA
+  s93 --> s185: UnloadReload
+  s94 --> s100: CompleteDefault
+  s94 --> s103: CompleteExplicitB
+  s94 --> s169: Clear
+  s94 --> s172: ConnectA
+  s94 --> s173: ConnectB
+  s94 --> s174: Expire
+  s94 --> s177: ExpireFetchEmpty
+  s94 --> s180: ExpireFetchFailure
+  s94 --> s183: FailedConnectB
+  s94 --> s184: RotateA
+  s94 --> s185: UnloadReload
+  s95 --> s124: CompleteDefault
+  s95 --> s127: CompleteExplicitB
+  s95 --> s170: Clear
+  s95 --> s172: ConnectA
+  s95 --> s173: ConnectB
+  s95 --> s175: Expire
+  s95 --> s178: ExpireFetchEmpty
+  s95 --> s181: ExpireFetchFailure
+  s95 --> s183: FailedConnectB
+  s95 --> s184: RotateA
+  s95 --> s185: UnloadReload
+  s96 --> s148: CompleteDefault
+  s96 --> s151: CompleteExplicitB
+  s96 --> s171: Clear
+  s96 --> s172: ConnectA
+  s96 --> s173: ConnectB
+  s96 --> s176: Expire
+  s96 --> s179: ExpireFetchEmpty
+  s96 --> s182: ExpireFetchFailure
+  s96 --> s183: FailedConnectB
+  s96 --> s184: RotateA
+  s96 --> s185: UnloadReload
+  s97 --> s148: CompleteDefault
+  s97 --> s151: CompleteExplicitB
+  s97 --> s171: Clear
+  s97 --> s172: ConnectA
+  s97 --> s173: ConnectB
+  s97 --> s176: Expire
+  s97 --> s179: ExpireFetchEmpty
+  s97 --> s182: ExpireFetchFailure
+  s97 --> s183: FailedConnectB
+  s97 --> s184: RotateA
+  s97 --> s185: UnloadReload
+  s98 --> s124: CompleteDefault
+  s98 --> s127: CompleteExplicitB
+  s98 --> s170: Clear
+  s98 --> s172: ConnectA
+  s98 --> s173: ConnectB
+  s98 --> s175: Expire
+  s98 --> s178: ExpireFetchEmpty
+  s98 --> s181: ExpireFetchFailure
+  s98 --> s183: FailedConnectB
+  s98 --> s184: RotateA
+  s98 --> s185: UnloadReload
+  s99 --> s100: CompleteDefault
+  s99 --> s103: CompleteExplicitB
+  s99 --> s169: Clear
+  s99 --> s172: ConnectA
+  s99 --> s173: ConnectB
+  s99 --> s174: Expire
+  s99 --> s177: ExpireFetchEmpty
+  s99 --> s180: ExpireFetchFailure
+  s99 --> s183: FailedConnectB
+  s99 --> s184: RotateA
+  s99 --> s185: UnloadReload
+  classDef breaks fill:#ffecee,stroke:#e72e3b,stroke-width:2.5px,color:#cd2834
+  class s0 bugPath
+  class s1 bugPath
+  class s2 breaks
+  class s2 bugPath
+  class s13 breaks
+  class s15 bugPath
+  class s20 bugPath
+  class s22 breaks
+  class s43 breaks
+  class s43 bugPath
+  class s44 breaks
+  class s44 bugPath
+  class s45 breaks
+  class s46 breaks
+  class s47 breaks
+  class s66 breaks
+  class s101 breaks
+  class s102 breaks
+  class s103 breaks
+  class s104 breaks
+  class s105 breaks
+  class s123 breaks
+  class s125 breaks
+  class s126 breaks
+  class s127 breaks
+  class s128 breaks
+  class s146 breaks
+  class s147 breaks

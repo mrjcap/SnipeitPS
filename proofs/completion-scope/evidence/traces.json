@@ -1,0 +1,137 @@
+[
+  {
+    "rule": "DefaultServerIsolation",
+    "trace": [
+      {
+        "action": "Initial",
+        "state": {
+          "owner": "none",
+          "shown": "none",
+          "event": "Init",
+          "fresh": false,
+          "connection": "A1",
+          "requested": "none",
+          "operations": 0
+        }
+      },
+      {
+        "action": "Next",
+        "state": {
+          "owner": "A1",
+          "shown": "A1",
+          "event": "CompleteDefault",
+          "fresh": true,
+          "connection": "A1",
+          "requested": "A1",
+          "operations": 1
+        }
+      },
+      {
+        "action": "Next",
+        "state": {
+          "owner": "A1",
+          "shown": "none",
+          "event": "ConnectB",
+          "fresh": true,
+          "connection": "B1",
+          "requested": "none",
+          "operations": 2
+        }
+      },
+      {
+        "action": "Next",
+        "state": {
+          "owner": "A1",
+          "shown": "A1",
+          "event": "CompleteDefault",
+          "fresh": true,
+          "connection": "B1",
+          "requested": "B1",
+          "operations": 3
+        }
+      }
+    ]
+  },
+  {
+    "rule": "DefaultCredentialIsolation",
+    "trace": [
+      {
+        "action": "Initial",
+        "state": {
+          "owner": "none",
+          "shown": "none",
+          "event": "Init",
+          "fresh": false,
+          "connection": "A1",
+          "requested": "none",
+          "operations": 0
+        }
+      },
+      {
+        "action": "Next",
+        "state": {
+          "owner": "A1",
+          "shown": "A1",
+          "event": "CompleteDefault",
+          "fresh": true,
+          "connection": "A1",
+          "requested": "A1",
+          "operations": 1
+        }
+      },
+      {
+        "action": "Next",
+        "state": {
+          "owner": "A1",
+          "shown": "none",
+          "event": "RotateA",
+          "fresh": true,
+          "connection": "A2",
+          "requested": "none",
+          "operations": 2
+        }
+      },
+      {
+        "action": "Next",
+        "state": {
+          "owner": "A1",
+          "shown": "A1",
+          "event": "CompleteDefault",
+          "fresh": true,
+          "connection": "A2",
+          "requested": "A2",
+          "operations": 3
+        }
+      }
+    ]
+  },
+  {
+    "rule": "ExplicitSessionIsolation",
+    "trace": [
+      {
+        "action": "Initial",
+        "state": {
+          "owner": "none",
+          "shown": "none",
+          "event": "Init",
+          "fresh": false,
+          "connection": "A1",
+          "requested": "none",
+          "operations": 0
+        }
+      },
+      {
+        "action": "Next",
+        "state": {
+          "owner": "A1",
+          "shown": "A1",
+          "event": "CompleteExplicitB",
+          "fresh": true,
+          "connection": "A1",
+          "requested": "B1",
+          "operations": 1
+        }
+      }
+    ]
+  }
+]

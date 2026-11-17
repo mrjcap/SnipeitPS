@@ -1,0 +1,108 @@
+{
+  "node": "v26.13.1",
+  "java": "java",
+  "bounds": 4,
+  "controls": [
+    "LF/CRLF/CRCRLF fileLines and outputLines",
+    "invalid view rejected",
+    "hidden counterexample steps rejected"
+  ],
+  "runs": [
+    {
+      "policy": "observed",
+      "wrapperExit": 1,
+      "independent": [
+        {
+          "rule": "TypeOK",
+          "exit": 0,
+          "counts": [
+            "1101 states generated, 186 distinct states found, 0 states left on queue."
+          ]
+        },
+        {
+          "rule": "DefaultServerIsolation",
+          "exit": 12,
+          "counts": [
+            "391 states generated, 87 distinct states found, 50 states left on queue."
+          ]
+        },
+        {
+          "rule": "DefaultCredentialIsolation",
+          "exit": 12,
+          "counts": [
+            "402 states generated, 92 distinct states found, 54 states left on queue."
+          ]
+        },
+        {
+          "rule": "ExplicitSessionIsolation",
+          "exit": 12,
+          "counts": [
+            "7 states generated, 7 distinct states found, 5 states left on queue."
+          ]
+        },
+        {
+          "rule": "FailureDoesNotFreshen",
+          "exit": 0,
+          "counts": [
+            "1101 states generated, 186 distinct states found, 0 states left on queue."
+          ]
+        },
+        {
+          "rule": "CleanupRemovesEntry",
+          "exit": 0,
+          "counts": [
+            "1101 states generated, 186 distinct states found, 0 states left on queue."
+          ]
+        }
+      ]
+    },
+    {
+      "policy": "reference",
+      "wrapperExit": 0,
+      "independent": [
+        {
+          "rule": "TypeOK",
+          "exit": 0,
+          "counts": [
+            "1244 states generated, 187 distinct states found, 0 states left on queue."
+          ]
+        },
+        {
+          "rule": "DefaultServerIsolation",
+          "exit": 0,
+          "counts": [
+            "1244 states generated, 187 distinct states found, 0 states left on queue."
+          ]
+        },
+        {
+          "rule": "DefaultCredentialIsolation",
+          "exit": 0,
+          "counts": [
+            "1244 states generated, 187 distinct states found, 0 states left on queue."
+          ]
+        },
+        {
+          "rule": "ExplicitSessionIsolation",
+          "exit": 0,
+          "counts": [
+            "1244 states generated, 187 distinct states found, 0 states left on queue."
+          ]
+        },
+        {
+          "rule": "FailureDoesNotFreshen",
+          "exit": 0,
+          "counts": [
+            "1244 states generated, 187 distinct states found, 0 states left on queue."
+          ]
+        },
+        {
+          "rule": "CleanupRemovesEntry",
+          "exit": 0,
+          "counts": [
+            "1244 states generated, 187 distinct states found, 0 states left on queue."
+          ]
+        }
+      ]
+    }
+  ]
+}
